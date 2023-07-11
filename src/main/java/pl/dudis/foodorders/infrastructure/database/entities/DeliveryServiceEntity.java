@@ -6,10 +6,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "mechanicId")
-@ToString(of = {"mechanicId", "name", "surname", "pesel"})
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "delivery_service")
