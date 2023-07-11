@@ -12,5 +12,5 @@ CREATE TABLE delivery_service
             REFERENCES local (local_id),
     CONSTRAINT fk_delivery_service_owner
         FOREIGN KEY (owner_id)
-            REFERENCES owner (local_id)
+            REFERENCES owner (owner_id)
 );

@@ -1,7 +1,7 @@
-CREATE TABLE order
+CREATE TABLE food_order
 (
     order_id                SERIAL                          NOT NULL,
-    order_number            SERIAL                          NOT NULL,
+    order_number            VARCHAR(64)                     NOT NULL    UNIQUE,
     received_date_time      TIMESTAMP WITH TIME ZONE        NOT NULL,
     completed_date_time     TIMESTAMP WITH TIME ZONE        NOT NULL,
     customer_comment        TEXT,
