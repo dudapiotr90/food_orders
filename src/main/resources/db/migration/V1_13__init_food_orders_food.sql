@@ -2,6 +2,7 @@ CREATE TABLE food
 (
     food_id         SERIAL          NOT NULL,
     name            VARCHAR(128)    NOT NULL,
+    description     TEXT            NOT NULL,
     price           NUMERIC(6,2)    NOT NULL,
     food_type_id    INT             NOT NULL,
     menu_id         INT             NOT NULL,
