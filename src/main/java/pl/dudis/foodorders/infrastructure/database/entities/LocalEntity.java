@@ -2,7 +2,6 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.database.security.AccountEntity;
 
 import java.util.Set;
 
@@ -41,7 +40,7 @@ public class LocalEntity {
     private OwnerEntity owner;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "local")
-    private Set<DeliveryServiceEntity> deliveries;
+    private Set<DeliveryEntity> deliveries;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "local")
     private Set<DeliveryAddressEntity> deliveryAddresses;

@@ -17,7 +17,31 @@ spring:
       maximumPoolSize: 20
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  mail:
+    host: localhost
+    port: 1025
+    username: mail
+    password: mail
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000

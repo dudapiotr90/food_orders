@@ -2,7 +2,7 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.database.security.AccountEntity;
+import pl.dudis.foodorders.infrastructure.security.AccountEntity;
 
 @Getter
 @Setter
