@@ -1,4 +1,4 @@
-package pl.dudis.foodorders.infrastructure.database.security;
+package pl.dudis.foodorders.infrastructure.security;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,5 +17,6 @@ public class ApiRoleEntity {
     private Integer apiRoleId;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private ApiRole role;
 }

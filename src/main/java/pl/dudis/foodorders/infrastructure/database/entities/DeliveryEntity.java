@@ -2,25 +2,24 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.database.security.AccountEntity;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "deliveryServiceId")
-@ToString(of = {"deliveryServiceId", "deliveryNumber", "price", "address"})
+@EqualsAndHashCode(of = "deliveryId")
+@ToString(of = {"deliveryId", "deliveryNumber", "price", "address"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "delivery_service")
-public class DeliveryServiceEntity {
+@Table(name = "delivery")
+public class DeliveryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delivery_service_id")
-    private Integer deliveryServiceId;
+    @Column(name = "delivery_id")
+    private Integer deliveryId;
 
     @Column(name = "delivery_number",unique = true)
     private String deliveryNumber;

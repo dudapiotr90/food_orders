@@ -2,7 +2,6 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.database.security.AccountEntity;
 
 import java.math.BigDecimal;
 

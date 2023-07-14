@@ -1,10 +1,13 @@
-package pl.dudis.foodorders.infrastructure.database.security;
+package pl.dudis.foodorders.infrastructure.security;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import pl.dudis.foodorders.infrastructure.database.entities.AddressEntity;
 
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -16,7 +19,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "account")
-public class AccountEntity {
+public class AccountEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +54,33 @@ public class AccountEntity {
     private Set<ApiRoleEntity> roles;
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

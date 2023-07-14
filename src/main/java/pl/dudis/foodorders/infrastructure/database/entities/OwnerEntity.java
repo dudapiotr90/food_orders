@@ -2,7 +2,7 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.database.security.AccountEntity;
+import pl.dudis.foodorders.infrastructure.security.AccountEntity;
 
 import java.util.Set;
 
@@ -39,5 +39,5 @@ public class OwnerEntity {
     private Set<BillEntity> bills;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
-    private Set<DeliveryServiceEntity> deliveries;
+    private Set<DeliveryEntity> deliveries;
 }
