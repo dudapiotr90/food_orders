@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+           rel="stylesheet"
+           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+           crossorigin="anonymous">
+     <title>Food Orders - Full Stomach</title>
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
+     <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+     <header>
+          <nav>
+               <ul>
+                    <li class="navItem"><a th:href="@{/customer}" class="btn" role="button">Customer</a></li>
+                    <li class="navItem"><a th:href="@{/owner}" class="btn" role="button">Owner</a></li>
+                    <li class="navItem"><a th:href="@{/product}" class="btn" role="button">Developer</a></li>
+                    <li class="navItem"><a th:href="@{/register}" class="btn" role="button">Register</a></li>
+                    <li class="navItem"><a th:href="@{/login}" class="btn" role="button">Login</a></li>
+                    <li class="navItem"><a href="#contact" class="btn" role="button">Contact</a></li>
+               </ul>
+          </nav>
+     </header>
+
+     <div class="welcome-message">
+          <h1>Welcome to Food Orders Application</h1>
+          <br>
+          <h2>Check possible features on the navigation panel</h2>
+          <h3>
+               If You are new here please register your account first:
+               <a th:href="@{/register}" class="button" role="button">Register</a>
+          </h3>
+          <h3>
+               If You already have an account please login:
+               <a th:href="@{/login}" class="button" role="button">Login</a>
+          </h3>
+     </div>
+
+     <footer id="contact">
+          <div class="contact-info">
+               <p>
+                    <i class="fas fa-envelope"></i>
+                    piotrjavatestowy@gmail.com
+               </p>
+               <p>
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/dudapiotr90/food_orders" target="_blank">GitHub</a>
+               </p>
+          </div>
+     </footer>
+
+</body>
+</html>
