@@ -3,6 +3,8 @@ package pl.dudis.foodorders.infrastructure.security;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,4 +21,7 @@ public class ApiRoleEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private ApiRole role;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "role")
+    private Set<AccountEntity> accounts;
 }
