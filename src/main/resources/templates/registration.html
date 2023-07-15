@@ -10,8 +10,8 @@
   <title>Food Orders - Full Stomach</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
-<!--  <link rel="stylesheet" th:href="@{/css/registration.css}">-->
-  <link rel="stylesheet" href="../static/css/registration.css">
+  <link rel="stylesheet" th:href="@{/css/registration.css}">
+<!--  <link rel="stylesheet" href="../static/css/registration.css">-->
 </head>
 <body>
   <h1>Welcome in registration page!</h1>
@@ -129,7 +129,7 @@
     <h3>What type of account do you want to have?</h3>
     <div class="container text-center">
       <label for="role">Account type:</label>
-      <select id="role" th:field="*{apiRole}">
+      <select id="role" th:field="*{role}">
         <option th:each="availableRole : ${availableRoles}"
         th:value="${availableRole}"
         th:text="${availableRole}"></option>

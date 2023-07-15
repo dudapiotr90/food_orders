@@ -6,4 +6,5 @@ import pl.dudis.foodorders.infrastructure.database.entities.AddressEntity;
 
 @Repository
 public interface AddressJpaRepository extends JpaRepository<AddressEntity,Integer> {
+
 }

@@ -23,11 +23,10 @@ public class RegistrationRequestDTO {
     private String userConfirmPassword;
     @Email
     private String userEmail;
-    @Size(min = 9, max = 12)
+    @Size(min = 9, max = 15)
     @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     private String userPhone;
-    @Enumerated
-    private ApiRoleDTO apiRole;
+    private String role;
 
     private String userAddressCity;
     private String userAddressPostalCode;
