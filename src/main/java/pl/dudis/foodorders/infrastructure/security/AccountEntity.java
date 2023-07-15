@@ -45,13 +45,15 @@ public class AccountEntity implements UserDetails {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-        name = "account_manager",
-        inverseJoinColumns = @JoinColumn(name="api_role_id"),
-        joinColumns = @JoinColumn(name="account_id")
-    )
-    private Set<ApiRoleEntity> roles;
+//    @ManyToMany(cascade = CascadeType.MERGE)
+//    @JoinTable(
+//        name = "account_manager",
+//        inverseJoinColumns = @JoinColumn(name="api_role_id"),
+//        joinColumns = @JoinColumn(name="account_id")
+//    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "api_role_id")
+    private ApiRoleEntity role;
 
 
     @Override

@@ -10,11 +10,24 @@
   <title>Food Orders - Full Stomach</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" th:href="@{/css/registration.css}">
+<!--  <link rel="stylesheet" th:href="@{/css/registration.css}">-->
+  <link rel="stylesheet" href="../static/css/registration.css">
 </head>
 <body>
   <h1>Welcome in registration page!</h1>
   <h2>Please fill in the form below</h2>
+  <script>
+    function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+
+      if (password !== confirm_password) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      return true;
+    }
+  </script>
 <!--  <form action="#" th:action="/register" th:object="${registrationRequestDTO}" method="POST"-->
   <form action="#" th:action="@{/register}" th:object="${registrationRequestDTO}" method="POST"
         onsubmit="return validateForm();">
@@ -29,7 +42,7 @@
                   <label for="name" style="display: block; text-align: left;">Name:</label>
               </div>
               <div class="col-md-5">
-                <input type="text" id="name" name="name"   required>  <!--th:field="*{name}"-->
+                <input type="text" id="name" th:field="*{userName}"  required>  <!--th:field="*{name}"-->
               </div>
             </div>
             <div class="row mt-2">
@@ -37,11 +50,9 @@
                 <label for="surname" style="display: block; text-align: left;">Surname:</label>
               </div>
               <div class="col-md-5">
-                <input type="text" id="surname" name="surname"  required>
+                <input type="text" id="surname" th:field="*{userSurname}"  required>
               </div>
             </div>
-
-
           </div>
         </div>
         <div class="col">
@@ -50,7 +61,7 @@
               <label for="login" style="display: block; text-align: left;">Login:</label>
             </div>
             <div class="col-md-5">
-              <input type="text" id="login" name="login" required>
+              <input type="text" id="login" th:field="*{userLogin}" required>
             </div>
           </div>
           <div class="row mt-2">
@@ -58,15 +69,15 @@
               <label for="password" style="display: block; text-align: left;">Password:</label>
             </div>
             <div class="col-md-5">
-              <input type="password" id="password" name="password" required>
+              <input type="password" id="password" th:field="*{userPassword}" required>
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-md-5">
-              <label for="login" style="display: block; text-align: left;">Confirm Password:</label>
+              <label for="password" style="display: block; text-align: left;">Confirm Password:</label>
             </div>
             <div class="col-md-5">
-              <input type="password" id="confirm_password" name="confirm_password" required>
+              <input type="password" id="confirm_password" th:field="*{userConfirmPassword}" required>
             </div>
           </div>
           <div class="row mt-2">
@@ -74,7 +85,7 @@
               <label for="email" style="display: block; text-align: left;">Email:</label>
             </div>
             <div class="col-md-5">
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" th:field="*{userEmail}" required>
             </div>
           </div>
           <div class="row mt-2">
@@ -82,7 +93,7 @@
               <label for="phone" style="display: block; text-align: left;">Phone:</label>
             </div>
             <div class="col-md-5">
-              <input type="text" id="phone" name="phone" placeholder="+xx xxx xxx xxx" required>
+              <input type="text" id="phone" th:field="*{userPhone}" placeholder="+xx xxx xxx xxx" required>
             </div>
           </div>
         </div>
@@ -92,7 +103,7 @@
               <label for="city" style="display: block; text-align: left;">City:</label>
             </div>
             <div class="col-md-5">
-              <input type="text" id="city" name="city" required>
+              <input type="text" id="city" th:field="*{userAddressCity}" required>
             </div>
           </div>
           <div class="row mt-2">
@@ -100,7 +111,7 @@
               <label for="postalCode" style="display: block; text-align: left;">Postal code:</label>
             </div>
             <div class="col-md-5">
-              <input type="text" id="postalCode" name="postalCode" required>
+              <input type="text" id="postalCode" th:field="*{userAddressPostalCode}" required>
             </div>
           </div>
           <div class="row mt-2">
@@ -108,7 +119,7 @@
               <label for="street" style="display: block; text-align: left;">Street:</label>
             </div>
             <div class="col-md-5">
-              <input type="text" id="street" name="street" required>
+              <input type="text" id="street" th:field="*{userAddressStreet}" required>
             </div>
           </div>
         </div>
@@ -118,7 +129,7 @@
     <h3>What type of account do you want to have?</h3>
     <div class="container text-center">
       <label for="role">Account type:</label>
-      <select id="role"> <!--th:field="*{role}"-->
+      <select id="role" th:field="*{apiRole}">
         <option th:each="availableRole : ${availableRoles}"
         th:value="${availableRole}"
         th:text="${availableRole}"></option>
