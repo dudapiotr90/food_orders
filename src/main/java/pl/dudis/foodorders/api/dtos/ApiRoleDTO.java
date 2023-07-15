@@ -1,7 +1,10 @@
 package pl.dudis.foodorders.api.dtos;
 
-public enum ApiRoleDTO {
-    CUSTOMER,
-    OWNER,
-    DEVELOPER;
+import lombok.AllArgsConstructor;
+
+import java.util.Set;
+
+@AllArgsConstructor
+public class ApiRoleDTO {
+    Set<RoleDTO> roles;
 }

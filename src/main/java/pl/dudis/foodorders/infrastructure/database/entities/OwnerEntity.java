@@ -2,7 +2,7 @@ package pl.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.dudis.foodorders.infrastructure.security.AccountEntity;
+import pl.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 
 import java.util.Set;
 

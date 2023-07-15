@@ -1,4 +1,4 @@
-package pl.dudis.foodorders.infrastructure.security;
+package pl.dudis.foodorders.infrastructure.security.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +8,6 @@ import pl.dudis.foodorders.infrastructure.database.entities.AddressEntity;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
