@@ -6,7 +6,7 @@ CREATE TABLE account
     email           VARCHAR(128)                NOT NULL    UNIQUE,
     phone           VARCHAR(128)                NOT NULL,
     creation_date   TIMESTAMP WITH TIME ZONE    NOT NULL,
-    address_id      INT                         NOT NULL,
+    address_id      INT,
     api_role_id     INT,
     PRIMARY KEY (account_id),
     CONSTRAINT fk_account_address
