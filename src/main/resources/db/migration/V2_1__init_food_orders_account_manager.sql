@@ -1,8 +1,9 @@
 CREATE TABLE account_manager
 (
+    account_manager_id SERIAL      NOT NULL,
     api_role_id        INT         NOT NULL,
     account_id         INT         NOT NULL,
-    PRIMARY KEY (api_role_id,account_id),
+    PRIMARY KEY (account_manager_id),
     CONSTRAINT  fk_account_manager_api_role
         FOREIGN KEY (api_role_id)
             REFERENCES  api_role (api_role_id),

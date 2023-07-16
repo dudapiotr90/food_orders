@@ -21,9 +21,9 @@ public class ApiRoleEntity {
 
     @Column(name = "role")
 //    @Enumerated(EnumType.STRING)
-    private Set<String> roles;
+    private String role;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "role")
-    private Set<AccountEntity> accounts;
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "role",cascade = CascadeType.PERSIST)
+//    private Set<AccountEntity> accounts;
 }
 // TODO Dodać funkcjonalność aby uzupełniało tabele api_role i account z api_role_id

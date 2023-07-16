@@ -37,7 +37,7 @@ public class AccountService {
                 .postalCode(request.getUserAddressPostalCode())
                 .address(request.getUserAddressStreet())
                 .build())
-            .apiRole(request.getRole())
+            .role(request.getRole())
             .build();
     }
 }
