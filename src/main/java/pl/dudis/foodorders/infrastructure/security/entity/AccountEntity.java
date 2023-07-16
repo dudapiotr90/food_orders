@@ -2,13 +2,20 @@ package pl.dudis.foodorders.infrastructure.security.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.dudis.foodorders.infrastructure.database.entities.AddressEntity;
+import pl.dudis.foodorders.infrastructure.security.AuthorityException;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,6 +34,7 @@ public class AccountEntity implements UserDetails {
     private Integer accountId;
 
     @Column(name = "login", unique = true)
+    @Length(min = 4)
     private String login;
 
     @Column(name = "password")
@@ -45,6 +53,17 @@ public class AccountEntity implements UserDetails {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
+    @Column(name = "api_role_id")
+    private Integer roleId;
+
+    @Column(name = "status")
+    private Boolean status;
+    @Column(name = "locked")
+    private Boolean locked = false;
+
+    @Column(name = "enabled")
+    private Boolean enabled = false;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
         name = "account_manager",
@@ -52,6 +71,7 @@ public class AccountEntity implements UserDetails {
         joinColumns = @JoinColumn(name="account_id")
     )
     private Set<ApiRoleEntity> roles;
+
 //    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 //    @JoinColumn(name = "api_role_id")
 //    private ApiRoleEntity role;
@@ -59,31 +79,36 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(roles.stream()
+            .map(ApiRoleEntity::getRole)
+            .findAny().orElseThrow(() -> new AuthorityException(
+                String.format("Account [%s] has no authority",this.login)
+            )));
+        return Collections.singleton(authority);
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return login;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 }

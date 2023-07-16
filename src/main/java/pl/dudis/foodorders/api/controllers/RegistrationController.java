@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RegistrationController {
 
-    public static final String REGISTER = "/register";
-    public static final String REGISTER_PROCESS = "/register/process";
+    public static final String REGISTER = "/registration";
+    public static final String REGISTER_PROCESS = "/registration/process";
 
     private final ApiRoleService apiRoleService;
     private final ApiRoleMapper apiRoleMapper;

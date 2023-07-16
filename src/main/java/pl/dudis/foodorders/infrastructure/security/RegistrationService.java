@@ -2,6 +2,7 @@ package pl.dudis.foodorders.infrastructure.security;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.dudis.foodorders.domain.Account;
 import pl.dudis.foodorders.domain.exception.RegistrationException;
