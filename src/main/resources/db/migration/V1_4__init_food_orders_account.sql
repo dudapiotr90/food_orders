@@ -7,7 +7,7 @@ CREATE TABLE account
     phone           VARCHAR(128)                NOT NULL,
     creation_date   TIMESTAMP WITH TIME ZONE    NOT NULL,
     address_id      INT                         NOT NULL,
-    api_role_id     INT                         NOT NULL,
+    api_role_id     INT,
     PRIMARY KEY (account_id),
     CONSTRAINT fk_account_address
         FOREIGN KEY (account_id)

@@ -24,12 +24,11 @@ public class RegistrationService {
     public String registerAccount(RegistrationRequest request) {
         accountService.findByEmail(request.getUserEmail());
 
-//        Set<Role> roles = request.getRole();
         return switch (Role.valueOf(request.getRole())) {
             case OWNER -> ownerService.registerOwner(request);
             case CUSTOMER -> customerService.registerCustomer(request);
             case DEVELOPER -> developerService.registerDeveloper(request);
-            case ADMIN -> throw new RegistrationException("Cant Create Admin account. Only Admins have this permission");
+            case ADMIN -> throw new RegistrationException("Cant create admin account. Only Admins have this permission");
         };
     }
 }

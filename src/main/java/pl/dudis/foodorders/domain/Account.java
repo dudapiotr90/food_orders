@@ -19,5 +19,5 @@ public class Account {
     String phone;
     OffsetDateTime creationDate;
     Address address;
-    String apiRole;
+    String role;
 }

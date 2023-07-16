@@ -8,6 +8,7 @@ import pl.dudis.foodorders.infrastructure.database.entities.AddressEntity;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class AccountEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="account_id")
     private Integer accountId;
 
     @Column(name = "login", unique = true)
@@ -44,15 +45,16 @@ public class AccountEntity implements UserDetails {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-//    @ManyToMany(cascade = CascadeType.MERGE)
-//    @JoinTable(
-//        name = "account_manager",
-//        inverseJoinColumns = @JoinColumn(name="api_role_id"),
-//        joinColumns = @JoinColumn(name="account_id")
-//    )
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "api_role_id")
-    private ApiRoleEntity role;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+        name = "account_manager",
+        inverseJoinColumns = @JoinColumn(name="api_role_id"),
+        joinColumns = @JoinColumn(name="account_id")
+    )
+    private Set<ApiRoleEntity> roles;
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @JoinColumn(name = "api_role_id")
+//    private ApiRoleEntity role;
 
 
     @Override
