@@ -56,9 +56,11 @@ public class SecurityConfiguration {
                     .requestMatchers("/**").permitAll()
 //                requests.anyRequest().authenticated();
             )
-            .formLogin(formLogin -> formLogin.permitAll())
+            .formLogin(formLogin -> formLogin
+                .defaultSuccessUrl("/")
+                .permitAll())
             .logout(logout -> logout
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()

@@ -11,31 +11,33 @@
      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
      <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
      <link rel="stylesheet" th:href="@{/css/registration_confirm.css}">
-            <link rel="stylesheet" href="../static/css/registration_confirmed.css">
+<!--       <link rel="stylesheet" href="../static/css/registration_confirm.css">-->
 </head>
 <body>
-<div class="container">
-     <h1>Congratulations!</h1>
-     <h2>Your account has been registered successfully!</h2>
-     <p>
-          <h3><b><span th:if="${confirmation.userLogin}" th:text="${confirmation.userLogin}">LOGIN</span></b><br></h3>
-          You have become our:
-          <b><span th:if="${confirmation.role}" th:text="${confirmation.role}">ROLE</span></b><br>
-          We will contact you through your email:
-          <b><span th:if="${confirmation.userEmail}" th:text="${confirmation.userEmail}">EMAIL</span></b>
-          if we change any application functionalities!
-     </p>
-     <p>
-          If you want to start using our app pls sign in here:
-          <a th:href="@{/login}" class="button" role="button"> Login</a>
-     </p>
-     <p>
+     <div class="container">
+     <h2>Confirm your account!</h2>
+     </div>
+     <div class="container">
+          <p>
+          <h3>
+          <b><span th:if="${userName}" th:text="${userName}">USERNAME</span></b>
+          <br>
+          </h3>
+               To complete registration You need to confirm your account!<br>
+               We send confirmation <u>link</u> to your email:
+               <b><span th:if="${userEmail}" th:text="${userEmail}">USER_EMAIL</span></b>
+          </p>
+     </div>
 
-          <div class="button-container">
+     <p>
+     <div class="container">
+     <div class="button-container">
 
-               <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
-          </div>
+          <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
+     </div>
+     </div>
      </p>
+
      <footer id="contact">
           <div class="contact-info">
 
@@ -49,7 +51,5 @@
           </div>
      </footer>
 
-
-</div>
 </body>
 </html>

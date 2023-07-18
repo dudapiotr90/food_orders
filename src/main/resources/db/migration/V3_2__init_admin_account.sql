@@ -1,4 +1,4 @@
-INSERT INTO account (login, password, email, phone, creation_date,status,locked,enabled)
+INSERT INTO account (login, password, email, phone, creation_date,status,unlocked,enabled,api_role_id)
 VALUES
 (
 'admin',
@@ -8,5 +8,8 @@ VALUES
 CURRENT_TIMESTAMP,
 TRUE,
 FALSE,
-TRUE
-)
+TRUE,
+1
+);
+INSERT INTO account_manager (api_role_id,account_id)
+VALUES  (1,1);

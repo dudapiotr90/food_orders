@@ -55,15 +55,16 @@ public class AccountEntity implements UserDetails {
 
     @Column(name = "status")
     private Boolean status;
-    @Column(name = "locked")
+
+    @Column(name = "unlocked")
     @Builder.Default
-    private Boolean locked = false;
+    private Boolean unlocked = false;
 
     @Column(name = "enabled")
     @Builder.Default
     private Boolean enabled = false;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
         name = "account_manager",
         inverseJoinColumns = @JoinColumn(name="api_role_id"),
@@ -98,7 +99,7 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return locked;
+        return !unlocked;
     }
 
     @Override

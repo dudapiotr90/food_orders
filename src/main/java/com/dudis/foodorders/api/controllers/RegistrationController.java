@@ -60,6 +60,8 @@ public class RegistrationController {
     ) {
         RegistrationRequest request = registrationRequestMapper.mapFromDTO(registrationRequestDTO);
         registrationService.registerAccount(request);
+        model.addAttribute("userName", registrationRequestDTO.getUserName());
+        model.addAttribute("userEmail", registrationRequestDTO.getUserEmail());
         return new ModelAndView("registration_confirm",model);
     }
 
@@ -67,7 +69,7 @@ public class RegistrationController {
     public ModelAndView confirm(@RequestParam("token") String token) {
         Account account = registrationService.confirmToken(token);
         Map<String, ?> model = prepareConfirmationDetails(account);
-        return new ModelAndView("token_confirmed", model);
+        return new ModelAndView("registration_confirmed", model);
     }
 
     private Map<String, ?> prepareConfirmationDetails(Account account) {
