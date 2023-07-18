@@ -30,10 +30,11 @@ spring:
         enabled: true
 
   mail:
+
     host: localhost
     port: 1025
-    username: mail
-    password: mail
+    username: admin
+    password: admin
     properties:
       mail:
         smtp:

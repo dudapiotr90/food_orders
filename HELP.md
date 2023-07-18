@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'pl.dudis.food-orders' is invalid and this project uses 'pl.dudis.foodorders' instead.
+* The original package name 'com.dudis.food-orders' is invalid and this project uses 'com.dudis.foodorders' instead.
 
 # Getting Started
 
