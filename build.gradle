@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'pl.dudis'
+group = 'com.foodorders'
 version = '0.0.1'
 
 java {
