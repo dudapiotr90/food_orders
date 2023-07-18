@@ -7,7 +7,7 @@ CREATE TABLE account
     phone           VARCHAR(128)                NOT NULL,
     creation_date   TIMESTAMP WITH TIME ZONE    NOT NULL,
     status          BOOLEAN                     NOT NULL,
-    locked          BOOLEAN                     NOT NULL,
+    unlocked        BOOLEAN                     NOT NULL,
     enabled         BOOLEAN                     NOT NULL,
     address_id      INT,
     api_role_id     INT,
