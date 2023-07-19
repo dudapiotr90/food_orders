@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface AccountDAO {
     Optional<Account> findByEmail(String userEmail);
 
-//    AccountEntity mapToEntity(Account account);
-
     AccountEntity prepareAccountAccess(Account accountToPrepare, ApiRoleEntity customerRole);
 
     ConfirmationToken registerAccount(AccountEntity account, ApiRoleEntity customerRole);

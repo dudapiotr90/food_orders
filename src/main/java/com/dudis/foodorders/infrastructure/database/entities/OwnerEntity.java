@@ -29,7 +29,7 @@ public class OwnerEntity {
     private String surname;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "account_id")
     private AccountEntity account;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
