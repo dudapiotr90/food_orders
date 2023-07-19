@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.security.repository.jpa;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,12 @@ public interface AccountJpaRepository extends JpaRepository<AccountEntity,Intege
 
     Optional<AccountEntity> findByEmail(String email);
 
+    @EntityGraph(
+        type = EntityGraph.EntityGraphType.FETCH,
+        attributePaths = {
+            "roles"
+        }
+    )
     Optional<AccountEntity> findByLogin(String login);
 
     @Modifying

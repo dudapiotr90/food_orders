@@ -64,7 +64,7 @@ public class AccountEntity implements UserDetails {
     @Builder.Default
     private Boolean enabled = false;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
         name = "account_manager",
         inverseJoinColumns = @JoinColumn(name="api_role_id"),
