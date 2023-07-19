@@ -43,16 +43,6 @@ public class RegistrationController {
         return new ModelAndView("registration", model);
     }
 
-    private Map<String, ?> prepareAvailableRoles() {
-        var availableRoles = apiRoleService.findAvailableApiRoles().stream()
-            .map(roleMapper::mapToDTO)
-            .collect(Collectors.toSet());
-        return Map.of(
-            "availableRoles", availableRoles,
-            "registrationRequestDTO", RegistrationRequestDTO.builder().build()
-        );
-    }
-
     @PostMapping(value = REGISTRATION)
     public ModelAndView registerAccount(
         @Valid @ModelAttribute("registrationRequestDTO") RegistrationRequestDTO registrationRequestDTO,
@@ -70,6 +60,16 @@ public class RegistrationController {
         Account account = registrationService.confirmToken(token);
         Map<String, ?> model = prepareConfirmationDetails(account);
         return new ModelAndView("registration_confirmed", model);
+    }
+
+    private Map<String, ?> prepareAvailableRoles() {
+        var availableRoles = apiRoleService.findAvailableApiRoles().stream()
+            .map(roleMapper::mapToDTO)
+            .collect(Collectors.toSet());
+        return Map.of(
+            "availableRoles", availableRoles,
+            "registrationRequestDTO", RegistrationRequestDTO.builder().build()
+        );
     }
 
     private Map<String, ?> prepareConfirmationDetails(Account account) {

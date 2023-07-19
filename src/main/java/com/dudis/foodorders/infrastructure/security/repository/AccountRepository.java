@@ -11,7 +11,6 @@ import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRep
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountManagerJpaRepository;
 import com.dudis.foodorders.services.dao.AccountDAO;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 

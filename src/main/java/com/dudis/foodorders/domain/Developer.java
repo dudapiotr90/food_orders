@@ -7,5 +7,10 @@ import lombok.With;
 @With
 @Value
 @Builder
-public class Bill {
+public class Developer {
+
+    Integer developerId;
+    String name;
+    String surname;
+    Account account;
 }

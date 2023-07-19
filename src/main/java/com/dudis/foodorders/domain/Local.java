@@ -7,5 +7,5 @@ import lombok.With;
 @With
 @Value
 @Builder
-public class Bill {
+public class Local {
 }

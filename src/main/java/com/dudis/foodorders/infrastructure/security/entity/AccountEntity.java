@@ -72,10 +72,6 @@ public class AccountEntity implements UserDetails {
     )
     private Set<ApiRoleEntity> roles;
 
-//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    @JoinColumn(name = "api_role_id")
-//    private ApiRoleEntity role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
