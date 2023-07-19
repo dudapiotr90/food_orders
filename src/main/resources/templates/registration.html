@@ -8,15 +8,13 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
         crossorigin="anonymous">
   <title>Food Orders - Full Stomach</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" th:href="@{/css/registration.css}">
 <!--  <link rel="stylesheet" href="../static/css/registration.css">-->
 </head>
 <body>
-  <h1>Welcome in registration page!</h1>
-  <h2>Please fill in the form below</h2>
-  <script>
+<script>
     function validateForm() {
       var password = document.getElementById("password").value;
       var confirm_password = document.getElementById("confirm_password").value;
@@ -27,8 +25,14 @@
       }
       return true;
     }
-  </script>
-<!--  <form action="#" th:action="/register" th:object="${registrationRequestDTO}" method="POST"-->
+</script>
+  <header>
+    <nav>
+      <h1>Welcome in registration page!</h1>
+      <h2>Please fill in the form below</h2>
+    </nav>
+  </header>
+  <div>
   <form action="#" th:action="@{/registration}" th:object="${registrationRequestDTO}" method="POST"
         onsubmit="return validateForm();">
 
@@ -42,7 +46,7 @@
                   <label for="name" style="display: block; text-align: left;">Name:</label>
               </div>
               <div class="col-md-5">
-                <input type="text" id="name" th:field="*{userName}"  required>  <!--th:field="*{name}"-->
+                <input type="text" id="name" th:field="*{userName}"  required>
               </div>
             </div>
             <div class="row mt-2">
@@ -142,6 +146,7 @@
       </div>
     </div>
   </form>
+
   <br>
 
   <p>
@@ -149,13 +154,14 @@
 
       <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
     </div>
-  </p>
 
-  <footer id="contact">
-    <div class="contact-info">
-
+  </div>
+</p>
+  <footer id="flex-container">
+    <div class="flex-item">
+      <p>
         <i class="fas fa-envelope"></i>
-        piotrjavatestowy@gmail.com
+        <span class="email-address">piotrjavatestowy@gmail.com</span>
       </p>
       <p>
         <i class="fab fa-github"></i>
@@ -165,3 +171,4 @@
   </footer>
 </body>
 </html>
+

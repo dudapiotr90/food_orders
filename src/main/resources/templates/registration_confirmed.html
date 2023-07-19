@@ -8,19 +8,18 @@
            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
            crossorigin="anonymous">
      <title>Food Orders - Full Stomach</title>
-     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
      <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
      <link rel="stylesheet" th:href="@{/css/registration_confirm.css}">
-            <link rel="stylesheet" href="../static/css/registration_confirmed.css">
+<!--            <link rel="stylesheet" href="../static/css/registration_confirmed.css">-->
 </head>
 <body>
 <div class="container">
      <h1>Congratulations!</h1>
      <h2>Your account has been registered successfully!</h2>
      <p>
-          <h3><b><span th:if="${confirmation.userLogin}" th:text="${confirmation.userLogin}">LOGIN</span></b><br></h3>
-          You have become our:
-          <b><span th:if="${confirmation.role}" th:text="${confirmation.role}">ROLE</span></b><br>
+          Your login is:
+          <b><span th:if="${confirmation.userLogin}" th:text="${confirmation.userLogin}">LOGIN</span></b><br>
           We will contact you through your email:
           <b><span th:if="${confirmation.userEmail}" th:text="${confirmation.userEmail}">EMAIL</span></b>
           if we change any application functionalities!
@@ -36,11 +35,11 @@
                <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
           </div>
      </p>
-     <footer id="contact">
-          <div class="contact-info">
-
-               <i class="fas fa-envelope"></i>
-               piotrjavatestowy@gmail.com
+     <footer id="flex-container">
+          <div class="flex-item">
+               <p>
+                    <i class="fas fa-envelope"></i>
+                    <span class="email-address">piotrjavatestowy@gmail.com</span>
                </p>
                <p>
                     <i class="fab fa-github"></i>
