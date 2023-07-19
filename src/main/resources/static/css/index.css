@@ -3,9 +3,6 @@
     margin: 0;
 }
 
-
-
-
 body {
     background-color: #3a405f4f;
     font-size: 16px;
@@ -25,7 +22,6 @@ nav {
 }
 
 .btn {
-  /* Style przycisku bez podświetlenia */
   color:  bisque;
       padding: 40px;
       display: block;
@@ -61,7 +57,6 @@ h3 {
 
 footer {
   display: inline-block;
-  /* Inne style stopki */
   text-align: center;
   position: fixed;
   bottom: 0;
@@ -69,16 +64,35 @@ footer {
   width: 100%;
 }
 
-.contact-info {
-  display: flex;
-  grid-template-columns: auto 1fr;
-  grid-gap: 100px;
-  align-items: center;
-  justify-content: center;
 
-}
 
 a {
     text-decoration: none;
 }
+#flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   background-color: rgb(38, 37, 41);
+  height: 50px;
+}
 
+.flex-item {
+  display: flex;
+  align-items: center;
+
+      color: bisque;
+      text-align: center;
+}
+
+p {
+  margin: 0;
+}
+
+i {
+  margin-right: 5px;
+}
+
+.email-address {
+  margin-right: 200px;
+}
