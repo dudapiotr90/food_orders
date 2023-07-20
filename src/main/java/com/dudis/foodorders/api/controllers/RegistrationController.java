@@ -29,7 +29,6 @@ public class RegistrationController {
     public static final String REGISTRATION_CONFIRM = "/registration/confirm";
 
     private final ApiRoleService apiRoleService;
-    private final ApiRoleMapper apiRoleMapper;
     private final RoleMapper roleMapper;
 
     private final RegistrationService registrationService;

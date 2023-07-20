@@ -33,6 +33,9 @@ public class OrderEntity {
     @Column(name = "customer_comment")
     private String customerComment;
 
+    @Column(name = "realized")
+    private Boolean realized;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "local_id")
     private LocalEntity local;

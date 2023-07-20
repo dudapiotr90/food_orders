@@ -31,12 +31,15 @@ public class BillEntity {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name="payed")
+    private Boolean payed;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private OwnerEntity owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
 }
