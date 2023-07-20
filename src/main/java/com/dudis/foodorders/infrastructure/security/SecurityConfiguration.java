@@ -41,7 +41,6 @@ public class SecurityConfiguration {
             .authenticationProvider(authenticationProvider)
             .build();
     }
-
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {

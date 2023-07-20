@@ -33,6 +33,11 @@ public class AccountRepository implements AccountDAO {
     }
 
     @Override
+    public Optional<Account> findByLogin(String login) {
+        return accountJpaRepository.findByLogin(login).map(accountEntityMapper::mapFromEntity);
+    }
+
+    @Override
     public AccountEntity prepareAccountAccess(Account accountToPrepare, ApiRoleEntity role) {
         AccountEntity account = accountEntityMapper.mapToEntity(accountToPrepare);
         account.setRoleId(role.getApiRoleId());
