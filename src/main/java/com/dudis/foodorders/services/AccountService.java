@@ -44,4 +44,13 @@ public class AccountService {
     public void enableAccount(Integer accountId) {
         accountDAO.enableAccount(accountId);
     }
+
+    public Account findByLogin(String login) {
+        Optional<Account> account = accountDAO.findByLogin(login);
+        if (account.isEmpty()) {
+            throw new NotFoundException(
+                String.format("User with login: [%s] doesn't exists", login));
+        }
+        return account.get();
+    }
 }

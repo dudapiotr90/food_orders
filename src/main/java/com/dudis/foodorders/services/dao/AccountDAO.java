@@ -15,4 +15,6 @@ public interface AccountDAO {
     ConfirmationToken registerAccount(AccountEntity account, ApiRoleEntity customerRole);
 
     void enableAccount(Integer accountId);
+
+    Optional<Account> findByLogin(String login);
 }

@@ -28,4 +28,8 @@ public class OwnerService {
             .account(ownerAccount)
             .build();
     }
+
+    public Account findOwnerByLogin(String login) {
+        return accountService.findByLogin(login);
+    }
 }
