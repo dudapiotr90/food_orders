@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/**").hasAnyAuthority(Role.ADMIN.name())
                     .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
                     .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
+                    .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())
 //                requests.anyRequest().authenticated();
             )
             .formLogin(formLogin -> formLogin

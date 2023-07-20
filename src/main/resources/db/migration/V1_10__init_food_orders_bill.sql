@@ -4,6 +4,7 @@ CREATE TABLE bill
     bill_number     VARCHAR(64)                 NOT NULL    UNIQUE,
     date_type       TIMESTAMP WITH TIME ZONE    NOT NULL,
     price           NUMERIC(7,2)                NOT NULL,
+    payed           BOOLEAN                     NOT NULL,
     owner_id        INT                         NOT NULL,
     customer_id     INT                         NOT NULL,
     PRIMARY KEY (bill_id),

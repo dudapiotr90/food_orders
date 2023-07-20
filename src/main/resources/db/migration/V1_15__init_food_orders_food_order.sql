@@ -5,6 +5,7 @@ CREATE TABLE food_order
     received_date_time      TIMESTAMP WITH TIME ZONE        NOT NULL,
     completed_date_time     TIMESTAMP WITH TIME ZONE        NOT NULL,
     customer_comment        TEXT,
+    realized                BOOLEAN                         NOT NULL,
     local_id                INT                             NOT NULL,
     customer_id             INT                             NOT NULL,
     PRIMARY KEY (order_id),
