@@ -16,14 +16,12 @@ h1 {
 h2 {
   font-size: 22px;
   font-weight: normal;
-  text-align: center;
   margin-bottom: 20px;
 }
 
 h3 {
   font-size: 18px;
   font-weight: normal;
-  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -55,6 +53,11 @@ a {
   text-align: center;
   font-size: 24px;
   text-transform: uppercase;
+}
+.custom-button {
+    font-size: 20px; /* Adjust the font size to your preference */
+    padding: 10px 20px; /* Adjust the padding to your preference */
+    text-transform: uppercase;
 }
 
 footer {

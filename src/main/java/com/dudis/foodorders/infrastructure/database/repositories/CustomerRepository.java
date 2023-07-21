@@ -3,7 +3,7 @@ package com.dudis.foodorders.infrastructure.database.repositories;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.dudis.foodorders.api.mappers.AddressEntityMapper;
+import com.dudis.foodorders.infrastructure.database.mappers.AddressEntityMapper;
 import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;

@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
+import com.dudis.foodorders.domain.Local;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
@@ -14,6 +15,9 @@ import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRep
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -36,4 +40,11 @@ public class OwnerRepository implements OwnerDAO {
 
         return accountRepository.registerAccount(ownerToRegister.getAccount(),ownerRole);
     }
+
+    @Override
+    public Optional<Owner> findOwnerById(Integer accountId) {
+        return ownerJpaRepository.findById(accountId)
+            .map(ownerEntityMapper::mapFromEntity);
+    }
+
 }

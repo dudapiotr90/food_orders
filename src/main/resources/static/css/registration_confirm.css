@@ -53,10 +53,10 @@ a {
 }
 
 .button-container .btn {
-  width: 200px;
-  height: 75px;
+  width: 250px;
+  height: 85px;
   text-align: center;
-  font-size: 20px;
+  font-size: 24px;
   text-transform: uppercase;
 }
 
@@ -65,7 +65,7 @@ a {
   justify-content: center;
   align-items: center;
    background-color: rgb(38, 37, 41);
-  height: 50px; /* Dostosuj wysokość do własnych preferencji */
+  height: 50px;
 }
 
 .flex-item {
@@ -77,13 +77,13 @@ a {
 }
 
 p {
-  margin: 0; /* Usunięcie marginesów dla paragrafu */
+  margin: 0;
 }
 
 i {
-  margin-right: 5px; /* Dodatkowy margines między ikoną a tekstem */
+  margin-right: 5px;
 }
 
 .email-address {
-  margin-right: 200px; /* Dodatkowy margines poziomy dla adresu e-mail */
+  margin-right: 200px;
 }

@@ -14,4 +14,7 @@ public interface OwnerEntityMapper {
     @Mapping(target = "deliveries",ignore = true)
     @Mapping(target = "account",ignore = true)
     OwnerEntity mapToEntity(Owner owner);
+
+
+    Owner mapFromEntity(OwnerEntity owner);
 }

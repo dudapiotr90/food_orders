@@ -3,14 +3,14 @@ package com.dudis.foodorders.api.controllers;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import com.dudis.foodorders.services.OwnerService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.security.sasl.AuthenticationException;
 import java.util.Map;
 
 @Controller
@@ -19,6 +19,8 @@ public class OwnerController {
 
     public static final String OWNER = "/owner";
     public static final String OWNER_ID = "/owner/{id}";
+    public static final String OWNER_ADD = "/owner/{id}/add";
+
 
     private final OwnerService ownerService;
 
@@ -29,14 +31,20 @@ public class OwnerController {
     }
 
     @GetMapping(value = OWNER_ID)
-    public String getSpecificOwnerPage(@PathVariable Integer accountId,HttpServletRequest request) {
+    public ModelAndView getSpecificOwnerPage(@PathVariable Integer accountId, HttpServletRequest request) {
         if (!accountId.equals(getLoggedInAccountId(request))) {
             throw new AuthorityException("invalid PathVariable. You can access only your account!");
         }
         Map<String, ?> model = prepareOwnerData(accountId);
 
-        return "owner";
+        return new ModelAndView("owner",model);
     }
+
+//    @GetMapping(value = OWNER_ADD)
+//    public ModelAndView addLocal(ModelMap model) {
+//
+//    }
+
 
     private Integer getLoggedInAccountId(HttpServletRequest request) {
         String login = request.getRemoteUser();
@@ -45,6 +53,16 @@ public class OwnerController {
     }
 
     private Map<String, ?> prepareOwnerData(Integer accountId) {
-        return null;
+        var addedLocals = ownerService.findAllOwnerLocals(accountId);
+        var pendingDeliveries = ownerService.findPendingDeliveries(accountId);
+        var pendingBills = ownerService.findPendingBills(accountId);
+        var owner = ownerService.findOwnerById(accountId);
+
+        return Map.of(
+            "locals",addedLocals,
+            "deliveries",pendingDeliveries,
+            "bills",pendingBills,
+            "owner",owner
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.entities;
 
+import com.dudis.foodorders.domain.LocalType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,12 +28,12 @@ public class LocalEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private LocalTypeEntity type;
+    @Enumerated(EnumType.STRING)
+//    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private LocalType type;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "menu")
     private MenuEntity menu;
 
     @ManyToOne(fetch = FetchType.LAZY)
