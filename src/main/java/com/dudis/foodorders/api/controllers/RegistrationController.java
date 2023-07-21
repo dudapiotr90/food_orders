@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
-import com.dudis.foodorders.api.mappers.ApiRoleMapper;
 import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
 import com.dudis.foodorders.api.mappers.RoleMapper;
 import com.dudis.foodorders.infrastructure.security.ApiRoleService;
@@ -37,7 +36,7 @@ public class RegistrationController {
 
     @GetMapping(value = REGISTRATION)
     public ModelAndView registerAccountForm() {
-        Map<String, ?> model = prepareAvailableRoles();
+        Map<String, ?> model = prepareRegistrationData();
 
         return new ModelAndView("registration", model);
     }
@@ -61,7 +60,7 @@ public class RegistrationController {
         return new ModelAndView("registration_confirmed", model);
     }
 
-    private Map<String, ?> prepareAvailableRoles() {
+    private Map<String, ?> prepareRegistrationData() {
         var availableRoles = apiRoleService.findAvailableApiRoles().stream()
             .map(roleMapper::mapToDTO)
             .collect(Collectors.toSet());

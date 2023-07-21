@@ -9,10 +9,10 @@ CREATE TABLE food_order
     local_id                INT                             NOT NULL,
     customer_id             INT                             NOT NULL,
     PRIMARY KEY (order_id),
-    CONSTRAINT fk_order_local
+    CONSTRAINT fk_food_order_local
         FOREIGN KEY (local_id)
             REFERENCES local (local_id),
-    CONSTRAINT fk_order_customer
+    CONSTRAINT fk_food_order_customer
         FOREIGN KEY (customer_id)
             REFERENCES customer (customer_id)
 );

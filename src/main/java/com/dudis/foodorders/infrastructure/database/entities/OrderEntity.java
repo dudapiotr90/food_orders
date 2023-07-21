@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,6 +36,10 @@ public class OrderEntity {
 
     @Column(name = "realized")
     private Boolean realized;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
+    private Set<OrderItemEntity> orderItems;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "local_id")

@@ -14,9 +14,15 @@
        <link rel="stylesheet" href="../static/css/owner.css">
 </head>
 <body>
-<h1>Welcome
-     <b><span th:if="${owner.name}" th:text="${owner.name}">NAME</span></b>
-     to your Home Page</h1>
+<header>
+     <nav>
+          <h1>Welcome
+               <b><span th:if="${owner.name}" th:text="${owner.name}">NAME</span></b>
+               to your Home Page
+          </h1>
+     </nav>
+</header>
+<br>
      <div class="container">
      <h2>Here are your current locals!</h2>
      <table class="table">
@@ -33,14 +39,14 @@
                <td th:text="${local.name}"></td>
                <td th:text="${local.type}"></td>
                <td>
-                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${local.localId})}"
+                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-info">SHOW</button>
                     </form>
                </td>
                <td>
                     <form action="#"
-                          th:action="@{owner/manageLocal/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
+                          th:action="@{owner/{id}/manageLocal/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-primary">MANAGE</button>
                     </form>
@@ -51,7 +57,7 @@
      </div>
      <br>
      <div class="container">
-          <a th:href="@{/owner/{id}/add}" class="btn btn-success custom-button" role="button">Add New Local!</a>
+          <a th:href="@{/owner/{id}/add(id=${owner.ownerId})}" class="btn btn-success custom-button" role="button">Add New Local!</a>
      </div>
      <br>
      <br>
@@ -92,10 +98,9 @@
      <br>
      <br>
 
-     <p>
      <div class="button-container">
 
-          <a th:href="@{/owner/{id}/add}" class="btn btn-primary" role="button">Go back to the main page</a>
+          <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
      </div>
 
      <footer id="flex-container">
