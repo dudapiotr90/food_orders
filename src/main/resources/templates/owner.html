@@ -10,11 +10,105 @@
      <title>Food Orders - Full Stomach</title>
      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
      <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
-     <link rel="stylesheet" th:href="@{/css/registration.css}">
-     <!--  <link rel="stylesheet" href="../static/css/registration.css">-->
+     <link rel="stylesheet" th:href="@{/css/owner.css}">
+       <link rel="stylesheet" href="../static/css/owner.css">
 </head>
 <body>
-<h1>Owner Page</h1>
+<h1>Welcome
+     <b><span th:if="${owner.name}" th:text="${owner.name}">NAME</span></b>
+     to your Home Page</h1>
+     <div class="container">
+     <h2>Here are your current locals!</h2>
+     <table class="table">
+          <thead class="table-primary">
+          <tr>
+               <th>NAME</th>
+               <th>TYPE</th>
+               <th>DETAILS</th>
+               <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="local: ${locals}">
+               <td th:text="${local.name}"></td>
+               <td th:text="${local.type}"></td>
+               <td>
+                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${local.localId})}"
+                          method="GET">
+                         <button type="submit" class="btn btn-info">SHOW</button>
+                    </form>
+               </td>
+               <td>
+                    <form action="#"
+                          th:action="@{owner/manageLocal/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
+                          method="GET">
+                         <button type="submit" class="btn btn-primary">MANAGE</button>
+                    </form>
+               </td>
+          </tr>
+          </tbody>
+     </table>
+     </div>
+     <br>
+     <div class="container">
+          <a th:href="@{/owner/{id}/add}" class="btn btn-success custom-button" role="button">Add New Local!</a>
+     </div>
+     <br>
+     <br>
+     <div class="container">
+     <h2>Here are your pending bills!</h2>
+     <h3>Bills not payed = <span th:if="${bills.size()>0}" th:text="${bills.size()}"></span>COUNT</h3>
+     <table class="table">
+          <thead class="table-primary">
+          <tr>
+               <th>NUMBER</th>
+               <th>DATE</th>
+               <th>AMOUNT</th>
+               <th>CUSTOMER</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="local: ${bills}">
+               <td th:text="${bill.billNumber}"></td>
+               <td th:text="${bill.dateTime}"></td>
+               <td th:text="${bill.price}"></td>
+               <td th:text="${bill.customer}"></td>
+<!--               <td>-->
+<!--                    <form action="#" th:action="@{owner/show/{localId}(localId=${local.localId})}"-->
+<!--                          method="GET">-->
+<!--                         <button type="submit" class="btn btn-info">SHOW</button>-->
+<!--                    </form>-->
+<!--               </td>-->
+<!--               <td>-->
+<!--                    <form action="#" th:action="@{owner/manageLocal/{localId}(localId=${local.localId})}"-->
+<!--                          method="GET">-->
+<!--                         <button type="submit" class="btn btn-info">MANAGE</button>-->
+<!--                    </form>-->
+<!--               </td>-->
+          </tr>
+          </tbody>
+     </table>
+     </div>
+     <br>
+     <br>
 
+     <p>
+     <div class="button-container">
+
+          <a th:href="@{/owner/{id}/add}" class="btn btn-primary" role="button">Go back to the main page</a>
+     </div>
+
+     <footer id="flex-container">
+          <div class="flex-item">
+               <p>
+                    <i class="fas fa-envelope"></i>
+                    <span class="email-address">piotrjavatestowy@gmail.com</span>
+               </p>
+               <p>
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/dudapiotr90/food_orders" target="_blank">GitHub</a>
+               </p>
+          </div>
+     </footer>
 </body>
 </html>

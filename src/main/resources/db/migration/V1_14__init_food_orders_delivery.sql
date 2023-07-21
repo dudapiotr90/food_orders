@@ -3,7 +3,7 @@ CREATE TABLE delivery
     delivery_id     SERIAL          NOT NULL,
     delivery_number         VARCHAR(128)    NOT NULL UNIQUE,
     price                   NUMERIC(5,2)    NOT NULL,
-    status                  VARCHAR(32)     NOT NULL,
+    delivered               BOOLEAN         NOT NULL,
     local_id                INT             NOT NULL,
     owner_id                INT             NOT NULL,
     PRIMARY KEY (delivery_id),
@@ -14,3 +14,4 @@ CREATE TABLE delivery
         FOREIGN KEY (owner_id)
             REFERENCES owner (owner_id)
 );
+-- TODO check with ERD diagram

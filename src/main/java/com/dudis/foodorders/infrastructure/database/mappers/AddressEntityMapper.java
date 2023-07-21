@@ -1,4 +1,4 @@
-package com.dudis.foodorders.api.mappers;
+package com.dudis.foodorders.infrastructure.database.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

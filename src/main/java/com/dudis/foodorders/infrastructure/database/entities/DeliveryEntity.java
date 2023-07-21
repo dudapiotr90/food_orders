@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "deliveryId")
-@ToString(of = {"deliveryId", "deliveryNumber", "price", "address"})
+@ToString(of = {"deliveryId", "deliveryNumber", "price"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,8 +27,8 @@ public class DeliveryEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "delivered")
+    private Boolean delivered;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "local_id")

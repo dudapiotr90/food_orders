@@ -12,6 +12,6 @@ public interface ApiRoleMapper {
 //    @Mapping(source = "roles.ADMIN",ignore = true)
 //    ApiRoleDTO mapToDTO(ApiRole role);
 
-    @Named("mapApiRole")
-    ApiRole mapFromDTO(ApiRoleDTO apiRole);
+//    @Named("mapApiRole")
+//    ApiRole mapFromDTO(ApiRoleDTO apiRole);
 }
