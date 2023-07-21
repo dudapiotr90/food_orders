@@ -1,5 +1,6 @@
 package com.dudis.foodorders.api.controllers;
 
+import com.dudis.foodorders.api.dtos.LocalDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import com.dudis.foodorders.services.OwnerService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -37,14 +39,22 @@ public class OwnerController {
         }
         Map<String, ?> model = prepareOwnerData(accountId);
 
-        return new ModelAndView("owner",model);
+        return new ModelAndView("owner", model);
     }
 
-//    @GetMapping(value = OWNER_ADD)
-//    public ModelAndView addLocal(ModelMap model) {
-//
-//    }
+    @GetMapping(value = OWNER_ADD)
+    public String localFormPage(@PathVariable Integer accountId, ModelMap model) {
+        model.addAttribute("local", LocalDTO.builder().build());
+        model.addAttribute("ownerId", accountId);
+        return "local_form";
+    }
 
+    @PostMapping(value = OWNER_ADD)
+    public String addLocal(@PathVariable Integer accountId, ModelMap model) {
+        // TODO addLocal
+
+        return "redirect:/" + OWNER_ID; // TODO check if added local shows in table
+    }
 
     private Integer getLoggedInAccountId(HttpServletRequest request) {
         String login = request.getRemoteUser();
@@ -59,10 +69,10 @@ public class OwnerController {
         var owner = ownerService.findOwnerById(accountId);
 
         return Map.of(
-            "locals",addedLocals,
-            "deliveries",pendingDeliveries,
-            "bills",pendingBills,
-            "owner",owner
+            "locals", addedLocals,
+            "deliveries", pendingDeliveries,
+            "bills", pendingBills,
+            "owner", owner
         );
     }
 }

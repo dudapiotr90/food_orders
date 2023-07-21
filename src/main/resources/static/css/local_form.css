@@ -16,34 +16,27 @@ h1 {
 h2 {
   font-size: 22px;
   font-weight: normal;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 h3 {
   font-size: 18px;
   font-weight: normal;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 nav {
     background-color: rgb(38, 37, 41);
     color: bisque;
-    height: 70px;
-    display: flex;
-    align-items: center;
     text-align: center;
-    justify-content: center;
 }
 
 a {
     text-decoration: none;
 }
 
-.form-container {
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-}
 
 .button-container {
   display: flex;
@@ -58,9 +51,10 @@ a {
   font-size: 24px;
   text-transform: uppercase;
 }
+
 .custom-button {
-    font-size: 20px; /* Adjust the font size to your preference */
-    padding: 10px 20px; /* Adjust the padding to your preference */
+    font-size: 20px;
+    padding: 10px 20px;
     text-transform: uppercase;
 }
 
@@ -93,8 +87,9 @@ footer {
 .flex-item {
   display: flex;
   align-items: center;
-  color: bisque;
-  text-align: center;
+
+      color: bisque;
+      text-align: center;
 }
 
 p {
