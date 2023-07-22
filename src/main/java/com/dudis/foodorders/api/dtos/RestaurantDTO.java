@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RestaurantDTO {
 
-    Integer localId;
-    String name;
-    String description;
-    LocalType type;
+    private Integer localId;
+    private String name;
+    private String description;
+    private LocalType type;
 
 }

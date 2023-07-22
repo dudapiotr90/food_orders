@@ -9,11 +9,11 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class LocalService {
+public class RestaurantService {
 
     private final RestaurantDAO restaurantDAO;
-    public List<Restaurant> findOwnersLocals(Integer accountId) {
-        return restaurantDAO.findLocalsWhereOwnerId(accountId);
+    public List<Restaurant> findOwnersLocals(Integer ownerId) {
+        return restaurantDAO.findLocalsWhereOwnerId(ownerId);
     }
 
     public void addLocal(Restaurant restaurant) {

@@ -13,10 +13,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class CustomerDTO {
 
-    Integer customerId;
-    String name;
-    String surname;
-    Account account;
-    Set<OrderDTO> orders;
-    Set<BillDTO> bills;
+    private Integer customerId;
+    private String name;
+    private String surname;
+    private Account account;
+    private Set<OrderDTO> orders;
+    private Set<BillDTO> bills;
 }

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeliveryDTO {
-    String deliveryNumber;
-    BigDecimal price;
-    Boolean delivered;
+    private String deliveryNumber;
+    private BigDecimal price;
+    private Boolean delivered;
 }

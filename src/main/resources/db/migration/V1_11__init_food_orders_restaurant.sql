@@ -1,6 +1,6 @@
 CREATE TABLE restaurant
 (
-    restaurant_id        SERIAL      NOT NULL,
+    restaurant_id   SERIAL      NOT NULL,
     name            VARCHAR(32) NOT NULL,
     description     TEXT,
     local_type      VARCHAR(32) NOT NULL,

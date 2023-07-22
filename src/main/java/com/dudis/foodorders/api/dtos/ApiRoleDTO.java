@@ -6,5 +6,5 @@ import java.util.Set;
 
 @AllArgsConstructor
 public class ApiRoleDTO {
-    Set<RoleDTO> roles;
+    private Set<RoleDTO> roles;
 }

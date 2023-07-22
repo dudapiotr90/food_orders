@@ -29,23 +29,24 @@ public class RestaurantEntity {
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "local_type")
 //    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private LocalType type;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "menu")
+    @JoinColumn(name = "menu_id")
     private MenuEntity menu;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="owner_id")
     private OwnerEntity owner;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
     private Set<DeliveryEntity> deliveries;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
     private Set<DeliveryAddressEntity> deliveryAddresses;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
     private Set<OrderEntity> orders;
 }

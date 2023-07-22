@@ -1,8 +1,10 @@
 package com.dudis.foodorders.api.controllers;
 
+import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.LocalMapper;
 import com.dudis.foodorders.domain.Account;
+import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import com.dudis.foodorders.services.OwnerService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -26,45 +29,68 @@ public class OwnerController {
     public static final String OWNER = "/owner";
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
+    public static final String OWNER_SHOW = "/owner/{id}/show/{localId}";
+    public static final String OWNER_MANAGE = "/owner/{id}/manage/{localId}" ;
 
     private final OwnerService ownerService;
     private final LocalMapper localMapper;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
+        if (Objects.isNull(request.getRemoteUser())) {
+            return "redirect:/login";
+        }
         Integer loggedAccount = getLoggedInAccountId(request);
-        return "redirect:/owner/" + loggedAccount;
+        OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount);
+        return "redirect:/owner/" + owner.getOwnerId();
     }
 
     @GetMapping(value = OWNER_ID)
-    public ModelAndView getSpecificOwnerPage(@PathVariable Integer accountId, HttpServletRequest request) {
-        if (!accountId.equals(getLoggedInAccountId(request))) {
-            throw new AuthorityException("invalid PathVariable. You can access only your account!");
+    public ModelAndView getSpecificOwnerPage(@PathVariable(value = "id") Integer ownerId, HttpServletRequest request) {
+        OwnerDTO owner = ownerService.findOwnerById(ownerId);
+        Integer loggedInAccount = getLoggedInAccountId(request);
+        if (!owner.getAccountId().equals(loggedInAccount)) {
+            throw new AuthorityException(
+                String.format("invalid PathVariable. You can access only your account!. /owner/%s",
+                loggedInAccount));
         }
-        Map<String, ?> model = prepareOwnerData(accountId);
+        Map<String, ?> model = prepareOwnerData(ownerId);
 
-        return new ModelAndView("owner", model);
+        return new ModelAndView("owner_portal", model);
     }
 
     @GetMapping(value = OWNER_ADD)
-    public String localFormPage(@PathVariable Integer accountId,ModelMap model){
-        model.addAttribute("local", RestaurantDTO.builder().build());
-        model.addAttribute("ownerId", accountId);
+    public String restaurantFormPage(@PathVariable(value = "id") Integer ownerId, ModelMap model) {
+        model.addAttribute("restaurant", RestaurantDTO.builder().build());
+        model.addAttribute("ownerId", ownerId);
+        model.addAttribute("types", LocalType.values());
         return "local_form";
     }
 
     @PostMapping(value = OWNER_ADD)
-    public String addLocal(
-        @PathVariable Integer accountId,
+    public String addRestaurant(
+        @PathVariable(value = "id") Integer ownerId,
         ModelMap model,
-        @Valid @ModelAttribute("local") RestaurantDTO restaurantDTO
+        @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO
     ) {
         Restaurant restaurant = localMapper.mapFromDTO(restaurantDTO);
-        ownerService.addLocal(accountId, restaurant);
+        ownerService.addRestaurant(ownerId, restaurant);
 
 
-        return "redirect:/" + OWNER_ID; // TODO check if added local shows in table
+        return "redirect:" + OWNER + "/" + ownerId;
     }
+
+    @GetMapping(value = OWNER_SHOW)
+    public String showRestaurantDetails(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "localId") Integer localId,
+        ModelMap modelMap
+    ) {
+        // TODO after implementing CustomerController
+        return "local_details";
+    }
+
+    @GetMapping(value = OWNER_MANAGE)
 
     private Integer getLoggedInAccountId(HttpServletRequest request) {
         String login = request.getRemoteUser();
@@ -72,11 +98,11 @@ public class OwnerController {
         return ownerAccount.getAccountId();
     }
 
-    private Map<String, ?> prepareOwnerData(Integer accountId) {
-        var addedLocals = ownerService.findAllOwnerLocals(accountId);
-        var pendingDeliveries = ownerService.findPendingDeliveries(accountId);
-        var pendingBills = ownerService.findPendingBills(accountId);
-        var owner = ownerService.findOwnerById(accountId);
+    private Map<String, ?> prepareOwnerData(Integer ownerId) {
+        var addedLocals = ownerService.findAllOwnerLocals(ownerId);
+        var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
+        var pendingBills = ownerService.findPendingBills(ownerId);
+        var owner = ownerService.findOwnerById(ownerId);
 
         return Map.of(
             "locals", addedLocals,

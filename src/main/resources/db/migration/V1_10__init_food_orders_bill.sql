@@ -2,7 +2,7 @@ CREATE TABLE bill
 (
     bill_id         SERIAL                      NOT NULL,
     bill_number     VARCHAR(64)                 NOT NULL    UNIQUE,
-    date_type       TIMESTAMP WITH TIME ZONE    NOT NULL,
+    date_time       TIMESTAMP WITH TIME ZONE    NOT NULL,
     price           NUMERIC(7,2)                NOT NULL,
     payed           BOOLEAN                     NOT NULL,
     owner_id        INT                         NOT NULL,

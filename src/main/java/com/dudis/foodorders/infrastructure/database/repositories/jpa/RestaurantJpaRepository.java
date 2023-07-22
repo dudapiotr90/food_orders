@@ -14,7 +14,7 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
     @Query("""
         SELECT re FROM RestaurantEntity re 
         JOIN FETCH re.owner ow
-        WHERE ow.ownerId = :accountId
+        WHERE ow.ownerId = :ownerId
         """)
-    List<RestaurantEntity> findByOwnerId(@Param("accountId") Integer accountId);
+    List<RestaurantEntity> findByOwnerId(@Param("ownerId") Integer ownerId);
 }

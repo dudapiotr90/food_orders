@@ -40,7 +40,6 @@ public class OrderEntity {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
     private Set<OrderItemEntity> orderItems;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;

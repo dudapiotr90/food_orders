@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" th:href="@{/css/local_form.css}">
-  <link rel="stylesheet" href="../static/css/local_form.css">
+<!--  <link rel="stylesheet" href="../static/css/local_form.css">-->
 </head>
 <body>
 <header>
@@ -22,7 +22,7 @@
 </header>
 
 <div>
-  <form action="#" th:action="@{/owner/{id}/add(Id=${ownerId)}" th:object="${restaurant}" method="POST">
+  <form action="#" th:action="@{/owner/{id}/add(id=${ownerId})}" th:object="${restaurant}" method="POST">
 
     <div class="container text-center">
       <div class="row align-items-start">
@@ -43,7 +43,7 @@
               </div>
               <div class="col-md-5">
                 <select id="type" th:field="*{type}" required>
-                  <option th:each="type : ${type.values()}"
+                  <option th:each="type : ${types}"
                           th:value="${type}"
                           th:text="${type}"></option>
                 </select>
@@ -54,10 +54,10 @@
         <div class="col">
           <div class="row mt-2">
           <div class="col-md-2">
-            <label for="mechanicComment">Description:</label>
+            <label for="description">Description:</label>
           </div>
           <div class="col-md-3">
-            <textarea id="mechanicComment" th:field="*{mechanicComment}" rows="10"
+            <textarea id="description" th:field="*{description}" rows="10"
               cols="100"></textarea>
           </div>
           </div>
@@ -71,10 +71,12 @@
         <input type="submit" value="Add" class="btn btn-success custom-button">
       </div>
     </div>
+  </form>
+</div>
     <br>
     <br>
     <div class="button-container">
-      <a th:href="@{/owner/{id}(Id=${ownerId)}" class="btn btn-info button-custom" role="button"> <= Owner Home Page</a>
+      <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info button-custom" role="button"> <= Owner Home Page</a>
     </div>
     <br>
     <br>

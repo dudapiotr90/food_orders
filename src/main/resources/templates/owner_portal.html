@@ -11,7 +11,7 @@
      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
      <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
      <link rel="stylesheet" th:href="@{/css/owner.css}">
-       <link rel="stylesheet" href="../static/css/owner.css">
+<!--       <link rel="stylesheet" href="../static/css/owner.css">-->
 </head>
 <body>
 <header>
@@ -39,14 +39,14 @@
                <td th:text="${restaurant.name}"></td>
                <td th:text="${restaurant.type}"></td>
                <td>
-                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
+                    <form action="#" th:action="@{/owner/{id}/show/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-info">SHOW</button>
                     </form>
                </td>
                <td>
                     <form action="#"
-                          th:action="@{owner/{id}/manageLocal/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
+                          th:action="@{/owner/{id}/manage/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-primary">MANAGE</button>
                     </form>
