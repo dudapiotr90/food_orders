@@ -14,10 +14,10 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class BillDTO {
 
-    String billNumber;
-    OffsetDateTime dateTime;
-    BigDecimal price;
-    Boolean payed;
-    OwnerDTO owner;
-    CustomerDTO customer;
+   private String billNumber;
+   private OffsetDateTime dateTime;
+   private BigDecimal price;
+   private Boolean payed;
+   private OwnerDTO owner;
+   private CustomerDTO customer;
 }

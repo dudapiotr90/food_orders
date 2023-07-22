@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface OwnerDAO {
     ConfirmationToken registerOwner(Owner owner);
 
-    Optional<Owner> findOwnerById(Integer accountId);
+    Optional<Owner> findOwnerByAccountId(Integer accountId);
+
+    Optional<Owner> findOwnerById(Integer ownerId);
 }

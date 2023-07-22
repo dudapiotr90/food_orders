@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class LocalRequestDTO {
 
-    String name;
-    String description;
-    LocalType type;
+   private String name;
+   private String description;
+   private LocalType type;
 }

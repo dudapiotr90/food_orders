@@ -17,8 +17,8 @@ public class RestaurantRepository implements RestaurantDAO {
     private final RestaurantJpaRepository restaurantJpaRepository;
     private final RestaurantEntityMapper restaurantEntityMapper;
     @Override
-    public List<Restaurant> findLocalsWhereOwnerId(Integer accountId) {
-        return restaurantJpaRepository.findByOwnerId(accountId).stream()
+    public List<Restaurant> findLocalsWhereOwnerId(Integer ownerId) {
+        return restaurantJpaRepository.findByOwnerId(ownerId).stream()
             .map(restaurantEntityMapper::mapFromEntity)
             .toList();
     }

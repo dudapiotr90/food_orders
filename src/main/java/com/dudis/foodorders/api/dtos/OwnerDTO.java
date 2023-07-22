@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OwnerDTO {
 
-    Integer ownerId;
-    String name;
-    String surname;
+    private Integer ownerId;
+    private String name;
+    private String surname;
+    private Integer accountId;
 }

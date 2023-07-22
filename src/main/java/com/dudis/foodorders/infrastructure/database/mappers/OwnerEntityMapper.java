@@ -18,6 +18,6 @@ public interface OwnerEntityMapper {
     @Mapping(target = "restaurants",ignore = true)
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "deliveries",ignore = true)
-    @Mapping(target = "account",ignore = true)
+    @Mapping(target = "account.address",ignore = true)
     Owner mapFromEntity(OwnerEntity owner);
 }

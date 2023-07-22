@@ -26,7 +26,7 @@ public class OwnerService {
 
     private final OwnerDAO ownerDAO;
     private final AccountService accountService;
-    private final LocalService localService;
+    private final RestaurantService restaurantService;
     private final DeliveryService deliveryService;
     private final BillService billService;
 
@@ -45,8 +45,8 @@ public class OwnerService {
         return accountService.findByLogin(login);
     }
 
-    public List<RestaurantDTO> findAllOwnerLocals(Integer accountId) {
-        return localService.findOwnersLocals(accountId).stream()
+    public List<RestaurantDTO> findAllOwnerLocals(Integer ownerId) {
+        return restaurantService.findOwnersLocals(ownerId).stream()
             .map(localMapper::mapToDTO)
             .toList();
     }
@@ -63,8 +63,8 @@ public class OwnerService {
             .toList();
     }
 
-    public OwnerDTO findOwnerById(Integer accountId) {
-        Optional<Owner> owner = ownerDAO.findOwnerById(accountId);
+    public OwnerDTO findOwnerByAccountId(Integer accountId) {
+        Optional<Owner> owner = ownerDAO.findOwnerByAccountId(accountId);
         if (owner.isEmpty()) {
             throw new NotFoundException("Owner doesn't exists");
         }
@@ -72,12 +72,12 @@ public class OwnerService {
     }
 
     @Transactional
-    public void addLocal(Integer accountId, Restaurant restaurant) {
-        Optional<Owner> owner = ownerDAO.findOwnerById(accountId);
+    public void addRestaurant(Integer ownerId, Restaurant restaurant) {
+        Optional<Owner> owner = ownerDAO.findOwnerById(ownerId);
         if (owner.isEmpty()) {
             throw new NotFoundException("Owner doesn't exists");
         }
-        localService.addLocal(restaurant.withOwner(owner.get()));
+        restaurantService.addLocal(restaurant.withOwner(owner.get()));
     }
 
     private Owner buildOwner(Account ownerAccount, RegistrationRequest request) {
@@ -86,5 +86,13 @@ public class OwnerService {
             .surname(request.getUserSurname())
             .account(ownerAccount)
             .build();
+    }
+
+    public OwnerDTO findOwnerById(Integer ownerId) {
+        Optional<Owner> owner = ownerDAO.findOwnerById(ownerId);
+        if (owner.isEmpty()) {
+            throw new NotFoundException("Owner doesn't exists");
+        }
+        return ownerMapper.mapToDTO(owner.get());
     }
 }

@@ -32,12 +32,12 @@ public class OwnerEntity {
     @JoinColumn(name = "account_id")
     private AccountEntity account;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
     private Set<RestaurantEntity> restaurants;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
     private Set<BillEntity> bills;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
     private Set<DeliveryEntity> deliveries;
 }
