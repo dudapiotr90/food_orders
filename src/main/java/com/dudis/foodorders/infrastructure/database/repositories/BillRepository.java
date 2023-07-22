@@ -1,7 +1,8 @@
-package com.dudis.foodorders.infrastructure.database.repositories.jpa;
+package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.infrastructure.database.mappers.BillEntityMapper;
+import com.dudis.foodorders.infrastructure.database.repositories.jpa.BillJpaRepository;
 import com.dudis.foodorders.services.dao.BillDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

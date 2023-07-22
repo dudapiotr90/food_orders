@@ -35,18 +35,18 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="local: ${locals}">
-               <td th:text="${local.name}"></td>
-               <td th:text="${local.type}"></td>
+          <tr th:each="restaurant: ${locals}">
+               <td th:text="${restaurant.name}"></td>
+               <td th:text="${restaurant.type}"></td>
                <td>
-                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
+                    <form action="#" th:action="@{owner/{id}/show/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-info">SHOW</button>
                     </form>
                </td>
                <td>
                     <form action="#"
-                          th:action="@{owner/{id}/manageLocal/{localId}(localId=${local.localId}, id=${owner.ownerId})}"
+                          th:action="@{owner/{id}/manageLocal/{localId}(localId=${restaurant.localId}, id=${owner.ownerId})}"
                           method="GET">
                          <button type="submit" class="btn btn-primary">MANAGE</button>
                     </form>
@@ -74,19 +74,19 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="local: ${bills}">
+          <tr th:each="restaurant: ${bills}">
                <td th:text="${bill.billNumber}"></td>
                <td th:text="${bill.dateTime}"></td>
                <td th:text="${bill.price}"></td>
                <td th:text="${bill.customer}"></td>
 <!--               <td>-->
-<!--                    <form action="#" th:action="@{owner/show/{localId}(localId=${local.localId})}"-->
+<!--                    <form action="#" th:action="@{owner/show/{localId}(localId=${restaurant.localId})}"-->
 <!--                          method="GET">-->
 <!--                         <button type="submit" class="btn btn-info">SHOW</button>-->
 <!--                    </form>-->
 <!--               </td>-->
 <!--               <td>-->
-<!--                    <form action="#" th:action="@{owner/manageLocal/{localId}(localId=${local.localId})}"-->
+<!--                    <form action="#" th:action="@{owner/manageLocal/{localId}(localId=${restaurant.localId})}"-->
 <!--                          method="GET">-->
 <!--                         <button type="submit" class="btn btn-info">MANAGE</button>-->
 <!--                    </form>-->

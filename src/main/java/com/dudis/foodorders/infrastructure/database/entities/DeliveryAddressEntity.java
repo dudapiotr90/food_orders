@@ -29,6 +29,6 @@ public class DeliveryAddressEntity {
     private String street;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_id")
-    private LocalEntity local;
+    @JoinColumn(name = "restaurant_id")
+    private RestaurantEntity restaurant;
 }

@@ -1,7 +1,7 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.domain.Local;
-import com.dudis.foodorders.services.dao.LocalDAO;
+import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.services.dao.RestaurantDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 public class LocalService {
 
-    private final LocalDAO localDAO;
-    public List<Local> findOwnersLocals(Integer accountId) {
-        return localDAO.findLocalsWhereOwnerId(accountId);
+    private final RestaurantDAO restaurantDAO;
+    public List<Restaurant> findOwnersLocals(Integer accountId) {
+        return restaurantDAO.findLocalsWhereOwnerId(accountId);
+    }
+
+    public void addLocal(Restaurant restaurant) {
+        restaurantDAO.addLocal(restaurant);
     }
 }

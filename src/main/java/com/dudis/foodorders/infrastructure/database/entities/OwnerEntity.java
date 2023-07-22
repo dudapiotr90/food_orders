@@ -33,7 +33,7 @@ public class OwnerEntity {
     private AccountEntity account;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
-    private Set<LocalEntity> locals;
+    private Set<RestaurantEntity> restaurants;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "owner")
     private Set<BillEntity> bills;

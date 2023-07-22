@@ -10,9 +10,9 @@ import java.util.Set;
 @With
 @Value
 @Builder
-public class Local {
+public class Restaurant {
 
-    Integer localId;
+    Integer restaurantId;
     String name;
     String description;
     LocalType type;

@@ -1,7 +1,7 @@
 package com.dudis.foodorders.api.mappers;
 
-import com.dudis.foodorders.api.dtos.LocalDTO;
-import com.dudis.foodorders.domain.Local;
+import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.domain.Restaurant;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -9,5 +9,7 @@ import org.mapstruct.ReportingPolicy;
 public interface LocalMapper {
 
 
-    LocalDTO mapToDTO(Local local);
+    RestaurantDTO mapToDTO(Restaurant restaurant);
+
+    Restaurant mapFromDTO(RestaurantDTO restaurantDTO);
 }

@@ -6,12 +6,12 @@ CREATE TABLE food_order
     completed_date_time     TIMESTAMP WITH TIME ZONE        NOT NULL,
     customer_comment        TEXT,
     realized                BOOLEAN                         NOT NULL,
-    local_id                INT                             NOT NULL,
+    restaurant_id           INT                             NOT NULL,
     customer_id             INT                             NOT NULL,
     PRIMARY KEY (order_id),
-    CONSTRAINT fk_food_order_local
-        FOREIGN KEY (local_id)
-            REFERENCES local (local_id),
+    CONSTRAINT fk_food_order_restaurant
+        FOREIGN KEY (restaurant_id)
+            REFERENCES restaurant (restaurant_id),
     CONSTRAINT fk_food_order_customer
         FOREIGN KEY (customer_id)
             REFERENCES customer (customer_id)

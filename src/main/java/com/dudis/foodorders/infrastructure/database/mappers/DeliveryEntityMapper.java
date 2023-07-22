@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DeliveryEntityMapper {
 
-    @Mapping(target = "local",ignore = true)
+    @Mapping(target = "restaurant",ignore = true)
     @Mapping(target = "owner",ignore = true)
     Delivery mapFromEntity(DeliveryEntity delivery);
 }

@@ -31,8 +31,8 @@ public class DeliveryEntity {
     private Boolean delivered;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_id")
-    private LocalEntity local;
+    @JoinColumn(name = "restaurant_id")
+    private RestaurantEntity restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")

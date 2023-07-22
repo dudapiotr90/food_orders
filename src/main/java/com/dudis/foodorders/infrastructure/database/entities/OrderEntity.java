@@ -42,8 +42,8 @@ public class OrderEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "local_id")
-    private LocalEntity local;
+    @JoinColumn(name = "restaurant_id")
+    private RestaurantEntity restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
