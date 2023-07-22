@@ -1,7 +1,5 @@
 package com.dudis.foodorders.domain;
 
-import com.dudis.foodorders.infrastructure.database.entities.LocalEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -17,6 +15,6 @@ public class Delivery {
     String deliveryNumber;
     BigDecimal price;
     Boolean delivered;
-    Local local;
+    Restaurant restaurant;
     Owner owner;
 }

@@ -15,7 +15,7 @@ public class Owner {
     String name;
     String surname;
     Account account;
-    Set<Local> locals;
+    Set<Restaurant> restaurants;
     Set<Bill> bills;
     Set<Delivery> deliveries;
 }

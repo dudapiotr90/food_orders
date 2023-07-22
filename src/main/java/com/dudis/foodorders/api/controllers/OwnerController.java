@@ -1,14 +1,18 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.LocalDTO;
+import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.mappers.LocalMapper;
 import com.dudis.foodorders.domain.Account;
+import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import com.dudis.foodorders.services.OwnerService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,8 +27,8 @@ public class OwnerController {
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
 
-
     private final OwnerService ownerService;
+    private final LocalMapper localMapper;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
@@ -43,15 +47,21 @@ public class OwnerController {
     }
 
     @GetMapping(value = OWNER_ADD)
-    public String localFormPage(@PathVariable Integer accountId, ModelMap model) {
-        model.addAttribute("local", LocalDTO.builder().build());
+    public String localFormPage(@PathVariable Integer accountId,ModelMap model){
+        model.addAttribute("local", RestaurantDTO.builder().build());
         model.addAttribute("ownerId", accountId);
         return "local_form";
     }
 
     @PostMapping(value = OWNER_ADD)
-    public String addLocal(@PathVariable Integer accountId, ModelMap model) {
-        // TODO addLocal
+    public String addLocal(
+        @PathVariable Integer accountId,
+        ModelMap model,
+        @Valid @ModelAttribute("local") RestaurantDTO restaurantDTO
+    ) {
+        Restaurant restaurant = localMapper.mapFromDTO(restaurantDTO);
+        ownerService.addLocal(accountId, restaurant);
+
 
         return "redirect:/" + OWNER_ID; // TODO check if added local shows in table
     }

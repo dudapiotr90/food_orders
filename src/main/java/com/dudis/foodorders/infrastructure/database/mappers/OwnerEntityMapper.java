@@ -9,12 +9,15 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OwnerEntityMapper {
 
-    @Mapping(target = "locals",ignore = true)
+    @Mapping(target = "restaurants",ignore = true)
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "deliveries",ignore = true)
     @Mapping(target = "account",ignore = true)
     OwnerEntity mapToEntity(Owner owner);
 
-
+    @Mapping(target = "restaurants",ignore = true)
+    @Mapping(target = "bills",ignore = true)
+    @Mapping(target = "deliveries",ignore = true)
+    @Mapping(target = "account",ignore = true)
     Owner mapFromEntity(OwnerEntity owner);
 }
