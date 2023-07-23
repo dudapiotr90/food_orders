@@ -1,21 +1,19 @@
 package com.dudis.foodorders.api.dtos;
 
-import com.dudis.foodorders.domain.LocalType;
+import com.dudis.foodorders.domain.Food;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestaurantDTO {
+public class FoodTypeDTO {
 
-    private Integer restaurantId;
+    private Integer foodTypeId;
     private String name;
-    private String description;
-    private LocalType type;
-    private MenuDTO menuDTO;
-
+    private Set<Food> foods;
 }
