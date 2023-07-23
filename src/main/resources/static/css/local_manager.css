@@ -1,0 +1,110 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+body {
+    background-color: #3a405f4f;
+    font-size: 16px;
+}
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+nav {
+    background-color: rgb(38, 37, 41);
+    color: bisque;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container .btn {
+  width: 250px;
+  height: 85px;
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+.custom-button {
+    font-size: 20px; /* Adjust the font size to your preference */
+    padding: 10px 20px; /* Adjust the padding to your preference */
+    text-transform: uppercase;
+}
+
+footer {
+  display: inline-block;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.contact-info {
+  display: flux;
+  grid-template-columns: auto 1fr;
+  grid-gap: 100px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   background-color: rgb(38, 37, 41);
+  height: 50px;
+}
+
+.flex-item {
+  display: flex;
+  align-items: center;
+  color: bisque;
+  text-align: center;
+}
+
+p {
+  margin: 0;
+}
+
+i {
+  margin-right: 5px;
+}
+
+.email-address {
+  margin-right: 200px;
+}

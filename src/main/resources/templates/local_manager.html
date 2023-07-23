@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+        crossorigin="anonymous">
+  <title>Food Orders - Full Stomach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" th:href="@{/css/local_form.css}">
+         <link rel="stylesheet" href="../static/css/local_form.css">
+</head>
+
+<body>
+<header>
+  <nav>
+    <h1>Welcome to Local Manager!</h1>
+    <h2>You can organize your restaurant
+      <span th:if="${restaurant.name}" th:text="${restaurant.name}">[restaurant name]</span> here!</h2>
+  </nav>
+</header>
+<br>
+  <div class="container">
+    <h2>Current Menu</h2>
+    <table class="table">
+      <thead class="table-primary">
+      <tr>
+        <th>NAME</th>
+        <th>TYPE</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="food: ${menu.foods}">
+        <td th:text="${food.name}"></td>
+        <td th:text="${food.foodType.name}"></td>
+        <td th:text="${food.description}"></td>
+        <td th:text="${food.price}"></td>
+        <td>
+          <form action="#"
+                th:action="@{/owner/{id}/show/{restaurantId}/deleteFood/{name}
+                (restaurantId=${restaurant.restaurantId}, id=${owner.ownerId}, name=${food.name})}"
+                th:method="DELETE">
+            <button type="submit" class="btn btn-danger">DELETE</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+<br>
+  <div class="container">
+    <form action="#"
+          th:action="@{/owner/{id}/show/{restaurantId}/updateFood(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"
+          th:method="PUT"
+          th:object="${updateFood}">
+      <div class="form-group">
+        NAME: <input type="text" th:field="*{employeeId}"/>
+        TYPE: <input type="text" th:field="*{name}"/>
+        PRICE: <input type="text" th:field="*{salary}"/>
+
+          <br>
+          <br>
+        DESCRIPTION:
+          <div>
+            <textarea id="description" th:field="*{description}" rows="7"
+                      cols="100"></textarea>
+          </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="submit" value="Update menu position" class="btn btn-success custom-button"/>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <a th:href="@{/owner/{id}/add(id=${owner.ownerId})}" class="btn btn-success custom-button" role="button"></a>
+  </div>
+<br>
+
+  <div class="container">
+    <h2>Delivery addresses</h2>
+    <table class="table">
+      <thead class="table-primary">
+      <tr>
+        <th>NAME</th>
+        <th>TYPE</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="food: ${menu.foods}">
+        <td th:text="${food.name}"></td>
+        <td th:text="${food.foodType.name}"></td>
+        <td th:text="${food.description}"></td>
+        <td th:text="${food.price}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+<br>
+<div class="button-container">
+  <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info button-custom" role="button"> <= Owner Home Page</a>
+</div>
+<br>
+<br>
+<div class="button-container">
+
+  <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
+</div>
+
+<footer id="flex-container">
+  <div class="flex-item">
+    <p>
+      <i class="fas fa-envelope"></i>
+      <span class="email-address">piotrjavatestowy@gmail.com</span>
+    </p>
+    <p>
+      <i class="fab fa-github"></i>
+      <a href="https://github.com/dudapiotr90/food_orders" target="_blank">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -2,15 +2,13 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.database.mappers.AccountEntityMapper;
+import com.dudis.foodorders.infrastructure.security.entity.AccountEntityMapper;
 import com.dudis.foodorders.services.dao.ConfirmationTokenDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

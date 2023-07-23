@@ -1,7 +1,5 @@
 package com.dudis.foodorders.domain;
 
-import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
-import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -15,6 +13,6 @@ public class Menu {
     Integer menuId;
     String menuName;
     String description;
-    Restaurant local;
+    Restaurant restaurant;
     Set<Food> foods;
 }
