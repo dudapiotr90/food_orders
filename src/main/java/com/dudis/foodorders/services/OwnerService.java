@@ -45,7 +45,7 @@ public class OwnerService {
         return accountService.findByLogin(login);
     }
 
-    public List<RestaurantDTO> findAllOwnerLocals(Integer ownerId) {
+    public List<RestaurantDTO> findAllOwnerRestaurants(Integer ownerId) {
         return restaurantService.findOwnersLocals(ownerId).stream()
             .map(localMapper::mapToDTO)
             .toList();

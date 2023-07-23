@@ -2,7 +2,7 @@ package com.dudis.foodorders.infrastructure.security.repository;
 
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.database.mappers.AccountEntityMapper;
+import com.dudis.foodorders.infrastructure.security.entity.AccountEntityMapper;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import com.dudis.foodorders.infrastructure.security.entity.AccountManagerEntity;
 import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;

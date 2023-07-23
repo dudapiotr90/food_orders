@@ -28,7 +28,7 @@ public class MenuEntity {
     private String description;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "menu")
-    private RestaurantEntity local;
+    private RestaurantEntity restaurant;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "menu")
     private Set<FoodEntity> foods;

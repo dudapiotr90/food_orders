@@ -29,8 +29,8 @@ public class OwnerController {
     public static final String OWNER = "/owner";
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
-    public static final String OWNER_SHOW = "/owner/{id}/show/{localId}";
-    public static final String OWNER_MANAGE = "/owner/{id}/manage/{localId}" ;
+    public static final String OWNER_SHOW = "/owner/{id}/show/{restaurantId}";
+
 
     private final OwnerService ownerService;
     private final LocalMapper localMapper;
@@ -83,14 +83,13 @@ public class OwnerController {
     @GetMapping(value = OWNER_SHOW)
     public String showRestaurantDetails(
         @PathVariable(value = "id") Integer ownerId,
-        @PathVariable(value = "localId") Integer localId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
         ModelMap modelMap
     ) {
         // TODO after implementing CustomerController
         return "local_details";
     }
 
-    @GetMapping(value = OWNER_MANAGE)
 
     private Integer getLoggedInAccountId(HttpServletRequest request) {
         String login = request.getRemoteUser();
@@ -98,14 +97,15 @@ public class OwnerController {
         return ownerAccount.getAccountId();
     }
 
+
     private Map<String, ?> prepareOwnerData(Integer ownerId) {
-        var addedLocals = ownerService.findAllOwnerLocals(ownerId);
+        var addedRestaurants = ownerService.findAllOwnerRestaurants(ownerId);
         var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
         var pendingBills = ownerService.findPendingBills(ownerId);
         var owner = ownerService.findOwnerById(ownerId);
 
         return Map.of(
-            "locals", addedLocals,
+            "restaurants", addedRestaurants,
             "deliveries", pendingDeliveries,
             "bills", pendingBills,
             "owner", owner

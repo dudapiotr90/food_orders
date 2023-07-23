@@ -12,7 +12,7 @@ public interface RestaurantEntityMapper {
     @Mapping(target = "deliveries", ignore = true)
     @Mapping(target = "deliveryAddresses", ignore = true)
     @Mapping(target = "orders", ignore = true)
-    @Mapping(target = "menu", ignore = true)
+//    @Mapping(target = "menu", ignore = true)
     Restaurant mapFromEntity(RestaurantEntity local);
 
 //    @Mapping(target = "owner", ignore = true)
