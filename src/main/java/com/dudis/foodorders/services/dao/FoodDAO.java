@@ -9,4 +9,6 @@ public interface FoodDAO {
     void saveFood(Food food, Menu menu);
 
     void updateFood(Food foodId);
+
+    void deleteFood(Integer foodId);
 }

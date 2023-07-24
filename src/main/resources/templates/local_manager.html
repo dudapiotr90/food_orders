@@ -30,7 +30,7 @@
 </header>
 <br>
   <div class="container">
-    <h3>Current Menu</h3>
+    <h3><b>Current Menu</b></h3>
     <table class="table">
       <thead class="table-primary">
       <tr>
@@ -70,7 +70,7 @@
 <br>
 
   <div class="container">
-    <h3>Delivery addresses</h3>
+    <h3><b>Delivery addresses</b></h3>
     <table class="table">
       <thead class="table-primary">
       <tr>
@@ -109,7 +109,7 @@
 <br>
 
 <div class="container">
-  <h3>Orders</h3>
+  <h3><b>Orders</b></h3>
   <table class="table">
     <thead class="table-primary">
     <tr>
@@ -140,18 +140,12 @@
               <td th:text="${orderItem.quantity}"></td>
             </tr>
           </table>
-<!--          &lt;!&ndash; Add the details you want to show for each order here &ndash;&gt;-->
-<!--          <p>Order ID: <span th:text="${order.orderId}"></span></p>-->
-<!--          &lt;!&ndash; Add more details as needed &ndash;&gt;-->
         </div>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-
-
-
 <br>
 <div class="button-container">
   <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info" role="button"> <= Owner Home Page</a>

@@ -25,4 +25,8 @@ public class FoodService {
         Food foodToUpdate = menuMapper.mapFoodFromDTO(foodDTO);
         foodDAO.updateFood(foodToUpdate);
     }
+
+    public void deleteFood(Integer foodId) {
+        foodDAO.deleteFood(foodId);
+    }
 }

@@ -6,6 +6,7 @@ import com.dudis.foodorders.services.MenuService;
 import com.dudis.foodorders.services.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ public class RestaurantController {
     public static final String MODIFY_MENU = "/manage/{restaurantId}/modifyMenu";
     public static final String ADD_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/add";
     public static final String UPDATE_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/updateFood";
+    public static final String DELETE_MENU_POSITION = "/manage/{restaurantId}/deleteFood/{foodId}";
+    public static final String MANAGE_PAGE = MANAGE + "/page/{pageNum}";
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
@@ -28,19 +31,10 @@ public class RestaurantController {
     public String manageRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        ModelMap modelMap
+        Model modelMap
     ) {
-        RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
-        MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
-        DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
-        OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
+        return getPaginated(ownerId, restaurantId, modelMap, 1, "id", "asc");
 
-        modelMap.addAttribute("ownerId", ownerId);
-        modelMap.addAttribute("restaurant", restaurantDTO);
-        modelMap.addAttribute("menu", menuDTO);
-        modelMap.addAttribute("deliveries", deliveriesDTO);
-        modelMap.addAttribute("orders", ordersDTO);
-        return "local_manager";
     }
 
     @GetMapping(MODIFY_MENU)
@@ -73,6 +67,30 @@ public class RestaurantController {
     ) {
         foodService.updateMenuPosition(foodDTO);
         return restaurantManagerPortal(ownerId, restaurantId);
+    }
+
+    @DeleteMapping(DELETE_MENU_POSITION)
+    public String removeMenuPosition(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @PathVariable(value = "foodId") Integer foodId
+    ) {
+        foodService.deleteFood(foodId);
+        return restaurantManagerPortal(ownerId, restaurantId);
+    }
+    @GetMapping(value = MANAGE_PAGE)
+    private String getPaginated(Integer ownerId, Integer restaurantId, Model modelMap, int i, String id, String asc) {
+        RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
+        MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
+        DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
+        OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
+
+        modelMap.addAttribute("ownerId", ownerId);
+        modelMap.addAttribute("restaurant", restaurantDTO);
+        modelMap.addAttribute("menu", menuDTO);
+        modelMap.addAttribute("deliveries", deliveriesDTO);
+        modelMap.addAttribute("orders", ordersDTO);
+        return "local_manager";
     }
 
     private static String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {

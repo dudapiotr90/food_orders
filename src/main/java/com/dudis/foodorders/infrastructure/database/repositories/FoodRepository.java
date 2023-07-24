@@ -38,4 +38,9 @@ public class FoodRepository implements FoodDAO {
         foodJpaRepository.save(existingFood);
     }
 
+    @Override
+    public void deleteFood(Integer foodId) {
+        foodJpaRepository.deleteById(foodId);
+    }
+
 }
