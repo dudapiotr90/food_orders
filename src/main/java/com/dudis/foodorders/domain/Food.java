@@ -14,6 +14,6 @@ public class Food {
     String name;
     String description;
     BigDecimal price;
-    FoodType foodType;
+    String foodType;
     Menu menu;
 }
