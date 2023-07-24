@@ -4,7 +4,7 @@ CREATE TABLE restaurant
     name            VARCHAR(32) NOT NULL,
     description     TEXT,
     local_type      VARCHAR(32) NOT NULL,
-    menu_id         INT,
+    menu_id         INT         NOT NULL,
     owner_id        INT         NOT NULL,
     PRIMARY KEY (restaurant_id),
     CONSTRAINT fk_restaurant_owner

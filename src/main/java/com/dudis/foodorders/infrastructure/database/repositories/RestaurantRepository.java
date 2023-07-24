@@ -44,9 +44,4 @@ public class RestaurantRepository implements RestaurantDAO {
         return restaurantJpaRepository.findMenuByRestaurantId(restaurantId)
             .map(menuEntityMapper::mapFromEntity);
     }
-
-    @Override
-    public List<DeliveryAddress> getDeliveryAddresses(Integer restaurantId) {
-        return restaurantJpaRepository.findDeliveriesByRestaurantId(restaurantId);
-    }
 }

@@ -21,14 +21,11 @@ public class MenuEntity {
     @Column(name = "menu_id")
     private Integer menuId;
 
-    @Column(name = "menu_name")
+    @Column(name = "name")
     private String menuName;
 
     @Column(name = "description")
     private String description;
-
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "menu")
-    private RestaurantEntity restaurant;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "menu")
     private Set<FoodEntity> foods;

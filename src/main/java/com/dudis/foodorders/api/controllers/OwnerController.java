@@ -2,7 +2,7 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
-import com.dudis.foodorders.api.mappers.LocalMapper;
+import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
@@ -33,7 +33,7 @@ public class OwnerController {
 
 
     private final OwnerService ownerService;
-    private final LocalMapper localMapper;
+    private final RestaurantMapper restaurantMapper;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
@@ -73,21 +73,10 @@ public class OwnerController {
         ModelMap model,
         @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO
     ) {
-        Restaurant restaurant = localMapper.mapFromDTO(restaurantDTO);
-        ownerService.addRestaurant(ownerId, restaurant);
+        ownerService.addRestaurant(ownerId, restaurantDTO);
 
 
         return "redirect:" + OWNER + "/" + ownerId;
-    }
-
-    @GetMapping(value = OWNER_SHOW)
-    public String showRestaurantDetails(
-        @PathVariable(value = "id") Integer ownerId,
-        @PathVariable(value = "restaurantId") Integer restaurantId,
-        ModelMap modelMap
-    ) {
-        // TODO after implementing CustomerController
-        return "local_details";
     }
 
 

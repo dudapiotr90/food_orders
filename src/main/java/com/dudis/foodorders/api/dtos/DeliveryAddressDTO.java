@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeliveryAddressDTO {
 
+    Integer deliveryId;
     String city;
     String postalCode;
     String street;

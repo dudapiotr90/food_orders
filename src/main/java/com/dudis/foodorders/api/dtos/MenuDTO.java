@@ -13,6 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class MenuDTO {
 
+    private String menuName;
+    private String menuDescription;
     Set<FoodDTO> foods;
 
 }

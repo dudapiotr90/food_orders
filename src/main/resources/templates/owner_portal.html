@@ -79,18 +79,6 @@
                <td th:text="${bill.dateTime}"></td>
                <td th:text="${bill.price}"></td>
                <td th:text="${bill.customer}"></td>
-<!--               <td>-->
-<!--                    <form action="#" th:action="@{owner/show/{localId}(localId=${restaurant.localId})}"-->
-<!--                          method="GET">-->
-<!--                         <button type="submit" class="btn btn-info">SHOW</button>-->
-<!--                    </form>-->
-<!--               </td>-->
-<!--               <td>-->
-<!--                    <form action="#" th:action="@{owner/manageLocal/{localId}(localId=${restaurant.localId})}"-->
-<!--                          method="GET">-->
-<!--                         <button type="submit" class="btn btn-info">MANAGE</button>-->
-<!--                    </form>-->
-<!--               </td>-->
           </tr>
           </tbody>
      </table>
@@ -102,6 +90,7 @@
 
           <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
      </div>
+     <br>
 
      <footer id="flex-container">
           <div class="flex-item">

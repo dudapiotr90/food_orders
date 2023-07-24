@@ -13,7 +13,7 @@ public interface OffsetDateTimeMapper {
 
     DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    @Named("mapOffsetDateTimeToString")
+    @Named(value = "mapOffsetDateTimeToString")
     default String mapOffsetDateTimeToString(OffsetDateTime offsetDateTime) {
         return Optional.ofNullable(offsetDateTime)
             .map(odt -> offsetDateTime.atZoneSameInstant(ZoneOffset.UTC))
