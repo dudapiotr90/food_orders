@@ -18,4 +18,5 @@ public class RestaurantDTO {
     private LocalType type;
     private MenuDTO menuDTO;
 
+
 }

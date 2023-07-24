@@ -12,16 +12,16 @@ import org.mapstruct.ReportingPolicy;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MenuMapper {
-
-    @Mapping(target = "foods",source = "foods",qualifiedByName = "mapFoods")
+    @Mapping(target = "foods", source = "foods", qualifiedByName = "mapFoods")
     MenuDTO mapToDTO(Menu menu);
 
-    @Named("mapFood")
+    @Named("mapFoods")
     default Set<FoodDTO> mapFoods(Set<Food> foods) {
         return foods.stream().map(this::mapFood).collect(Collectors.toSet());
     }
 
     FoodDTO mapFood(Food food);
+    Food mapFoodFromDTO(FoodDTO food);
 }

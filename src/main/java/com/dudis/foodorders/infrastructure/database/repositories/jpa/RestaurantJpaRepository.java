@@ -28,9 +28,4 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         """)
     Optional<MenuEntity> findMenuByRestaurantId(@Param("restaurantId") Integer restaurantId);
 
-    @Query("""
-        SELECT re FROM RestaurantEntity re
-        JOIN FETCH 
-        """)
-    List<DeliveryAddress> findDeliveriesByRestaurantId(Integer restaurantId);
 }

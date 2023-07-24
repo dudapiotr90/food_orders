@@ -13,7 +13,7 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
 
 
     @Query("""
-        SELECT del FORM DeliveryAddressEntity del
+        SELECT del FROM DeliveryAddressEntity del
         JOIN FETCH del.restaurant res
         WHERE res.restaurantId = :restaurantId
         """)

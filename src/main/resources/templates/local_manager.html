@@ -10,24 +10,31 @@
   <title>Food Orders - Full Stomach</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" th:href="@{/css/local_form.css}">
-         <link rel="stylesheet" href="../static/css/local_form.css">
+  <link rel="stylesheet" th:href="@{/css/local_manager.css}">
+         <link rel="stylesheet" href="../static/css/local_manager.css">
 </head>
+<script>
+  function toggleDetails(button) {
+    const detailsSection = button.nextElementSibling;
+    detailsSection.style.display = detailsSection.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 
 <body>
 <header>
   <nav>
-    <h1>Welcome to Local Manager!</h1>
-    <h2>You can organize your restaurant
-      <span th:if="${restaurant.name}" th:text="${restaurant.name}">[restaurant name]</span> here!</h2>
+    <h1>You can organize your restaurant
+      <span th:if="${restaurant.name}" th:text="${restaurant.name}">[restaurant name]</span> here!
+    </h1>
   </nav>
 </header>
 <br>
   <div class="container">
-    <h2>Current Menu</h2>
+    <h3>Current Menu</h3>
     <table class="table">
       <thead class="table-primary">
       <tr>
+        <th>ID</th>
         <th>NAME</th>
         <th>TYPE</th>
         <th>DESCRIPTION</th>
@@ -37,14 +44,15 @@
       </thead>
       <tbody>
       <tr th:each="food: ${menu.foods}">
+        <td th:text="${food.foodId}"></td>
         <td th:text="${food.name}"></td>
-        <td th:text="${food.foodType.name}"></td>
+        <td th:text="${food.foodType}"></td>
         <td th:text="${food.description}"></td>
         <td th:text="${food.price}"></td>
         <td>
           <form action="#"
-                th:action="@{/owner/{id}/show/{restaurantId}/deleteFood/{name}
-                (restaurantId=${restaurant.restaurantId}, id=${owner.ownerId}, name=${food.name})}"
+                th:action="@{/owner/{id}/show/{restaurantId}/deleteFood/{foodId}
+                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodId=${food.foodId})}"
                 th:method="DELETE">
             <button type="submit" class="btn btn-danger">DELETE</button>
           </form>
@@ -54,71 +62,136 @@
     </table>
   </div>
 <br>
-  <div class="container">
-    <form action="#"
-          th:action="@{/owner/{id}/show/{restaurantId}/updateFood(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"
-          th:method="PUT"
-          th:object="${updateFood}">
-      <div class="form-group">
-        NAME: <input type="text" th:field="*{employeeId}"/>
-        TYPE: <input type="text" th:field="*{name}"/>
-        PRICE: <input type="text" th:field="*{salary}"/>
-
-          <br>
-          <br>
-        DESCRIPTION:
-          <div>
-            <textarea id="description" th:field="*{description}" rows="7"
-                      cols="100"></textarea>
-          </div>
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="submit" value="Update menu position" class="btn btn-success custom-button"/>
-      </div>
-    </form>
-  </div>
-
-  <div class="container">
-    <a th:href="@{/owner/{id}/add(id=${owner.ownerId})}" class="btn btn-success custom-button" role="button"></a>
-  </div>
+<div class="container">
+  <a th:href="@{/owner/{id}/show/{restaurantId}/modifyMenu(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+     class="btn btn-success custom-button" role="button">Modify Menu</a>
+</div>
 <br>
+<br>
+<!--<div class="container">-->
+<!--  <h3>Update Menu</h3>-->
+<!--</div>-->
+<!--  <div class="container">-->
+<!--    <form action="#"-->
+<!--          th:action="@{/owner/{id}/show/{restaurantId}/updateFood(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"-->
+<!--          th:method="PUT"-->
+<!--          th:object="${updateFood}">-->
+<!--      <div class="form-group">-->
+<!--        ID: <input type="text" th:field="*{foodId}"/>-->
+<!--        NAME: <input type="text" th:field="*{name}"/>-->
+<!--        TYPE: <input type="text" th:field="*{foodType.name}"/>-->
+<!--        PRICE: <input type="text" th:field="*{price}"/>-->
+
+<!--        <br>-->
+<!--        <br>-->
+<!--        DESCRIPTION:-->
+<!--          <div>-->
+<!--            <textarea id="description" th:field="*{description}" rows="7"-->
+<!--                      cols="100"></textarea>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--      <br>-->
+<!--      <div class="form-group">-->
+<!--        <input type="submit" value="Update menu position" class="btn btn-success custom-button"/>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--<br>-->
+<!--<br>-->
 
   <div class="container">
-    <h2>Delivery addresses</h2>
+    <h3>Delivery addresses</h3>
     <table class="table">
       <thead class="table-primary">
       <tr>
-        <th>NAME</th>
-        <th>TYPE</th>
-        <th>DESCRIPTION</th>
-        <th>PRICE</th>
+        <th>ID</th>
+        <th>CITY</th>
+        <th>POSTAL CODE</th>
+        <th>STREET</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="food: ${menu.foods}">
-        <td th:text="${food.name}"></td>
-        <td th:text="${food.foodType.name}"></td>
-        <td th:text="${food.description}"></td>
-        <td th:text="${food.price}"></td>
+      <tr th:each="delivery: ${deliveries.deliveries}">
+        <td th:text="${delivery.deliveryId}"></td>
+        <td th:text="${delivery.city}"></td>
+        <td th:text="${delivery.postalCode}"></td>
+        <td th:text="${delivery.street}"></td>
+        <td>
+          <form action="#"
+                th:action="@{/owner/{id}/show/{restaurantId}/deleteAddress/{deliveryId}
+                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryId})}"
+                th:method="DELETE">
+            <button type="submit" class="btn btn-danger">DELETE</button>
+          </form>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
+  <br>
+  <div class="container">
+    <a th:href="@{/owner/{id}/show/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+       class="btn btn-success custom-button" role="button">Add Delivery Address</a>
+  </div>
 
+<br>
+<br>
+
+<div class="container">
+  <h3>Orders</h3>
+  <table class="table">
+    <thead class="table-primary">
+    <tr>
+      <th>ORDER NUMBER</th>
+      <th>ORDERED</th>
+      <th>COMPLETED</th>
+      <th>COMMENT</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order: ${orders.orders}">
+      <td th:text="${order.orderNumber}"></td>
+      <td th:text="${order.receivedDateTime}"></td>
+      <td th:text="${order.completedDateTime}"></td>
+      <td th:text="${order.customerComment}"></td>
+      <td>
+        <button class="btn btn-primary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+        <div class="order-details" style="display: none;">
+          <table class="table">
+            <tr>
+              <th>FOOD</th>
+              <th>QUANTITY</th>
+            </tr>
+            <tbody>
+            <tr th:each="orderItem: ${order.orderItems}">
+              <td th:text="${orderItem.food.name}"></td>
+              <td th:text="${orderItem.quantity}"></td>
+            </tr>
+          </table>
+<!--          &lt;!&ndash; Add the details you want to show for each order here &ndash;&gt;-->
+<!--          <p>Order ID: <span th:text="${order.orderId}"></span></p>-->
+<!--          &lt;!&ndash; Add more details as needed &ndash;&gt;-->
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 
 
 <br>
 <div class="button-container">
-  <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info button-custom" role="button"> <= Owner Home Page</a>
+  <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info" role="button"> <= Owner Home Page</a>
 </div>
 <br>
 <br>
 <div class="button-container">
-
-  <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
+  <a th:href="@{/}" class="btn btn-primary fixed" role="button">Go back to the main page</a>
 </div>
+<br>
 
 <footer id="flex-container">
   <div class="flex-item">

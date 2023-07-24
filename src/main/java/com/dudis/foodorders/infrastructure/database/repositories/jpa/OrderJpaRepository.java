@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OrderJpaRepository extends JpaRepository<OrderEntity,Integer> {
     @Query("""
-        SELECT o FORM OrderEntity o
+        SELECT o FROM OrderEntity o
         JOIN FETCH o.restaurant res
         WHERE res.restaurantId = :restaurantId
         """)

@@ -12,14 +12,15 @@ import org.mapstruct.Named;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = OffsetDateTimeMapper.class)
 public interface OrderMapper {
 
-    @Mapping(target = "restaurant",ignore = true)
-    @Mapping(target = "customer",ignore = true)
+//    @Mapping(target = "restaurant",ignore = true)
+//    @Mapping(target = "customer",ignore = true)
     @Mapping(target = "receivedDateTime",source = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
     @Mapping(target = "completedDateTime",source = "completedDateTime",qualifiedByName = "mapOffsetDateTimeToString")
-    @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItemsToDTO")
+//    @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItemsToDTO")
+    @Mapping(target = "orderItems",ignore = true)
     OrderDTO mapToDTO(Order order);
 
     @Named("mapOrderItemsToDTO")

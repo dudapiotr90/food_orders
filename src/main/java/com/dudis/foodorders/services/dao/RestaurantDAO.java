@@ -16,5 +16,4 @@ public interface RestaurantDAO {
 
     Optional<Menu> getMenu(Integer restaurantId);
 
-    List<DeliveryAddress> getDeliveryAddresses(Integer restaurantId);
 }

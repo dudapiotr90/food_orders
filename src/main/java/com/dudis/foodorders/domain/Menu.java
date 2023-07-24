@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @With
@@ -13,6 +15,9 @@ public class Menu {
     Integer menuId;
     String menuName;
     String description;
-    Restaurant restaurant;
     Set<Food> foods;
+
+    public Set<Food> getFoods() {
+        return Objects.isNull(foods) ? new HashSet<>() : foods;
+    }
 }

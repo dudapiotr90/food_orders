@@ -1,21 +1,22 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.DeliveryAddressesDTO;
-import com.dudis.foodorders.api.dtos.MenuDTO;
-import com.dudis.foodorders.api.dtos.OrdersDTO;
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.api.mappers.DeliveryAddressMapper;
 import com.dudis.foodorders.api.mappers.MenuMapper;
 import com.dudis.foodorders.api.mappers.OrderMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
-import com.dudis.foodorders.domain.DeliveryAddress;
+import com.dudis.foodorders.domain.Food;
+import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class RestaurantService {
     private final RestaurantDAO restaurantDAO;
     private final DeliveryAddressService deliveryAddressService;
     private final OrderService orderService;
+    private final MenuService menuService;
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
@@ -49,7 +51,8 @@ public class RestaurantService {
     public MenuDTO getCurrentMenu(Integer restaurantId) {
         return restaurantDAO.getMenu(restaurantId)
             .map(menuMapper::mapToDTO)
-            .orElseThrow(() -> new NotFoundException("Restaurant with id: [%s] doesn't have a menu".formatted(restaurantId)));
+            .orElse(MenuDTO.builder().foods(Set.of()).build());
+//            .orElseThrow(() -> new NotFoundException("Restaurant with id: [%s] doesn't have a menu".formatted(restaurantId)));
     }
 
     public DeliveryAddressesDTO getDeliveryAddresses(Integer restaurantId) {
@@ -66,5 +69,15 @@ public class RestaurantService {
             .map(orderMapper::mapToDTO)
             .toList())
             .build();
+    }
+
+    @Transactional
+    public void addFoodToMenu(FoodDTO foodDTO, Integer restaurantId) {
+        Optional<Menu> menu = restaurantDAO.getMenu(restaurantId);
+        if (menu.isPresent()) {
+            menuService.addFoodToMenu(menuMapper.mapFoodFromDTO(foodDTO),menu.get());
+        } else {
+            throw new NotFoundException("Menu doesn't exist");
+        }
     }
 }

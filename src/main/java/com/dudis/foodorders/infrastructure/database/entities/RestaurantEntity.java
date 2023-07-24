@@ -30,7 +30,6 @@ public class RestaurantEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "local_type")
-//    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private LocalType type;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

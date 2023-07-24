@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" th:href="@{/css/local_form.css}">
-<!--  <link rel="stylesheet" href="../static/css/local_form.css">-->
+  <link rel="stylesheet" href="../static/css/local_form.css">
 </head>
 <body>
 <header>
@@ -65,8 +65,40 @@
       </div>
     </div>
     <br>
+    <div class="container"><h3>Please fill in additional information</h3></div>
+    <div class="container text-center">
+      <div class="row align-items-start">
+
+        <div class="col">
+          <div class="container">
+            <div class="row mt-2">
+              <div class="col-md-4">
+                <label for="menuName" style="display: block; text-align: left;">Menu name:</label>
+              </div>
+              <div class="col-md-5">
+                <input type="text" id="menuName" th:field="*{menuDTO.menuName}" required>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col">
+          <div class="row mt-2">
+            <div class="col-md-2">
+              <label for="menuDescription">Menu description:</label>
+            </div>
+            <div class="col-md-3">
+            <textarea id="menuDescription" th:field="*{menuDTO.menuDescription}" rows="7"
+                      cols="100"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
     <div class="container text-center">
       <br>
+
       <div class="form-group">
         <input type="submit" value="Add" class="btn btn-success custom-button">
       </div>
@@ -84,6 +116,7 @@
 
   <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
 </div>
+<br>
 
 <footer id="flex-container">
   <div class="flex-item">
