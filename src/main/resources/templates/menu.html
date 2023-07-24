@@ -26,7 +26,7 @@
 </div>
 <div class="container">
   <form action="#"
-        th:action="@{/owner/{id}/show/{restaurantId}/modifyMenu/add(restaurantId=${restaurantId}, id=${ownerId})}"
+        th:action="@{/owner/{id}/manage/{restaurantId}/modifyMenu/add(restaurantId=${restaurantId}, id=${ownerId})}"
         th:method="POST"
         th:object="${food}">
     <div class="form-group">
@@ -56,13 +56,13 @@
 </div>
 <div class="container">
   <form action="#"
-        th:action="@{/owner/{id}/show/{restaurantId}/modifyMenu/updateFood(restaurantId=${restaurantId}, id=${ownerId})}"
+        th:action="@{/owner/{id}/manage/{restaurantId}/modifyMenu/updateFood(restaurantId=${restaurantId}, id=${ownerId})}"
         th:method="PUT"
         th:object="${food}">
     <div class="form-group">
       ID: <input type="text" th:field="*{foodId}"/>
       NAME: <input type="text" th:field="*{name}"/>
-      FOOD TYPE: <input type="text" th:field="*{name}"/>
+      FOOD TYPE: <input type="text" th:field="*{foodType}"/>
       PRICE: <input type="text" th:field="*{price}"/>
 
       <br>

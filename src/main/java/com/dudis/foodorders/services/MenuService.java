@@ -16,7 +16,4 @@ public class MenuService{
     private final MenuMapper menuMapper;
 
 
-    public void addFoodToMenu(Food food, Menu menu) {
-        foodService.addFoodToMenu(food, menu);
-    }
 }
