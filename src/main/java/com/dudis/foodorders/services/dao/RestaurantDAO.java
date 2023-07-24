@@ -1,8 +1,10 @@
 package com.dudis.foodorders.services.dao;
 
-import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +18,5 @@ public interface RestaurantDAO {
 
     Optional<Menu> getMenu(Integer restaurantId);
 
+    Page<Menu> getPaginatedMenu(Integer restaurantId, Pageable pageable);
 }

@@ -1,13 +1,16 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
-import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.RestaurantJpaRepository;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -44,4 +47,15 @@ public class RestaurantRepository implements RestaurantDAO {
         return restaurantJpaRepository.findMenuByRestaurantId(restaurantId)
             .map(menuEntityMapper::mapFromEntity);
     }
+
+    @Override
+    public Page<Menu> getPaginatedMenu(Integer restaurantId, Pageable pageable) {
+        MenuEntity menu = restaurantJpaRepository.findMenuByRestaurantId(restaurantId)
+            .orElseThrow(() -> new EntityNotFoundException("Restaurant doesn't have a menu"));
+
+
+        return restaurantJpaRepository.findPaginatedMenuByRestaurantId(restaurantId,pageable)
+            .map(menuEntityMapper::mapFromEntity);
+    }
+
 }

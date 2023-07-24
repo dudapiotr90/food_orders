@@ -19,9 +19,9 @@ public interface MenuMapper {
 
     @Named("mapFoods")
     default Set<FoodDTO> mapFoods(Set<Food> foods) {
-        return foods.stream().map(this::mapFood).collect(Collectors.toSet());
+        return foods.stream().map(this::mapFoodToDTO).collect(Collectors.toSet());
     }
 
-    FoodDTO mapFood(Food food);
+    FoodDTO mapFoodToDTO(Food food);
     Food mapFoodFromDTO(FoodDTO food);
 }

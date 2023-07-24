@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
+import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
@@ -9,6 +10,8 @@ import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodJpaRepo
 import com.dudis.foodorders.services.dao.FoodDAO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -41,6 +44,11 @@ public class FoodRepository implements FoodDAO {
     @Override
     public void deleteFood(Integer foodId) {
         foodJpaRepository.deleteById(foodId);
+    }
+
+    @Override
+    public Page<Food> getPaginatedFoods(Integer menuId, Pageable pageable) {
+        return foodJpaRepository.findByMenuId(menuId,pageable).map(menuEntityMapper::mapFoodFromEntity);
     }
 
 }

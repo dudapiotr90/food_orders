@@ -1,9 +1,9 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
-import com.dudis.foodorders.domain.DeliveryAddress;
-import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +28,9 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         """)
     Optional<MenuEntity> findMenuByRestaurantId(@Param("restaurantId") Integer restaurantId);
 
+    @Query("""
+        SELECT re.menu FROM RestaurantEntity re
+        WHERE re.restaurantId = :restaurantId
+        """)
+    Page<MenuEntity> findPaginatedMenuByRestaurantId(@Param("restaurantId") Integer restaurantId, Pageable pageable);
 }
