@@ -5,13 +5,17 @@ import com.dudis.foodorders.api.mappers.DeliveryAddressMapper;
 import com.dudis.foodorders.api.mappers.MenuMapper;
 import com.dudis.foodorders.api.mappers.OrderMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
-import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,4 +87,17 @@ public class RestaurantService {
         }
     }
 
+    public Page<FoodDTO> getPaginatedMenu(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Menu menu = restaurantDAO.getMenu(restaurantId)
+            .orElseThrow(() -> new EntityNotFoundException("Restaurant doesn't have a menu"));
+
+        return foodService.getPaginatedFoods(menu.getMenuId(), pageable);
+
+//        return restaurantDAO.getPaginatedMenu(restaurantId,pageable)
+//            .map(menuMapper::mapToDTO);
+    }
 }

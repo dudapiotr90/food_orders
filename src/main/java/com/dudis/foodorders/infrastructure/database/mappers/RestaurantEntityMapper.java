@@ -16,6 +16,6 @@ public interface RestaurantEntityMapper {
     Restaurant mapFromEntity(RestaurantEntity local);
 
 //    @Mapping(target = "owner", ignore = true)
-    @Mapping(target = "menu", ignore = true)
+//    @Mapping(target = "menu", ignore = true)
     RestaurantEntity mapToEntity(Restaurant restaurant);
 }

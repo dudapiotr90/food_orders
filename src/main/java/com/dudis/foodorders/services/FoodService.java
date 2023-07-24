@@ -7,6 +7,8 @@ import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.services.dao.FoodDAO;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,5 +30,9 @@ public class FoodService {
 
     public void deleteFood(Integer foodId) {
         foodDAO.deleteFood(foodId);
+    }
+
+    public Page<FoodDTO> getPaginatedFoods(Integer menuId, Pageable pageable) {
+        return foodDAO.getPaginatedFoods(menuId,pageable).map(menuMapper::mapFoodToDTO);
     }
 }

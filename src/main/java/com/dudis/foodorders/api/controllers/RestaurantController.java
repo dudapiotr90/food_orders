@@ -5,10 +5,13 @@ import com.dudis.foodorders.services.FoodService;
 import com.dudis.foodorders.services.MenuService;
 import com.dudis.foodorders.services.RestaurantService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(RestaurantController.OWNER)
@@ -33,7 +36,7 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         Model modelMap
     ) {
-        return getPaginated(ownerId, restaurantId, modelMap, 1, "id", "asc");
+        return getPaginated(ownerId, restaurantId, modelMap, 1, "foodId", "asc");
 
     }
 
@@ -79,7 +82,16 @@ public class RestaurantController {
         return restaurantManagerPortal(ownerId, restaurantId);
     }
     @GetMapping(value = MANAGE_PAGE)
-    private String getPaginated(Integer ownerId, Integer restaurantId, Model modelMap, int i, String id, String asc) {
+    public String getPaginated(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        Model modelMap,
+        @PathVariable(value = "pageNumber")int pageNumber,
+        String sortBy,
+        String sortHow
+    ) {
+        int pageSize = 4; // default Value
+        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber,pageSize,sortBy,sortHow,restaurantId);
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
         MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
         DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
@@ -87,7 +99,7 @@ public class RestaurantController {
 
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);
-        modelMap.addAttribute("menu", menuDTO);
+        modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("deliveries", deliveriesDTO);
         modelMap.addAttribute("orders", ordersDTO);
         return "local_manager";
