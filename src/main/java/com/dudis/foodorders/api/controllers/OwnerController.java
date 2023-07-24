@@ -30,6 +30,8 @@ public class OwnerController {
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
     public static final String OWNER_SHOW = "/owner/{id}/show/{restaurantId}";
+    // TODO SHOW przerobić na ilość zamówień, ilość pozycji 
+
 
 
     private final OwnerService ownerService;

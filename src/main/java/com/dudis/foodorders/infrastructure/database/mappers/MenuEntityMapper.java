@@ -19,11 +19,11 @@ public interface MenuEntityMapper {
 
     @Named("mapFoods")
     default Set<Food> mapFoods(Set<FoodEntity> foods) {
-        return foods.stream().map(this::mapFood).collect(Collectors.toSet());
+        return foods.stream().map(this::mapFoodFromEntity).collect(Collectors.toSet());
     }
 
     @Mapping(target = "menu",ignore = true)
-    Food mapFood(FoodEntity foodEntity);
+    Food mapFoodFromEntity(FoodEntity foodEntity);
 
     @Mapping(target = "menu",ignore = true)
     FoodEntity mapFoodToEntity(Food food);

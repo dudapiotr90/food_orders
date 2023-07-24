@@ -26,10 +26,12 @@ public class RestaurantService {
     private final DeliveryAddressService deliveryAddressService;
     private final OrderService orderService;
     private final MenuService menuService;
+    private final FoodService foodService;
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
     private final OrderMapper orderMapper;
+
     public List<Restaurant> findOwnersLocals(Integer ownerId) {
         return restaurantDAO.findRestaurantsWhereOwnerId(ownerId);
     }
@@ -38,12 +40,12 @@ public class RestaurantService {
         restaurantDAO.addLocal(restaurant);
     }
 
-//    @Transactional
+    //    @Transactional
     public RestaurantDTO findProcessingRestaurant(Integer restaurantId) {
         return restaurantDAO.findProcessingRestaurant(restaurantId)
             .map(restaurantMapper::mapToDTO).orElseThrow(
                 () -> new NotFoundException(
-                    String.format("Couldn't find restaurant with id: [%s]",restaurantId)
+                    String.format("Couldn't find restaurant with id: [%s]", restaurantId)
                 )
             );
     }
@@ -66,8 +68,8 @@ public class RestaurantService {
     public OrdersDTO findOrders(Integer restaurantId) {
         return OrdersDTO.builder()
             .orders(orderService.getRestaurantOrders(restaurantId).stream()
-            .map(orderMapper::mapToDTO)
-            .toList())
+                .map(orderMapper::mapToDTO)
+                .toList())
             .build();
     }
 
@@ -75,9 +77,10 @@ public class RestaurantService {
     public void addFoodToMenu(FoodDTO foodDTO, Integer restaurantId) {
         Optional<Menu> menu = restaurantDAO.getMenu(restaurantId);
         if (menu.isPresent()) {
-            menuService.addFoodToMenu(menuMapper.mapFoodFromDTO(foodDTO),menu.get());
+            foodService.addFoodToMenu(foodDTO,menu.get());
         } else {
             throw new NotFoundException("Menu doesn't exist");
         }
     }
+
 }

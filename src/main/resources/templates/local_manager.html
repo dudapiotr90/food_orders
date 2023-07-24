@@ -51,7 +51,7 @@
         <td th:text="${food.price}"></td>
         <td>
           <form action="#"
-                th:action="@{/owner/{id}/show/{restaurantId}/deleteFood/{foodId}
+                th:action="@{/owner/{id}/manage/{restaurantId}/deleteFood/{foodId}
                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodId=${food.foodId})}"
                 th:method="DELETE">
             <button type="submit" class="btn btn-danger">DELETE</button>
@@ -63,41 +63,11 @@
   </div>
 <br>
 <div class="container">
-  <a th:href="@{/owner/{id}/show/{restaurantId}/modifyMenu(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+  <a th:href="@{/owner/{id}/manage/{restaurantId}/modifyMenu(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
      class="btn btn-success custom-button" role="button">Modify Menu</a>
 </div>
 <br>
 <br>
-<!--<div class="container">-->
-<!--  <h3>Update Menu</h3>-->
-<!--</div>-->
-<!--  <div class="container">-->
-<!--    <form action="#"-->
-<!--          th:action="@{/owner/{id}/show/{restaurantId}/updateFood(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"-->
-<!--          th:method="PUT"-->
-<!--          th:object="${updateFood}">-->
-<!--      <div class="form-group">-->
-<!--        ID: <input type="text" th:field="*{foodId}"/>-->
-<!--        NAME: <input type="text" th:field="*{name}"/>-->
-<!--        TYPE: <input type="text" th:field="*{foodType.name}"/>-->
-<!--        PRICE: <input type="text" th:field="*{price}"/>-->
-
-<!--        <br>-->
-<!--        <br>-->
-<!--        DESCRIPTION:-->
-<!--          <div>-->
-<!--            <textarea id="description" th:field="*{description}" rows="7"-->
-<!--                      cols="100"></textarea>-->
-<!--          </div>-->
-<!--      </div>-->
-<!--      <br>-->
-<!--      <div class="form-group">-->
-<!--        <input type="submit" value="Update menu position" class="btn btn-success custom-button"/>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--<br>-->
-<!--<br>-->
 
   <div class="container">
     <h3>Delivery addresses</h3>
@@ -119,7 +89,7 @@
         <td th:text="${delivery.street}"></td>
         <td>
           <form action="#"
-                th:action="@{/owner/{id}/show/{restaurantId}/deleteAddress/{deliveryId}
+                th:action="@{/owner/{id}/manage/{restaurantId}/deleteAddress/{deliveryId}
                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryId})}"
                 th:method="DELETE">
             <button type="submit" class="btn btn-danger">DELETE</button>
@@ -131,7 +101,7 @@
   </div>
   <br>
   <div class="container">
-    <a th:href="@{/owner/{id}/show/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+    <a th:href="@{/owner/{id}/manage/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
        class="btn btn-success custom-button" role="button">Add Delivery Address</a>
   </div>
 
