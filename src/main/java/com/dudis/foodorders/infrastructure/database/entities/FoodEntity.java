@@ -32,9 +32,8 @@ public class FoodEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_type_id")
-    private FoodTypeEntity foodType;
+    @Column(name="food_type")
+    private String foodType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
