@@ -34,11 +34,30 @@
     <table class="table">
       <thead class="table-primary">
       <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>TYPE</th>
+        <th>
+          <a
+                 th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=foodId&sortHow={reverseSortHow}
+                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+            ID</a>
+        </th>
+        <th>
+          <a
+                 th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=name&sortHow={reverseSortHow}
+                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+            NAME</a>
+        </th>
+        <th>
+          <a
+               th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=foodType&sortHow={reverseSortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+            TYPE</a>
+        </th>
+        <th>
+          <a th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=price&sortHow={reverseSortHow}
+          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+            PRICE</a>
+        </th>
         <th>DESCRIPTION</th>
-        <th>PRICE</th>
         <th></th>
       </tr>
       </thead>
@@ -47,8 +66,8 @@
         <td th:text="${food.foodId}"></td>
         <td th:text="${food.name}"></td>
         <td th:text="${food.foodType}"></td>
-        <td th:text="${food.description}"></td>
         <td th:text="${food.price}"></td>
+        <td th:text="${food.description}"></td>
         <td>
           <form action="#"
                 th:action="@{/owner/{id}/manage/{restaurantId}/deleteFood/{foodId}
@@ -61,6 +80,38 @@
       </tbody>
     </table>
   </div>
+<div class="container">
+  <div th:if="${totalPages > 1}">
+   <div class="row col-sm-10">
+     <div class = "col-sm-2">
+       Menu size: [[${totalSize}]]
+     </div>
+     <div class = "col-sm-1">
+        <span th:each="p: ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${currentPage != p}"
+               th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}?sortBy={sortBy}&sortHow={sortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+               [[${p}]]</a>
+            <span th:unless="${currentPage != p}">[[${p}]]</span>  &nbsp; &nbsp;
+        </span>
+     </div>
+     <div class = "col-sm-1">
+       <a th:if="${currentPage < totalPages}"
+          th:href="@{/owner/{id}/manage/{restaurantId}/page/{nextPage}?sortBy={sortBy}&sortHow={sortHow}
+          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, nextPage=${currentPage + 1}, sortHow=${sortHow},sortBy=${sortBy})}">
+          Next</a>
+       <span th:unless="${currentPage < totalPages}">Next</span>
+     </div>
+     <div class="col-sm-1">
+      <a th:if="${currentPage < totalPages}"
+         th:href="@{/owner/{id}/manage/{restaurantId}/page/{last}?sortBy={sortBy}&sortHow={sortHow}
+         (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},last=${totalPages})}">
+         Last</a>
+       <span th:unless="${currentPage < totalPages}">Last</span>
+     </div>
+   </div>
+  </div>
+</div>
 <br>
 <div class="container">
   <a th:href="@{/owner/{id}/manage/{restaurantId}/modifyMenu(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
