@@ -39,4 +39,8 @@ public class FoodEntity {
     @JoinColumn(name = "menu_id")
     private MenuEntity menu;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_image_id")
+    private FoodImageEntity foodImage;
+
 }
