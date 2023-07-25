@@ -11,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(RestaurantController.OWNER)
 @AllArgsConstructor
@@ -24,7 +22,7 @@ public class RestaurantController {
     public static final String ADD_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/add";
     public static final String UPDATE_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/updateFood";
     public static final String DELETE_MENU_POSITION = "/manage/{restaurantId}/deleteFood/{foodId}";
-    public static final String MANAGE_PAGE = MANAGE + "/page/{pageNum}";
+    public static final String MANAGE_PAGE = MANAGE + "/page/{pageNumber}";
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
@@ -87,26 +85,44 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         Model modelMap,
         @PathVariable(value = "pageNumber")int pageNumber,
-        String sortBy,
-        String sortHow
+        @RequestParam("sortBy") String sortBy,
+        @RequestParam("sortHow") String sortHow
     ) {
         int pageSize = 4; // default Value
+//        MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
         Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber,pageSize,sortBy,sortHow,restaurantId);
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
-        MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
         DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
         OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
-
+        // TODO and paging button and column sorting
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);
         modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("deliveries", deliveriesDTO);
         modelMap.addAttribute("orders", ordersDTO);
+
+        preparePaginatedAttributes(modelMap, menuPage,pageNumber,sortBy,sortHow);
+
         return "local_manager";
     }
 
     private static String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {
         return String.format("redirect:/owner/%s/manage/%s", ownerId, restaurantId);
+    }
+
+    private static void preparePaginatedAttributes(
+        Model modelMap,
+        Page<FoodDTO> menuPage,
+        int pageNumber,
+        String sortBy,
+        String sortHow
+    ) {
+        modelMap.addAttribute("reverseSortHow", sortHow.equals("asc") ? "desc" : "asc");
+        modelMap.addAttribute("sortHow", sortHow);
+        modelMap.addAttribute("sortBy", sortBy);
+        modelMap.addAttribute("currentPage", pageNumber);
+        modelMap.addAttribute("totalPages", menuPage.getTotalPages());
+        modelMap.addAttribute("totalSize", menuPage.getTotalElements());
     }
 
 }
