@@ -112,7 +112,6 @@
    </div>
   </div>
 </div>
-<br>
 <div class="container">
   <a th:href="@{/owner/{id}/manage/{restaurantId}/modifyMenu(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
      class="btn btn-success custom-button" role="button">Modify Menu</a>
@@ -134,14 +133,14 @@
       </thead>
       <tbody>
       <tr th:each="delivery: ${deliveries.deliveries}">
-        <td th:text="${delivery.deliveryId}"></td>
+        <td th:text="${delivery.deliveryAddressId}"></td>
         <td th:text="${delivery.city}"></td>
         <td th:text="${delivery.postalCode}"></td>
         <td th:text="${delivery.street}"></td>
         <td>
           <form action="#"
                 th:action="@{/owner/{id}/manage/{restaurantId}/deleteAddress/{deliveryId}
-                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryId})}"
+                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryAddressId})}"
                 th:method="DELETE">
             <button type="submit" class="btn btn-danger">DELETE</button>
           </form>
@@ -152,8 +151,23 @@
   </div>
   <br>
   <div class="container">
-    <a th:href="@{/owner/{id}/manage/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
-       class="btn btn-success custom-button" role="button">Add Delivery Address</a>
+    <h3><b>Add Address:</b></h3>
+    <form action="#"
+          th:action="@{/owner/{id}/manage/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+          th:method="POST"
+          th:object="${deliveryAddress}">
+      <div class="form-group">
+        CITY: <input type="text" th:field="*{city}"/>
+        POSTAL CODE: <input type="text" th:field="*{postalCode}"/>
+        STREET: <input type="text" th:field="*{street}"/>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="submit" value="Add Delivery Address" class="btn btn-success custom-button"/>
+      </div>
+    </form>
+<!--    <a th:href="@{/owner/{id}/manage/{restaurantId}/addAddress(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"-->
+<!--       class="btn btn-success custom-button" role="button">Add Delivery Address</a>-->
   </div>
 
 <br>

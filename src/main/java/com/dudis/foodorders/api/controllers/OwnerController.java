@@ -1,5 +1,6 @@
 package com.dudis.foodorders.api.controllers;
 
+import com.dudis.foodorders.api.dtos.FoodTypeDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
@@ -30,7 +31,7 @@ public class OwnerController {
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
     public static final String OWNER_SHOW = "/owner/{id}/show/{restaurantId}";
-    // TODO SHOW przerobić na ilość zamówień, ilość pozycji 
+    // TODO SHOW przerobić na ilość zamówień, ilość pozycji menu
 
 
 

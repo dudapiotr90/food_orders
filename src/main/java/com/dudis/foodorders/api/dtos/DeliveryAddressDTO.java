@@ -1,6 +1,5 @@
 package com.dudis.foodorders.api.dtos;
 
-import com.dudis.foodorders.domain.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeliveryAddressDTO {
 
-    Integer deliveryId;
+    Integer deliveryAddressId;
     String city;
     String postalCode;
     String street;
