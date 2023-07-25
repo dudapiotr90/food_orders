@@ -1,7 +1,13 @@
 server:
   port: 8150
   servlet:
+    multipart:
+      max-request-size: 1MB
+      max-file-size: 1MB
     context-path: /food-orders
+
+upload:
+  dir: uploadImages/
 
 spring:
   datasource:
@@ -30,7 +36,6 @@ spring:
         enabled: true
 
   mail:
-
     host: localhost
     port: 1025
     username: admin
@@ -46,3 +51,4 @@ spring:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
+
