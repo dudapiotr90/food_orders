@@ -18,11 +18,12 @@ public class RestaurantController {
 
     public static final String OWNER = "/owner/{id}";
     public static final String MANAGE = "/manage/{restaurantId}";
-    public static final String MODIFY_MENU = "/manage/{restaurantId}/modifyMenu";
-    public static final String ADD_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/add";
-    public static final String UPDATE_MENU_POSITION = "/manage/{restaurantId}/modifyMenu/updateFood";
-    public static final String DELETE_MENU_POSITION = "/manage/{restaurantId}/deleteFood/{foodId}";
+    public static final String MODIFY_MENU = MANAGE + "/modifyMenu";
+    public static final String ADD_MENU_POSITION = MODIFY_MENU + "/add";
+    public static final String UPDATE_MENU_POSITION = MODIFY_MENU +"/updateFood";
+    public static final String DELETE_MENU_POSITION = MANAGE + "/deleteFood/{foodId}";
     public static final String MANAGE_PAGE = MANAGE + "/page/{pageNumber}";
+    public static final String ADD_ADDRESS = MANAGE + "/addAddress";
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
@@ -47,6 +48,7 @@ public class RestaurantController {
         modelMap.addAttribute("food", new FoodDTO());
         modelMap.addAttribute("restaurantId", restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
+        modelMap.addAttribute("foodTypes", FoodTypeDTO.values());
         return "menu";
     }
 
@@ -56,7 +58,7 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @ModelAttribute("food") FoodDTO foodDTO
     ) {
-        restaurantService.addFoodToMenu(foodDTO,restaurantId);
+        restaurantService.addFoodToMenu(foodDTO, restaurantId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
@@ -79,38 +81,50 @@ public class RestaurantController {
         foodService.deleteFood(foodId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
+
+    @PostMapping(ADD_ADDRESS)
+    public String addAddress(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @ModelAttribute("deliveryAddress") DeliveryAddressDTO deliveryAddressDTO
+    ) {
+        restaurantService.addDeliveryAddress(deliveryAddressDTO,restaurantId);
+        return restaurantManagerPortal(ownerId, restaurantId);
+    }
+
     @GetMapping(value = MANAGE_PAGE)
     public String getPaginated(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
         Model modelMap,
-        @PathVariable(value = "pageNumber")int pageNumber,
+        @PathVariable(value = "pageNumber") int pageNumber,
         @RequestParam("sortBy") String sortBy,
         @RequestParam("sortHow") String sortHow
     ) {
         int pageSize = 4; // default Value
-//        MenuDTO menuDTO = restaurantService.getCurrentMenu(restaurantId);
-        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber,pageSize,sortBy,sortHow,restaurantId);
+        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber, pageSize, sortBy, sortHow, restaurantId);
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
         DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
         OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
-        // TODO and paging button and column sorting
+
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);
         modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("deliveries", deliveriesDTO);
         modelMap.addAttribute("orders", ordersDTO);
+        modelMap.addAttribute("deliveryAddress", new DeliveryAddressDTO());
 
-        preparePaginatedAttributes(modelMap, menuPage,pageNumber,sortBy,sortHow);
+        preparePaginatedAttributes(modelMap, menuPage, pageNumber, sortBy, sortHow);
 
         return "local_manager";
     }
 
-    private static String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {
+
+    private String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {
         return String.format("redirect:/owner/%s/manage/%s", ownerId, restaurantId);
     }
 
-    private static void preparePaginatedAttributes(
+    private void preparePaginatedAttributes(
         Model modelMap,
         Page<FoodDTO> menuPage,
         int pageNumber,
@@ -124,5 +138,4 @@ public class RestaurantController {
         modelMap.addAttribute("totalPages", menuPage.getTotalPages());
         modelMap.addAttribute("totalSize", menuPage.getTotalElements());
     }
-
 }

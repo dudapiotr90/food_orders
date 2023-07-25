@@ -31,7 +31,13 @@
         th:object="${food}">
     <div class="form-group">
       NAME: <input type="text" th:field="*{name}"/>
-      FOOD TYPE: <input type="text" th:field="*{foodType}"/>
+      FOOD TYPE:
+      <select id="type" th:field="*{foodType}" required>
+            <option th:each="type : ${foodTypes}"
+              th:value="${type}"
+              th:text="${type}">
+            </option>
+      </select>
       PRICE: <input type="text" th:field="*{price}"/>
 
       <br>
@@ -62,7 +68,13 @@
     <div class="form-group">
       ID: <input type="text" th:field="*{foodId}"/>
       NAME: <input type="text" th:field="*{name}"/>
-      FOOD TYPE: <input type="text" th:field="*{foodType}"/>
+      FOOD TYPE:
+      <select th:field="*{foodType}" required>
+      <option th:each="type : ${foodTypes}"
+              th:value="${type}"
+              th:text="${type}">
+      </option>
+      </select>
       PRICE: <input type="text" th:field="*{price}"/>
 
       <br>
