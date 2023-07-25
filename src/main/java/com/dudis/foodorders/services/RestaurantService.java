@@ -5,6 +5,7 @@ import com.dudis.foodorders.api.mappers.DeliveryAddressMapper;
 import com.dudis.foodorders.api.mappers.MenuMapper;
 import com.dudis.foodorders.api.mappers.OrderMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
+import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
@@ -81,7 +82,7 @@ public class RestaurantService {
     public void addFoodToMenu(FoodDTO foodDTO, Integer restaurantId) {
         Optional<Menu> menu = restaurantDAO.getMenu(restaurantId);
         if (menu.isPresent()) {
-            foodService.addFoodToMenu(foodDTO,menu.get());
+            foodService.addFoodToMenu(foodDTO, menu.get());
         } else {
             throw new NotFoundException("Menu doesn't exist");
         }
@@ -100,4 +101,12 @@ public class RestaurantService {
 //        return restaurantDAO.getPaginatedMenu(restaurantId,pageable)
 //            .map(menuMapper::mapToDTO);
     }
+
+    @Transactional
+    public void addDeliveryAddress(DeliveryAddressDTO deliveryAddressDTO, Integer restaurantId) {
+        DeliveryAddress deliveryAddress = deliveryAddressMapper.mapFromDTO(deliveryAddressDTO);
+        Restaurant restaurant = restaurantMapper.mapFromDTO(findProcessingRestaurant(restaurantId));
+        deliveryAddressService.addDeliveryAddressToRestaurant(deliveryAddress, restaurant);
+    }
 }
+

@@ -1,7 +1,11 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.DeliveryAddress;
+import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
+import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeliveryAddressJpaRepository;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
 import lombok.AllArgsConstructor;
@@ -15,11 +19,20 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
 
     private final DeliveryAddressJpaRepository deliveryAddressJpaRepository;
     private final DeliveryAddressEntityMapper deliveryAddressEntityMapper;
+    private final RestaurantEntityMapper restaurantEntityMapper;
 
     @Override
     public List<DeliveryAddress> getRestaurantDeliveryAddresses(Integer restaurantId) {
         return deliveryAddressJpaRepository.findDeliveryAddressesByRestaurantId(restaurantId).stream()
             .map(deliveryAddressEntityMapper::mapFromEntity)
             .toList();
+    }
+
+    @Override
+    public void addDeliveryAddressToRestaurant(DeliveryAddress deliveryAddress, Restaurant restaurant) {
+        DeliveryAddressEntity deliveryAddressEntity = deliveryAddressEntityMapper.mapToEntity(deliveryAddress);
+        RestaurantEntity restaurantEntity = restaurantEntityMapper.mapToEntity(restaurant);
+        deliveryAddressEntity.setRestaurant(restaurantEntity);
+        deliveryAddressJpaRepository.save(deliveryAddressEntity);
     }
 }
