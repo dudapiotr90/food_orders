@@ -6,6 +6,7 @@ import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
+import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodImageJpaRepository;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodJpaRepository;
 import com.dudis.foodorders.services.dao.FoodDAO;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class FoodRepository implements FoodDAO {
 
     private final FoodJpaRepository foodJpaRepository;
+    private final FoodImageJpaRepository foodImageJpaRepository;
     private final MenuEntityMapper menuEntityMapper;
     @Override
     public void saveFood(Food food, Menu menu) {
