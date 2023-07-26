@@ -18,9 +18,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,6 +34,8 @@ public class RestaurantService {
     private final OrderService orderService;
     private final MenuService menuService;
     private final FoodService foodService;
+    private final StorageService storageService;
+
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
@@ -79,13 +83,14 @@ public class RestaurantService {
     }
 
     @Transactional
-    public void addFoodToMenu(FoodDTO foodDTO, Integer restaurantId) {
-        Optional<Menu> menu = restaurantDAO.getMenu(restaurantId);
-        if (menu.isPresent()) {
-            foodService.addFoodToMenu(foodDTO, menu.get());
-        } else {
-            throw new NotFoundException("Menu doesn't exist");
+    public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile file) throws IOException {
+        Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
+        if (file.isEmpty()) {
+            foodService.addFoodToMenu(foodDTO, menu, null);
         }
+        String foodImage = storageService.uploadImageToServer(file, restaurantId);
+        foodService.addFoodToMenu(foodDTO, menu, foodImage);
+        return foodImage.isBlank() ? "No image" : foodImage;
     }
 
     public Page<FoodDTO> getPaginatedMenu(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {

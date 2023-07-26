@@ -1,2 +1,2 @@
 ALTER TABLE Food
-ADD COLUMN food_image_id INT;
+ADD COLUMN food_image_path VARCHAR(128);

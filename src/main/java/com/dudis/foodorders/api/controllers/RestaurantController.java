@@ -10,6 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Controller
 @RequestMapping(RestaurantController.OWNER)
@@ -56,9 +60,10 @@ public class RestaurantController {
     public String addMenuPosition(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        @ModelAttribute("food") FoodDTO foodDTO
-    ) {
-        restaurantService.addFoodToMenu(foodDTO, restaurantId);
+        @ModelAttribute("food") FoodDTO foodDTO,
+        @RequestParam("image") MultipartFile image
+        ) throws IOException, URISyntaxException {
+        restaurantService.addFoodToMenu(foodDTO, restaurantId,image);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
@@ -66,7 +71,8 @@ public class RestaurantController {
     public String updateMenuPosition(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        @ModelAttribute("food") FoodDTO foodDTO
+        @ModelAttribute("food") FoodDTO foodDTO,
+        @RequestParam("image") MultipartFile file
     ) {
         foodService.updateMenuPosition(foodDTO);
         return restaurantManagerPortal(ownerId, restaurantId);
@@ -106,7 +112,6 @@ public class RestaurantController {
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
         DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
         OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
-
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);
         modelMap.addAttribute("foods", menuPage.getContent());

@@ -1,6 +1,5 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
-import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
@@ -15,20 +14,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 @AllArgsConstructor
 public class FoodRepository implements FoodDAO {
 
     private final FoodJpaRepository foodJpaRepository;
-    private final FoodImageJpaRepository foodImageJpaRepository;
     private final MenuEntityMapper menuEntityMapper;
     @Override
-    public void saveFood(Food food, Menu menu) {
+    public void saveFood(Food food, Menu menu, String foodImagePath) {
         MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
         FoodEntity foodToSave = menuEntityMapper.mapFoodToEntity(food);
         foodToSave.setMenu(menuEntity);
+        foodToSave.setFoodImagePath(foodImagePath);
         foodJpaRepository.saveAndFlush(foodToSave);
     }
 

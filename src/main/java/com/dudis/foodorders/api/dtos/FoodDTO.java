@@ -7,15 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Base64;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoodDTO {
 
-    Integer foodId;
-    String name;
-    String description;
-    BigDecimal price;
-    String foodType;
+    private Integer foodId;
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private String foodType;
+    private String foodImageAsBase64;
+    private String foodImagePath;
+
 }

@@ -16,4 +16,5 @@ public class Food {
     BigDecimal price;
     String foodType;
     Menu menu;
+    String foodImagePath;
 }
