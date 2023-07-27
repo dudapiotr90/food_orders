@@ -115,7 +115,10 @@ public class RestaurantService {
     return Objects.isNull(imagePathToDelete) ? "Already removed" : "Removed Successfully";
 }
 
-    public Page<FoodDTO> getPaginatedMenu(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {
+    public Page<FoodDTO> getPaginatedMenu(Integer pageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
+        if (Objects.isNull(pageNumber)) {
+            pageNumber = 1;
+        }
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
@@ -129,11 +132,14 @@ public class RestaurantService {
 //            .map(menuMapper::mapToDTO);
     }
 
-    public Page<DeliveryAddressDTO> getPaginatedDeliveries(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {
+    public Page<DeliveryAddressDTO> getPaginatedDeliveries(Integer deliveryPageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
+        if (Objects.isNull(deliveryPageNumber)) {
+            deliveryPageNumber = 1;
+        }
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = PageRequest.of(deliveryPageNumber - 1, pageSize, sort);
         return deliveryAddressService.getPaginatedRestaurantDeliveryAddresses(restaurantId, pageable);
     }
 
