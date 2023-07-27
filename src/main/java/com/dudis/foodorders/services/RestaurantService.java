@@ -129,12 +129,19 @@ public class RestaurantService {
 //            .map(menuMapper::mapToDTO);
     }
 
+    public Page<DeliveryAddressDTO> getPaginatedDeliveries(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return deliveryAddressService.getPaginatedRestaurantDeliveryAddresses(restaurantId, pageable);
+    }
+
     @Transactional
     public void addDeliveryAddress(DeliveryAddressDTO deliveryAddressDTO, Integer restaurantId) {
         DeliveryAddress deliveryAddress = deliveryAddressMapper.mapFromDTO(deliveryAddressDTO);
         Restaurant restaurant = restaurantMapper.mapFromDTO(findProcessingRestaurant(restaurantId));
         deliveryAddressService.addDeliveryAddressToRestaurant(deliveryAddress, restaurant);
     }
-
 }
 

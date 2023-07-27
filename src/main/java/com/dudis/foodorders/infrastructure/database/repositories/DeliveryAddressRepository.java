@@ -9,6 +9,8 @@ import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapp
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeliveryAddressJpaRepository;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,4 +37,11 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
         deliveryAddressEntity.setRestaurant(restaurantEntity);
         deliveryAddressJpaRepository.save(deliveryAddressEntity);
     }
+
+    @Override
+    public Page<DeliveryAddress> getPaginatedRestaurantDeliveryAddresses(Integer restaurantId, Pageable pageable) {
+        return deliveryAddressJpaRepository.findPaginatedDeliveryAddressesByRestaurantId(restaurantId,pageable)
+            .map(deliveryAddressEntityMapper::mapFromEntity);
+    }
+
 }
