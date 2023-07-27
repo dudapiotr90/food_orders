@@ -26,8 +26,8 @@ public class FoodService {
         return foodDAO.updateFood(food,foodImagePath);
     }
 
-    public void deleteFood(Integer foodId) {
-        foodDAO.deleteFood(foodId);
+    public String deleteFood(Integer foodId) {
+        return foodDAO.deleteFood(foodId);
     }
 
     public Page<FoodDTO> getPaginatedFoods(Integer menuId, Pageable pageable) {
