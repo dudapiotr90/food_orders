@@ -108,8 +108,9 @@ public class RestaurantController {
         @RequestParam("sortHow") String sortHow
     ) {
         int pageSize = 4; // default Value
-        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber, pageSize, sortBy, sortHow, restaurantId);
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
+        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(pageNumber, pageSize, sortBy, sortHow, restaurantId);
+        Page<DeliveryAddressDTO> deliveriesPage = restaurantService.getPaginatedDeliveries(pageNumber, pageSize, sortBy, sortHow, restaurantId);
         DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
         OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
         modelMap.addAttribute("ownerId", ownerId);

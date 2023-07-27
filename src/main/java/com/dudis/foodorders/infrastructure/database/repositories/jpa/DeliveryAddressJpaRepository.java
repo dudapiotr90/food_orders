@@ -1,5 +1,8 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
+import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +21,11 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
         WHERE res.restaurantId = :restaurantId
         """)
     List<DeliveryAddressEntity> findDeliveryAddressesByRestaurantId(@Param("restaurantId") Integer restaurantId);
+
+    @Query("""
+        SELECT del FROM DeliveryAddressEntity del
+        JOIN FETCH del.restaurant res
+        WHERE res.restaurantId = :restaurantId
+        """)
+    Page<DeliveryAddressEntity> findPaginatedDeliveryAddressesByRestaurantId(@Param("restaurantId") Integer restaurantId, Pageable pageable);
 }

@@ -103,10 +103,16 @@
 </div>
 
 <br>
-<div class="button-container">
-  <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-info" role="button"> <= Owner Home Page</a>
+<div class="container">
+<div class="form-group">
+  <a th:href="@{/owner/{id}/manage/{restaurantId}(restaurantId=${restaurantId}, id=${ownerId})}" class="btn btn-info custom-button" role="button">
+    <= Restaurant Manager Page</a>
+</div>
 </div>
 <br>
+<div class="button-container">
+  <a th:href="@{/owner/{id}(id=${ownerId})}" class="btn btn-secondary" role="button"> <= Owner Home Page</a>
+</div>
 <br>
 <div class="button-container">
   <a th:href="@{/}" class="btn btn-primary fixed" role="button">Go back to the main page</a>
