@@ -3,8 +3,6 @@ server:
   servlet:
     multipart:
       location: /src/main/resources/static/uploaded
-      max-file-size: -1
-      max-request-size: -1
     context-path: /food-orders
 
 upload:

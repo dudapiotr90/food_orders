@@ -31,7 +31,7 @@
         th:object="${food}"
         enctype="multipart/form-data">
     <div class="form-group">
-      NAME: <input type="text" th:field="*{name}"/>
+      NAME: <input type="text" th:field="*{name}" required/>
       FOOD TYPE:
       <select id="type" th:field="*{foodType}" required>
             <option th:each="type : ${foodTypes}"
@@ -39,7 +39,7 @@
               th:text="${type}">
             </option>
       </select>
-      PRICE: <input type="text" th:field="*{price}"/>
+      PRICE: <input type="text" th:field="*{price}" required/>
 
       <br>
       <br>
@@ -72,8 +72,8 @@
         th:object="${food}"
         enctype="multipart/form-data">
     <div class="form-group">
-      ID: <input type="text" th:field="*{foodId}"/>
-      NAME: <input type="text" th:field="*{name}"/>
+      ID: <input type="text" th:field="*{foodId}" required/>
+      NAME: <input type="text" th:field="*{name}" required/>
       FOOD TYPE:
       <select th:field="*{foodType}" required>
       <option th:each="type : ${foodTypes}"
@@ -81,7 +81,7 @@
               th:text="${type}">
       </option>
       </select>
-      PRICE: <input type="text" th:field="*{price}"/>
+      PRICE: <input type="text" th:field="*{price}" required/>
 
       <br>
       <br>

@@ -21,6 +21,7 @@
 
 
 
+
 </script>
 
 <body>
@@ -76,8 +77,9 @@
                     <a
                            th:href="@{/owner/{id}/manage/{restaurantId}/showImage(restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodImagePath=${food.foodImagePath})}"
                            th:if="${food.foodImageAsBase64 != null}">
-                         <img th:src="|data:image/png;base64,${food.foodImageAsBase64}|" class="img-round" alt="No pic" width="100" height="100"/>
+                         <img th:src="|data:image/png;base64,${food.foodImageAsBase64}|" width="100" height="100"/>
                     </a>
+                    <a th:if="${food.foodImageAsBase64 == null}">No pic</a>
                </td>
                <td>
                     <form action="#"
@@ -92,33 +94,36 @@
      </table>
 </div>
 <div class="container">
-     <div th:if="${totalPages > 1}">
+     <div th:if="${totalMenuPages > 1}">
           <div class="row col-sm-10">
                <div class="col-sm-2">
-                    Menu size: [[${totalSize}]]
+                    Menu size: [[${totalMenuSize}]]
                </div>
                <div class="col-sm-1">
-        <span th:each="p: ${#numbers.sequence(1, totalPages)}">
+          <span th:each="p: ${#numbers.sequence(1, totalMenuPages)}">
             <a th:if="${currentPage != p}"
-               th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}?sortBy={sortBy}&sortHow={sortHow}
-               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+               th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}/{dp}?sortBy={sortBy}&sortHow={sortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, p=${p},dp=${deliveriesPage},
+               sortHow=${sortHow},sortBy=${sortBy},deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy})}">
                [[${p}]]</a>
-            <span th:unless="${currentPage != p}">[[${p}]]</span>  &nbsp; &nbsp;
+               <span th:unless="${currentPage != p}">[[${p}]]</span>
         </span>
                </div>
                <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}"
-                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{nextPage}?sortBy={sortBy}&sortHow={sortHow}
-          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, nextPage=${currentPage + 1}, sortHow=${sortHow},sortBy=${sortBy})}">
+                    <a th:if="${currentPage < totalMenuPages}"
+                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{nextPage}/{dp}?sortBy={sortBy}&sortHow={sortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, nextPage=${currentPage + 1},dp=${deliveriesPage},
+           sortHow=${sortHow},sortBy=${sortBy},deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy})}">
                          Next</a>
-                    <span th:unless="${currentPage < totalPages}">Next</span>
+                    <span th:unless="${currentPage < totalMenuPages}">Next</span>
                </div>
                <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}"
-                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{last}?sortBy={sortBy}&sortHow={sortHow}
-         (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},last=${totalPages})}">
+                    <a th:if="${currentPage < totalMenuPages}"
+                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{last}/{dp}?sortBy={sortBy}&sortHow={sortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+         (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},dp=${deliveriesPage},
+         sortHow=${sortHow},sortBy=${sortBy},last=${totalMenuPages},deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy})}">
                          Last</a>
-                    <span th:unless="${currentPage < totalPages}">Last</span>
+                    <span th:unless="${currentPage < totalMenuPages}">Last</span>
                </div>
           </div>
      </div>
@@ -143,7 +148,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="delivery: ${deliveries.deliveries}">
+          <tr th:each="delivery: ${deliveries}">
                <td th:text="${delivery.deliveryAddressId}"></td>
                <td th:text="${delivery.city}"></td>
                <td th:text="${delivery.postalCode}"></td>
@@ -151,7 +156,7 @@
                <td>
                     <form action="#"
                           th:action="@{/owner/{id}/manage/{restaurantId}/deleteAddress/{deliveryId}
-                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryAddressId})}"
+                         (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryId=${delivery.deliveryAddressId})}"
                           th:method="DELETE">
                          <button type="submit" class="btn btn-danger">DELETE</button>
                     </form>
@@ -159,6 +164,41 @@
           </tr>
           </tbody>
      </table>
+</div>
+<div class="container">
+     <div th:if="${totalDeliveryPages > 1}">
+          <div class="row col-sm-15">
+               <div class="col-sm-2">
+                    Delivery addresses: [[${totalDeliverySize}]]
+               </div>
+               <div class="col-sm-1">
+        <span th:each="dp: ${#numbers.sequence(1, totalDeliveryPages)}">
+            <a th:if="${currentDeliveryPage != dp}"
+               th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}/{dp}?deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}&sortBy={sortBy}&sortHow={sortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, dp=${dp}, p=${menuPage},
+               deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},sortHow=${sortHow},sortBy=${sortBy})}">
+               [[${dp}]]</a>
+             <span th:unless="${currentDeliveryPage != dp}">[[${dp}]]</span>
+        </span>
+               </div>
+               <div class="col-sm-1">
+                    <a th:if="${currentDeliveryPage < totalDeliveryPages}"
+                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}/{nextPage}?deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}&sortBy={sortBy}&sortHow={sortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, nextPage=${currentDeliveryPage + 1},p=${menuPage},
+                deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},sortHow=${sortHow},sortBy=${sortBy})}">
+                         Next</a>
+                    <span th:unless="${currentDeliveryPage < totalDeliveryPages}">Next</span>
+               </div>
+               <div class="col-sm-1">
+                    <a th:if="${currentDeliveryPage < totalDeliveryPages}"
+                       th:href="@{/owner/{id}/manage/{restaurantId}/page/{p}/{last}?deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}&sortBy={sortBy}&sortHow={sortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, deliveryPageNumber=${currentDeliveryPage},p=${menuPage},
+               deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},last=${totalDeliveryPages},sortHow=${sortHow},sortBy=${sortBy})}">
+                         Last</a>
+                    <span th:unless="${currentDeliveryPage < totalDeliveryPages}">Last</span>
+               </div>
+          </div>
+     </div>
 </div>
 <br>
 <div class="container">
@@ -168,7 +208,7 @@
            th:method="POST"
            th:object="${deliveryAddress}">
           <div class="form-group">
-               CITY: <input type="text" th:field="*{city}"/>
+               CITY: <input type="text" th:field="*{city}" required/>
                POSTAL CODE: <input type="text" th:field="*{postalCode}"/>
                STREET: <input type="text" th:field="*{street}"/>
           </div>
