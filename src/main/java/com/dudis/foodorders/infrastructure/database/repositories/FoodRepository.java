@@ -44,8 +44,11 @@ public class FoodRepository implements FoodDAO {
     }
 
     @Override
-    public void deleteFood(Integer foodId) {
+    public String deleteFood(Integer foodId) {
+        FoodEntity existingFood = foodJpaRepository.findById(foodId)
+            .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(foodId)));
         foodJpaRepository.deleteById(foodId);
+        return existingFood.getFoodImagePath();
     }
 
     @Override

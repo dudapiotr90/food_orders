@@ -84,7 +84,7 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @PathVariable(value = "foodId") Integer foodId
     ) {
-        foodService.deleteFood(foodId);
+        restaurantService.deleteFoodFromMenu(foodId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 

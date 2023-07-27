@@ -11,7 +11,7 @@ public interface FoodDAO {
 
     String updateFood(Food food,String foodImagePath);
 
-    void deleteFood(Integer foodId);
+    String deleteFood(Integer foodId);
 
     Page<Food> getPaginatedFoods(Integer menuId, Pageable pageable);
 }

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -107,6 +108,12 @@ public class RestaurantService {
         storageService.removeImageFromServer(imagePathToDelete);
         return foodImage.isBlank() ? "No image" : foodImage;
     }
+    @Transactional
+    public String deleteFoodFromMenu(Integer foodId) {
+    String imagePathToDelete = foodService.deleteFood(foodId);
+    storageService.removeImageFromServer(imagePathToDelete);
+    return Objects.isNull(imagePathToDelete) ? "Already removed" : "Removed Successfully";
+}
 
     public Page<FoodDTO> getPaginatedMenu(int pageNumber, int pageSize, String sortBy, String sortHow, Integer restaurantId) {
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
@@ -128,5 +135,6 @@ public class RestaurantService {
         Restaurant restaurant = restaurantMapper.mapFromDTO(findProcessingRestaurant(restaurantId));
         deliveryAddressService.addDeliveryAddressToRestaurant(deliveryAddress, restaurant);
     }
+
 }
 
