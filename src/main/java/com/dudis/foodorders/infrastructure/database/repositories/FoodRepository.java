@@ -5,7 +5,6 @@ import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodImageJpaRepository;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodJpaRepository;
 import com.dudis.foodorders.services.dao.FoodDAO;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +19,7 @@ public class FoodRepository implements FoodDAO {
 
     private final FoodJpaRepository foodJpaRepository;
     private final MenuEntityMapper menuEntityMapper;
+
     @Override
     public void saveFood(Food food, Menu menu, String foodImagePath) {
         MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
@@ -30,14 +30,17 @@ public class FoodRepository implements FoodDAO {
     }
 
     @Override
-    public void updateFood(Food food) {
-       FoodEntity existingFood = foodJpaRepository.findById(food.getFoodId())
-           .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(food.getFoodId())));
-       existingFood.setName(food.getName());
-       existingFood.setDescription(food.getDescription());
-       existingFood.setFoodType(food.getFoodType());
-       existingFood.setPrice(food.getPrice());
-        foodJpaRepository.save(existingFood);
+    public String updateFood(Food food, String foodImagePath) {
+        FoodEntity existingFood = foodJpaRepository.findById(food.getFoodId())
+            .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(food.getFoodId())));
+        String imageToDelete = existingFood.getFoodImagePath();
+        existingFood.setName(food.getName());
+        existingFood.setDescription(food.getDescription());
+        existingFood.setFoodType(food.getFoodType());
+        existingFood.setPrice(food.getPrice());
+        existingFood.setFoodImagePath(foodImagePath);
+        FoodEntity updatedFood = foodJpaRepository.saveAndFlush(existingFood);
+        return imageToDelete;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class FoodRepository implements FoodDAO {
 
     @Override
     public Page<Food> getPaginatedFoods(Integer menuId, Pageable pageable) {
-        return foodJpaRepository.findByMenuId(menuId,pageable).map(menuEntityMapper::mapFoodFromEntity);
+        return foodJpaRepository.findByMenuId(menuId, pageable).map(menuEntityMapper::mapFoodFromEntity);
     }
 
 }

@@ -3,14 +3,13 @@ package com.dudis.foodorders.services;
 import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.api.mappers.MenuMapper;
 import com.dudis.foodorders.domain.Food;
-import com.dudis.foodorders.domain.FoodImage;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.services.dao.FoodDAO;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
@@ -19,14 +18,12 @@ public class FoodService {
 
     private final MenuMapper menuMapper;
 
-    public void addFoodToMenu(FoodDTO foodDTO, Menu menu, String foodImagePath) {
-        foodDAO.saveFood(menuMapper.mapFoodFromDTO(foodDTO), menu,foodImagePath);
+    public void addFoodToMenu(Food food, Menu menu, String foodImagePath) {
+        foodDAO.saveFood(food, menu,foodImagePath);
     }
 
-    @Transactional
-    public void updateMenuPosition(FoodDTO foodDTO) {
-        Food foodToUpdate = menuMapper.mapFoodFromDTO(foodDTO);
-        foodDAO.updateFood(foodToUpdate);
+    public String updateMenuPosition(Food food, String foodImagePath) {
+        return foodDAO.updateFood(food,foodImagePath);
     }
 
     public void deleteFood(Integer foodId) {
