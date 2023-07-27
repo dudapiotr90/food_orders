@@ -19,6 +19,8 @@
     detailsSection.style.display = detailsSection.style.display === 'none' ? 'block' : 'none';
   }
 
+
+
 </script>
 
 <body>
@@ -76,14 +78,11 @@
                            th:if="${food.foodImageAsBase64 != null}">
                          <img th:src="|data:image/png;base64,${food.foodImageAsBase64}|" class="img-round" alt="No pic" width="100" height="100"/>
                     </a>
-                    <!--          <img src="@{/} + ${food.foodImagePath}" class="img-round" alt="No pic"-->
-                    <!--          <a th:href="${food.foodImage !=null ? food.foodImage.getFoodImageAsBase64() : ''}" target="_blank">-->
-
                </td>
                <td>
                     <form action="#"
                           th:action="@{/owner/{id}/manage/{restaurantId}/deleteFood/{foodId}
-                (restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodId=${food.foodId})}"
+                          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodId=${food.foodId})}"
                           th:method="DELETE">
                          <button type="submit" class="btn btn-danger">DELETE</button>
                     </form>

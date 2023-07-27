@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface FoodDAO {
     void saveFood(Food food, Menu menu, String foodImagePath);
 
-    void updateFood(Food foodId);
+    String updateFood(Food food,String foodImagePath);
 
     void deleteFood(Integer foodId);
 

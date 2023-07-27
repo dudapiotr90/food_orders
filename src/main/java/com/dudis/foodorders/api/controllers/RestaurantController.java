@@ -62,7 +62,7 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @ModelAttribute("food") FoodDTO foodDTO,
         @RequestParam("image") MultipartFile image
-        ) throws IOException, URISyntaxException {
+        ) throws IOException {
         restaurantService.addFoodToMenu(foodDTO, restaurantId,image);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
@@ -72,9 +72,9 @@ public class RestaurantController {
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @ModelAttribute("food") FoodDTO foodDTO,
-        @RequestParam("image") MultipartFile file
-    ) {
-        foodService.updateMenuPosition(foodDTO);
+        @RequestParam("image") MultipartFile image
+    ) throws IOException {
+        restaurantService.updateMenuPosition(foodDTO,restaurantId,image);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
