@@ -15,18 +15,17 @@ import java.util.stream.Collectors;
 public interface OrderEntityMapper {
 
     @Mapping(target = "restaurant",ignore = true)
-    @Mapping(target = "customer",ignore = true)
-    @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItems")
+    @Mapping(target = "orderDetails",ignore = true)
     Order mapFromEntity(OrderEntity orderEntity);
 
-    @Named("mapOrderItems")
-    default Set<OrderItem> mapOrderItems(Set<OrderItemEntity> orderItems) {
-        return orderItems.stream()
-            .map(this::mapOrderItem)
-            .collect(Collectors.toSet());
-    }
+//    @Named("mapOrderItems")
+//    default Set<OrderItem> mapOrderItems(Set<OrderItemEntity> orderItems) {
+//        return orderItems.stream()
+//            .map(this::mapOrderItem)
+//            .collect(Collectors.toSet());
+//    }
 
-    @Mapping(target = "order",ignore = true)
-    @Mapping(target = "food",ignore = true)
-    OrderItem mapOrderItem(OrderItemEntity orderItem);
+//    @Mapping(target = "order",ignore = true)
+//    @Mapping(target = "food",ignore = true)
+//    OrderItem mapOrderItem(OrderItemEntity orderItem);
 }

@@ -38,19 +38,10 @@ public class OrderEntity {
     private Boolean realized;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
-    private Set<OrderItemEntity> orderItems;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "restaurant_id")
-//    private RestaurantEntity restaurant;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "order_details",
-        joinColumns = @JoinColumn(name="order_id"),
-        inverseJoinColumns =@JoinColumn(name = "restaurant_id")
-    )
+    private Set<OrderDetailEntity> orderDetails;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    @JoinColumn(name = "restaurant_id")
+    private RestaurantEntity restaurant;
+
 }

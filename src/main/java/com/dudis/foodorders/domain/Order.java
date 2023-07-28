@@ -1,6 +1,7 @@
 package com.dudis.foodorders.domain;
 
 import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
+import com.dudis.foodorders.infrastructure.database.entities.OrderDetailEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import lombok.Builder;
@@ -20,7 +21,6 @@ public class Order {
     OffsetDateTime completedDateTime;
     String customerComment;
     Boolean realized;
-    Set<OrderItem> orderItems;
+    Set<OrderDetail> orderDetails;
     Restaurant restaurant;
-    Customer customer;
 }

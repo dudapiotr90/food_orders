@@ -33,7 +33,7 @@ public class CustomerEntity {
     private AccountEntity account;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
-    private Set<OrderEntity> orders;
+    private Set<OrderDetailEntity> orderDetails;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
     private Set<BillEntity> bills;
