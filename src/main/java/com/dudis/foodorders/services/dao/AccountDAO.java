@@ -17,4 +17,6 @@ public interface AccountDAO {
     void enableAccount(Integer accountId);
 
     Optional<Account> findByLogin(String login);
+
+    Integer findByRole(String role);
 }

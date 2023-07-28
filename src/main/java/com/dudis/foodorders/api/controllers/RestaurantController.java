@@ -1,10 +1,12 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
+import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.FoodService;
 import com.dudis.foodorders.services.MenuService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ public class RestaurantController {
     public static final String MANAGE_MENU_PAGE = MANAGE + "/page/{menuPageNumber}/{deliveriesPageNumber}";
     public static final String ADD_ADDRESS = MANAGE + "/addAddress";
 
+    private final SecurityUtils securityUtils;
+
     private final RestaurantService restaurantService;
     private final MenuService menuService;
     private final FoodService foodService;
@@ -37,9 +41,11 @@ public class RestaurantController {
     public String manageRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        Model modelMap
+        Model modelMap,
+        HttpServletRequest request
     ) {
-        return getPaginated(ownerId, restaurantId, modelMap, 1, "foodId", "asc", 1, "deliveryAddressId", "asc");
+        securityUtils.checkAccess(ownerId, request);
+        return getPaginated(ownerId, restaurantId, modelMap, 1, "foodId", "asc", 1, "deliveryAddressId", "asc",request);
 
     }
 
@@ -47,8 +53,10 @@ public class RestaurantController {
     public String modifyMenu(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        ModelMap modelMap
+        ModelMap modelMap,
+        HttpServletRequest request
     ) {
+        securityUtils.checkAccess(ownerId, request);
         modelMap.addAttribute("food", new FoodDTO());
         modelMap.addAttribute("restaurantId", restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
@@ -61,8 +69,10 @@ public class RestaurantController {
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @ModelAttribute("food") FoodDTO foodDTO,
-        @RequestParam("image") MultipartFile image
+        @RequestParam("image") MultipartFile image,
+        HttpServletRequest request
     ) throws IOException {
+        securityUtils.checkAccess(ownerId, request);
         restaurantService.addFoodToMenu(foodDTO, restaurantId, image);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
@@ -72,8 +82,10 @@ public class RestaurantController {
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @ModelAttribute("food") FoodDTO foodDTO,
-        @RequestParam("image") MultipartFile image
+        @RequestParam("image") MultipartFile image,
+        HttpServletRequest request
     ) throws IOException {
+        securityUtils.checkAccess(ownerId, request);
         restaurantService.updateMenuPosition(foodDTO, restaurantId, image);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
@@ -82,8 +94,10 @@ public class RestaurantController {
     public String removeMenuPosition(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        @PathVariable(value = "foodId") Integer foodId
+        @PathVariable(value = "foodId") Integer foodId,
+        HttpServletRequest request
     ) {
+        securityUtils.checkAccess(ownerId, request);
         restaurantService.deleteFoodFromMenu(foodId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
@@ -92,8 +106,10 @@ public class RestaurantController {
     public String addAddress(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        @ModelAttribute("deliveryAddress") DeliveryAddressDTO deliveryAddressDTO
+        @ModelAttribute("deliveryAddress") DeliveryAddressDTO deliveryAddressDTO,
+        HttpServletRequest request
     ) {
+        securityUtils.checkAccess(ownerId, request);
         restaurantService.addDeliveryAddress(deliveryAddressDTO, restaurantId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
@@ -108,13 +124,14 @@ public class RestaurantController {
         @RequestParam("sortHow") String sortHow,
         @PathVariable(value = "deliveriesPageNumber", required = false) int deliveriesPageNumber,
         @RequestParam("deliverySortBy") String deliverySortBy,
-        @RequestParam("deliverySortHow") String deliverySortHow
+        @RequestParam("deliverySortHow") String deliverySortHow,
+        HttpServletRequest request
     ) {
-        int pageSize = 4; // default Value
+        securityUtils.checkAccess(ownerId, request);
+        int defaultPageSize = 4;
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
-        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(menuPageNumber, pageSize, sortBy, sortHow, restaurantId);
-        Page<DeliveryAddressDTO> deliveriesPage = restaurantService.getPaginatedDeliveries(deliveriesPageNumber, pageSize, deliverySortBy, deliverySortHow, restaurantId);
-//        DeliveryAddressesDTO deliveriesDTO = restaurantService.getDeliveryAddresses(restaurantId);
+        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(menuPageNumber, defaultPageSize, sortBy, sortHow, restaurantId);
+        Page<DeliveryAddressDTO> deliveriesPage = restaurantService.getPaginatedDeliveries(deliveriesPageNumber, defaultPageSize, deliverySortBy, deliverySortHow, restaurantId);
         OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);

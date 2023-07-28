@@ -17,9 +17,6 @@ public class ApiRoleEntity {
     private Integer apiRoleId;
 
     @Column(name = "role")
-//    @Enumerated(EnumType.STRING)
     private String role;
 
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "role",cascade = CascadeType.PERSIST)
-//    private Set<AccountEntity> accounts;
 }

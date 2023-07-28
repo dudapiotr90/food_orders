@@ -40,9 +40,15 @@ public class OrderEntity {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
     private Set<OrderItemEntity> orderItems;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id")
-    private RestaurantEntity restaurant;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "restaurant_id")
+//    private RestaurantEntity restaurant;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "order_details",
+        joinColumns = @JoinColumn(name="order_id"),
+        inverseJoinColumns =@JoinColumn(name = "restaurant_id")
+    )
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")

@@ -9,4 +9,9 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 public class ApiRoleRepository implements ApiRoleDAO {
     private final ApiRoleJpaRepository apiRoleJpaRepository;
+
+    @Override
+    public String findRoleById(Integer roleId) {
+        return apiRoleJpaRepository.findRoleByApiRoleId(roleId);
+    }
 }

@@ -21,5 +21,5 @@ public class Account {
     Boolean status;
     Boolean locked;
     Boolean enabled;
-    String role;
+    Integer roleId;
 }

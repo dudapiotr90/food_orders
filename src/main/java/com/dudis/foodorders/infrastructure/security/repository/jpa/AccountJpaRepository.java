@@ -23,7 +23,10 @@ public interface AccountJpaRepository extends JpaRepository<AccountEntity,Intege
     Optional<AccountEntity> findByLogin(String login);
 
     @Modifying
-    @Query("UPDATE AccountEntity a " +
-        "SET a.enabled = TRUE WHERE a.accountId = ?1")
+    @Query("""
+        UPDATE AccountEntity a
+        SET a.enabled = TRUE, a.unlocked = TRUE
+        WHERE a.accountId = ?1
+        """)
     void enableAccount(Integer accountId);
 }
