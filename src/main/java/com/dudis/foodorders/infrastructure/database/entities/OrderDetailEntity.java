@@ -31,4 +31,6 @@ public class OrderDetailEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderDetail")
     private List<OrderItemEntity> orderItems;
+
+    // TODO add migrations. Chech ERD diagram. Add cart to migrations. Change relations again...
 }

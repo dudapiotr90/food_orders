@@ -14,4 +14,3 @@ CREATE TABLE delivery
         FOREIGN KEY (owner_id)
             REFERENCES owner (owner_id)
 );
--- TODO check with ERD diagram. Delete local_type table possibly

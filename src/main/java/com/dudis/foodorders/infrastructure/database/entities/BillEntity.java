@@ -28,8 +28,8 @@ public class BillEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
     @Column(name="payed")
     private Boolean payed;
@@ -41,5 +41,10 @@ public class BillEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
+
 
 }
