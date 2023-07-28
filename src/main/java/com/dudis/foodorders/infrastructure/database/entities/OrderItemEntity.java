@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Builder
 @EqualsAndHashCode(of = "orderItemId")
-@ToString(of = {"orderItemId","quantity","order"})
+@ToString(of = {"orderItemId","quantity","orderDetail"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -23,12 +23,13 @@ public class OrderItemEntity {
     private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="order_id")
-    private OrderEntity order;
+    @JoinColumn(name="order_detail_id")
+    private OrderDetailEntity orderDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="food_id")
     private FoodEntity food;
+
 
 
 }

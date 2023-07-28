@@ -30,7 +30,7 @@ public class ConfirmationToken {
     @Column(name = "expires_at")
     private OffsetDateTime expiresAt;
 
-    @Column(name = "confirmedAt")
+    @Column(name = "confirmed_at")
     private OffsetDateTime confirmedAt;
 
     @ManyToOne
