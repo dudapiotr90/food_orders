@@ -1,13 +1,13 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.FoodTypeDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
-import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.security.ApiRoleService;
 import com.dudis.foodorders.infrastructure.security.AuthorityException;
+import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.OwnerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -33,37 +33,28 @@ public class OwnerController {
     public static final String OWNER_SHOW = "/owner/{id}/show/{restaurantId}";
     // TODO SHOW przerobić na ilość zamówień, ilość pozycji menu
 
-
-
+    private final SecurityUtils securityUtils;
     private final OwnerService ownerService;
+
     private final RestaurantMapper restaurantMapper;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
-        if (Objects.isNull(request.getRemoteUser())) {
-            return "redirect:/login";
-        }
-        Integer loggedAccount = getLoggedInAccountId(request);
-        OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount);
+        Account loggedAccount = securityUtils.getLoggedInAccountId(request);
+        OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount.getAccountId());
         return "redirect:/owner/" + owner.getOwnerId();
     }
 
     @GetMapping(value = OWNER_ID)
     public ModelAndView getSpecificOwnerPage(@PathVariable(value = "id") Integer ownerId, HttpServletRequest request) {
-        OwnerDTO owner = ownerService.findOwnerById(ownerId);
-        Integer loggedInAccount = getLoggedInAccountId(request);
-        if (!owner.getAccountId().equals(loggedInAccount)) {
-            throw new AuthorityException(
-                String.format("invalid PathVariable. You can access only your account!. /owner/%s",
-                loggedInAccount));
-        }
+        securityUtils.checkAccess(ownerId, request);
         Map<String, ?> model = prepareOwnerData(ownerId);
-
-        return new ModelAndView("owner_portal", model);
+        return new ModelAndView("owner", model);
     }
 
     @GetMapping(value = OWNER_ADD)
-    public String restaurantFormPage(@PathVariable(value = "id") Integer ownerId, ModelMap model) {
+    public String restaurantFormPage(@PathVariable(value = "id") Integer ownerId, ModelMap model,HttpServletRequest request) {
+        securityUtils.checkAccess(ownerId, request);
         model.addAttribute("restaurant", RestaurantDTO.builder().build());
         model.addAttribute("ownerId", ownerId);
         model.addAttribute("types", LocalType.values());
@@ -74,20 +65,16 @@ public class OwnerController {
     public String addRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         ModelMap model,
-        @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO
+        @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
+        HttpServletRequest request
     ) {
+        securityUtils.checkAccess(ownerId, request);
         ownerService.addRestaurant(ownerId, restaurantDTO);
-
-
         return "redirect:" + OWNER + "/" + ownerId;
     }
 
 
-    private Integer getLoggedInAccountId(HttpServletRequest request) {
-        String login = request.getRemoteUser();
-        Account ownerAccount = ownerService.findOwnerByLogin(login);
-        return ownerAccount.getAccountId();
-    }
+
 
 
     private Map<String, ?> prepareOwnerData(Integer ownerId) {

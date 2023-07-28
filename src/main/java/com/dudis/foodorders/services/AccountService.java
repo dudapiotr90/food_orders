@@ -1,6 +1,9 @@
 package com.dudis.foodorders.services;
 
+import com.dudis.foodorders.infrastructure.security.ApiRoleService;
+import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 import lombok.AllArgsConstructor;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
@@ -25,6 +28,19 @@ public class AccountService {
         }
     }
 
+    public void enableAccount(Integer accountId) {
+        accountDAO.enableAccount(accountId);
+    }
+
+    public Account findByLogin(String login) {
+        Optional<Account> account = accountDAO.findByLogin(login);
+        if (account.isEmpty()) {
+            throw new NotFoundException(
+                String.format("User with login: [%s] doesn't exists", login));
+        }
+        return account.get();
+    }
+
     public Account buildAccount(RegistrationRequest request) {
         return Account.builder()
             .login(request.getUserLogin())
@@ -37,20 +53,7 @@ public class AccountService {
                 .postalCode(request.getUserAddressPostalCode())
                 .address(request.getUserAddressStreet())
                 .build())
-            .role(request.getRole())
+            .roleId(accountDAO.findByRole(request.getRole()))
             .build();
-    }
-
-    public void enableAccount(Integer accountId) {
-        accountDAO.enableAccount(accountId);
-    }
-
-    public Account findByLogin(String login) {
-        Optional<Account> account = accountDAO.findByLogin(login);
-        if (account.isEmpty()) {
-            throw new NotFoundException(
-                String.format("User with login: [%s] doesn't exists", login));
-        }
-        return account.get();
     }
 }

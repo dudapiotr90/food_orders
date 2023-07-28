@@ -95,7 +95,7 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !unlocked;
+        return unlocked;
     }
 
     @Override

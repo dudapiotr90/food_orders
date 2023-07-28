@@ -9,6 +9,7 @@ import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountManagerJpaRepository;
+import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
 import com.dudis.foodorders.services.dao.AccountDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class AccountRepository implements AccountDAO {
     private final AccountManagerJpaRepository accountManagerJpaRepository;
     private final AccountEntityMapper accountEntityMapper;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final ApiRoleJpaRepository apiRoleJpaRepository;
 
     @Override
     public Optional<Account> findByEmail(String userEmail) {
@@ -34,7 +36,13 @@ public class AccountRepository implements AccountDAO {
 
     @Override
     public Optional<Account> findByLogin(String login) {
-        return accountJpaRepository.findByLogin(login).map(accountEntityMapper::mapFromEntity);
+        return accountJpaRepository.findByLogin(login)
+            .map(accountEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Integer findByRole(String role) {
+        return apiRoleJpaRepository.findByRole(role);
     }
 
     @Override
