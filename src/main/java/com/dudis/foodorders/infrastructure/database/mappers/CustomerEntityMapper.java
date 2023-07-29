@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerEntityMapper {
-    @Mapping(target = "orderDetails",ignore = true)
+//    @Mapping(target = "cart",ignore = true)
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "account",ignore = true)
     CustomerEntity mapToEntity(Customer customer);

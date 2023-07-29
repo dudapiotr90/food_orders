@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -88,25 +87,28 @@ public class RestaurantService {
     public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
         Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
         Food food = menuMapper.mapFoodFromDTO(foodDTO);
+        String foodImage = storageService.uploadImageToServer(image, restaurantId);
         if (image.isEmpty()) {
             foodService.addFoodToMenu(food, menu, null);
+        } else {
+            foodService.addFoodToMenu(food, menu, foodImage);
         }
-        String foodImage = storageService.uploadImageToServer(image, restaurantId);
-        foodService.addFoodToMenu(food, menu, foodImage);
         return foodImage.isBlank() ? "No image" : foodImage;
     }
 
     @Transactional
     public String updateMenuPosition(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
-//        Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
         Food food = menuMapper.mapFoodFromDTO(foodDTO);
+        String foodImagePath = storageService.uploadImageToServer(image, restaurantId);
         if (image.isEmpty()) {
-            foodService.updateMenuPosition(food,null);
+            foodService.updateMenuPosition(food, null);
+        } else {
+            String imagePathToDelete = foodService.updateMenuPosition(food, foodImagePath);
+            if (Objects.nonNull(imagePathToDelete)) {
+                storageService.removeImageFromServer(imagePathToDelete);
+            }
         }
-        String foodImage = storageService.uploadImageToServer(image, restaurantId);
-        String imagePathToDelete = foodService.updateMenuPosition(food, foodImage);
-        storageService.removeImageFromServer(imagePathToDelete);
-        return foodImage.isBlank() ? "No image" : foodImage;
+        return foodImagePath.isBlank() ? "No image" : foodImagePath;
     }
     @Transactional
     public String deleteFoodFromMenu(Integer foodId) {

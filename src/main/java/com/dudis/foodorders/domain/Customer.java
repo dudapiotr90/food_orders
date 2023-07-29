@@ -1,5 +1,6 @@
 package com.dudis.foodorders.domain;
 
+import com.dudis.foodorders.infrastructure.database.entities.CartEntity;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -14,6 +15,6 @@ public class Customer {
     String name;
     String surname;
     Account account;
-    Set<Order> orders;
+    Cart cart;
     Set<Bill> bills;
 }

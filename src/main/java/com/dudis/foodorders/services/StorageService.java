@@ -30,7 +30,7 @@ public class StorageService {
         if (!Files.exists(restaurantUploadsCatalog)) {
             Files.createDirectories(restaurantUploadsCatalog);
         }
-        if (Objects.nonNull(image.getOriginalFilename()) || !("".equals(image.getOriginalFilename()))) {
+        if (!"".equals(image.getOriginalFilename())) {
             String filename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString();
             String fileExtension = StringUtils.getFilenameExtension(filename);
@@ -38,7 +38,6 @@ public class StorageService {
             File destinationFile = new File(imagePath);
             image.transferTo(destinationFile);
             return imagePath;
-
         } else {
             return "";
         }

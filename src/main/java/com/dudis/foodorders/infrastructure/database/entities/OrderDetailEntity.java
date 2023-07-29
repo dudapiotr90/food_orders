@@ -23,14 +23,13 @@ public class OrderDetailEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    private CartEntity cart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderDetail")
-    private List<OrderItemEntity> orderItems;
+
 
     // TODO add migrations. Chech ERD diagram. Add cart to migrations. Change relations again...
 }
