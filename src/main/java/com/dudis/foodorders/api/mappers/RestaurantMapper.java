@@ -6,14 +6,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = OrderMapper.class)
 public interface RestaurantMapper {
 
     @Mapping(target = "menuDTO",source = "menu",ignore = true)
+    @Mapping(source = "orders", target ="orders",qualifiedByName = "mapOrders")
     RestaurantDTO mapToDTO(Restaurant restaurant);
 
-//    @Mapping(source = "menuDTO.menuName",target ="menu.menuName")
-//    @Mapping(source = "menuDTO.menuDescription",target ="menu.menuName")
     @Mapping(target ="owner",ignore = true)
     @Mapping(target ="deliveries",ignore = true)
     @Mapping(target ="deliveryAddresses",ignore = true)

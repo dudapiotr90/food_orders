@@ -14,13 +14,8 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",uses = OffsetDateTimeMapper.class)
 public interface OrderMapper {
-
-//    @Mapping(target = "restaurant",ignore = true)
-//    @Mapping(target = "customer",ignore = true)
     @Mapping(target = "receivedDateTime",source = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
     @Mapping(target = "completedDateTime",source = "completedDateTime",qualifiedByName = "mapOffsetDateTimeToString")
-//    @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItemsToDTO")
-    @Mapping(target = "orderItems",ignore = true)
     OrderDTO mapToDTO(Order order);
 
     @Named("mapOrderItemsToDTO")
@@ -33,4 +28,11 @@ public interface OrderMapper {
     @Mapping(target = "order",ignore = true)
     @Mapping(target = "food",ignore = true)
     OrderItemDTO mapOrderItem(OrderItem orderItem);
+
+    @Named("mapOrders")
+    default Set<OrderDTO> mapOrders(Set<Order> orders) {
+        return orders.stream().map(this::mapToDTO).collect(Collectors.toSet());
+    }
+
+
 }

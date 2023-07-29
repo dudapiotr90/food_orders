@@ -33,4 +33,5 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         WHERE re.restaurantId = :restaurantId
         """)
     Page<MenuEntity> findPaginatedMenuByRestaurantId(@Param("restaurantId") Integer restaurantId, Pageable pageable);
+
 }

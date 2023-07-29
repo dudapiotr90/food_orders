@@ -1,7 +1,7 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.domain.Order;
+import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.services.dao.OrderDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +15,9 @@ public class OrderService {
 
     public List<Order> getRestaurantOrders(Integer restaurantId) {
         return orderDAO.getRestaurantOrders(restaurantId);
+    }
+
+    public Integer countPendingOrdersForRestaurant(Restaurant restaurantId) {
+        return orderDAO.findPendingOrdersForRestaurant(restaurantId);
     }
 }

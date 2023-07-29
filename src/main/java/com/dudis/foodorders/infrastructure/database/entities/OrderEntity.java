@@ -37,7 +37,7 @@ public class OrderEntity {
     @Column(name = "realized")
     private Boolean realized;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
     private Set<OrderDetailEntity> orderDetails;
 
     @ManyToOne(fetch = FetchType.LAZY)

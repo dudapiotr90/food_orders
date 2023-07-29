@@ -2,13 +2,11 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
-import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
-import com.dudis.foodorders.infrastructure.security.ApiRoleService;
-import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.OwnerService;
+import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -36,7 +33,7 @@ public class OwnerController {
     private final SecurityUtils securityUtils;
     private final OwnerService ownerService;
 
-    private final RestaurantMapper restaurantMapper;
+    private final RestaurantService restaurantService;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
@@ -82,12 +79,14 @@ public class OwnerController {
         var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
         var pendingBills = ownerService.findPendingBills(ownerId);
         var owner = ownerService.findOwnerById(ownerId);
+        var pendingOrders = restaurantService.findAllOwnerPendingOrders(ownerId,addedRestaurants);
 
         return Map.of(
             "restaurants", addedRestaurants,
             "deliveries", pendingDeliveries,
             "bills", pendingBills,
-            "owner", owner
+            "owner", owner,
+            "pendingOrders",pendingOrders
         );
     }
 }
