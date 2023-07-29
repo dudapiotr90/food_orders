@@ -32,8 +32,9 @@ public class CustomerEntity {
     @JoinColumn(name = "account_id")
     private AccountEntity account;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
-    private Set<OrderDetailEntity> orderDetails;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id")
+    private CartEntity cart;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
     private Set<BillEntity> bills;

@@ -49,7 +49,7 @@ public class SecurityConfiguration {
         return http
 //            .csrf(AbstractHttpConfigurer::disable) // probably to dont have logout form
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers("/","/login","/registration/**","/css/**").permitAll()
+                    .requestMatchers("/","/login","/error","/registration/**","/css/**").permitAll()
                     .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
                     .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
                     .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())

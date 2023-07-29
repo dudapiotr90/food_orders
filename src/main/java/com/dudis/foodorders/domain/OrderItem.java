@@ -11,6 +11,6 @@ public class OrderItem {
 
     Integer orderItemId;
     Integer quantity;
-    OrderDetail orderDetail;
+    Cart cart;
     Food food;
 }

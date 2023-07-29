@@ -6,5 +6,14 @@ public enum FoodTypeDTO {
     SOUP,
     DESSERT,
     APPETIZER,
-    BREAKFAST
+    BREAKFAST,
+    ROLL,
+    BREAD,
+    COOKIE,
+    COFFEE,
+    TEA,
+    ALCOHOL,
+    WINE,
+    BEER,
+    SNACK
 }

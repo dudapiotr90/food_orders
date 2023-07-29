@@ -2,10 +2,7 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
-import com.dudis.foodorders.services.FoodService;
-import com.dudis.foodorders.services.MenuService;
 import com.dudis.foodorders.services.RestaurantService;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,8 +31,6 @@ public class RestaurantController {
     private final SecurityUtils securityUtils;
 
     private final RestaurantService restaurantService;
-    private final MenuService menuService;
-    private final FoodService foodService;
 
     @GetMapping(value = MANAGE)
     public String manageRestaurant(
@@ -61,7 +56,7 @@ public class RestaurantController {
         modelMap.addAttribute("restaurantId", restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("foodTypes", FoodTypeDTO.values());
-        return "menu";
+        return "menu_manager";
     }
 
     @PostMapping(ADD_MENU_POSITION)
@@ -74,7 +69,7 @@ public class RestaurantController {
     ) throws IOException {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.addFoodToMenu(foodDTO, restaurantId, image);
-        return restaurantManagerPortal(ownerId, restaurantId);
+        return modifyMenuPortal(ownerId, restaurantId);
     }
 
     @PutMapping(UPDATE_MENU_POSITION)
@@ -87,7 +82,7 @@ public class RestaurantController {
     ) throws IOException {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.updateMenuPosition(foodDTO, restaurantId, image);
-        return restaurantManagerPortal(ownerId, restaurantId);
+        return modifyMenuPortal(ownerId, restaurantId);
     }
 
     @DeleteMapping(DELETE_MENU_POSITION)
@@ -148,10 +143,6 @@ public class RestaurantController {
     }
 
 
-    private String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {
-        return String.format("redirect:/owner/%s/manage/%s", ownerId, restaurantId);
-    }
-
     private void preparePaginatedAttributes(
         Model modelMap,
         Page<FoodDTO> menuPage,
@@ -174,5 +165,13 @@ public class RestaurantController {
         modelMap.addAttribute("totalMenuSize", menuPage.getTotalElements());
         modelMap.addAttribute("totalDeliveryPages", deliveriesPage.getTotalPages());
         modelMap.addAttribute("totalDeliverySize", deliveriesPage.getTotalElements());
+    }
+
+    private String restaurantManagerPortal(Integer ownerId, Integer restaurantId) {
+        return String.format("redirect:/owner/%s/manage/%s", ownerId, restaurantId);
+    }
+
+    private String modifyMenuPortal(Integer ownerId, Integer restaurantId) {
+        return String.format("redirect:/owner/%s/manage/%s/modifyMenu", ownerId, restaurantId);
     }
 }
