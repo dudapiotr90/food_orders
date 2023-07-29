@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class RestaurantDTO {
     private String description;
     private LocalType type;
     private MenuDTO menuDTO;
+    private Set<OrderDTO> orders;
 
 
 }

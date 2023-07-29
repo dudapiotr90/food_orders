@@ -30,7 +30,9 @@
           <tr>
                <th>NAME</th>
                <th>TYPE</th>
-               <th>DETAILS</th>
+               <th>ORDERS</th>
+               <th>ADDRESSES</th>
+               <th>DELIVERIES</th>
                <th></th>
           </tr>
           </thead>
@@ -38,12 +40,9 @@
           <tr th:each="restaurant: ${restaurants}">
                <td th:text="${restaurant.name}"></td>
                <td th:text="${restaurant.type}"></td>
-               <td>
-                    <form action="#" th:action="@{/owner/{id}/show/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"
-                          method="GET">
-                         <button type="submit" class="btn btn-info">SHOW</button>
-                    </form>
-               </td>
+               <td th:text="${restaurant.orders}"></td>
+               <td th:text="${restaurant.addresses}"></td>
+               <td th:text="${restaurant.deliveries}"></td>
                <td>
                     <form action="#"
                           th:action="@{/owner/{id}/manage/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"

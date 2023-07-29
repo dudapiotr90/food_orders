@@ -1,21 +1,16 @@
 package com.dudis.foodorders.infrastructure.database.mappers;
 
 import com.dudis.foodorders.domain.Order;
-import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Mapper(componentModel = "spring")
 public interface OrderEntityMapper {
-
-    @Mapping(target = "restaurant",ignore = true)
-    @Mapping(target = "orderDetails",ignore = true)
+    @Named("mapOrderEntities")
+    @Mapping(target = "restaurant", ignore = true)
+    @Mapping(target = "orderDetails", ignore = true)
     Order mapFromEntity(OrderEntity orderEntity);
 
 //    @Named("mapOrderItems")

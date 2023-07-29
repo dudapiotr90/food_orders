@@ -53,9 +53,9 @@ public class RestaurantRepository implements RestaurantDAO {
         MenuEntity menu = restaurantJpaRepository.findMenuByRestaurantId(restaurantId)
             .orElseThrow(() -> new EntityNotFoundException("Restaurant doesn't have a menu"));
 
-
         return restaurantJpaRepository.findPaginatedMenuByRestaurantId(restaurantId,pageable)
             .map(menuEntityMapper::mapFromEntity);
     }
+
 
 }

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +37,6 @@ public class RestaurantService {
     private final MenuService menuService;
     private final FoodService foodService;
     private final StorageService storageService;
-
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
@@ -65,6 +65,18 @@ public class RestaurantService {
             .map(menuMapper::mapToDTO)
             .orElse(MenuDTO.builder().foods(Set.of()).build());
 //            .orElseThrow(() -> new NotFoundException("Restaurant with id: [%s] doesn't have a menu".formatted(restaurantId)));
+    }
+
+    public List<Integer> findAllOwnerPendingOrders(Integer ownerId, List<RestaurantDTO> ownersRestaurants) {
+        List<Restaurant> restaurants = ownersRestaurants.stream()
+            .map(restaurantMapper::mapFromDTO).toList();
+        return restaurants.stream()
+            .map(this::countPendingOrdersForRestaurant)
+            .toList();
+    }
+
+    private Integer countPendingOrdersForRestaurant(Restaurant restaurant) {
+        return orderService.countPendingOrdersForRestaurant(restaurant);
     }
 
     public DeliveryAddressesDTO getDeliveryAddresses(Integer restaurantId) {
@@ -110,12 +122,15 @@ public class RestaurantService {
         }
         return foodImagePath.isBlank() ? "No image" : foodImagePath;
     }
+
     @Transactional
     public String deleteFoodFromMenu(Integer foodId) {
-    String imagePathToDelete = foodService.deleteFood(foodId);
-    storageService.removeImageFromServer(imagePathToDelete);
-    return Objects.isNull(imagePathToDelete) ? "Already removed" : "Removed Successfully";
-}
+        String imagePathToDelete = foodService.deleteFood(foodId);
+        if (Objects.nonNull(imagePathToDelete)) {
+            storageService.removeImageFromServer(imagePathToDelete);
+        }
+        return Objects.isNull(imagePathToDelete) ? "Already removed" : "Removed Successfully";
+    }
 
     public Page<FoodDTO> getPaginatedMenu(Integer pageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
         if (Objects.isNull(pageNumber)) {
@@ -129,9 +144,6 @@ public class RestaurantService {
             .orElseThrow(() -> new EntityNotFoundException("Restaurant doesn't have a menu"));
 
         return foodService.getPaginatedFoods(menu.getMenuId(), pageable);
-
-//        return restaurantDAO.getPaginatedMenu(restaurantId,pageable)
-//            .map(menuMapper::mapToDTO);
     }
 
     public Page<DeliveryAddressDTO> getPaginatedDeliveries(Integer deliveryPageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
