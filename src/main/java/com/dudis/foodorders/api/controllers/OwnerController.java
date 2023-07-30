@@ -79,14 +79,12 @@ public class OwnerController {
         var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
         var pendingBills = ownerService.findPendingBills(ownerId);
         var owner = ownerService.findOwnerById(ownerId);
-        var pendingOrders = restaurantService.findAllOwnerPendingOrders(ownerId,addedRestaurants);
 
         return Map.of(
             "restaurants", addedRestaurants,
-            "deliveries", pendingDeliveries,
+//            "deliveries", pendingDeliveries,
             "bills", pendingBills,
-            "owner", owner,
-            "pendingOrders",pendingOrders
+            "owner", owner
         );
     }
 }

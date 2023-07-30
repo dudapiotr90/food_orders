@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,6 @@ public interface DeliveryJpaRepository extends JpaRepository<DeliveryEntity,Inte
     @Param("accountId") Integer accountId,
     @Param("delivered") Boolean delivered
     );
+
+    Integer countByRestaurantAndDelivered(RestaurantEntity restaurant, boolean delivered);
 }

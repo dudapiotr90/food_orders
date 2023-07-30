@@ -163,5 +163,10 @@ public class RestaurantService {
         Restaurant restaurant = restaurantMapper.mapFromDTO(findProcessingRestaurant(restaurantId));
         deliveryAddressService.addDeliveryAddressToRestaurant(deliveryAddress, restaurant);
     }
+
+    public void deleteAddressFromRestaurant(Integer deliveryId) {
+        deliveryAddressService.deleteById(deliveryId);
+
+    }
 }
 

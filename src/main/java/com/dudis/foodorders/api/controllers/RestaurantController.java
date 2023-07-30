@@ -27,6 +27,7 @@ public class RestaurantController {
     public static final String DELETE_MENU_POSITION = MANAGE + "/deleteFood/{foodId}";
     public static final String MANAGE_MENU_PAGE = MANAGE + "/page/{menuPageNumber}/{deliveriesPageNumber}";
     public static final String ADD_ADDRESS = MANAGE + "/addAddress";
+    public static final String DELETE_ADDRESS = MANAGE + "/deleteAddress/{deliveryId}";
 
     private final SecurityUtils securityUtils;
 
@@ -94,6 +95,18 @@ public class RestaurantController {
     ) {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.deleteFoodFromMenu(foodId);
+        return restaurantManagerPortal(ownerId, restaurantId);
+    }
+
+    @DeleteMapping(DELETE_ADDRESS)
+    public String deleteAddress(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @PathVariable(value = "deliveryId") Integer deliveryId,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(ownerId, request);
+        restaurantService.deleteAddressFromRestaurant(deliveryId);
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
