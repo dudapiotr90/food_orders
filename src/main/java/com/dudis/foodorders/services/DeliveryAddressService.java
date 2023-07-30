@@ -30,4 +30,12 @@ public class DeliveryAddressService {
         return deliveryAddressDAO.getPaginatedRestaurantDeliveryAddresses(restaurantId, pageable)
             .map(deliveryAddressMapper::mapToDTO);
     }
+
+    public Integer countDeliveryAddressesForRestaurant(Restaurant restaurant) {
+        return deliveryAddressDAO.countDeliveryAddressesForRestaurant(restaurant);
+    }
+
+    public void deleteById(Integer deliveryId) {
+        deliveryAddressDAO.deleteById(deliveryId);
+    }
 }

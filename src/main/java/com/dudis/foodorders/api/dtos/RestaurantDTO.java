@@ -1,13 +1,10 @@
 package com.dudis.foodorders.api.dtos;
 
 import com.dudis.foodorders.domain.LocalType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
-
+@With
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,6 +16,8 @@ public class RestaurantDTO {
     private String description;
     private LocalType type;
     private MenuDTO menuDTO;
+    private Integer deliveriesSize;
+    private Integer deliveryAddressesSize;
     private Set<OrderDTO> orders;
 
 

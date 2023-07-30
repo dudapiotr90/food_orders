@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,Integer> {
+public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity, Integer> {
 
     @Query("""
         SELECT re FROM RestaurantEntity re
@@ -21,6 +21,7 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         WHERE ow.ownerId = :ownerId
         """)
     List<RestaurantEntity> findByOwnerId(@Param("ownerId") Integer ownerId);
+
 
     @Query("""
         SELECT re.menu FROM RestaurantEntity re

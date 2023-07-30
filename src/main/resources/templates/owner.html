@@ -41,8 +41,8 @@
                <td th:text="${restaurant.name}"></td>
                <td th:text="${restaurant.type}"></td>
                <td th:text="${restaurant.orders}"></td>
-               <td th:text="${restaurant.addresses}"></td>
-               <td th:text="${restaurant.deliveries}"></td>
+               <td th:text="${restaurant.deliveryAddressesSize}"></td>
+               <td th:text="${restaurant.deliveriesSize}"></td>
                <td>
                     <form action="#"
                           th:action="@{/owner/{id}/manage/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"

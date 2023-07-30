@@ -44,4 +44,14 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
             .map(deliveryAddressEntityMapper::mapFromEntity);
     }
 
+    @Override
+    public Integer countDeliveryAddressesForRestaurant(Restaurant restaurant) {
+        return deliveryAddressJpaRepository.countByRestaurant(restaurantEntityMapper.mapToEntity(restaurant));
+    }
+
+    @Override
+    public void deleteById(Integer deliveryId) {
+        deliveryAddressJpaRepository.deleteById(deliveryId);
+    }
+
 }

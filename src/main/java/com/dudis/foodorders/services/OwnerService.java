@@ -33,6 +33,7 @@ public class OwnerService {
     private final RestaurantService restaurantService;
     private final DeliveryService deliveryService;
     private final BillService billService;
+    private final DeliveryAddressService deliveryAddressService;
 
     private final OwnerMapper ownerMapper;
     private final RestaurantMapper restaurantMapper;
@@ -52,6 +53,10 @@ public class OwnerService {
     public List<RestaurantDTO> findAllOwnerRestaurants(Integer ownerId) {
         return restaurantService.findOwnersLocals(ownerId).stream()
             .map(restaurantMapper::mapToDTO)
+            .map(restaurantDTO -> restaurantDTO
+                .withDeliveriesSize(deliveryService.countPendingDeliveries(restaurantMapper.mapFromDTO(restaurantDTO),false)))
+            .map(restaurantDTO -> restaurantDTO
+                .withDeliveryAddressesSize(deliveryAddressService.countDeliveryAddressesForRestaurant(restaurantMapper.mapFromDTO(restaurantDTO))))
             .toList();
     }
 

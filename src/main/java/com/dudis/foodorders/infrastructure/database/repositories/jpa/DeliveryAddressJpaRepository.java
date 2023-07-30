@@ -1,6 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
-import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +28,6 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
         WHERE res.restaurantId = :restaurantId
         """)
     Page<DeliveryAddressEntity> findPaginatedDeliveryAddressesByRestaurantId(@Param("restaurantId") Integer restaurantId, Pageable pageable);
+
+    Integer countByRestaurant(RestaurantEntity restaurant);
 }
