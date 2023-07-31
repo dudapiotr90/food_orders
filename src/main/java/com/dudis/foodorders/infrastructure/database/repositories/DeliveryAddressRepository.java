@@ -1,18 +1,23 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.DeliveryAddress;
+import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
+import com.dudis.foodorders.infrastructure.database.entities.utility.RestaurantFromNamedNativeQuery;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeliveryAddressJpaRepository;
+import com.dudis.foodorders.infrastructure.database.repositories.jpa.MenuJpaRepository;
+import com.dudis.foodorders.infrastructure.database.repositories.jpa.OwnerJpaRepository;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,6 +27,8 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     private final DeliveryAddressJpaRepository deliveryAddressJpaRepository;
     private final DeliveryAddressEntityMapper deliveryAddressEntityMapper;
     private final RestaurantEntityMapper restaurantEntityMapper;
+    private final MenuJpaRepository menuJpaRepository;
+    private final OwnerJpaRepository ownerJpaRepository;
 
     @Override
     public List<DeliveryAddress> getRestaurantDeliveryAddresses(Integer restaurantId) {
@@ -40,7 +47,7 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
 
     @Override
     public Page<DeliveryAddress> getPaginatedRestaurantDeliveryAddresses(Integer restaurantId, Pageable pageable) {
-        return deliveryAddressJpaRepository.findPaginatedDeliveryAddressesByRestaurantId(restaurantId,pageable)
+        return deliveryAddressJpaRepository.findPaginatedDeliveryAddressesByRestaurantId(restaurantId, pageable)
             .map(deliveryAddressEntityMapper::mapFromEntity);
     }
 
@@ -52,6 +59,22 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     @Override
     public void deleteById(Integer deliveryId) {
         deliveryAddressJpaRepository.deleteById(deliveryId);
+    }
+
+    @Override
+    public List<Restaurant> findRestaurantsIdWithAddress(String city, String postalCode, String street) {
+        List<Object[]> restaurantDetails = deliveryAddressJpaRepository.findRestaurantsIdWithAddress(city, postalCode, street);
+        return restaurantDetails.stream()
+            .map(a -> RestaurantEntity.builder()
+                .restaurantId((Integer) a[0])
+                .name((String) a[1])
+                .description((String) a[2])
+                .type(LocalType.valueOf((String) a[3]))
+                .build()
+            )
+            .toList().stream()
+            .map(restaurantEntityMapper::mapFromEntity)
+            .toList();
     }
 
 }

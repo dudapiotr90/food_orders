@@ -5,8 +5,9 @@ import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderEntityMapper {
     @Named("mapOrderEntities")
     @Mapping(target = "restaurant", ignore = true)

@@ -18,8 +18,15 @@ public class BillRepository implements BillDAO {
 
 
     @Override
-    public List<Bill> findPendingBills(Integer accountId, boolean payed) {
-        return billJpaRepository.findByOwnerIdAndPayed(accountId,payed).stream()
+    public List<Bill> findOwnerPendingBills(Integer ownerId, boolean payed) {
+        return billJpaRepository.findByOwnerIdAndPayed(ownerId,payed).stream()
+            .map(billEntityMapper::mapFromEntity)
+            .toList();
+    }
+
+    @Override
+    public List<Bill> findCustomerPendingBills(Integer customerId, boolean payed) {
+        return billJpaRepository.findByCustomerIdAndPayed(customerId,payed).stream()
             .map(billEntityMapper::mapFromEntity)
             .toList();
     }

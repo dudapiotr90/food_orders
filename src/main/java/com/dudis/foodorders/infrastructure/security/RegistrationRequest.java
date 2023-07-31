@@ -22,4 +22,5 @@ public class RegistrationRequest {
     String userAddressCity;
     String userAddressPostalCode;
     String userAddressStreet;
+    String userResidenceNumber;
 }

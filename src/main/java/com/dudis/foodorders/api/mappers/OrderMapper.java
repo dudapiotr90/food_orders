@@ -4,18 +4,22 @@ import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OrderItemDTO;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
-import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring",uses = OffsetDateTimeMapper.class)
+@Mapper(componentModel = "spring", uses = {OffsetDateTimeMapper.class, OrderDetailsMapper.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
-    @Mapping(target = "receivedDateTime",source = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
-    @Mapping(target = "completedDateTime",source = "completedDateTime",qualifiedByName = "mapOffsetDateTimeToString")
+
+    @Named("mapOrderToDTO")
+    @Mapping(target = "receivedDateTime", source = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
+    @Mapping(target = "completedDateTime", source = "completedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
+    @Mapping(source = "orderDetails", target = "orderDetails", qualifiedByName = "mapOrderDetailsToDTO")
+    @Mapping(source = "restaurant.orders",target = "restaurant.orders",qualifiedByName = "mapOrders")
     OrderDTO mapToDTO(Order order);
 
     @Named("mapOrderItemsToDTO")
@@ -25,8 +29,8 @@ public interface OrderMapper {
             .collect(Collectors.toSet());
     }
 
-    @Mapping(target = "order",ignore = true)
-    @Mapping(target = "food",ignore = true)
+    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "cart", ignore = true)
     OrderItemDTO mapOrderItem(OrderItem orderItem);
 
     @Named("mapOrders")

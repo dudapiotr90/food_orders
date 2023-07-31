@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -39,6 +40,9 @@ public class OrderEntity {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
     private Set<OrderDetailEntity> orderDetails;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
+    private List<OrderItemEntity> orderItems;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")

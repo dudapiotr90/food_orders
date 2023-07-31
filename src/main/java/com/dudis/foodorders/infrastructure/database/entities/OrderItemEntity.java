@@ -3,6 +3,8 @@ package com.dudis.foodorders.infrastructure.database.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Builder
@@ -20,7 +22,7 @@ public class OrderItemEntity {
     private Integer orderItemId;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private BigDecimal quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="cart_id")
@@ -30,6 +32,8 @@ public class OrderItemEntity {
     @JoinColumn(name="food_id")
     private FoodEntity food;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
+    private OrderEntity order;
 
 }

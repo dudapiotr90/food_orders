@@ -12,12 +12,11 @@ import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.database.mappers.OwnerMapper;
+import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +45,9 @@ public class OwnerService {
         return ownerDAO.registerOwner(owner);
     }
 
-    public Account findOwnerByLogin(String login) {
-        return accountService.findByLogin(login);
-    }
+//    public Account findOwnerByLogin(String login) {
+//        return accountService.findByLogin(login);
+//    }
 
     public List<RestaurantDTO> findAllOwnerRestaurants(Integer ownerId) {
         return restaurantService.findOwnersLocals(ownerId).stream()
@@ -66,18 +65,10 @@ public class OwnerService {
             .toList();
     }
 
-    public List<BillDTO> findPendingBills(Integer accountId) {
-        return billService.findPendingBills(accountId,false).stream()
+    public List<BillDTO> findOwnerPendingBills(Integer ownerId) {
+        return billService.findOwnerPendingBills(ownerId,false).stream()
             .map(billMapper::mapToDTO)
             .toList();
-    }
-
-    public OwnerDTO findOwnerByAccountId(Integer accountId) {
-        Optional<Owner> owner = ownerDAO.findOwnerByAccountId(accountId);
-        if (owner.isEmpty()) {
-            throw new NotFoundException("Owner doesn't exists");
-        }
-        return ownerMapper.mapToDTO(owner.get());
     }
 
     @Transactional
@@ -89,6 +80,22 @@ public class OwnerService {
             throw new NotFoundException("Owner doesn't exists");
         }
         restaurantService.addLocal(restaurant.withOwner(owner.get()).withMenu(buildMenu(restaurantDTO)));
+    }
+
+    public OwnerDTO findOwnerByAccountId(Integer accountId) {
+        Optional<Owner> owner = ownerDAO.findOwnerByAccountId(accountId);
+        if (owner.isEmpty()) {
+            throw new NotFoundException("Owner doesn't exists");
+        }
+        return ownerMapper.mapToDTO(owner.get());
+    }
+
+    public OwnerDTO findOwnerById(Integer ownerId) {
+        Optional<Owner> owner = ownerDAO.findOwnerById(ownerId);
+        if (owner.isEmpty()) {
+            throw new NotFoundException("Owner doesn't exists");
+        }
+        return ownerMapper.mapToDTO(owner.get());
     }
 
     private Menu buildMenu(RestaurantDTO restaurantDTO) {
@@ -105,13 +112,5 @@ public class OwnerService {
             .surname(request.getUserSurname())
             .account(ownerAccount)
             .build();
-    }
-
-    public OwnerDTO findOwnerById(Integer ownerId) {
-        Optional<Owner> owner = ownerDAO.findOwnerById(ownerId);
-        if (owner.isEmpty()) {
-            throw new NotFoundException("Owner doesn't exists");
-        }
-        return ownerMapper.mapToDTO(owner.get());
     }
 }

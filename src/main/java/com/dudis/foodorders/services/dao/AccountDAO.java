@@ -19,4 +19,6 @@ public interface AccountDAO {
     Optional<Account> findByLogin(String login);
 
     Integer findByRole(String role);
+
+    Optional<Account> findById(Integer accountId);
 }

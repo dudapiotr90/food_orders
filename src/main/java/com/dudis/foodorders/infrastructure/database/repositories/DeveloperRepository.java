@@ -14,6 +14,8 @@ import com.dudis.foodorders.services.dao.DeveloperDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @AllArgsConstructor
 public class DeveloperRepository implements DeveloperDAO {
@@ -33,5 +35,11 @@ public class DeveloperRepository implements DeveloperDAO {
         developerJpaRepository.saveAndFlush(developerToRegister);
 
         return accountRepository.registerAccount(developerToRegister.getAccount(),developerRole);
+    }
+
+    @Override
+    public Optional<Developer> findDeveloperByAccountId(Integer accountId) {
+       return developerJpaRepository.findByAccountId(accountId)
+           .map(developerEntityMapper::mapFromEntity);
     }
 }

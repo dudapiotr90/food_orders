@@ -1,18 +1,20 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
+import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
+import com.dudis.foodorders.infrastructure.database.entities.utility.RestaurantFromNamedNativeQuery;
+import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 
 import java.util.List;
 
 @Repository
-public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddressEntity,Integer> {
+public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddressEntity, Integer> {
 
 
     @Query("""
@@ -30,4 +32,15 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
     Page<DeliveryAddressEntity> findPaginatedDeliveryAddressesByRestaurantId(@Param("restaurantId") Integer restaurantId, Pageable pageable);
 
     Integer countByRestaurant(RestaurantEntity restaurant);
+
+    @Query(value = """
+        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.local_type, res.menu_id
+        FROM delivery_address da
+        JOIN restaurant res ON da.restaurant_id = res.restaurant_id
+        WHERE da.city = :city
+        AND da.postal_code = :postalCode
+        AND da.street LIKE :street
+         """,nativeQuery = true)
+    List<Object[]> findRestaurantsIdWithAddress(@Param("city") String city,@Param("postalCode") String postalCode, @Param("street")String street);
+
 }

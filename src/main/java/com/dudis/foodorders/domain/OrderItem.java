@@ -13,4 +13,5 @@ public class OrderItem {
     Integer quantity;
     Cart cart;
     Food food;
+    Order order;
 }

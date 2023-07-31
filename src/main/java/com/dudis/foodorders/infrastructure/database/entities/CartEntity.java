@@ -26,7 +26,7 @@ public class CartEntity {
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "cart")
     private CustomerEntity customer;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "cart")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "cart")
     private Set<OrderDetailEntity> orderDetails;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart")

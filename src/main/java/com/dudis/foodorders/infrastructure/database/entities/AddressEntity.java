@@ -7,7 +7,7 @@ import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "addressId")
-@ToString(of = {"addressId", "city", "postalCode", "address"})
+@ToString(of = {"addressId", "city", "postalCode", "street","residenceNumber"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,8 +26,11 @@ public class AddressEntity {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "residence_number")
+    private String residenceNumber;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "address")
     private AccountEntity account;

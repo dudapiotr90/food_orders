@@ -29,7 +29,4 @@ public class OrderDetailEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-
-
-    // TODO add migrations. Chech ERD diagram. Add cart to migrations. Change relations again...
 }

@@ -36,6 +36,6 @@ public class CustomerEntity {
     @JoinColumn(name = "cart_id")
     private CartEntity cart;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
     private Set<BillEntity> bills;
 }
