@@ -18,5 +18,8 @@ public interface CustomerEntityMapper {
     @Mapping(target = "account",ignore = true)
     CustomerEntity mapToEntity(Customer customer);
 
-
+    @Mapping(target = "account.address",ignore = true)
+    @Mapping(target = "cart",ignore = true)
+    @Mapping(target = "bills",ignore = true)
+    Customer mapFromEntity(CustomerEntity customerEntity);
 }

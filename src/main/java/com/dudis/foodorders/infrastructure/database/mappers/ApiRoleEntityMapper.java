@@ -9,6 +9,7 @@ import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 public interface ApiRoleEntityMapper {
 
 
-    ApiRoleEntity map(ApiRole apiRole);
+    ApiRoleEntity mapToDTO(ApiRole apiRole);
 
+    ApiRole mapFromDTO(ApiRoleEntity apiRoleEntity);
 }

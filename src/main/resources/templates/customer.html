@@ -13,6 +13,12 @@
      <link rel="stylesheet" th:href="@{/css/customer.css}">
      <link rel="stylesheet" href="../static/css/customer.css">
 </head>
+<script>
+  function toggleDetails(button) {
+    const detailsSection = button.nextElementSibling;
+    detailsSection.style.display = detailsSection.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 <body>
 <nav>
      <h1>Welcome
@@ -34,15 +40,29 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="bill: ${bills}">
+          <tr th:each="bill: ${pendingBills}">
                <td th:text="${bill.billNumber}"></td>
                <td th:text="${bill.orderNumber}"></td>
                <td th:text="${bill.amount}"></td>
                <td>
-                    <form action="#" th:action="@{/customer/{id}/showOrder/{orderNumber}(orderNumber=${bill.orderNumber}, id=${customer.customerId})}"
-                          method="GET">
-                         <button type="submit" class="btn btn-info">SHOW</button>
-                    </form>
+<!--                    <form action="#" th:action="@{/customer/{id}/showOrder/{orderNumber}(orderNumber=${bill.orderNumber}, id=${customer.customerId})}"-->
+<!--                          method="GET">-->
+<!--                         <button type="submit" class="btn btn-info">SHOW</button>-->
+<!--                    </form>-->
+                    <button class="btn btn-primary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+                    <div class="order-details" style="display: none;">
+                         <table class="table">
+                              <tr>
+                                   <th>FOOD</th>
+                                   <th>QUANTITY</th>
+                              </tr>
+                              <tbody>
+                              <tr th:each="item: ${bill.order.orderItems}">
+                                   <td th:text="${item.food.name}"></td>
+                                   <td th:text="${item.quantity}"></td>
+                              </tr>
+                         </table>
+                    </div>
                </td>
                <td>
                     <form action="#"
@@ -71,13 +91,13 @@
                </tr>
                </thead>
                <tbody>
-               <tr th:each="restaurant: ${bills}">
+               <tr th:each="restaurant: ${restaurants}">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.type}"></td>
                     <td th:text="${restaurant.description}"></td>
                     <td>
                          <form action="#"
-                               th:action="@{/customer/{id}/showMenu/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${customer.customerId})}"
+                               th:action="@{/customer/showMenu/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${customer.customerId})}"
                                method="GET">
                               <button type="submit" class="btn btn-info">SHOW</button>
                          </form>

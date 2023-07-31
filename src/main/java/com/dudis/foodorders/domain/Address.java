@@ -11,6 +11,7 @@ public class Address {
     Integer addressId;
     String city;
     String postalCode;
-    String address;
+    String street;
+    String residenceNumber;
     Account account;
 }

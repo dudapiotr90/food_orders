@@ -42,4 +42,9 @@ public interface MenuMapper {
         byte[] imageAsBytes = Files.readAllBytes(new File(foodImagePath).toPath());
         return Base64.getEncoder().encodeToString(imageAsBytes);
     }
+
+    @Named("mapMenuToMenuId")
+    default Integer mapMenuToMenuId(Menu menu) {
+        return menu.getMenuId();
+    }
 }

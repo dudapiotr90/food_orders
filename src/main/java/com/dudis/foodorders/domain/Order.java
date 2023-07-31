@@ -9,6 +9,7 @@ import lombok.Value;
 import lombok.With;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @With
@@ -22,5 +23,6 @@ public class Order {
     String customerComment;
     Boolean realized;
     Set<OrderDetail> orderDetails;
+    List<OrderItem> orderItems;
     Restaurant restaurant;
 }

@@ -5,5 +5,7 @@ import com.dudis.foodorders.domain.Bill;
 import java.util.List;
 
 public interface BillDAO {
-    List<Bill> findPendingBills(Integer accountId, boolean payed);
+    List<Bill> findOwnerPendingBills(Integer ownerId, boolean payed);
+
+    List<Bill> findCustomerPendingBills(Integer customerId, boolean payed);
 }

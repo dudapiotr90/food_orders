@@ -11,4 +11,6 @@ public interface DeveloperEntityMapper {
 
     @Mapping(target = "account",ignore = true)
     DeveloperEntity mapToEntity(Developer developer);
+    @Mapping(target = "account.address",ignore = true)
+    Developer mapFromEntity(DeveloperEntity developerEntity);
 }

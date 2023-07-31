@@ -1,4 +1,4 @@
-package com.dudis.foodorders.infrastructure.database.mappers;
+package com.dudis.foodorders.api.mappers;
 
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.domain.Account;

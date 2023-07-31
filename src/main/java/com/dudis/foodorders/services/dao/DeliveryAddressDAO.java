@@ -2,6 +2,7 @@ package com.dudis.foodorders.services.dao;
 
 import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,6 @@ public interface DeliveryAddressDAO {
     Integer countDeliveryAddressesForRestaurant(Restaurant restaurant);
 
     void deleteById(Integer deliveryId);
+
+    List<Restaurant> findRestaurantsIdWithAddress(String city, String postalCode, String address);
 }

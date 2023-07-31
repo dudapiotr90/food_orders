@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" th:href="@{/css/registration.css}">
-<!--  <link rel="stylesheet" href="../static/css/registration.css">-->
+  <link rel="stylesheet" href="../static/css/registration.css">
 </head>
 <body>
 <script>
@@ -103,15 +103,15 @@
         </div>
         <div class="col">
           <div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label for="city" style="display: block; text-align: left;">City:</label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               <input type="text" id="city" th:field="*{userAddressCity}">
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label for="postalCode" style="display: block; text-align: left;">Postal code:</label>
             </div>
             <div class="col-md-5">
@@ -119,11 +119,19 @@
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label for="street" style="display: block; text-align: left;">Street:</label>
             </div>
             <div class="col-md-5">
               <input type="text" id="street" th:field="*{userAddressStreet}">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-5">
+              <label for="residenceNumber" style="display: block; text-align: left;">Residence Number:</label>
+            </div>
+            <div class="col-md-5">
+              <input type="text" id="residenceNumber" th:field="*{userResidenceNumber}">
             </div>
           </div>
         </div>

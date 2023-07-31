@@ -17,6 +17,8 @@ import com.dudis.foodorders.infrastructure.security.repository.AccountRepository
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 
+import java.util.Optional;
+
 @Repository
 @AllArgsConstructor
 public class CustomerRepository implements CustomerDAO {
@@ -34,22 +36,27 @@ public class CustomerRepository implements CustomerDAO {
 
     @Override
     public ConfirmationToken registerCustomer(Customer customer) {
-//        AccountEntity account = accountEntityMapper.mapToEntity(customer.getAccount());
         ApiRoleEntity customerRole = apiRoleJpaRepository.findFirstByRole(Role.CUSTOMER.name());
         AccountEntity account = accountRepository.prepareAccountAccess(customer.getAccount(),customerRole);
-
-
-//        AccountEntity account = accountRepository.mapToEntity(customer.getAccount());
 
         CustomerEntity customerToRegister = customerEntityMapper.mapToEntity(customer);
         customerToRegister.setAccount(account);
 
-//        apiRoleJpaRepository.saveAndFlush(customerToRegister.getAccount().getRole());
-
         customerJpaRepository.saveAndFlush(customerToRegister);
 
         return accountRepository.registerAccount(customerToRegister.getAccount(),customerRole);
+    }
 
+    @Override
+    public Optional<Customer> findCustomerByAccountId(Integer accountId) {
+        return customerJpaRepository.findByAccountId(accountId)
+            .map(customerEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Optional<Customer> findCustomerById(Integer customerId) {
+        return customerJpaRepository.findById(customerId)
+            .map(customerEntityMapper::mapFromEntity);
     }
 
 }

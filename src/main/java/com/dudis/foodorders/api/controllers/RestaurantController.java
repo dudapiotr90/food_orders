@@ -25,7 +25,7 @@ public class RestaurantController {
     public static final String ADD_MENU_POSITION = MODIFY_MENU + "/add";
     public static final String UPDATE_MENU_POSITION = MODIFY_MENU + "/updateFood";
     public static final String DELETE_MENU_POSITION = MANAGE + "/deleteFood/{foodId}";
-    public static final String MANAGE_MENU_PAGE = MANAGE + "/page/{menuPageNumber}/{deliveriesPageNumber}";
+    public static final String MANAGE_PAGINATED_MENU_PAGE = MANAGE + "/page/{menuPageNumber}/{deliveriesPageNumber}";
     public static final String ADD_ADDRESS = MANAGE + "/addAddress";
     public static final String DELETE_ADDRESS = MANAGE + "/deleteAddress/{deliveryId}";
 
@@ -42,7 +42,6 @@ public class RestaurantController {
     ) {
         securityUtils.checkAccess(ownerId, request);
         return getPaginated(ownerId, restaurantId, modelMap, 1, "foodId", "asc", 1, "deliveryAddressId", "asc",request);
-
     }
 
     @GetMapping(MODIFY_MENU)
@@ -122,7 +121,7 @@ public class RestaurantController {
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
-    @GetMapping(value = MANAGE_MENU_PAGE)
+    @GetMapping(value = MANAGE_PAGINATED_MENU_PAGE)
     public String getPaginated(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,

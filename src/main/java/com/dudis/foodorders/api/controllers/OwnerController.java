@@ -28,8 +28,6 @@ public class OwnerController {
     public static final String OWNER_ID = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
     public static final String OWNER_SHOW = "/owner/{id}/show/{restaurantId}";
-    // TODO SHOW przerobić na ilość zamówień, ilość pozycji menu
-
     private final SecurityUtils securityUtils;
     private final OwnerService ownerService;
 
@@ -77,7 +75,7 @@ public class OwnerController {
     private Map<String, ?> prepareOwnerData(Integer ownerId) {
         var addedRestaurants = ownerService.findAllOwnerRestaurants(ownerId);
         var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
-        var pendingBills = ownerService.findPendingBills(ownerId);
+        var pendingBills = ownerService.findOwnerPendingBills(ownerId);
         var owner = ownerService.findOwnerById(ownerId);
 
         return Map.of(

@@ -12,7 +12,11 @@ import java.util.List;
 public class BillService {
     private final BillDAO billDAO;
 
-    public List<Bill> findPendingBills(Integer accountId, boolean payed) {
-        return billDAO.findPendingBills(accountId,payed);
+    public List<Bill> findOwnerPendingBills(Integer ownerId, boolean payed) {
+        return billDAO.findOwnerPendingBills(ownerId,payed);
+    }
+
+    public List<Bill> findCustomerPendingBills(Integer customerId, boolean payed) {
+        return billDAO.findCustomerPendingBills(customerId, payed);
     }
 }

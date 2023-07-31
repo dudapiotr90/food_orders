@@ -30,6 +30,6 @@ public class RegistrationRequestDTO {
     private String userAddressCity;
     private String userAddressPostalCode;
     private String userAddressStreet;
-
+    private String userResidenceNumber;
 
 }

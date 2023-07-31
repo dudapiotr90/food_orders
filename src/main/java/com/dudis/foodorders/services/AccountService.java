@@ -41,6 +41,7 @@ public class AccountService {
         return account.get();
     }
 
+
     public Account buildAccount(RegistrationRequest request) {
         return Account.builder()
             .login(request.getUserLogin())
@@ -51,9 +52,16 @@ public class AccountService {
             .address(Address.builder()
                 .city(request.getUserAddressCity())
                 .postalCode(request.getUserAddressPostalCode())
-                .address(request.getUserAddressStreet())
+                .street(request.getUserAddressStreet())
+                .residenceNumber(request.getUserResidenceNumber())
                 .build())
             .roleId(accountDAO.findByRole(request.getRole()))
             .build();
     }
+
+    public Account findCustomerAccount(Integer accountId) {
+        return accountDAO.findById(accountId)
+            .orElseThrow(() -> new NotFoundException("Account with id: [%s] doesn't exist".formatted(accountId)));
+    }
+
 }

@@ -6,17 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class DeveloperDTO {
 
-    private Integer customerId;
-    private String name;
-    private String surname;
-    private Integer accountId;
-    private Set<OrderDTO> orders;
-    private Set<BillDTO> bills;
+   private Integer developerId;
+   private String name;
+   private String surname;
+   private Integer accountId;
 }

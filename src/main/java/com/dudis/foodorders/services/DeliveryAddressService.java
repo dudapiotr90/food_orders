@@ -2,6 +2,7 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.DeliveryAddressDTO;
 import com.dudis.foodorders.api.mappers.DeliveryAddressMapper;
+import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -18,6 +20,7 @@ public class DeliveryAddressService {
 
     private final DeliveryAddressDAO deliveryAddressDAO;
     private final DeliveryAddressMapper deliveryAddressMapper;
+    private final OrderService orderService;
     public List<DeliveryAddress> getRestaurantDeliveryAddresses(Integer restaurantId) {
         return deliveryAddressDAO.getRestaurantDeliveryAddresses(restaurantId);
     }
@@ -37,5 +40,10 @@ public class DeliveryAddressService {
 
     public void deleteById(Integer deliveryId) {
         deliveryAddressDAO.deleteById(deliveryId);
+    }
+
+    public List<Restaurant> findRestaurantsIdWithAddress(Address address) {
+        return deliveryAddressDAO.findRestaurantsIdWithAddress(address.getCity(), address.getPostalCode(), address.getStreet());
+
     }
 }
