@@ -2,24 +2,25 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.api.dtos.CustomerDTO;
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.dtos.FoodRequestDTO;
 import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
 import com.dudis.foodorders.api.mappers.CustomerMapper;
+import com.dudis.foodorders.api.mappers.RequestMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
-import com.dudis.foodorders.domain.Account;
-import com.dudis.foodorders.domain.Address;
-import com.dudis.foodorders.domain.Customer;
-import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -29,9 +30,11 @@ public class CustomerService {
     private final AccountService accountService;
     private final BillService billService;
     private final DeliveryAddressService deliveryAddressService;
+    private final CartService cartService;
     private final CustomerMapper customerMapper;
     private final RestaurantMapper restaurantMapper;
     private final BillMapper billMapper;
+    private final RequestMapper requestMapper;
 
 //    @Transactional
     public ConfirmationToken registerCustomer(RegistrationRequest request) {
@@ -77,5 +80,17 @@ public class CustomerService {
         return deliveryAddressService.findRestaurantsIdWithAddress(address).stream()
             .map(restaurantMapper::mapToDTOForCustomer)
             .toList();
+    }
+
+    @Transactional
+    public void addFoodToCart(Integer customerId, FoodRequestDTO foodToAdd) {
+        OrderItem itemToAdd = requestMapper.mapFoodRequestToOrderItem(foodToAdd);
+        Optional<Cart> customerCart = customerDAO.findCartByCustomerId(customerId);
+        if (customerCart.isEmpty()) {
+            Cart cart = customerDAO.addCart(customerId);
+            cartService.addItemToCart(cart, itemToAdd);
+        } else {
+            cartService.addItemToCart(customerCart.get(),itemToAdd);
+        }
     }
 }

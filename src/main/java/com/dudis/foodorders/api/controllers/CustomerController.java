@@ -2,11 +2,11 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.CustomerDTO;
 import com.dudis.foodorders.api.dtos.FoodDTO;
-import com.dudis.foodorders.api.dtos.OrderItemDTO;
+import com.dudis.foodorders.api.dtos.FoodRequestDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Account;
-import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
+import com.dudis.foodorders.services.CartService;
 import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,9 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -27,7 +25,7 @@ public class CustomerController {
 
     public static final String CUSTOMER = "/customer";
     public static final String CUSTOMER_ID = "/customer/{id}";
-    public static final String CUSTOMER_ADD_TO_CART = "/customer/{id}/add";
+    public static final String CUSTOMER_ADD_TO_CART = "/customer/{id}/{restaurantId}/add";
 
     public static final String CUSTOMER_SHOW_MENU = "/customer/showMenu/{restaurantId}";
     public static final String CUSTOMER_SHOW_PAGINATED_MENU = "/customer/showMenu/{restaurantId}/page/{menuPageNumber}";
@@ -35,6 +33,7 @@ public class CustomerController {
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
     private final RestaurantService restaurantService;
+    private final CartService cartService;
 
     @GetMapping(value = CUSTOMER)
     public String getCustomerPage(HttpServletRequest request) {
@@ -51,9 +50,23 @@ public class CustomerController {
     }
 
     @GetMapping(value = CUSTOMER_SHOW_MENU)
-    public String showMenu(@PathVariable(value = "restaurantId") Integer restaurantId, ModelMap model,HttpServletRequest request) {
-        return paginatedMenu(restaurantId, 1, "foodId", "asc", model,request);
+    public String showMenu(@PathVariable(value = "restaurantId") Integer restaurantId, ModelMap model, HttpServletRequest request) {
+        return paginatedMenu(restaurantId, 1, "foodId", "asc", model, request);
     }
+
+    @PostMapping(value = CUSTOMER_ADD_TO_CART)
+    public String addFoodToCart(
+        @PathVariable(value = "id") Integer customerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @ModelAttribute("foodToAdd") FoodRequestDTO foodToAdd,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        customerService.addFoodToCart(customerId, foodToAdd);
+        return menuPortal(restaurantId);
+    }
+
+
     @GetMapping(value = CUSTOMER_SHOW_PAGINATED_MENU)
     public String paginatedMenu(
         @PathVariable(value = "restaurantId") Integer restaurantId,
@@ -62,7 +75,7 @@ public class CustomerController {
         @RequestParam("sortHow") String sortHow,
         ModelMap modelMap,
         HttpServletRequest request
-        ) {
+    ) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         CustomerDTO customer = customerService.findCustomerByAccountId(loggedAccount.getAccountId());
         int defaultPageSize = 10;
@@ -72,7 +85,7 @@ public class CustomerController {
         modelMap.addAttribute("restaurant", restaurantDTO);
         modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("menuPage", menuPageNumber);
-        modelMap.addAttribute("buy", new OrderItemDTO());
+        modelMap.addAttribute("foodToAdd",new FoodRequestDTO());
         preparePaginatedAttributes(modelMap, menuPage, menuPageNumber, sortBy, sortHow);
         return "menu";
     }
@@ -106,4 +119,8 @@ public class CustomerController {
         modelMap.addAttribute("totalMenuSize", menuPage.getTotalElements());
     }
 
+
+    private String menuPortal(Integer restaurantId) {
+        return String.format("redirect:/customer/showMenu/%s", restaurantId);
+    }
 }

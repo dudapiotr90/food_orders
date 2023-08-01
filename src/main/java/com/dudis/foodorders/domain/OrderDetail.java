@@ -14,6 +14,6 @@ import java.util.List;
 @Builder
 public class OrderDetail {
     Integer orderDetailId;
-    Customer customer;
+    Cart cart;
     Order order;
 }

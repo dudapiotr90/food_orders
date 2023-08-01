@@ -9,14 +9,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemDTO {
-    Integer orderItemId;
-    Integer quantity;
-    CartDTO cart;
-    FoodDTO food;
-    OrderDTO order;
+    private Integer orderItemId;
+    private BigDecimal quantity;
+    private CartDTO cart;
+    private FoodDTO food;
+    private OrderDTO order;
 }

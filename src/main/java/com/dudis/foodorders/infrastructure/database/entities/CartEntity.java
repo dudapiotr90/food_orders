@@ -1,10 +1,8 @@
 package com.dudis.foodorders.infrastructure.database.entities;
 
-import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "customer")
+@Table(name = "cart")
 public class CartEntity {
 
     @Id
@@ -23,14 +21,14 @@ public class CartEntity {
     @Column(name = "cart_id")
     private Integer cartId;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "cart")
-    private CustomerEntity customer;
+    @Column(name="customer_id")
+    private Integer customerId;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "cart")
     private Set<OrderDetailEntity> orderDetails;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart")
-    private List<OrderItemEntity> orderItems;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cart")
+    private Set<OrderItemEntity> orderItems;
 
 
 }

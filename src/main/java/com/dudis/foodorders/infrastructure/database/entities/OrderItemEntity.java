@@ -28,7 +28,7 @@ public class OrderItemEntity {
     @JoinColumn(name="cart_id")
     private CartEntity cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="food_id")
     private FoodEntity food;
 

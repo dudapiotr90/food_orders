@@ -18,5 +18,5 @@ public class CartDTO {
     Integer cartId;
     Customer customer;
     Set<OrderDetailDTO> orderDetails;
-    List<OrderItemDTO> orderItems;
+    Set<OrderItemDTO> orderItems;
 }
