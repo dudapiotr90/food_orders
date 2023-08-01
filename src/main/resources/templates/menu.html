@@ -71,11 +71,13 @@
                     <a th:if="${food.foodImageAsBase64 == null}">No pic</a>
                </td>
                <td>
-                    <form action="#" th:action="@{/customer/{id}/add(id=${customer.customerId})}" th:object="${buy}" th:method="POST">
+                    <form action="#"
+                          th:action="@{/customer/{id}/{restaurantId}/add(id=${customer.customerId}, restaurantId=${restaurant.restaurantId})}"
+                          th:object="${foodToAdd}" th:method="POST">
                          <div class="form-group">
-                         QUANTITY: <input type="number" th:field="*{quantity}" required min="1" value=1 class="small-number-picker"/>
-                         <input type="hidden" th:field="*{food}" th:value="${food}"/>
-                         <button type="submit" class="btn btn-primary">ADD</button>
+                         QUANTITY: <input type="number" th:field="*{quantity}" required min="1" class="small-number-picker"/>
+                         <input type="hidden" name="foodId"  th:value="${food.foodId}" />
+                         <button type="submit" class="btn btn-primary">ADD TO CART</button>
                          </div>
                     </form>
                </td>

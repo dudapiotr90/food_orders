@@ -5,7 +5,6 @@ import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
-import com.dudis.foodorders.infrastructure.database.entities.utility.RestaurantFromNamedNativeQuery;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeliveryAddressJpaRepository;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

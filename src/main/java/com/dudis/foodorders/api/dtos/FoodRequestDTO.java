@@ -5,13 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoodRequestDTO {
 
+    private Integer foodId;
     private String name;
-    private Integer quantity;
-    private String customerComment;
+    private BigDecimal quantity;
+    private String foodType;
+    private BigDecimal price;
+    private String description;
 }

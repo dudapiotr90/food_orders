@@ -17,10 +17,7 @@ public interface DeliveryJpaRepository extends JpaRepository<DeliveryEntity,Inte
         JOIN FETCH de.owner ow
         WHERE ow.ownerId = :accountId and de.delivered = :delivered
         """)
-    List<DeliveryEntity> findByOwnerIdAndDelivered(
-    @Param("accountId") Integer accountId,
-    @Param("delivered") Boolean delivered
-    );
+    List<DeliveryEntity> findByOwnerIdAndDelivered(@Param("accountId") Integer accountId,@Param("delivered") Boolean delivered);
 
     Integer countByRestaurantAndDelivered(RestaurantEntity restaurant, boolean delivered);
 }
