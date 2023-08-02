@@ -31,7 +31,6 @@ public class OwnerController {
     private final SecurityUtils securityUtils;
     private final OwnerService ownerService;
 
-    private final RestaurantService restaurantService;
 
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {

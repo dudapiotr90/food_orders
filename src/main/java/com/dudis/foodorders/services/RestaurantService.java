@@ -1,10 +1,7 @@
 package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.*;
-import com.dudis.foodorders.api.mappers.DeliveryAddressMapper;
-import com.dudis.foodorders.api.mappers.MenuMapper;
-import com.dudis.foodorders.api.mappers.OrderMapper;
-import com.dudis.foodorders.api.mappers.RestaurantMapper;
+import com.dudis.foodorders.api.mappers.*;
 import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,11 +30,11 @@ public class RestaurantService {
     private final RestaurantDAO restaurantDAO;
     private final DeliveryAddressService deliveryAddressService;
     private final OrderService orderService;
-    private final MenuService menuService;
     private final FoodService foodService;
     private final StorageService storageService;
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
+    private final FoodMapper foodMapper;
     private final DeliveryAddressMapper deliveryAddressMapper;
     private final OrderMapper orderMapper;
 
@@ -98,7 +94,7 @@ public class RestaurantService {
     @Transactional
     public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
         Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
-        Food food = menuMapper.mapFoodFromDTO(foodDTO);
+        Food food = foodMapper.mapFromDTO(foodDTO);
         String foodImage = storageService.uploadImageToServer(image, restaurantId);
         if (image.isEmpty()) {
             foodService.addFoodToMenu(food, menu, null);
@@ -110,7 +106,7 @@ public class RestaurantService {
 
     @Transactional
     public String updateMenuPosition(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
-        Food food = menuMapper.mapFoodFromDTO(foodDTO);
+        Food food = foodMapper.mapFromDTO(foodDTO);
         String foodImagePath = storageService.uploadImageToServer(image, restaurantId);
         if (image.isEmpty()) {
             foodService.updateMenuPosition(food, null);
@@ -167,6 +163,10 @@ public class RestaurantService {
     public void deleteAddressFromRestaurant(Integer deliveryId) {
         deliveryAddressService.deleteById(deliveryId);
 
+    }
+
+    public Restaurant findRestaurantByMenu(Menu menu) {
+        return restaurantDAO.findRestaurantByMenu(menu);
     }
 }
 

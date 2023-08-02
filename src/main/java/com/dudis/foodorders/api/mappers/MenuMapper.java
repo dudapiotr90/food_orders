@@ -18,30 +18,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = FoodMapper.class)
 public interface MenuMapper {
     @Mapping(target = "foods", source = "foods", qualifiedByName = "mapFoods")
     MenuDTO mapToDTO(Menu menu);
 
-    @Named("mapFoods")
-    default Set<FoodDTO> mapFoods(Set<Food> foods) {
-        return foods.stream().map(this::mapFoodToDTO).collect(Collectors.toSet());
-    }
-    @Mapping(source = "foodImagePath",target = "foodImageAsBase64",qualifiedByName = "mapFoodImage")
-    @Mapping(source = "foodImagePath",target = "foodImagePath")
-    FoodDTO mapFoodToDTO(Food food);
-
-    @Mapping(target = "foodImagePath",ignore = true)
-    Food mapFoodFromDTO(FoodDTO food);
-
-    @Named("mapFoodImage")
-    default String mapFoodImage(String foodImagePath) throws IOException {
-        if (Objects.isNull(foodImagePath)) {
-            return null;
-        }
-        byte[] imageAsBytes = Files.readAllBytes(new File(foodImagePath).toPath());
-        return Base64.getEncoder().encodeToString(imageAsBytes);
-    }
 
     @Named("mapMenuToMenuId")
     default Integer mapMenuToMenuId(Menu menu) {

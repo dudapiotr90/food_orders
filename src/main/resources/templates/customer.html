@@ -45,10 +45,6 @@
                <td th:text="${bill.orderNumber}"></td>
                <td th:text="${bill.amount}"></td>
                <td>
-<!--                    <form action="#" th:action="@{/customer/{id}/showOrder/{orderNumber}(orderNumber=${bill.orderNumber}, id=${customer.customerId})}"-->
-<!--                          method="GET">-->
-<!--                         <button type="submit" class="btn btn-info">SHOW</button>-->
-<!--                    </form>-->
                     <button class="btn btn-primary" onclick="toggleDetails(this)">SHOW DETAILS</button>
                     <div class="order-details" style="display: none;">
                          <table class="table">
@@ -118,9 +114,9 @@
                <a th:href="@{/}" class="btn btn-success custom-button" role="button">Go to restaurant Search Engine</a>
           </div>
           <div class="col">
-               <a th:href="@{/}" class="btn btn-success custom-button" role="button" style="display: block; item-align: right;" >Check
-                    your
-                    Cart</a>
+               <a th:href="@{/customer/{id}/showCart(id=${customer.customerId})}" class="btn btn-success custom-button" role="button"
+                  style="display: block; item-align: right;"
+               >Check your Cart</a>
           </div>
      </div>
 </div>

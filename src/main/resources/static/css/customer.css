@@ -56,6 +56,13 @@ a {
   justify-content: center;
   align-items: center;
 }
+.btn.btn-success.custom {
+    width: 50px;
+    height: 200px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 20px;
+  }
 
 .button-container .btn {
   width: 250px;
@@ -113,4 +120,8 @@ i {
 
 .email-address {
   margin-right: 200px;
+}
+
+.small-number-picker {
+    width: 50px;
 }

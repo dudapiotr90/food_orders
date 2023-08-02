@@ -4,6 +4,7 @@ import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
+import com.dudis.foodorders.infrastructure.database.mappers.FoodEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.FoodJpaRepository;
 import com.dudis.foodorders.services.dao.FoodDAO;
@@ -13,17 +14,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @AllArgsConstructor
 public class FoodRepository implements FoodDAO {
 
     private final FoodJpaRepository foodJpaRepository;
+    private final FoodEntityMapper foodEntityMapper;
     private final MenuEntityMapper menuEntityMapper;
 
     @Override
     public void saveFood(Food food, Menu menu, String foodImagePath) {
         MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
-        FoodEntity foodToSave = menuEntityMapper.mapFoodToEntity(food);
+        FoodEntity foodToSave = foodEntityMapper.mapToEntity(food);
         foodToSave.setMenu(menuEntity);
         foodToSave.setFoodImagePath(foodImagePath);
         foodJpaRepository.saveAndFlush(foodToSave);
@@ -53,7 +57,21 @@ public class FoodRepository implements FoodDAO {
 
     @Override
     public Page<Food> getPaginatedFoods(Integer menuId, Pageable pageable) {
-        return foodJpaRepository.findByMenuId(menuId, pageable).map(menuEntityMapper::mapFoodFromEntity);
+        return foodJpaRepository.findByMenuId(menuId, pageable).map(foodEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Menu findMenuByFood(Food food) {
+        FoodEntity foodEntity = foodEntityMapper.mapToEntity(food);
+        MenuEntity menu = foodJpaRepository.findMenuByFoodId(foodEntity.getFoodId());
+        return menuEntityMapper.mapFromEntity(menu);
+    }
+
+    @Override
+    public List<Food> findAllFoodWhereMenu(Menu menu) {
+        MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
+        return foodJpaRepository.findByMenuId(menuEntity.getMenuId()).stream()
+            .map(foodEntityMapper::mapFromEntity).toList();
     }
 
 }

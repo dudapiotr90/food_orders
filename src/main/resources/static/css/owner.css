@@ -79,6 +79,13 @@ footer {
   width: 100%;
 }
 
+@media (min-height: 100vh) {
+            .footer {
+                position: sticky;
+                left: 0;
+            }
+        }
+
 .contact-info {
   display: flux;
   grid-template-columns: auto 1fr;

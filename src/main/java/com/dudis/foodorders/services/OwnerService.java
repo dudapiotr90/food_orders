@@ -33,7 +33,6 @@ public class OwnerService {
     private final DeliveryService deliveryService;
     private final BillService billService;
     private final DeliveryAddressService deliveryAddressService;
-
     private final OwnerMapper ownerMapper;
     private final RestaurantMapper restaurantMapper;
     private final DeliveryMapper deliveryMapper;

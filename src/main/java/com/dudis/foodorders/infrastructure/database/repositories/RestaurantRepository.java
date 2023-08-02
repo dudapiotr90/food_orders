@@ -3,6 +3,7 @@ package com.dudis.foodorders.infrastructure.database.repositories;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.RestaurantJpaRepository;
@@ -55,6 +56,13 @@ public class RestaurantRepository implements RestaurantDAO {
 
         return restaurantJpaRepository.findPaginatedMenuByRestaurantId(restaurantId,pageable)
             .map(menuEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Restaurant findRestaurantByMenu(Menu menu) {
+        MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
+        RestaurantEntity restaurant = restaurantJpaRepository.findByMenu(menuEntity);
+        return restaurantEntityMapper.mapFromEntity(restaurant);
     }
 
 
