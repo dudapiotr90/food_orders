@@ -71,7 +71,7 @@
                <td th:text="${food.description}"></td>
                <td>
                     <a
-                           th:href="@{/owner/{id}/manage/{restaurantId}/showImage(restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodImagePath=${food.foodImagePath})}"
+                           th:href="@{/showImage(restaurantId=${restaurant.restaurantId}, id=${ownerId}, foodImagePath=${food.foodImagePath})}"
                            th:if="${food.foodImageAsBase64 != null}">
                          <img th:src="|data:image/png;base64,${food.foodImageAsBase64}|" width="100" height="100"/>
                     </a>

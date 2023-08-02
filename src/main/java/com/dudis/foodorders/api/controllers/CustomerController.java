@@ -1,9 +1,6 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.CustomerDTO;
-import com.dudis.foodorders.api.dtos.FoodDTO;
-import com.dudis.foodorders.api.dtos.FoodRequestDTO;
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.CartService;
@@ -17,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,12 +26,12 @@ public class CustomerController {
     public static final String CUSTOMER_ADD_TO_CART = "/customer/{id}/{restaurantId}/add";
 
     public static final String CUSTOMER_SHOW_MENU = "/customer/showMenu/{restaurantId}";
+    public static final String CUSTOMER_SHOW_CART = "/customer/{id}/showCart";
     public static final String CUSTOMER_SHOW_PAGINATED_MENU = "/customer/showMenu/{restaurantId}/page/{menuPageNumber}";
 
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
     private final RestaurantService restaurantService;
-    private final CartService cartService;
 
     @GetMapping(value = CUSTOMER)
     public String getCustomerPage(HttpServletRequest request) {
@@ -64,6 +62,20 @@ public class CustomerController {
         securityUtils.checkAccess(customerId, request);
         customerService.addFoodToCart(customerId, foodToAdd);
         return menuPortal(restaurantId);
+    }
+
+    @GetMapping(value = CUSTOMER_SHOW_CART)
+    public String showCart(
+        @PathVariable(value = "id") Integer customerId,
+        ModelMap modelMap,
+        HttpServletRequest request
+        ) {
+        securityUtils.checkAccess(customerId, request);
+        List<OrderRequestDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
+        modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
+        modelMap.addAttribute("customerId", customerId);
+        modelMap.addAttribute("foodToUpdate",new OrderItemDTO());
+        return "cart";
     }
 
 

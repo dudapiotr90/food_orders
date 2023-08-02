@@ -1,9 +1,6 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.BillDTO;
-import com.dudis.foodorders.api.dtos.CustomerDTO;
-import com.dudis.foodorders.api.dtos.FoodRequestDTO;
-import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
+import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.api.mappers.BillMapper;
 import com.dudis.foodorders.api.mappers.CustomerMapper;
 import com.dudis.foodorders.api.mappers.RequestMapper;
@@ -17,10 +14,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -31,24 +28,19 @@ public class CustomerService {
     private final BillService billService;
     private final DeliveryAddressService deliveryAddressService;
     private final CartService cartService;
+    private final OrderItemService orderItemService;
+    private final RestaurantService restaurantService;
+    private final OrderRequestService orderRequestService;
     private final CustomerMapper customerMapper;
     private final RestaurantMapper restaurantMapper;
     private final BillMapper billMapper;
     private final RequestMapper requestMapper;
 
-//    @Transactional
+    @Transactional
     public ConfirmationToken registerCustomer(RegistrationRequest request) {
         Account customerAccount = accountService.buildAccount(request);
         Customer customer = buildCustomer(customerAccount, request);
         return customerDAO.registerCustomer(customer);
-    }
-
-    private Customer buildCustomer(Account customerAccount, RegistrationRequest request) {
-        return Customer.builder()
-            .name(request.getUserName())
-            .surname(request.getUserSurname())
-            .account(customerAccount)
-            .build();
     }
 
     public CustomerDTO findCustomerById(Integer id) {
@@ -92,5 +84,25 @@ public class CustomerService {
         } else {
             cartService.addItemToCart(customerCart.get(),itemToAdd);
         }
+    }
+
+    private Customer buildCustomer(Account customerAccount, RegistrationRequest request) {
+        return Customer.builder()
+            .name(request.getUserName())
+            .surname(request.getUserSurname())
+            .account(customerAccount)
+            .build();
+    }
+
+    public List<OrderRequestDTO> getRestaurantsWithAddedFoodItems(Integer customerId) {
+        Cart cart = customerDAO.findCartByCustomerId(customerId)
+            .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu!"));
+//
+        Set<Restaurant> restaurants = cart.getOrderItems().stream()
+            .map(o -> orderItemService.findMenuByFood(o.getFood()))
+            .map(restaurantService::findRestaurantByMenu)
+            .collect(Collectors.toSet());
+
+        return orderRequestService.prepareOrderRequests(cart, restaurants);
     }
 }

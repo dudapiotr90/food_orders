@@ -6,6 +6,8 @@ import com.dudis.foodorders.domain.Menu;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface FoodDAO {
     void saveFood(Food food, Menu menu, String foodImagePath);
 
@@ -14,4 +16,8 @@ public interface FoodDAO {
     String deleteFood(Integer foodId);
 
     Page<Food> getPaginatedFoods(Integer menuId, Pageable pageable);
+
+    Menu findMenuByFood(Food food);
+
+    List<Food> findAllFoodWhereMenu(Menu menu);
 }

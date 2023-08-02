@@ -20,4 +20,5 @@ public interface RestaurantDAO {
 
     Page<Menu> getPaginatedMenu(Integer restaurantId, Pageable pageable);
 
+    Restaurant findRestaurantByMenu(Menu menu);
 }

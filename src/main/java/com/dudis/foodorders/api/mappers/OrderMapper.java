@@ -18,7 +18,7 @@ public interface OrderMapper {
     @Named("mapOrderToDTO")
     @Mapping(target = "receivedDateTime", source = "receivedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
     @Mapping(target = "completedDateTime", source = "completedDateTime", qualifiedByName = "mapOffsetDateTimeToString")
-    @Mapping(source = "orderDetails", target = "orderDetails", qualifiedByName = "mapOrderDetailsToDTO")
+    @Mapping(target = "orderDetails",ignore = true)
     @Mapping(source = "restaurant.orders",target = "restaurant.orders",qualifiedByName = "mapOrders")
     OrderDTO mapToDTO(Order order);
 

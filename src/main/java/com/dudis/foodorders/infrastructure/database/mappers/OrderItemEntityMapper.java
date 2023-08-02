@@ -16,10 +16,19 @@ public interface OrderItemEntityMapper {
     @Mapping(target = "order",ignore = true)
     @Mapping(target = "cart",ignore = true)
     @Mapping(target = "food.menu",ignore = true)
-    OrderItemEntity mapToEntity(OrderItem itemToAdd);
+    OrderItemEntity mapToEntity(OrderItem orderItem);
+    @Mapping(target = "order",ignore = true)
+    @Mapping(target = "cart",ignore = true)
+    @Mapping(target = "food.menu.foods",ignore = true)
+    OrderItem mapFromEntity(OrderItemEntity orderItem);
 
     @Named("mapOrderItems")
     default Set<OrderItemEntity> mapOrderItems(Set<OrderItem> orderItems) {
         return orderItems.stream().map(this::mapToEntity).collect(Collectors.toSet());
+    }
+
+    @Named("mapOrderItemsFromEntity")
+    default Set<OrderItem> mapOrderItemsFromEntity(Set<OrderItemEntity> orderItems) {
+        return orderItems.stream().map(this::mapFromEntity).collect(Collectors.toSet());
     }
 }
