@@ -19,4 +19,7 @@ public interface OrderItemMapper {
     @Mapping(source = "food",target = "food",qualifiedByName = "mapFoodToDTO")
     OrderItemDTO mapToDTO(OrderItem orderItem);
 
+    @Mapping(target = "cart",ignore = true)
+    @Mapping(target = "order",ignore = true)
+    OrderItem mapFromDTO(OrderItemDTO orderItemDTO);
 }

@@ -15,4 +15,5 @@ public class OrderRequestDTO {
 
     private RestaurantForCustomerDTO restaurant;
     private List<OrderItemDTO> orderItems;
+    private String customerComment;
 }

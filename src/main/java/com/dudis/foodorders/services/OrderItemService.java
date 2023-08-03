@@ -21,4 +21,8 @@ public class OrderItemService {
     public Menu findMenuByFood(Food food) {
         return foodService.findMenuByFood(food);
     }
+
+    public void updateOrderItem(OrderItem orderItem) {
+        orderItemDAO.updateOrderItem(orderItem);
+    }
 }

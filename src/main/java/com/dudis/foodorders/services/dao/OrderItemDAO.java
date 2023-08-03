@@ -5,4 +5,6 @@ import com.dudis.foodorders.domain.OrderItem;
 
 public interface OrderItemDAO {
     void addItemToCart(Cart cart, OrderItem itemToAdd);
+
+    void updateOrderItem(OrderItem orderItem);
 }

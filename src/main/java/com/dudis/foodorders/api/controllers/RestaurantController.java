@@ -52,10 +52,10 @@ public class RestaurantController {
         HttpServletRequest request
     ) {
         securityUtils.checkAccess(ownerId, request);
-        modelMap.addAttribute("food", new FoodDTO());
         modelMap.addAttribute("restaurantId", restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("foodTypes", FoodTypeDTO.values());
+        modelMap.addAttribute("food", new FoodDTO());
         return "menu_manager";
     }
 

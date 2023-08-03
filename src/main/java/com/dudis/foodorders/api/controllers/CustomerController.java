@@ -75,6 +75,7 @@ public class CustomerController {
         modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("foodToUpdate",new OrderItemDTO());
+        modelMap.addAttribute("foodsToOrder",OrderRequestDTO.builder().build());
         return "cart";
     }
 
