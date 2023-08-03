@@ -23,9 +23,9 @@ public class CartEntity {
 
     @Column(name="customer_id")
     private Integer customerId;
-
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "cart")
-    private Set<OrderDetailEntity> orderDetails;
+//
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "cart")
+//    private Set<OrderDetailEntity> orderDetails;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cart")
     private Set<OrderItemEntity> orderItems;

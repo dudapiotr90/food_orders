@@ -71,7 +71,7 @@ public class CustomerController {
         HttpServletRequest request
         ) {
         securityUtils.checkAccess(customerId, request);
-        List<OrderRequestDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
+        List<OrderDetailsDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
         modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("foodToUpdate",new OrderItemDTO());

@@ -41,9 +41,6 @@ public class RestaurantEntity {
     private OwnerEntity owner;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
-    private Set<DeliveryEntity> deliveries;
-
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
     private Set<DeliveryAddressEntity> deliveryAddresses;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "restaurant")

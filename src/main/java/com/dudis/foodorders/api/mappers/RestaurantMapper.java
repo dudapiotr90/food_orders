@@ -15,7 +15,6 @@ public interface RestaurantMapper {
     RestaurantDTO mapToDTO(Restaurant restaurant);
 
     @Mapping(target ="owner",ignore = true)
-    @Mapping(target ="deliveries",ignore = true)
     @Mapping(target ="deliveryAddresses",ignore = true)
     @Mapping(target ="orders",ignore = true)
     Restaurant mapFromDTO(RestaurantDTO restaurantDTO);

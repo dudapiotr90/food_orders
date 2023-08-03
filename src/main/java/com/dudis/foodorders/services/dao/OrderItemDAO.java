@@ -7,4 +7,10 @@ public interface OrderItemDAO {
     void addItemToCart(Cart cart, OrderItem itemToAdd);
 
     void updateOrderItem(OrderItem orderItem);
+
+    void deleteOrderItem(Integer orderItemId);
+
+    OrderItem findOrderItemById(Integer id);
+
+    void deleteOrderItemFromCart(OrderItem orderItem, Cart cart);
 }

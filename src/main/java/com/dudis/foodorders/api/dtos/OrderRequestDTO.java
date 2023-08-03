@@ -12,8 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequestDTO {
-
-    private RestaurantForCustomerDTO restaurant;
-    private List<OrderItemDTO> orderItems;
+    private Integer restaurantId;
     private String customerComment;
+    private List<Integer> orderItemsId;
 }

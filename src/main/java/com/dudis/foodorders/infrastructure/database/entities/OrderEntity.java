@@ -38,13 +38,13 @@ public class OrderEntity {
     @Column(name = "realized")
     private Boolean realized;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
-    private Set<OrderDetailEntity> orderDetails;
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
+//    private Set<OrderDetailEntity> orderDetails;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
     private List<OrderItemEntity> orderItems;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;
 

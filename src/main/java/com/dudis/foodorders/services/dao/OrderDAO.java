@@ -9,4 +9,6 @@ public interface OrderDAO {
     List<Order> getRestaurantOrders(Integer restaurantId);
 
     Integer findPendingOrdersForRestaurant(Restaurant restaurantId);
+
+    void issueAnOrder(Order order);
 }
