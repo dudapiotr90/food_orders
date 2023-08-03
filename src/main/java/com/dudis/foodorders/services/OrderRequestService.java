@@ -1,6 +1,6 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.OrderRequestDTO;
+import com.dudis.foodorders.api.dtos.OrderDetailsDTO;
 import com.dudis.foodorders.api.mappers.FoodMapper;
 import com.dudis.foodorders.api.mappers.OrderItemMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,9 +21,9 @@ public class OrderRequestService {
     private final OrderItemMapper orderItemMapper;
     private final FoodMapper foodMapper;
 
-    public List<OrderRequestDTO> prepareOrderRequests(Cart cart, Set<Restaurant> restaurants) {
+    public List<OrderDetailsDTO> prepareOrderRequests(Cart cart, Set<Restaurant> restaurants) {
         return restaurants.stream()
-            .map(r -> OrderRequestDTO.builder()
+            .map(r -> OrderDetailsDTO.builder()
                 .restaurant(restaurantMapper.mapToDTOForCustomer(r))
                 .orderItems(cart.getOrderItems().stream()
                     .map(orderItemMapper::mapToDTO)

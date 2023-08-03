@@ -17,5 +17,4 @@ public class Owner {
     Account account;
     Set<Restaurant> restaurants;
     Set<Bill> bills;
-    Set<Delivery> deliveries;
 }

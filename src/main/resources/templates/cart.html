@@ -74,7 +74,7 @@
                               <td>
                                    <form action="#"
                                          th:action="@{/customer/{id}/updateCart/delete/{orderItemId}
-                                         (id=${customerId}, (orderItemId=${item.orderItemId})}"
+                                         (id=${customerId}, orderItemId=${item.orderItemId})}"
                                          th:method="DELETE">
                                         <button type="submit" class="btn btn-danger">DELETE</button>
                                    </form>
@@ -90,8 +90,10 @@
                           th:object="${foodsToOrder}" th:method="POST">
                          <div class="form-group">
                               <textarea th:field="*{customerComment}" rows="7" cols="30" placeholder="Add your comment"></textarea>
-                              <input type="hidden" name="restaurant"  th:value="${order.restaurant}" />
-                              <input type="hidden" name="orderItems"  th:value="${order.orderItems}" />
+                              <input type="hidden" name="restaurantId"  th:value="${order.restaurant.restaurantId}" />
+                              <div th:each="item : ${order.orderItems}">
+                                   <input type="hidden" name="orderItemsId" th:value="${item.orderItemId}">
+                              </div>
                               <button type="submit" class="btn btn-success custom" >ORDER</button>
                          </div>
                     </form>

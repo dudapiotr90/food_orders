@@ -2,6 +2,7 @@ package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
@@ -30,5 +31,11 @@ public class OrderRepository implements OrderDAO {
     public Integer findPendingOrdersForRestaurant(Restaurant restaurantId) {
         RestaurantEntity restaurantEntity = restaurantEntityMapper.mapToEntity(restaurantId);
         return orderJpaRepository.countByRestaurantIdAndRealized(restaurantEntity,false);
+    }
+
+    @Override
+    public void issueAnOrder(Order order) {
+        OrderEntity orderToSave = orderEntityMapper.mapToEntity(order);
+        orderJpaRepository.save(orderToSave);
     }
 }

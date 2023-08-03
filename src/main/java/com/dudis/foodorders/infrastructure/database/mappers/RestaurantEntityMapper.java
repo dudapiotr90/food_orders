@@ -9,7 +9,6 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderEntityMapper.class})
 public interface RestaurantEntityMapper {
     @Mapping(target = "owner", ignore = true)
-    @Mapping(target = "deliveries", ignore = true)
     @Mapping(target = "deliveryAddresses", ignore = true)
     @Mapping(source = "orders", target = "orders", qualifiedByName = "mapOrderEntities")
     @Mapping(source = "menu.foods", target = "menu.foods", ignore = true)

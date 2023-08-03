@@ -142,7 +142,7 @@ public class RestaurantService {
         return foodService.getPaginatedFoods(menu.getMenuId(), pageable);
     }
 
-    public Page<DeliveryAddressDTO> getPaginatedDeliveries(Integer deliveryPageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
+    public Page<DeliveryAddressDTO> getPaginatedDeliveryAddresses(Integer deliveryPageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
         if (Objects.isNull(deliveryPageNumber)) {
             deliveryPageNumber = 1;
         }

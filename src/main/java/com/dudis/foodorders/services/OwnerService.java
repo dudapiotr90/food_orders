@@ -1,18 +1,16 @@
 package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.BillDTO;
-import com.dudis.foodorders.api.dtos.DeliveryDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
-import com.dudis.foodorders.api.mappers.DeliveryMapper;
+import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
@@ -30,12 +28,10 @@ public class OwnerService {
     private final OwnerDAO ownerDAO;
     private final AccountService accountService;
     private final RestaurantService restaurantService;
-    private final DeliveryService deliveryService;
     private final BillService billService;
     private final DeliveryAddressService deliveryAddressService;
     private final OwnerMapper ownerMapper;
     private final RestaurantMapper restaurantMapper;
-    private final DeliveryMapper deliveryMapper;
     private final BillMapper billMapper;
 
     public ConfirmationToken registerOwner(RegistrationRequest request) {
@@ -44,23 +40,11 @@ public class OwnerService {
         return ownerDAO.registerOwner(owner);
     }
 
-//    public Account findOwnerByLogin(String login) {
-//        return accountService.findByLogin(login);
-//    }
-
     public List<RestaurantDTO> findAllOwnerRestaurants(Integer ownerId) {
         return restaurantService.findOwnersLocals(ownerId).stream()
             .map(restaurantMapper::mapToDTO)
-            .map(restaurantDTO -> restaurantDTO
-                .withDeliveriesSize(deliveryService.countPendingDeliveries(restaurantMapper.mapFromDTO(restaurantDTO),false)))
-            .map(restaurantDTO -> restaurantDTO
+                        .map(restaurantDTO -> restaurantDTO
                 .withDeliveryAddressesSize(deliveryAddressService.countDeliveryAddressesForRestaurant(restaurantMapper.mapFromDTO(restaurantDTO))))
-            .toList();
-    }
-
-    public List<DeliveryDTO> findPendingDeliveries(Integer accountId) {
-        return deliveryService.findPendingDeliveries(accountId,true).stream()
-            .map(deliveryMapper::mapToDTO)
             .toList();
     }
 

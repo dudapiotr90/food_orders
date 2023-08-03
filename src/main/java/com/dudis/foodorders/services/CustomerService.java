@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,9 +94,8 @@ public class CustomerService {
             .build();
     }
 
-    public List<OrderRequestDTO> getRestaurantsWithAddedFoodItems(Integer customerId) {
-        Cart cart = customerDAO.findCartByCustomerId(customerId)
-            .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu!"));
+    public List<OrderDetailsDTO> getRestaurantsWithAddedFoodItems(Integer customerId) {
+        Cart cart = findCartByCustomerId(customerId);
 //
         Set<Restaurant> restaurants = cart.getOrderItems().stream()
             .map(o -> orderItemService.findMenuByFood(o.getFood()))
@@ -105,5 +103,10 @@ public class CustomerService {
             .collect(Collectors.toSet());
 
         return orderRequestService.prepareOrderRequests(cart, restaurants);
+    }
+
+    public Cart findCartByCustomerId(Integer customerId) {
+        return customerDAO.findCartByCustomerId(customerId)
+            .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu!"));
     }
 }

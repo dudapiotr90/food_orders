@@ -18,7 +18,6 @@ public class Restaurant {
     LocalType type;
     Menu menu;
     Owner owner;
-    Set<Delivery> deliveries;
     Set<DeliveryAddress> deliveryAddresses;
     Set<Order> orders;
 

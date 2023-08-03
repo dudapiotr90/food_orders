@@ -1,19 +1,14 @@
-package com.dudis.foodorders.domain;
-
-import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
-import lombok.Builder;
-import lombok.Value;
-import lombok.With;
-
-import java.util.List;
-
-@With
-@Value
-@Builder
-public class OrderDetail {
-    Integer orderDetailId;
-    Cart cart;
-    Order order;
-}
+//package com.dudis.foodorders.domain;
+//
+//import lombok.Builder;
+//import lombok.Value;
+//import lombok.With;
+//
+//@With
+//@Value
+//@Builder
+//public class OrderDetail {
+//    Integer orderDetailId;
+//    Cart cart;
+//    Order order;
+//}

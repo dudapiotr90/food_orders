@@ -73,13 +73,11 @@ public class OwnerController {
 
     private Map<String, ?> prepareOwnerData(Integer ownerId) {
         var addedRestaurants = ownerService.findAllOwnerRestaurants(ownerId);
-        var pendingDeliveries = ownerService.findPendingDeliveries(ownerId);
         var pendingBills = ownerService.findOwnerPendingBills(ownerId);
         var owner = ownerService.findOwnerById(ownerId);
 
         return Map.of(
             "restaurants", addedRestaurants,
-//            "deliveries", pendingDeliveries,
             "bills", pendingBills,
             "owner", owner
         );

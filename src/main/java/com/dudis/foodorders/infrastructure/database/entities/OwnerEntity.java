@@ -38,6 +38,4 @@ public class OwnerEntity {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
     private Set<BillEntity> bills;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")
-    private Set<DeliveryEntity> deliveries;
 }
