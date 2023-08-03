@@ -19,10 +19,14 @@
 </nav>
 <div class="container">
      <h2><b>Purchase List</b></h2>
-     <table class="table table-striped table-bordered">
+     <table class="table table-striped">
           <thead class="table-primary">
           <th>RESTAURANT</th>
           <th>DETAILS</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>COMMENT</th>
           </thead>
           <tbody>
           <tr th:each="order: ${orderRequests}">
@@ -57,12 +61,12 @@
                               </td>
                               <td>
                                    <form action="#"
-                                         th:action="@{/customer/{id}/updateCart/(id=${customerId})}"
+                                         th:action="@{/customer/{id}/updateCart(id=${customerId})}"
                                          th:method="PUT"
                                          th:object="${foodToUpdate}">
                                         <div class="form-group">
                                              QUANTITY: <input type="number" th:field="*{quantity}" required min="1" class="small-number-picker"/>
-                                             <input type="hidden" name="food.foodId"  th:value="${item.food.foodId}" />
+                                             <input type="hidden" name="orderItemId"  th:value="${item.orderItemId}" />
                                              <button type="submit" class="btn btn-secondary">UPDATE</button>
                                         </div>
                                    </form>
@@ -80,16 +84,21 @@
                     </table>
                </td>
                <td>
+                    <div class="center-items">
                     <form action="#"
                           th:action="@{/customer/{id}/makeAnOrder(id=${customerId})}"
-                          th:object="${order}" th:method="POST">
+                          th:object="${foodsToOrder}" th:method="POST">
                          <div class="form-group">
-                              <button type="submit" class="btn btn-success custom">ORDER</button>
+                              <textarea th:field="*{customerComment}" rows="7" cols="30" placeholder="Add your comment"></textarea>
+                              <input type="hidden" name="restaurant"  th:value="${order.restaurant}" />
+                              <input type="hidden" name="orderItems"  th:value="${order.orderItems}" />
+                              <button type="submit" class="btn btn-success custom" >ORDER</button>
                          </div>
                     </form>
+                    </div>
                </td>
           </tr>
-          <h2><b>Orders</b></h2>
+          <b>Orders</b>
           </tbody>
      </table>
 </div>
