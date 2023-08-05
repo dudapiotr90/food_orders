@@ -1,5 +1,7 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
+import com.dudis.foodorders.domain.Customer;
+import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.springframework.data.domain.Page;
@@ -71,4 +73,18 @@ public interface OrderJpaRepository extends JpaRepository<OrderEntity, Integer> 
         @Param("restaurantIds") List<Integer> restaurantIds,
         @Param("realized") boolean realized,
         Pageable pageable);
+
+    @Query(value = """
+        SELECT cus.name, cus.surname FROM OrderEntity o
+        JOIN FETCH customer cus on o.customer_id = cus.customer_id
+        WHERE o.orderNumber = ?1
+        """,nativeQuery = true)
+    CustomerEntity findCustomerByOrderNumber(String orderNumber);
+
+    @Query(value = """
+        SELECT res FROM food_order o
+        JOIN restaurant res on o.restaurant_id = res.restaurant_id
+        WHERE o.order_number = ?1
+        """,nativeQuery = true)
+    List<Object[]> findRestaurantByOrderNumber(String orderNumber);
 }

@@ -1,5 +1,7 @@
 package com.dudis.foodorders.services.dao;
 
+import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Restaurant;
 import org.springframework.data.domain.Page;
@@ -26,4 +28,8 @@ public interface OrderDAO {
     void realizeOrder(Order orderNumber);
 
     Page<Order> getPaginatedRealizedOrders(List<Integer> restaurantIds, boolean realized, Pageable pageable);
+
+    Customer findCustomerByOrderNumber(String orderNumber);
+
+    Restaurant findRestaurantByOrderNumber(String orderNumber);
 }

@@ -76,7 +76,7 @@ public class OwnerController {
         HttpServletRequest request
     ) {
         securityUtils.checkAccess(ownerId, request);
-        return getPaginatedOrderHistory(ownerId, modelMap, request, 1, "receivedDateTime", "desc");
+        return getPaginatedOrderHistory(ownerId, modelMap, request, 1, "desc", "receivedDateTime");
     }
 
     @GetMapping(ORDER_HISTORY_PAGINATED)
@@ -87,7 +87,8 @@ public class OwnerController {
         @PathVariable(value = "pageNumber", required = false) int pageNumber,
         @RequestParam("sortHow") String sortHow,
         @RequestParam("sortBy") String... sortBy
-        ) {
+        )
+    {
         securityUtils.checkAccess(ownerId, request);
         int defaultPageSize = 2;
         Page<OrderDTO> orders = ownerService.findOwnerRealizedOrders(ownerId, pageNumber, defaultPageSize, sortHow, sortBy);
@@ -116,7 +117,7 @@ public class OwnerController {
         String sortHow,
         String... sortBy
     ) {
-        modelMap.addAttribute("orders", orders);
+        modelMap.addAttribute("orders", orders.getContent());
         modelMap.addAttribute("reverseSortHow", sortHow.equals("asc") ? "desc" : "asc");
         modelMap.addAttribute("sortHow", sortHow);
         modelMap.addAttribute("sortBy", sortBy);

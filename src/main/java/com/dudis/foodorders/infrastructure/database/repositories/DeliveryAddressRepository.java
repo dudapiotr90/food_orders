@@ -63,20 +63,13 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     public List<Restaurant> findRestaurantsIdWithAddress(String city, String postalCode, String street) {
         List<Object[]> restaurantDetails = deliveryAddressJpaRepository.findRestaurantsIdWithAddress(city, postalCode, street);
         return restaurantDetails.stream()
-            .map(a -> RestaurantEntity.builder()
-                .restaurantId((Integer) a[0])
+            .map(a -> Restaurant.builder()
+                .restaurantId( (Integer)a[0])
                 .name((String) a[1])
                 .description((String) a[2])
                 .type(LocalType.valueOf((String) a[3]))
                 .build()
             )
-            .toList().stream()
-            .map(restaurantEntity -> Restaurant.builder()
-                .restaurantId(restaurantEntity.getRestaurantId())
-                .name(restaurantEntity.getName())
-                .description(restaurantEntity.getDescription())
-                .type(restaurantEntity.getType())
-                .build())
             .toList();
     }
 
