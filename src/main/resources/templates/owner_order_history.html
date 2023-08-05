@@ -35,26 +35,26 @@
           <tr>
                <th>
                     <a
-                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortBy=receivedDateTime&sortHow={reverseSortHow}
-               (id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortHow={reverseSortHow}&sortBy=receivedDateTime
+               (id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},reverseSortHow=${reverseSortHow})}">
                          RECEIVED</a>
                </th>
                <th>
                     <a
-                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortBy=completedDateTime&sortHow={reverseSortHow}
-               (id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortHow={reverseSortHow}&sortBy=completedDateTime
+               (id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},reverseSortHow=${reverseSortHow})}">
                          COMPLETED</a>
                </th>
                <th>
                     <a
-                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortBy=restaurant.name&sortHow={reverseSortHow}
-               (id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortHow={reverseSortHow}&sortBy=restaurant.name
+               (id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},reverseSortHow=${reverseSortHow})}">
                          RESTAURANT NAME</a>
                </th>
                <th>
                     <a
-                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortBy=${'customer.name,customer.surname'}&sortHow={reverseSortHow}
-               (id=${ownerId}, p=${p},sortHow=${sortHow},sortBy=${sortBy})}">
+                           th:href="@{/owner/{id}/orderHistory/page/{pageNumber}?sortHow={reverseSortHow}&sortBy=${'customer.name,customer.surname'}
+               (id=${ownerId}, pageNumber=${currentPage},sortHow=${sortHow},sortBy=${sortBy},reverseSortHow=${reverseSortHow})}">
                          CUSTOMER</a>
                </th>
                <th>DETAILS</th>
@@ -91,7 +91,7 @@
      </table>
 </div>
 <div class="container">
-     <div th:if="${totalMenuPages > 1}">
+     <div th:if="${totalPages > 1}">
           <div class="row col-sm-10">
                <div class="col-sm-2">
                     Orders size: [[${totalSize}]]

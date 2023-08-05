@@ -56,8 +56,6 @@ public class CartService {
 
         orderItemService.deleteOrderItemsFromCartAndAssignOrder(orderItems,order);
 
-//        Bill bill = billService.issueReceipt(order, customer, restaurant);
         return order.getOrderNumber();
-// TODO maybe issueReceipt after order cant be cancelled
     }
 }

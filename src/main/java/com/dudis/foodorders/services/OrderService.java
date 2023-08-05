@@ -2,17 +2,13 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
-import com.dudis.foodorders.api.mappers.OrderMapper;
-import com.dudis.foodorders.api.mappers.RestaurantMapper;
+import com.dudis.foodorders.api.mappers.*;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.OrderDAO;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +22,9 @@ public class OrderService {
     private final OrderItemService orderItemService;
     private final RestaurantMapper restaurantMapper;
     private final OrderMapper orderMapper;
+    private final OrderItemMapper orderItemMapper;
+    private final OffsetDateTimeMapper offsetDateTimeMapper;
+    private final CustomerMapper customerMapper;
 
     public List<Order> findOrdersByInProgress(Integer restaurantId, boolean inProgress) {
         return orderDAO.getRestaurantOrders(restaurantId, inProgress);
@@ -100,7 +99,7 @@ public class OrderService {
         int pageSize,
         String sortHow,
         String... sortBy
-        ) {
+    ) {
         if (Objects.isNull(pageNumber)) {
             pageNumber = 1;
         }
@@ -108,7 +107,35 @@ public class OrderService {
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-        return orderDAO.getPaginatedRealizedOrders(restaurantIds,true, pageable)
-            .map(orderMapper::mapToDTO);
+        Page<Order> paginatedRealizedOrders = orderDAO.getPaginatedRealizedOrders(restaurantIds, true, pageable);
+        return new PageImpl<>(
+            mapOrdersToOrdersDTO(paginatedRealizedOrders),
+            pageable,
+            paginatedRealizedOrders.getTotalElements()
+        );
+
+    }
+
+    private List<OrderDTO> mapOrdersToOrdersDTO(Page<Order> paginatedRealizedOrders) {
+        return paginatedRealizedOrders.stream()
+            .map(o -> OrderDTO.builder()
+                .orderNumber(o.getOrderNumber())
+                .orderItems(orderItemMapper.mapOrderItemsToDTO(o.getOrderItems()))
+                .receivedDateTime(offsetDateTimeMapper.mapOffsetDateTimeToString(o.getReceivedDateTime()))
+                .completedDateTime(offsetDateTimeMapper.mapOffsetDateTimeToString(o.getCompletedDateTime()))
+                .customer(customerMapper.mapToDTO(o.getCustomer()))
+//                .customer(customerMapper.mapToDTO(orderDAO.findCustomerByOrderNumber(o.getOrderNumber())))
+                .restaurant(buildRestaurantDTO(o))
+                .build())
+            .toList();
+    }
+
+    private RestaurantDTO buildRestaurantDTO(Order o) {
+        Restaurant restaurant = orderDAO.findRestaurantByOrderNumber(o.getOrderNumber());
+        return RestaurantDTO.builder()
+            .restaurantId(restaurant.getRestaurantId())
+            .name(restaurant.getName())
+            .type(restaurant.getType())
+            .build();
     }
 }

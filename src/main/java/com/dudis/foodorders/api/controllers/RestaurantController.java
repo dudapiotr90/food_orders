@@ -200,7 +200,7 @@ public class RestaurantController {
     private void preparePaginatedAttributes(
         Model modelMap,
         Page<FoodDTO> menuPage,
-        int pageNumber,
+        int menuPageNumber,
         String sortBy,
         String sortHow,
         Page<DeliveryAddressDTO> deliveriesPage,
@@ -213,7 +213,7 @@ public class RestaurantController {
         modelMap.addAttribute("deliverySortHow", deliverySortHow);
         modelMap.addAttribute("sortBy", sortBy);
         modelMap.addAttribute("deliverySortBy", deliverySortBy);
-        modelMap.addAttribute("currentPage", pageNumber);
+        modelMap.addAttribute("currentPage", menuPageNumber);
         modelMap.addAttribute("currentDeliveryPage", deliveryPageNumber);
         modelMap.addAttribute("totalMenuPages", menuPage.getTotalPages());
         modelMap.addAttribute("totalMenuSize", menuPage.getTotalElements());
