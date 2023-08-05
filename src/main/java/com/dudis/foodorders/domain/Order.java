@@ -5,7 +5,7 @@ import lombok.Value;
 import lombok.With;
 
 import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Set;
 
 @With
 @Value
@@ -17,7 +17,9 @@ public class Order {
     OffsetDateTime completedDateTime;
     String customerComment;
     Boolean realized;
-//    Set<OrderDetail> orderDetails;
-    List<OrderItem> orderItems;
+    Boolean inProgress;
+    OffsetDateTime cancelTill;
+    Set<OrderItem> orderItems;
     Restaurant restaurant;
+    Customer customer;
 }

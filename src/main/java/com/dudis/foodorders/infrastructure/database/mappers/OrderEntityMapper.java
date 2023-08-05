@@ -7,25 +7,32 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderItemEntityMapper.class})
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring"
+    ,unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    uses = {OrderItemEntityMapper.class, CustomerEntityMapper.class})
 public interface OrderEntityMapper {
-    @Named("mapOrderEntities")
+
+    @Named("mapOrderFromEntity")
     @Mapping(target = "restaurant", ignore = true)
-//    @Mapping(target = "orderDetails", ignore = true)
+    @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItemsFromEntity")
+    @Mapping(source = "customer",target = "customer",qualifiedByName = "mapCustomerFromEntity")
     Order mapFromEntity(OrderEntity orderEntity);
 
+    @Named("mapOrderToEntity")
     @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItems")
     @Mapping(source = "restaurant",target = "restaurant")
+    @Mapping(source = "customer",target = "customer",qualifiedByName = "mapCustomerToEntity")
     OrderEntity mapToEntity(Order order);
 
-//    @Named("mapOrderItems")
-//    default Set<OrderItem> mapOrderItems(Set<OrderItemEntity> orderItems) {
-//        return orderItems.stream()
-//            .map(this::mapOrderItem)
-//            .collect(Collectors.toSet());
-//    }
+    @Named("mapOrdersFromEntity")
+    default Set<Order> mapOrdersFromEntity(Set<OrderEntity> orders) {
+        return orders.stream().map(this::mapFromEntity).collect(Collectors.toSet());
+    }
 
-//    @Mapping(target = "order",ignore = true)
-//    @Mapping(target = "food",ignore = true)
-//    OrderItem mapOrderItem(OrderItemEntity orderItem);
+
+
+
 }

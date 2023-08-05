@@ -1,6 +1,7 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Cart;
+import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CartEntityMapper;
@@ -73,8 +74,24 @@ public class OrderItemRepository implements OrderItemDAO {
     }
 
     @Override
-    public void deleteOrderItemFromCart(OrderItem orderItem, Cart cart) {
+    public void deleteOrderItemFromCart(OrderItem orderItem) {
         OrderItemEntity toDelete = orderItemEntityMapper.mapToEntity(orderItem);
-        orderItemJpaRepository.deleteOrderItemFromCart(toDelete.getOrderItemId(), cart.getCartId());
+        orderItemJpaRepository.deleteOrderItemFromCart(toDelete.getOrderItemId());
+    }
+
+    @Override
+    public void setOrder(OrderItem orderItem, Order order) {
+//        OrderItemEntity assignToOrder = orderItemEntityMapper.mapToEntity(orderItem);
+        orderItemJpaRepository.setOrder(orderItem.getOrderItemId(), order.getOrderId());
+    }
+
+    @Override
+    public void setCart(OrderItem orderItem, Cart cart) {
+        orderItemJpaRepository.setCart(orderItem.getOrderItemId(), cart.getCartId());
+    }
+
+    @Override
+    public void setOrderNull(OrderItem orderItem) {
+        orderItemJpaRepository.setOrderNull(orderItem.getOrderItemId());
     }
 }

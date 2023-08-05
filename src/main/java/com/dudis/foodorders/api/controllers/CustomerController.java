@@ -2,9 +2,10 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.domain.Account;
+import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
-import com.dudis.foodorders.services.CartService;
 import com.dudis.foodorders.services.CustomerService;
+import com.dudis.foodorders.services.OrderService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -29,15 +30,19 @@ public class CustomerController {
     public static final String CUSTOMER_SHOW_CART = "/customer/{id}/showCart";
     public static final String CUSTOMER_SHOW_PAGINATED_MENU = "/customer/showMenu/{restaurantId}/page/{menuPageNumber}";
 
+    public static final String CANCEL_ORDER = "/customer/{id}/cancel/{orderNumber}";
+    public static final String PAY = "/customer/{id}/pay";
+
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
     private final RestaurantService restaurantService;
+    private final OrderService orderService;
 
     @GetMapping(value = CUSTOMER)
     public String getCustomerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         CustomerDTO customer = customerService.findCustomerByAccountId(loggedAccount.getAccountId());
-        return "redirect:/customer/" + customer.getCustomerId();
+        return customerPortal(customer.getCustomerId());
     }
 
     @GetMapping(value = CUSTOMER_ID)
@@ -79,6 +84,31 @@ public class CustomerController {
         return "cart";
     }
 
+    @PutMapping(CANCEL_ORDER)
+    public String cancelOrder(
+        @PathVariable(value = "id") Integer customerId,
+        @PathVariable(value = "orderNumber") String orderNumber,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        Cart cart = customerService.findCartByCustomerId(customerId);
+        orderService.cancelOrder(orderNumber, cart);
+
+        return cartPortal(customerId);
+    }
+
+    @PutMapping(PAY)
+    public String payForOrder(
+        @PathVariable(value = "id") Integer customerId,
+        @RequestParam(value = "billNumber") String billNumber,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        customerService.payForBill(billNumber);
+
+        return customerPortal(customerId);
+    }
+
 
     @GetMapping(value = CUSTOMER_SHOW_PAGINATED_MENU)
     public String paginatedMenu(
@@ -108,12 +138,14 @@ public class CustomerController {
         var pendingBills = customerService.findPendingBills(customerId);
         var restaurants = customerService.findRestaurantWithCustomerAddress(customer.getAccountId());
         var address = securityUtils.getLoggedInAccountId(request).getAddress();
+        var orders = customerService.findCancelableOrders(customerId);
 
         return Map.of(
             "customer", customer,
             "pendingBills", pendingBills,
             "restaurants", restaurants,
-            "address", address
+            "address", address,
+            "orders",orders
         );
     }
 
@@ -135,5 +167,12 @@ public class CustomerController {
 
     private String menuPortal(Integer restaurantId) {
         return String.format("redirect:/customer/showMenu/%s", restaurantId);
+    }
+
+    private String cartPortal(Integer customerId) {
+        return String.format("redirect:/customer/%s/showCart", customerId);
+    }
+    private String customerPortal(Integer customerId) {
+        return String.format("redirect:/customer/%s", customerId);
     }
 }

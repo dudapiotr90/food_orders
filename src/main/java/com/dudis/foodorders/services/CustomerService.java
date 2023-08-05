@@ -1,10 +1,7 @@
 package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.*;
-import com.dudis.foodorders.api.mappers.BillMapper;
-import com.dudis.foodorders.api.mappers.CustomerMapper;
-import com.dudis.foodorders.api.mappers.RequestMapper;
-import com.dudis.foodorders.api.mappers.RestaurantMapper;
+import com.dudis.foodorders.api.mappers.*;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
@@ -31,6 +28,8 @@ public class CustomerService {
     private final OrderItemService orderItemService;
     private final RestaurantService restaurantService;
     private final OrderRequestService orderRequestService;
+    private final OrderService orderService;
+    private final OrderMapper orderMapper;
     private final CustomerMapper customerMapper;
     private final RestaurantMapper restaurantMapper;
     private final BillMapper billMapper;
@@ -60,7 +59,7 @@ public class CustomerService {
     }
 
     public List<BillDTO> findPendingBills(Integer customerId) {
-        return billService.findCustomerPendingBills(customerId,false).stream()
+        return billService.findCustomerPendingBills(customerId, false).stream()
             .map(billMapper::mapToDTO)
             .toList();
 
@@ -82,7 +81,7 @@ public class CustomerService {
             Cart cart = customerDAO.addCart(customerId);
             cartService.addItemToCart(cart, itemToAdd);
         } else {
-            cartService.addItemToCart(customerCart.get(),itemToAdd);
+            cartService.addItemToCart(customerCart.get(), itemToAdd);
         }
     }
 
@@ -108,5 +107,17 @@ public class CustomerService {
     public Cart findCartByCustomerId(Integer customerId) {
         return customerDAO.findCartByCustomerId(customerId)
             .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu!"));
+    }
+
+    public OrdersDTO findCancelableOrders(Integer customerId) {
+        return OrdersDTO.builder()
+            .orders(orderService.findCancelableOrders(customerId).stream()
+                .map(orderMapper::mapToDTO)
+                .toList())
+            .build();
+    }
+    @Transactional
+    public void payForBill(String billNumber) {
+        billService.payForBill(billNumber);
     }
 }

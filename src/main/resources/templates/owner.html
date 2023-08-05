@@ -30,9 +30,8 @@
           <tr>
                <th>NAME</th>
                <th>TYPE</th>
-               <th>ORDERS</th>
-               <th>ADDRESSES</th>
-               <th>DELIVERIES</th>
+               <th>TOTAL PROCESSED ORDERS</th>
+               <th>DELIVERY ADDRESSES</th>
                <th></th>
           </tr>
           </thead>
@@ -40,9 +39,8 @@
           <tr th:each="restaurant: ${restaurants}">
                <td th:text="${restaurant.name}"></td>
                <td th:text="${restaurant.type}"></td>
-               <td th:text="${restaurant.orders}"></td>
+               <td th:text="${restaurant.orders.size()}"></td>
                <td th:text="${restaurant.deliveryAddressesSize}"></td>
-               <td th:text="${restaurant.deliveriesSize}"></td>
                <td>
                     <form action="#"
                           th:action="@{/owner/{id}/manage/{restaurantId}(restaurantId=${restaurant.restaurantId}, id=${owner.ownerId})}"
@@ -62,7 +60,7 @@
      <br>
      <div class="container">
           <h2><b>Here are your pending bills!</b></h2>
-     <h3>Bills not payed = <span th:if="${bills.size()>0}" th:text="${bills.size()}"></span>COUNT</h3>
+     <h3>Bills not payed = <span th:if="${bills.size()>0}" th:text="${bills.size()}">COUNT</span></h3>
      <table class="table">
           <thead class="table-primary">
           <tr>
@@ -73,11 +71,11 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="restaurant: ${bills}">
+          <tr th:each="bill: ${bills}">
                <td th:text="${bill.billNumber}"></td>
                <td th:text="${bill.dateTime}"></td>
-               <td th:text="${bill.price}"></td>
-               <td th:text="${bill.customer}"></td>
+               <td th:text="${bill.amount}"></td>
+               <td th:text="${bill.customer.name + ' ' + bill.customer.surname}"></td>
           </tr>
           </tbody>
      </table>
@@ -86,7 +84,13 @@
      <br>
 
      <div class="button-container">
+          <a th:href="@{/owner/{id}/orderHistory(id=${owner.ownerId})}" class="btn btn-info" role="button">Check order history</a>
+     </div>
+     <br>
+     <br>
+     <br>
 
+     <div class="button-container">
           <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
      </div>
      <br>

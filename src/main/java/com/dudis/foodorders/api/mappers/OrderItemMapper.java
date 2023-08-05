@@ -9,6 +9,9 @@ import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = FoodMapper.class)
 public interface OrderItemMapper {
@@ -22,4 +25,11 @@ public interface OrderItemMapper {
     @Mapping(target = "cart",ignore = true)
     @Mapping(target = "order",ignore = true)
     OrderItem mapFromDTO(OrderItemDTO orderItemDTO);
+
+    @Named("mapOrderItemsToDTO")
+    default Set<OrderItemDTO> mapOrderItemsToDTO(Set<OrderItem> orderItems) {
+        return orderItems.stream()
+            .map(this::mapToDTO)
+            .collect(Collectors.toSet());
+    }
 }

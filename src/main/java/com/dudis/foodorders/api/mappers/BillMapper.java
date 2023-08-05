@@ -6,9 +6,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderMapper.class,CustomerMapper.class})
 public interface BillMapper {
-    @Mapping(target = "customer",ignore = true)
+    @Mapping(source = "customer",target = "customer",qualifiedByName = "mapCustomerToDTO")
+//    @Mapping(target = "customer",ignore = true)
     @Mapping(target = "owner",ignore = true)
     @Mapping(source = "order",target = "order",qualifiedByName ="mapOrderToDTO" )
     BillDTO mapToDTO(Bill bill);

@@ -2,13 +2,28 @@ package com.dudis.foodorders.services.dao;
 
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Restaurant;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderDAO {
-    List<Order> getRestaurantOrders(Integer restaurantId);
+    List<Order> getRestaurantOrders(Integer restaurantId, boolean inProgress);
 
     Integer findPendingOrdersForRestaurant(Restaurant restaurantId);
 
-    void issueAnOrder(Order order);
+    Order issueAnOrder(Order order);
+
+    void cancelOrder(Order orderNumber);
+
+    List<Order> findCancelableOrders(Integer customerId);
+
+    Optional<Order> findByOrderNumber(String orderNumber);
+
+    void setOrderAsInProgress(Order order);
+
+    void realizeOrder(Order orderNumber);
+
+    Page<Order> getPaginatedRealizedOrders(List<Integer> restaurantIds, boolean realized, Pageable pageable);
 }

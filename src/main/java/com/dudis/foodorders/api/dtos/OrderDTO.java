@@ -1,10 +1,12 @@
 package com.dudis.foodorders.api.dtos;
 
+import com.dudis.foodorders.domain.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +21,10 @@ public class OrderDTO {
     private String completedDateTime;
     private String customerComment;
     private Boolean realized;
-//    private Set<OrderRequestDTO> orderDetails;
-    private List<OrderItemDTO> orderItems;
+    private Boolean inProgress;
+    private OffsetDateTime cancelTill;
+    private CustomerDTO customer;
+    private Set<OrderItemDTO> orderItems;
     private RestaurantDTO restaurant;
 
 }

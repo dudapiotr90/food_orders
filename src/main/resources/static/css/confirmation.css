@@ -87,3 +87,23 @@ i {
 .email-address {
   margin-right: 200px;
 }
+
+.btn btn-danger.custom{
+   width: 250px;
+     height: 85px;
+     text-align: center;
+     font-size: 24px;
+     text-transform: uppercase;
+}
+.btn btn-info.custom{
+   width: 250px;
+     height: 85px;
+     text-align: center;
+     font-size: 24px;
+     text-transform: uppercase;
+}
+.custom {
+    font-size: 20px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}

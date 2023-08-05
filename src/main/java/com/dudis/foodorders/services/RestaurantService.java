@@ -2,10 +2,7 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.api.mappers.*;
-import com.dudis.foodorders.domain.DeliveryAddress;
-import com.dudis.foodorders.domain.Food;
-import com.dudis.foodorders.domain.Menu;
-import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,6 +27,7 @@ public class RestaurantService {
 
     private final RestaurantDAO restaurantDAO;
     private final DeliveryAddressService deliveryAddressService;
+    private final BillService billService;
     private final OrderService orderService;
     private final FoodService foodService;
     private final StorageService storageService;
@@ -60,7 +59,6 @@ public class RestaurantService {
         return restaurantDAO.getMenu(restaurantId)
             .map(menuMapper::mapToDTO)
             .orElse(MenuDTO.builder().foods(Set.of()).build());
-//            .orElseThrow(() -> new NotFoundException("Restaurant with id: [%s] doesn't have a menu".formatted(restaurantId)));
     }
 
     public List<Integer> findAllOwnerPendingOrders(Integer ownerId, List<RestaurantDTO> ownersRestaurants) {
@@ -83,9 +81,20 @@ public class RestaurantService {
             .build();
     }
 
-    public OrdersDTO findOrders(Integer restaurantId) {
+    public OrdersDTO findOrdersByInProgress(Integer restaurantId, boolean nonIssued) {
         return OrdersDTO.builder()
-            .orders(orderService.getRestaurantOrders(restaurantId).stream()
+            .orders(orderService.findOrdersByInProgress(restaurantId,nonIssued).stream()
+                .map(orderMapper::mapToDTO)
+                .toList())
+            .build();
+    }
+
+    public OrdersDTO findPayedOrdersAndNotRealized(Integer restaurantId) {
+        List<Order> ordersNotInProgressAndPayed = billService
+            .findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, false,true,false);
+
+        return OrdersDTO.builder()
+            .orders(ordersNotInProgressAndPayed.stream()
                 .map(orderMapper::mapToDTO)
                 .toList())
             .build();
@@ -167,6 +176,17 @@ public class RestaurantService {
 
     public Restaurant findRestaurantByMenu(Menu menu) {
         return restaurantDAO.findRestaurantByMenu(menu);
+    }
+
+    public Optional<Owner> findOwnerByRestaurant(Restaurant restaurant) {
+        return restaurantDAO.findOwnerByRestaurant(restaurant);
+    }
+
+    @Transactional
+    public void realizeOrder(String orderNumber, Integer restaurantId) {
+        Restaurant restaurant = restaurantDAO.findProcessingRestaurant(restaurantId)
+            .orElseThrow(() -> new NotFoundException("Can't realize order for non existing restaurant"));
+        orderService.realizeOrder(orderNumber,restaurant);
     }
 }
 

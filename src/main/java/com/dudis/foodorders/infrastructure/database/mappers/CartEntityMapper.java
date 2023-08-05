@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderItemEntityMapper.class})
 public interface CartEntityMapper {
+
 //    @Mapping(target = "orderDetails",ignore = true)
     @Mapping(source = "orderItems",target = "orderItems",qualifiedByName ="mapOrderItemsFromEntity" )
     Cart mapFromEntity(CartEntity cart);

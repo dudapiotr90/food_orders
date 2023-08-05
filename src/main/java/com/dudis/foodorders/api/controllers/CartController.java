@@ -1,9 +1,9 @@
 package com.dudis.foodorders.api.controllers;
 
+import com.dudis.foodorders.api.dtos.CustomerDTO;
 import com.dudis.foodorders.api.dtos.OrderItemDTO;
 import com.dudis.foodorders.api.dtos.OrderRequestDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
-import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.CartService;
 import com.dudis.foodorders.services.CustomerService;
@@ -61,9 +61,11 @@ public class CartController {
     ) {
         securityUtils.checkAccess(customerId, request);
         RestaurantDTO restaurant = restaurantService.findProcessingRestaurant(orderRequestDTO.getRestaurantId());
-        Cart cart = customerService.findCartByCustomerId(customerId);
-        cartService.issueOrder(orderRequestDTO,restaurant,cart);
-
+        CustomerDTO customer = customerService.findCustomerById(customerId);
+//        Cart cart = customerService.findCartByCustomerId(customerId);
+        String orderNumber = cartService.issueOrder(orderRequestDTO, restaurant, customer);
+        modelMap.addAttribute("customer", customer);
+        modelMap.addAttribute("orderNumber", orderNumber);
         return "order_issued";
     }
 

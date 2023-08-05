@@ -36,25 +36,29 @@
           <tr>
                <th>
                     <a
-                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=foodId&sortHow={reverseSortHow}
-                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}/{dp}?sortBy=foodId&sortHow={reverseSortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow},
+                 deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},dp=${deliveriesPage})}">
                          ID</a>
                </th>
                <th>
                     <a
-                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=name&sortHow={reverseSortHow}
-                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}/{dp}?sortBy=name&sortHow={reverseSortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+                 (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow},
+                 deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},dp=${deliveriesPage})}">
                          NAME</a>
                </th>
                <th>
                     <a
-                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=foodType&sortHow={reverseSortHow}
-               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                           th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}/{dp}?sortBy=foodType&sortHow={reverseSortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+               (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow},
+               deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},dp=${deliveriesPage})}">
                          TYPE</a>
                </th>
                <th>
-                    <a th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}?sortBy=price&sortHow={reverseSortHow}
-          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                    <a th:href="@{/owner/{id}/manage/{restaurantId}/page/{pageNumber}/{dp}?sortBy=price&sortHow={reverseSortHow}&deliverySortBy={deliverySortBy}&deliverySortHow={deliverySortHow}
+          (restaurantId=${restaurant.restaurantId}, id=${ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow},
+          deliverySortHow=${deliverySortHow},deliverySortBy=${deliverySortBy},dp=${deliveriesPage})}">
                          PRICE</a>
                </th>
                <th>DESCRIPTION</th>
@@ -219,7 +223,8 @@
 <br>
 
 <div class="container">
-     <h3><b>Orders</b></h3>
+     <h3><b>Orders not prepared</b></h3>
+     <b>Issue receipt if restaurant prepared order</b>
      <table class="table">
           <thead class="table-primary">
           <tr>
@@ -227,6 +232,7 @@
                <th>ORDERED</th>
                <th>COMPLETED</th>
                <th>COMMENT</th>
+               <th></th>
                <th></th>
           </tr>
           </thead>
@@ -237,7 +243,7 @@
                <td th:text="${order.completedDateTime}"></td>
                <td th:text="${order.customerComment}"></td>
                <td>
-                    <button class="btn btn-primary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+                    <button class="btn btn-secondary" onclick="toggleDetails(this)">SHOW DETAILS</button>
                     <div class="order-details" style="display: none;">
                          <table class="table">
                               <tr>
@@ -251,6 +257,69 @@
                               </tr>
                          </table>
                     </div>
+               </td>
+               <td>
+                    <form action="#"
+                          th:action="@{/owner/{id}/manage/{restaurantId}/issueReceipt(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+                          th:object="${orderToBill}" th:method="POST">
+                         <div class="form-group">
+                              <input type="hidden" name="orderNumber"  th:value="${order.orderNumber}" />
+                              <button type="submit" class="btn btn-primary">ISSUE RECEIPT</button>
+                         </div>
+                    </form>
+               </td>
+          </tr>
+          </tbody>
+     </table>
+</div>
+<br>
+<br>
+
+<div class="container">
+     <h3><b>Orders to realize</b></h3>
+     <b>Customers already payed for these orders! Realized them when you ready</b>
+     <table class="table">
+          <thead class="table-primary">
+          <tr>
+               <th>ORDER NUMBER</th>
+               <th>ORDERED</th>
+               <th>COMPLETED</th>
+               <th>COMMENT</th>
+               <th></th>
+               <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="order: ${toRealized.orders}">
+               <td th:text="${order.orderNumber}"></td>
+               <td th:text="${order.receivedDateTime}"></td>
+               <td th:text="${order.completedDateTime}"></td>
+               <td th:text="${order.customerComment}"></td>
+               <td>
+                    <button class="btn btn-secondary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+                    <div class="order-details" style="display: none;">
+                         <table class="table">
+                              <tr>
+                                   <th>FOOD</th>
+                                   <th>QUANTITY</th>
+                              </tr>
+                              <tbody>
+                              <tr th:each="orderItem: ${order.orderItems}">
+                                   <td th:text="${orderItem.food.name}"></td>
+                                   <td th:text="${orderItem.quantity}"></td>
+                              </tr>
+                         </table>
+                    </div>
+               </td>
+               <td>
+                    <form action="#"
+                          th:action="@{/owner/{id}/manage/{restaurantId}/realize(restaurantId=${restaurant.restaurantId}, id=${ownerId})}"
+                          th:method="PUT">
+                         <div class="form-group">
+                              <input type="hidden" name="orderNumber"  th:value="${order.orderNumber}" />
+                              <button type="submit" class="btn btn-primary">REALIZE</button>
+                         </div>
+                    </form>
                </td>
           </tr>
           </tbody>

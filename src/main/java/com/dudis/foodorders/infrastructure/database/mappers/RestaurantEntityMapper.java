@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 public interface RestaurantEntityMapper {
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "deliveryAddresses", ignore = true)
-    @Mapping(source = "orders", target = "orders", qualifiedByName = "mapOrderEntities")
+    @Mapping(source = "orders", target = "orders", qualifiedByName = "mapOrdersFromEntity")
     @Mapping(source = "menu.foods", target = "menu.foods", ignore = true)
     Restaurant mapFromEntity(RestaurantEntity local);
 

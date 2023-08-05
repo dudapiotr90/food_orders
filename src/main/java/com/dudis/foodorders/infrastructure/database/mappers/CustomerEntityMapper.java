@@ -14,13 +14,16 @@ import java.util.Set;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerEntityMapper {
 //    @Mapping(target = "cart",ignore = true)
+    @Named("mapCustomerToEntity")
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "account",ignore = true)
     @Mapping(target = "cart",ignore = true)
+    @Mapping(target = "orders",ignore = true)
     CustomerEntity mapToEntity(Customer customer);
-
+    @Named("mapCustomerFromEntity")
     @Mapping(target = "account.address",ignore = true)
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "cart",ignore = true)
+    @Mapping(target = "orders",ignore = true)
     Customer mapFromEntity(CustomerEntity customerEntity);
 }
