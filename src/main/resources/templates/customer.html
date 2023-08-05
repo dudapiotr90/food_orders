@@ -42,10 +42,10 @@
           <tbody>
           <tr th:each="bill: ${pendingBills}">
                <td th:text="${bill.billNumber}"></td>
-               <td th:text="${bill.orderNumber}"></td>
+               <td th:text="${bill.order.orderNumber}"></td>
                <td th:text="${bill.amount}"></td>
                <td>
-                    <button class="btn btn-primary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+                    <button class="btn btn-secondary" onclick="toggleDetails(this)">SHOW DETAILS</button>
                     <div class="order-details" style="display: none;">
                          <table class="table">
                               <tr>
@@ -53,17 +53,18 @@
                                    <th>QUANTITY</th>
                               </tr>
                               <tbody>
-                              <tr th:each="item: ${bill.order.orderItems}">
-                                   <td th:text="${item.food.name}"></td>
-                                   <td th:text="${item.quantity}"></td>
+                              <tr th:each="orderItem: ${bill.order.orderItems}">
+                                   <td th:text="${orderItem.food.name}"></td>
+                                   <td th:text="${orderItem.quantity}"></td>
                               </tr>
                          </table>
                     </div>
                </td>
                <td>
                     <form action="#"
-                          th:action="@{/customer/{id}/pay/{billNumber}(billNumber=${bill.billNumber}, id=${customer.customerId})}"
-                          method="GET">
+                          th:action="@{/customer/{id}/pay(id=${customer.customerId})}"
+                          th:method="PUT">
+                         <input type="hidden" name="billNumber" th:value="${bill.billNumber}" />
                          <button type="submit" class="btn btn-primary">PAY</button>
                     </form>
                </td>
@@ -105,10 +106,58 @@
 </div>
 <br>
 <br>
+<br>
+<div class="container">
+     <h2><b>Orders in progress!</b></h2>
+     <table class="table">
+          <thead class="table-primary">
+          <tr>
+               <th>ORDER NUMBER</th>
+               <th>ORDERED WHEN</th>
+               <th>CUSTOMER COMMENT</th>
+               <th>DETAILS</th>
+               <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="order: ${orders.orders}">
+               <td th:text="${order.orderNumber}"></td>
+               <td th:text="${order.receivedDateTime}"></td>
+               <td th:text="${order.customerComment}"></td>
+               <td>
+                    <button class="btn btn-secondary" onclick="toggleDetails(this)">SHOW DETAILS</button>
+                    <div class="order-details" style="display: none;">
+                         <table class="table">
+                              <tr>
+                                   <th>FOOD</th>
+                                   <th>QUANTITY</th>
+                              </tr>
+                              <tbody>
+                              <tr th:each="orderItem: ${order.orderItems}">
+                                   <td th:text="${orderItem.food.name}"></td>
+                                   <td th:text="${orderItem.quantity}"></td>
+                              </tr>
+                         </table>
+                    </div>
+               </td>
+               <td>
+                    <form action="#"
+                          th:action="@{/customer/{id}/cancel/{orderNumber}(orderNumber=${order.orderNumber}, id=${customer.customerId})}"
+                          th:method="PUT">
+                         <button type="submit" class="btn btn-danger">CANCEL</button>
+                    </form>
+               </td>
+          </tr>
+          </tbody>
+     </table>
+</div>
+<br>
+<br>
 <div class="container">
      <div class="row align-items-start">
           <div class="col">
-               <a th:href="@{/}" class="btn btn-success custom-button" role="button" style="display: block; item-align: right;">Check your order history</a>
+               <a th:href="@{/}" class="btn btn-success custom-button" role="button" style="display: block; item-align: right;">Check your order
+                    history</a>
           </div>
           <div class="col">
                <a th:href="@{/}" class="btn btn-success custom-button" role="button">Go to restaurant Search Engine</a>
@@ -135,7 +184,6 @@
           <a th:href="@{/}" class="btn btn-secondary --bs-success-rgb" role="button">Click here!</a>
      </div>
 </div>
-
 
 
 <br>

@@ -1,7 +1,10 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
+import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
+import com.dudis.foodorders.services.BillService;
+import com.dudis.foodorders.services.OwnerService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -28,20 +31,24 @@ public class RestaurantController {
     public static final String MANAGE_PAGINATED_MENU_PAGE = MANAGE + "/page/{menuPageNumber}/{deliveriesPageNumber}";
     public static final String ADD_ADDRESS = MANAGE + "/addAddress";
     public static final String DELETE_ADDRESS = MANAGE + "/deleteAddress/{deliveryId}";
+    public static final String ISSUE_RECEIPT = MANAGE + "/issueReceipt";
+    public static final String REALIZE_ORDER = MANAGE + "/realize";
 
     private final SecurityUtils securityUtils;
 
     private final RestaurantService restaurantService;
+    private final BillService billService;
+    private final OwnerService ownerService;
 
     @GetMapping(value = MANAGE)
     public String manageRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
-        Model modelMap,
+        Model model,
         HttpServletRequest request
     ) {
         securityUtils.checkAccess(ownerId, request);
-        return getPaginated(ownerId, restaurantId, modelMap, 1, "foodId", "asc", 1, "deliveryAddressId", "asc",request);
+        return getPaginated(ownerId, restaurantId, model, 1, "foodId", "asc", 1, "deliveryAddressId", "asc",request);
     }
 
     @GetMapping(MODIFY_MENU)
@@ -71,6 +78,7 @@ public class RestaurantController {
         restaurantService.addFoodToMenu(foodDTO, restaurantId, image);
         return modifyMenuPortal(ownerId, restaurantId);
     }
+
 
     @PutMapping(UPDATE_MENU_POSITION)
     public String updateMenuPosition(
@@ -121,6 +129,37 @@ public class RestaurantController {
         return restaurantManagerPortal(ownerId, restaurantId);
     }
 
+    @PostMapping(ISSUE_RECEIPT)
+    public String issueReceipt(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @ModelAttribute("orderToBill") OrderDTO orderDTO,
+        ModelMap modelMap,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(ownerId, request);
+        OwnerDTO owner = ownerService.findOwnerById(ownerId);
+        BillDTO bill = billService.issueReceipt(orderDTO, owner);
+        modelMap.addAttribute("owner", owner);
+        modelMap.addAttribute("bill", bill);
+        modelMap.addAttribute("restaurantId", restaurantId);
+        return "bill_issued";
+    }
+
+
+    @PutMapping(REALIZE_ORDER)
+    public String realizeOrder(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @RequestParam(value = "orderNumber") String orderNumber,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(ownerId, request);
+        restaurantService.realizeOrder(orderNumber,restaurantId);
+        return restaurantManagerPortal(ownerId,restaurantId);
+    }
+
+
     @GetMapping(value = MANAGE_PAGINATED_MENU_PAGE)
     public String getPaginated(
         @PathVariable(value = "id") Integer ownerId,
@@ -139,15 +178,18 @@ public class RestaurantController {
         RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
         Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(menuPageNumber, defaultPageSize, sortBy, sortHow, restaurantId);
         Page<DeliveryAddressDTO> deliveriesPage = restaurantService.getPaginatedDeliveryAddresses(deliveriesPageNumber, defaultPageSize, deliverySortBy, deliverySortHow, restaurantId);
-        OrdersDTO ordersDTO = restaurantService.findOrders(restaurantId);
+        OrdersDTO withoutBill = restaurantService.findOrdersByInProgress(restaurantId,true);
+        OrdersDTO toRealized = restaurantService.findPayedOrdersAndNotRealized(restaurantId);
         modelMap.addAttribute("ownerId", ownerId);
         modelMap.addAttribute("restaurant", restaurantDTO);
         modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("deliveries", deliveriesPage.getContent());
-        modelMap.addAttribute("orders", ordersDTO);
+        modelMap.addAttribute("orders", withoutBill);
+        modelMap.addAttribute("toRealized", toRealized);
         modelMap.addAttribute("deliveryAddress", new DeliveryAddressDTO());
         modelMap.addAttribute("menuPage", menuPageNumber);
         modelMap.addAttribute("deliveriesPage", deliveriesPageNumber);
+        modelMap.addAttribute("orderToBill", OrderDTO.builder().build());
 
         preparePaginatedAttributes(modelMap, menuPage, menuPageNumber, sortBy, sortHow, deliveriesPage, deliveriesPageNumber, deliverySortBy, deliverySortHow);
 

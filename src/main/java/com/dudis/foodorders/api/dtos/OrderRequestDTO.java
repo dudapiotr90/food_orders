@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -14,5 +15,5 @@ import java.util.List;
 public class OrderRequestDTO {
     private Integer restaurantId;
     private String customerComment;
-    private List<Integer> orderItemsId;
+    private Set<Integer> orderItemsId;
 }

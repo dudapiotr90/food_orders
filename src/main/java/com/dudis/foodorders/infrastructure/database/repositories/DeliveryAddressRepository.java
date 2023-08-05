@@ -71,7 +71,12 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
                 .build()
             )
             .toList().stream()
-            .map(restaurantEntityMapper::mapFromEntity)
+            .map(restaurantEntity -> Restaurant.builder()
+                .restaurantId(restaurantEntity.getRestaurantId())
+                .name(restaurantEntity.getName())
+                .description(restaurantEntity.getDescription())
+                .type(restaurantEntity.getType())
+                .build())
             .toList();
     }
 

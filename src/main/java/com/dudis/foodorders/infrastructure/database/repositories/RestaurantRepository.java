@@ -1,10 +1,13 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Menu;
+import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
+import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.MenuEntityMapper;
+import com.dudis.foodorders.infrastructure.database.mappers.OwnerEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.RestaurantJpaRepository;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
@@ -25,6 +28,7 @@ public class RestaurantRepository implements RestaurantDAO {
     private final RestaurantJpaRepository restaurantJpaRepository;
     private final RestaurantEntityMapper restaurantEntityMapper;
     private final MenuEntityMapper menuEntityMapper;
+    private final OwnerEntityMapper ownerEntityMapper;
     @Override
     public List<Restaurant> findRestaurantsWhereOwnerId(Integer ownerId) {
         return restaurantJpaRepository.findByOwnerId(ownerId).stream()
@@ -63,6 +67,12 @@ public class RestaurantRepository implements RestaurantDAO {
         MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
         RestaurantEntity restaurant = restaurantJpaRepository.findByMenu(menuEntity);
         return restaurantEntityMapper.mapFromEntity(restaurant);
+    }
+
+    @Override
+    public Optional<Owner> findOwnerByRestaurant(Restaurant restaurant) {
+        Optional<OwnerEntity> owner = restaurantJpaRepository.findOwnerByRestaurantId(restaurant.getRestaurantId());
+        return owner.map(ownerEntityMapper::mapFromEntity);
     }
 
 

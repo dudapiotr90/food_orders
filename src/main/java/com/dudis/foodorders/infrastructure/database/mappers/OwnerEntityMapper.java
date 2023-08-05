@@ -4,11 +4,13 @@ import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OwnerEntityMapper {
 
+    @Named("mapOwnerToEntity")
     @Mapping(target = "restaurants",ignore = true)
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "account",ignore = true)

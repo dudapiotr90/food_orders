@@ -5,7 +5,7 @@ import com.dudis.foodorders.domain.Developer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring",uses = OwnerMapper.class)
+@Mapper(componentModel = "spring",uses = AccountMapper.class)
 public interface DeveloperMapper {
 
     @Mapping(source = "account",target = "accountId",qualifiedByName = "getAccountId")

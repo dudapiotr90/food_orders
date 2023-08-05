@@ -36,6 +36,9 @@ public class CustomerEntity {
     @JoinColumn(name = "cart_id")
     private CartEntity cart;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private Set<BillEntity> bills;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<OrderEntity> orders;
 }

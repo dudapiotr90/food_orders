@@ -32,20 +32,28 @@ public class OrderEntity {
     @Column(name = "completed_date_time")
     private OffsetDateTime completedDateTime;
 
+
     @Column(name = "customer_comment")
     private String customerComment;
 
     @Column(name = "realized")
     private Boolean realized;
 
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
-//    private Set<OrderDetailEntity> orderDetails;
+    @Column(name = "in_progress")
+    private Boolean inProgress;
+
+    @Column(name = "cancel_till")
+    private OffsetDateTime cancelTill;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
-    private List<OrderItemEntity> orderItems;
+    private Set<OrderItemEntity> orderItems;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
 
 }

@@ -1,6 +1,7 @@
 package com.dudis.foodorders.services.dao;
 
 import com.dudis.foodorders.domain.Cart;
+import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
 
 public interface OrderItemDAO {
@@ -12,5 +13,11 @@ public interface OrderItemDAO {
 
     OrderItem findOrderItemById(Integer id);
 
-    void deleteOrderItemFromCart(OrderItem orderItem, Cart cart);
+    void deleteOrderItemFromCart(OrderItem orderItem);
+
+    void setOrder(OrderItem orderItem, Order order);
+
+    void setCart(OrderItem orderItem, Cart cart);
+
+    void setOrderNull(OrderItem orderItem);
 }

@@ -17,4 +17,5 @@ public class Customer {
     Account account;
     Cart cart;
     Set<Bill> bills;
+    Set<Order> orders;
 }

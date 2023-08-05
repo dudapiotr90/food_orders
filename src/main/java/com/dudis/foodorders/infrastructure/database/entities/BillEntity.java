@@ -38,7 +38,7 @@ public class BillEntity {
     @JoinColumn(name = "owner_id")
     private OwnerEntity owner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 

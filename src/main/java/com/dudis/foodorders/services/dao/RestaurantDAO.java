@@ -1,6 +1,7 @@
 package com.dudis.foodorders.services.dao;
 
 import com.dudis.foodorders.domain.Menu;
+import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
 import org.springframework.data.domain.Page;
@@ -21,4 +22,6 @@ public interface RestaurantDAO {
     Page<Menu> getPaginatedMenu(Integer restaurantId, Pageable pageable);
 
     Restaurant findRestaurantByMenu(Menu menu);
+
+    Optional<Owner> findOwnerByRestaurant(Restaurant restaurant);
 }

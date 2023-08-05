@@ -1,0 +1,2 @@
+ALTER TABLE order_item
+    ALTER COLUMN cart_id DROP NOT NULL;

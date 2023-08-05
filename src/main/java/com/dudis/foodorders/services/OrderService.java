@@ -1,48 +1,114 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.OrderRequestDTO;
+import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.mappers.OrderMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
-import com.dudis.foodorders.domain.Order;
-import com.dudis.foodorders.domain.OrderItem;
-import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.domain.*;
+import com.dudis.foodorders.domain.exception.NotFoundException;
+import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.OrderDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class OrderService {
     private final OrderDAO orderDAO;
+    private final OrderItemService orderItemService;
     private final RestaurantMapper restaurantMapper;
+    private final OrderMapper orderMapper;
 
-    public List<Order> getRestaurantOrders(Integer restaurantId) {
-        return orderDAO.getRestaurantOrders(restaurantId);
+    public List<Order> findOrdersByInProgress(Integer restaurantId, boolean inProgress) {
+        return orderDAO.getRestaurantOrders(restaurantId, inProgress);
+    }
+
+    public List<Order> findCancelableOrders(Integer customerId) {
+        return orderDAO.findCancelableOrders(customerId);
     }
 
     public Integer countPendingOrdersForRestaurant(Restaurant restaurantId) {
         return orderDAO.findPendingOrdersForRestaurant(restaurantId);
     }
 
-    public void makeAnOrder(List<OrderItem> orderItems, String customerComment, RestaurantDTO restaurantDTO) {
+    public Order makeAnOrder(Set<OrderItem> orderItems, String customerComment, RestaurantDTO restaurantDTO, Customer customer) {
         Restaurant restaurant = restaurantMapper.mapFromDTO(restaurantDTO);
-        Order order = buildOrderDetails(orderItems, restaurant,customerComment);
-        orderDAO.issueAnOrder(order);
-
+        Order order = buildOrderDetails(orderItems, restaurant, customerComment, customer);
+        return orderDAO.issueAnOrder(order);
     }
 
-    private Order buildOrderDetails(List<OrderItem> orderItems, Restaurant restaurant,String customerComment) {
+    private Order buildOrderDetails(Set<OrderItem> orderItems, Restaurant restaurant, String customerComment, Customer customer) {
         return Order.builder()
             .orderNumber(UUID.randomUUID().toString())
             .receivedDateTime(OffsetDateTime.now())
+            .cancelTill(OffsetDateTime.now().plusMinutes(20))
             .customerComment(customerComment)
             .realized(false)
+            .inProgress(true)
             .orderItems(orderItems)
             .restaurant(restaurant)
+            .customer(customer)
             .build();
+    }
+
+    @Transactional
+    public void cancelOrder(String orderNumber, Cart cart) {
+        Order orderToCancel = orderDAO.findByOrderNumber(orderNumber)
+            .orElseThrow(() -> new NotFoundException("Order with order number: [%s] doesn't exist".formatted(orderNumber)));
+        if (orderToCancel.getCancelTill().isAfter(OffsetDateTime.now())) {
+            orderItemService.returnOrderItemsToCartAndUncheckOrder(orderToCancel.getOrderItems(), cart);
+            orderDAO.cancelOrder(orderToCancel);
+        } else {
+            throw new OrderException("You can't cancel order now. It was possible till: [%s]".formatted(orderToCancel.getCancelTill()));
+        }
+    }
+
+    public Order findOrderByOrderNumber(String orderNumber) {
+        return orderDAO.findByOrderNumber(orderNumber)
+            .orElseThrow(() -> new NotFoundException("Order with order number: [%s] doesn't exist".formatted(orderNumber)));
+    }
+
+    public void setOrderAsInProgress(Order order) {
+        orderDAO.setOrderAsInProgress(order);
+    }
+
+    public void realizeOrder(String orderNumber, Restaurant restaurant) {
+        Optional<Order> order = orderDAO.findByOrderNumber(orderNumber);
+        if (order.isEmpty()) {
+            throw new NotFoundException("Order with order number: [%s] doesn't exist. Can't realize request".formatted(orderNumber));
+        } else {
+            Order orderToUpdate = order.get()
+                .withCompletedDateTime(OffsetDateTime.now())
+                .withRealized(true)
+                .withRestaurant(restaurant);
+            orderDAO.realizeOrder(orderToUpdate);
+        }
+
+    }
+
+    public Page<OrderDTO> getPaginatedRealizedOrders(
+        List<Integer> restaurantIds,
+        Integer pageNumber,
+        int pageSize,
+        String sortHow,
+        String... sortBy
+        ) {
+        if (Objects.isNull(pageNumber)) {
+            pageNumber = 1;
+        }
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return orderDAO.getPaginatedRealizedOrders(restaurantIds,true, pageable)
+            .map(orderMapper::mapToDTO);
     }
 }

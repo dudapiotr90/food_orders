@@ -1,14 +1,11 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.domain.Cart;
-import com.dudis.foodorders.domain.Food;
-import com.dudis.foodorders.domain.Menu;
-import com.dudis.foodorders.domain.OrderItem;
+import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.services.dao.OrderItemDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -16,7 +13,6 @@ public class OrderItemService {
 
     private final OrderItemDAO orderItemDAO;
     private final FoodService foodService;
-    private final OrderService orderService;
     public void addItemToCart(Cart cart, OrderItem itemToAdd) {
         orderItemDAO.addItemToCart(cart, itemToAdd);
     }
@@ -37,8 +33,13 @@ public class OrderItemService {
         return orderItemDAO.findOrderItemById(id);
     }
 
-    public void deleteOrderItemsFromCart(List<OrderItem> orderItems, Cart cart) {
-        orderItems
-            .forEach(oi -> orderItemDAO.deleteOrderItemFromCart(oi,cart));
+    public void deleteOrderItemsFromCartAndAssignOrder(Set<OrderItem> orderItems, Order order) {
+        orderItems.forEach(orderItem -> orderItemDAO.setOrder(orderItem,order));
+        orderItems.forEach(orderItemDAO::deleteOrderItemFromCart);
+    }
+
+    public void returnOrderItemsToCartAndUncheckOrder(Set<OrderItem> orderItems, Cart cart) {
+        orderItems.forEach(orderItem -> orderItemDAO.setOrderNull(orderItem));
+        orderItems.forEach(orderItem -> orderItemDAO.setCart(orderItem,cart));
     }
 }

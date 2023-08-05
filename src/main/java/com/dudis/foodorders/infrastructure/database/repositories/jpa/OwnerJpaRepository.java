@@ -17,4 +17,5 @@ public interface OwnerJpaRepository extends JpaRepository<OwnerEntity,Integer> {
         WHERE ac.accountId = :accountId
         """)
     Optional<OwnerEntity> findByAccountId(@Param("accountId") Integer accountId);
+
 }
