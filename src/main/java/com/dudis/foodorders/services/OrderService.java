@@ -93,7 +93,7 @@ public class OrderService {
 
     }
 
-    public Page<OrderDTO> getPaginatedRealizedOrders(
+    public Page<OrderDTO> getPaginatedRealizedOwnerOrders(
         List<Integer> restaurantIds,
         Integer pageNumber,
         int pageSize,
@@ -107,7 +107,7 @@ public class OrderService {
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-        Page<Order> paginatedRealizedOrders = orderDAO.getPaginatedRealizedOrders(restaurantIds, true, pageable);
+        Page<Order> paginatedRealizedOrders = orderDAO.getPaginatedRealizedOwnerOrders(restaurantIds, true, pageable);
         return new PageImpl<>(
             mapOrdersToOrdersDTO(paginatedRealizedOrders),
             pageable,
@@ -137,5 +137,22 @@ public class OrderService {
             .name(restaurant.getName())
             .type(restaurant.getType())
             .build();
+    }
+
+    public Page<Order> getPaginatedRealizedCustomerOrders(
+        Integer customerId,
+        Integer pageNumber,
+        int pageSize,
+        String sortHow,
+        String... sortBy
+    ) {
+        if (Objects.isNull(pageNumber)) {
+            pageNumber = 1;
+        }
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return orderDAO.getPaginatedRealizedCustomerOrders(customerId, true, pageable);
     }
 }

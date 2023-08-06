@@ -1,15 +1,13 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
-import com.dudis.foodorders.api.dtos.CustomerDTO;
-import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Restaurant;
-import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CustomerEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderEntityMapper;
+import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderJpaRepository;
 import com.dudis.foodorders.services.dao.OrderDAO;
@@ -29,6 +27,7 @@ public class OrderRepository implements OrderDAO {
     private final OrderEntityMapper orderEntityMapper;
     private final RestaurantEntityMapper restaurantEntityMapper;
     private final CustomerEntityMapper customerEntityMapper;
+    private final OrderItemEntityMapper orderItemEntityMapper;
 
     @Override
     public List<Order> findCancelableOrders(Integer customerId) {
@@ -80,18 +79,6 @@ public class OrderRepository implements OrderDAO {
     }
 
     @Override
-    public Page<Order> getPaginatedRealizedOrders(List<Integer> restaurantIds, boolean realized, Pageable pageable) {
-        return orderJpaRepository.findByRestaurantIds(restaurantIds,realized,pageable)
-            .map(orderEntityMapper::mapFromEntity);
-    }
-
-    @Override
-    public Customer findCustomerByOrderNumber(String orderNumber) {
-        CustomerEntity customer = orderJpaRepository.findCustomerByOrderNumber(orderNumber);
-        return customerEntityMapper.mapFromEntity(customer);
-    }
-
-    @Override
     public Restaurant findRestaurantByOrderNumber(String orderNumber) {
         return orderJpaRepository.findRestaurantByOrderNumber(orderNumber).stream()
             .map(r -> Restaurant.builder()
@@ -101,6 +88,27 @@ public class OrderRepository implements OrderDAO {
                 .build())
             .findFirst().orElse(null);
 
+    }
+
+    @Override
+    public Page<Order> getPaginatedRealizedOwnerOrders(List<Integer> restaurantIds, boolean realized, Pageable pageable) {
+        return orderJpaRepository.findByRestaurantIds(restaurantIds,realized,pageable)
+            .map(orderEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Page<Order> getPaginatedRealizedCustomerOrders(Integer customerId, boolean realized, Pageable pageable) {
+        return orderJpaRepository.findByCustomerIdAndRealized(customerId,realized,pageable)
+            .map(o->Order.builder()
+                .completedDateTime(o.getCompletedDateTime())
+                .orderNumber(o.getOrderNumber())
+                .receivedDateTime(o.getReceivedDateTime())
+                .orderItems(orderItemEntityMapper.mapOrderItemsFromEntity(o.getOrderItems()))
+                .restaurant(Restaurant.builder()
+                    .name(o.getRestaurant().getName())
+                    .type(o.getRestaurant().getType())
+                    .build())
+                .build());
     }
 
     @Override
