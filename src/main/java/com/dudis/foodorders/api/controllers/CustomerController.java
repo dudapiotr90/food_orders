@@ -24,21 +24,13 @@ public class CustomerController {
 
     public static final String CUSTOMER = "/customer";
     public static final String CUSTOMER_ID = "/customer/{id}";
-    public static final String CUSTOMER_ADD_TO_CART = "/customer/{id}/{restaurantId}/add";
-
-    public static final String CUSTOMER_SHOW_MENU = "/customer/showMenu/{restaurantId}";
-    public static final String CUSTOMER_SHOW_CART = "/customer/{id}/showCart";
-    public static final String CUSTOMER_SHOW_PAGINATED_MENU = "/customer/showMenu/{restaurantId}/page/{menuPageNumber}";
-
     public static final String CANCEL_ORDER = "/customer/{id}/cancel/{orderNumber}";
     public static final String PAY = "/customer/{id}/pay";
-
     public static final String ORDER_HISTORY = "/customer/{id}/orderHistory";
     public static final String ORDER_HISTORY_PAGINATED = "/customer/{id}/orderHistory/page/{pageNumber}";
 
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
-    private final RestaurantService restaurantService;
     private final OrderService orderService;
 
     @GetMapping(value = CUSTOMER)
@@ -53,38 +45,6 @@ public class CustomerController {
         securityUtils.checkAccess(customerId, request);
         Map<String, ?> model = prepareCustomerData(customerId, request);
         return new ModelAndView("customer", model);
-    }
-
-    @GetMapping(value = CUSTOMER_SHOW_MENU)
-    public String showMenu(@PathVariable(value = "restaurantId") Integer restaurantId, ModelMap model, HttpServletRequest request) {
-        return paginatedMenu(restaurantId, 1, "foodId", "asc", model, request);
-    }
-
-    @PostMapping(value = CUSTOMER_ADD_TO_CART)
-    public String addFoodToCart(
-        @PathVariable(value = "id") Integer customerId,
-        @PathVariable(value = "restaurantId") Integer restaurantId,
-        @ModelAttribute("foodToAdd") FoodRequestDTO foodToAdd,
-        HttpServletRequest request
-    ) {
-        securityUtils.checkAccess(customerId, request);
-        customerService.addFoodToCart(customerId, foodToAdd);
-        return menuPortal(restaurantId);
-    }
-
-    @GetMapping(value = CUSTOMER_SHOW_CART)
-    public String showCart(
-        @PathVariable(value = "id") Integer customerId,
-        ModelMap modelMap,
-        HttpServletRequest request
-        ) {
-        securityUtils.checkAccess(customerId, request);
-        List<OrderDetailsDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
-        modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
-        modelMap.addAttribute("customerId", customerId);
-        modelMap.addAttribute("foodToUpdate",new OrderItemDTO());
-        modelMap.addAttribute("foodsToOrder",OrderRequestDTO.builder().build());
-        return "cart";
     }
 
     @PutMapping(CANCEL_ORDER)
@@ -112,31 +72,6 @@ public class CustomerController {
         return customerPortal(customerId);
     }
 
-
-    @GetMapping(value = CUSTOMER_SHOW_PAGINATED_MENU)
-    public String paginatedMenu(
-        @PathVariable(value = "restaurantId") Integer restaurantId,
-        @PathVariable(value = "menuPageNumber", required = false) int menuPageNumber,
-        @RequestParam("sortBy") String sortBy,
-        @RequestParam("sortHow") String sortHow,
-        ModelMap modelMap,
-        HttpServletRequest request
-    ) {
-        Account loggedAccount = securityUtils.getLoggedInAccountId(request);
-        CustomerDTO customer = customerService.findCustomerByAccountId(loggedAccount.getAccountId());
-        int defaultPageSize = 10;
-        RestaurantDTO restaurantDTO = restaurantService.findProcessingRestaurant(restaurantId);
-        Page<FoodDTO> menuPage = restaurantService.getPaginatedMenu(menuPageNumber, defaultPageSize, sortBy, sortHow, restaurantId);
-        modelMap.addAttribute("customer", customer);
-        modelMap.addAttribute("restaurant", restaurantDTO);
-        modelMap.addAttribute("foods", menuPage.getContent());
-        modelMap.addAttribute("menuPage", menuPageNumber);
-        modelMap.addAttribute("foodToAdd",new FoodRequestDTO());
-        prepareMenuPaginatedAttributes(modelMap, menuPage, menuPageNumber, sortBy, sortHow);
-        return "menu";
-    }
-
-
     @GetMapping(value = ORDER_HISTORY)
     public String checkOrderHistory(
         @PathVariable(value = "id") Integer customerId,
@@ -162,10 +97,8 @@ public class CustomerController {
         Page<OrderDTO> orders = customerService.findCustomerRealizedOrders(customerId, pageNumber, defaultPageSize, sortHow, sortBy);
         modelMap.addAttribute("customerId", customerId);
         prepareOrdersPaginatedAttributes(modelMap, orders, pageNumber, sortHow, sortBy);
-
         return "customer_order_history";
     }
-
 
     private Map<String, ?> prepareCustomerData(Integer customerId, HttpServletRequest request) {
         var customer = customerService.findCustomerById(customerId);
@@ -183,21 +116,6 @@ public class CustomerController {
         );
     }
 
-    private void prepareMenuPaginatedAttributes(
-        ModelMap modelMap,
-        Page<FoodDTO> menuPage,
-        int menuPageNumber,
-        String sortBy,
-        String sortHow
-    ) {
-        modelMap.addAttribute("reverseSortHow", sortHow.equals("asc") ? "desc" : "asc");
-        modelMap.addAttribute("sortHow", sortHow);
-        modelMap.addAttribute("sortBy", sortBy);
-        modelMap.addAttribute("currentPage", menuPageNumber);
-        modelMap.addAttribute("totalMenuPages", menuPage.getTotalPages());
-        modelMap.addAttribute("totalMenuSize", menuPage.getTotalElements());
-    }
-
     private void prepareOrdersPaginatedAttributes(
         ModelMap modelMap,
         Page<OrderDTO> orders,
@@ -212,11 +130,6 @@ public class CustomerController {
         modelMap.addAttribute("currentPage", pageNumber);
         modelMap.addAttribute("totalPages", orders.getTotalPages());
         modelMap.addAttribute("totalSize", orders.getTotalElements());
-    }
-
-
-    private String menuPortal(Integer restaurantId) {
-        return String.format("redirect:/customer/showMenu/%s", restaurantId);
     }
 
     private String cartPortal(Integer customerId) {

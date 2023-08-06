@@ -157,16 +157,15 @@
      <div class="row align-items-start">
           <div class="col">
                <a th:href="@{/customer/{id}/orderHistory(id=${customer.customerId})}" class="btn btn-success custom-button" role="button"
-                  style="display: block; item-align: right;">Check your order
-                    history</a>
+                  style="display: block; item-align: right;">Check your order history</a>
           </div>
           <div class="col">
-               <a th:href="@{/}" class="btn btn-success custom-button" role="button">Go to restaurant Search Engine</a>
+               <a th:href="@{/customer/{id}/searchEngine(id=${customer.customerId})}" class="btn btn-success custom-button" role="button">
+                    Go to restaurant Search Engine</a>
           </div>
           <div class="col">
                <a th:href="@{/customer/{id}/showCart(id=${customer.customerId})}" class="btn btn-success custom-button" role="button"
-                  style="display: block; item-align: right;"
-               >Check your Cart</a>
+                  style="display: block; item-align: right;">Check your Cart</a>
           </div>
      </div>
 </div>

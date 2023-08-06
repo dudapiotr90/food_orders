@@ -1,9 +1,6 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.CustomerDTO;
-import com.dudis.foodorders.api.dtos.OrderItemDTO;
-import com.dudis.foodorders.api.dtos.OrderRequestDTO;
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
+import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.CartService;
 import com.dudis.foodorders.services.CustomerService;
@@ -14,13 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class CartController {
-
+    public static final String SHOW_CART = "/customer/{id}/showCart";
     public static final String UPDATE_CART = "/customer/{id}/updateCart";
     public static final String DELETE_FROM_CART = "/customer/{id}/updateCart/delete/{orderItemId}";
     public static final String ORDER = "/customer/{id}/makeAnOrder";
+    public static final String CUSTOMER_ADD_TO_CART = "/customer/{id}/{restaurantId}/add";
 
     private final SecurityUtils securityUtils;
     private final CartService cartService;
@@ -62,15 +62,45 @@ public class CartController {
         securityUtils.checkAccess(customerId, request);
         RestaurantDTO restaurant = restaurantService.findProcessingRestaurant(orderRequestDTO.getRestaurantId());
         CustomerDTO customer = customerService.findCustomerById(customerId);
-//        Cart cart = customerService.findCartByCustomerId(customerId);
         String orderNumber = cartService.issueOrder(orderRequestDTO, restaurant, customer);
         modelMap.addAttribute("customer", customer);
         modelMap.addAttribute("orderNumber", orderNumber);
         return "order_issued";
     }
 
+
+    @GetMapping(value = SHOW_CART)
+    public String showCart(
+        @PathVariable(value = "id") Integer customerId,
+        ModelMap modelMap,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        List<OrderDetailsDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
+        modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
+        modelMap.addAttribute("customerId", customerId);
+        modelMap.addAttribute("foodToUpdate",new OrderItemDTO());
+        modelMap.addAttribute("foodsToOrder",OrderRequestDTO.builder().build());
+        return "cart";
+    }
+
+    @PostMapping(value = CUSTOMER_ADD_TO_CART)
+    public String addFoodToCart(
+        @PathVariable(value = "id") Integer customerId,
+        @PathVariable(value = "restaurantId") Integer restaurantId,
+        @ModelAttribute("foodToAdd") FoodRequestDTO foodToAdd,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        customerService.addFoodToCart(customerId, foodToAdd);
+        return menuPortal(restaurantId);
+    }
+
     private String showCart(Integer customerId) {
         return String.format("redirect:/customer/%s/showCart",customerId);
+    }
+    private String menuPortal(Integer restaurantId) {
+        return String.format("redirect:/customer/showMenu/%s", restaurantId);
     }
 
 }

@@ -2,8 +2,6 @@ package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
-import com.dudis.foodorders.infrastructure.database.entities.utility.RestaurantFromNamedNativeQuery;
-import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,6 +39,7 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
         AND da.postal_code = :postalCode
         AND da.street LIKE :street
          """,nativeQuery = true)
-    List<Object[]> findRestaurantsIdWithAddress(@Param("city") String city,@Param("postalCode") String postalCode, @Param("street")String street);
+    List<Object[]> findRestaurantsWithAddress(@Param("city") String city, @Param("postalCode") String postalCode, @Param("street")String street);
+
 
 }

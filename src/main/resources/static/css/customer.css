@@ -64,6 +64,17 @@ a {
     font-size: 20px;
     display: center;
   }
+.link{
+  font-size: 14px;
+  width: 50px;
+    align-items: center;
+    background: none;
+  border: none;
+  color: blue; /* Set the text color */
+  text-decoration: underline; /* Add underline to the text */
+  padding: 0; /* Remove padding to eliminate extra space around the text */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
 
 .button-container .btn {
   width: 250px;
@@ -73,8 +84,8 @@ a {
   text-transform: uppercase;
 }
 .custom-button {
-    font-size: 20px; /* Adjust the font size to your preference */
-    padding: 10px 20px; /* Adjust the padding to your preference */
+    font-size: 20px;
+    padding: 10px 20px;
     text-transform: uppercase;
 }
 
