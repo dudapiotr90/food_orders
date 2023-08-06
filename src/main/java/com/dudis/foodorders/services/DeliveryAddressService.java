@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -20,7 +19,6 @@ public class DeliveryAddressService {
 
     private final DeliveryAddressDAO deliveryAddressDAO;
     private final DeliveryAddressMapper deliveryAddressMapper;
-    private final OrderService orderService;
     public List<DeliveryAddress> getRestaurantDeliveryAddresses(Integer restaurantId) {
         return deliveryAddressDAO.getRestaurantDeliveryAddresses(restaurantId);
     }
@@ -42,8 +40,8 @@ public class DeliveryAddressService {
         deliveryAddressDAO.deleteById(deliveryId);
     }
 
-    public List<Restaurant> findRestaurantsIdWithAddress(Address address) {
-        return deliveryAddressDAO.findRestaurantsIdWithAddress(address.getCity(), address.getPostalCode(), address.getStreet());
+    public List<Restaurant> findRestaurantsWithAddress(Address address) {
+        return deliveryAddressDAO.findRestaurantsWithAddress(address.getCity(), address.getPostalCode(), address.getStreet());
 
     }
 }

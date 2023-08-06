@@ -1,9 +1,11 @@
 package com.dudis.foodorders.services;
 
+import com.dudis.foodorders.api.controllers.SearchEngineController;
 import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.api.mappers.*;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
+import com.dudis.foodorders.domain.exception.SearchingException;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -83,7 +85,7 @@ public class RestaurantService {
 
     public OrdersDTO findOrdersByInProgress(Integer restaurantId, boolean nonIssued) {
         return OrdersDTO.builder()
-            .orders(orderService.findOrdersByInProgress(restaurantId,nonIssued).stream()
+            .orders(orderService.findOrdersByInProgress(restaurantId, nonIssued).stream()
                 .map(orderMapper::mapToDTO)
                 .toList())
             .build();
@@ -91,7 +93,7 @@ public class RestaurantService {
 
     public OrdersDTO findPayedOrdersAndNotRealized(Integer restaurantId) {
         List<Order> ordersNotInProgressAndPayed = billService
-            .findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, false,true,false);
+            .findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, false, true, false);
 
         return OrdersDTO.builder()
             .orders(ordersNotInProgressAndPayed.stream()
@@ -151,7 +153,13 @@ public class RestaurantService {
         return foodService.getPaginatedFoods(menu.getMenuId(), pageable);
     }
 
-    public Page<DeliveryAddressDTO> getPaginatedDeliveryAddresses(Integer deliveryPageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
+    public Page<DeliveryAddressDTO> getPaginatedDeliveryAddresses(
+        Integer deliveryPageNumber,
+        Integer pageSize,
+        String sortBy,
+        String sortHow,
+        Integer restaurantId
+    ) {
         if (Objects.isNull(deliveryPageNumber)) {
             deliveryPageNumber = 1;
         }
@@ -186,7 +194,85 @@ public class RestaurantService {
     public void realizeOrder(String orderNumber, Integer restaurantId) {
         Restaurant restaurant = restaurantDAO.findProcessingRestaurant(restaurantId)
             .orElseThrow(() -> new NotFoundException("Can't realize order for non existing restaurant"));
-        orderService.realizeOrder(orderNumber,restaurant);
+        orderService.realizeOrder(orderNumber, restaurant);
+    }
+
+    public Page<RestaurantForCustomerDTO> findAllRestaurants(
+        Integer pageNumber,
+        Integer pageSize,
+        String sortBy,
+        String sortHow
+    ) {
+        if (Objects.isNull(pageSize)) {
+            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+        }
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return restaurantDAO.findAllRestaurants(pageable)
+            .map(restaurantMapper::mapToDTOForCustomer);
+    }
+
+    public Page<RestaurantForCustomerDTO> findAllRestaurantsByParameters(
+        DeliveryAddressDTO deliveryAddress,
+        Integer pageNumber,
+        Integer pageSize,
+        String sortBy,
+        String sortHow
+    ) {
+        if ((!deliveryAddress.getPostalCode().isBlank() || !deliveryAddress.getStreet().isBlank())
+            && deliveryAddress.getCity().isBlank()) {
+            throw new SearchingException("""
+                City is missing.
+                You can search by city or with every detail.
+                You can also search without any input
+                """);
+        } else if (!deliveryAddress.getCity().isBlank() &&
+            (deliveryAddress.getPostalCode().isBlank() || deliveryAddress.getStreet().isBlank())) {
+            return findAllRestaurantsByCity(deliveryAddress, pageNumber, pageSize, sortBy, sortHow);
+        } else {
+            return findAllRestaurantsByCityPostalCodeStreet(deliveryAddress, pageNumber, pageSize, sortBy, sortHow);
+        }
+
+    }
+
+    private Page<RestaurantForCustomerDTO> findAllRestaurantsByCity(
+        DeliveryAddressDTO deliveryAddress,
+        Integer pageNumber,
+        Integer pageSize,
+        String sortBy,
+        String sortHow
+    ) {
+        if (Objects.isNull(pageSize)) {
+            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+        }
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return restaurantDAO.findAllRestaurantsByCity(deliveryAddress.getCity(),pageable)
+            .map(restaurantMapper::mapToDTOForCustomer);
+
+    }
+
+    private Page<RestaurantForCustomerDTO> findAllRestaurantsByCityPostalCodeStreet(
+        DeliveryAddressDTO deliveryAddress,
+        Integer pageNumber,
+        Integer pageSize,
+        String sortBy,
+        String sortHow
+    ) {
+        if (Objects.isNull(pageSize)) {
+            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+        }
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return restaurantDAO.findAllRestaurantsByFullAddress(
+            deliveryAddress.getCity(),deliveryAddress.getPostalCode(),deliveryAddress.getStreet(),pageable)
+            .map(restaurantMapper::mapToDTOForCustomer);
     }
 }
 

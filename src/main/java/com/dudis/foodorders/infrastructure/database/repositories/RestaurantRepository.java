@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
+import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
@@ -73,6 +74,27 @@ public class RestaurantRepository implements RestaurantDAO {
     public Optional<Owner> findOwnerByRestaurant(Restaurant restaurant) {
         Optional<OwnerEntity> owner = restaurantJpaRepository.findOwnerByRestaurantId(restaurant.getRestaurantId());
         return owner.map(ownerEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Page<Restaurant> findAllRestaurants(Pageable pageable) {
+        return restaurantJpaRepository.findAll(pageable)
+            .map(restaurantEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Page<Restaurant> findAllRestaurantsByCity(String city, Pageable pageable) {
+        Page<Object[]> restaurantDetails = restaurantJpaRepository.findAllRestaurantsByCity(city, pageable);
+        return restaurantDetails
+            .map(restaurantEntityMapper::buildRestaurantFromObject);
+    }
+
+    @Override
+    public Page<Restaurant> findAllRestaurantsByFullAddress(String city, String postalCode, String street, Pageable pageable) {
+        Page<Object[]> restaurantDetails = restaurantJpaRepository.findAllRestaurantsByFullAddress(
+            city, postalCode,street, pageable);
+        return restaurantDetails
+            .map(restaurantEntityMapper::buildRestaurantFromObject);
     }
 
 

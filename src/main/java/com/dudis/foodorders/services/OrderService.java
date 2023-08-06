@@ -124,7 +124,6 @@ public class OrderService {
                 .receivedDateTime(offsetDateTimeMapper.mapOffsetDateTimeToString(o.getReceivedDateTime()))
                 .completedDateTime(offsetDateTimeMapper.mapOffsetDateTimeToString(o.getCompletedDateTime()))
                 .customer(customerMapper.mapToDTO(o.getCustomer()))
-//                .customer(customerMapper.mapToDTO(orderDAO.findCustomerByOrderNumber(o.getOrderNumber())))
                 .restaurant(buildRestaurantDTO(o))
                 .build())
             .toList();

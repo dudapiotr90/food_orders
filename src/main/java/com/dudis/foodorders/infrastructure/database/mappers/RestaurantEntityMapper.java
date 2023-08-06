@@ -1,5 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.mappers;
 
+import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.mapstruct.Mapper;
@@ -17,4 +18,13 @@ public interface RestaurantEntityMapper {
     Restaurant mapFromEntity(RestaurantEntity local);
 
     RestaurantEntity mapToEntity(Restaurant restaurant);
+
+    default Restaurant buildRestaurantFromObject(Object[] o) {
+        return Restaurant.builder()
+            .restaurantId((Integer) o[0])
+            .name((String) o[1])
+            .description((String) o[2])
+            .type(LocalType.valueOf((String) o[3]))
+            .build();
+    }
 }

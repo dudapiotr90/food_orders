@@ -8,8 +8,6 @@ import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeliveryAddressJpaRepository;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.MenuJpaRepository;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.OwnerJpaRepository;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,8 +23,6 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     private final DeliveryAddressJpaRepository deliveryAddressJpaRepository;
     private final DeliveryAddressEntityMapper deliveryAddressEntityMapper;
     private final RestaurantEntityMapper restaurantEntityMapper;
-    private final MenuJpaRepository menuJpaRepository;
-    private final OwnerJpaRepository ownerJpaRepository;
 
     @Override
     public List<DeliveryAddress> getRestaurantDeliveryAddresses(Integer restaurantId) {
@@ -60,17 +56,13 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     }
 
     @Override
-    public List<Restaurant> findRestaurantsIdWithAddress(String city, String postalCode, String street) {
-        List<Object[]> restaurantDetails = deliveryAddressJpaRepository.findRestaurantsIdWithAddress(city, postalCode, street);
+    public List<Restaurant> findRestaurantsWithAddress(String city, String postalCode, String street) {
+        List<Object[]> restaurantDetails = deliveryAddressJpaRepository.findRestaurantsWithAddress(city, postalCode, street);
         return restaurantDetails.stream()
-            .map(a -> Restaurant.builder()
-                .restaurantId( (Integer)a[0])
-                .name((String) a[1])
-                .description((String) a[2])
-                .type(LocalType.valueOf((String) a[3]))
-                .build()
+            .map(restaurantEntityMapper::buildRestaurantFromObject
             )
             .toList();
     }
+
 
 }
