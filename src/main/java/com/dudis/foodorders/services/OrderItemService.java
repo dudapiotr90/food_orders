@@ -39,7 +39,7 @@ public class OrderItemService {
     }
 
     public void returnOrderItemsToCartAndUncheckOrder(Set<OrderItem> orderItems, Cart cart) {
-        orderItems.forEach(orderItem -> orderItemDAO.setOrderNull(orderItem));
+        orderItems.forEach(orderItemDAO::setOrderNull);
         orderItems.forEach(orderItem -> orderItemDAO.setCart(orderItem,cart));
     }
 }

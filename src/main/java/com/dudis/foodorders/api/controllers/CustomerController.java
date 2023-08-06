@@ -33,6 +33,9 @@ public class CustomerController {
     public static final String CANCEL_ORDER = "/customer/{id}/cancel/{orderNumber}";
     public static final String PAY = "/customer/{id}/pay";
 
+    public static final String ORDER_HISTORY = "/customer/{id}/orderHistory";
+    public static final String ORDER_HISTORY_PAGINATED = "/customer/{id}/orderHistory/page/{pageNumber}";
+
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
     private final RestaurantService restaurantService;
@@ -129,9 +132,40 @@ public class CustomerController {
         modelMap.addAttribute("foods", menuPage.getContent());
         modelMap.addAttribute("menuPage", menuPageNumber);
         modelMap.addAttribute("foodToAdd",new FoodRequestDTO());
-        preparePaginatedAttributes(modelMap, menuPage, menuPageNumber, sortBy, sortHow);
+        prepareMenuPaginatedAttributes(modelMap, menuPage, menuPageNumber, sortBy, sortHow);
         return "menu";
     }
+
+
+    @GetMapping(value = ORDER_HISTORY)
+    public String checkOrderHistory(
+        @PathVariable(value = "id") Integer customerId,
+        ModelMap modelMap,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(customerId, request);
+        return getPaginatedOrderHistory(customerId, modelMap, request, 1, "desc", "completedDateTime");
+    }
+
+    @GetMapping(ORDER_HISTORY_PAGINATED)
+    public String getPaginatedOrderHistory(
+        @PathVariable(value = "id") Integer customerId,
+        ModelMap modelMap,
+        HttpServletRequest request,
+        @PathVariable(value = "pageNumber", required = false) int pageNumber,
+        @RequestParam("sortHow") String sortHow,
+        @RequestParam("sortBy") String... sortBy
+    )
+    {
+        securityUtils.checkAccess(customerId, request);
+        int defaultPageSize = 2;
+        Page<OrderDTO> orders = customerService.findCustomerRealizedOrders(customerId, pageNumber, defaultPageSize, sortHow, sortBy);
+        modelMap.addAttribute("customerId", customerId);
+        prepareOrdersPaginatedAttributes(modelMap, orders, pageNumber, sortHow, sortBy);
+
+        return "customer_order_history";
+    }
+
 
     private Map<String, ?> prepareCustomerData(Integer customerId, HttpServletRequest request) {
         var customer = customerService.findCustomerById(customerId);
@@ -149,7 +183,7 @@ public class CustomerController {
         );
     }
 
-    private void preparePaginatedAttributes(
+    private void prepareMenuPaginatedAttributes(
         ModelMap modelMap,
         Page<FoodDTO> menuPage,
         int menuPageNumber,
@@ -162,6 +196,22 @@ public class CustomerController {
         modelMap.addAttribute("currentPage", menuPageNumber);
         modelMap.addAttribute("totalMenuPages", menuPage.getTotalPages());
         modelMap.addAttribute("totalMenuSize", menuPage.getTotalElements());
+    }
+
+    private void prepareOrdersPaginatedAttributes(
+        ModelMap modelMap,
+        Page<OrderDTO> orders,
+        int pageNumber,
+        String sortHow,
+        String... sortBy
+    ) {
+        modelMap.addAttribute("orders", orders.getContent());
+        modelMap.addAttribute("reverseSortHow", sortHow.equals("asc") ? "desc" : "asc");
+        modelMap.addAttribute("sortHow", sortHow);
+        modelMap.addAttribute("sortBy", sortBy);
+        modelMap.addAttribute("currentPage", pageNumber);
+        modelMap.addAttribute("totalPages", orders.getTotalPages());
+        modelMap.addAttribute("totalSize", orders.getTotalElements());
     }
 
 

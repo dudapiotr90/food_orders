@@ -31,7 +31,6 @@ public class OwnerController {
     public static final String ORDER_HISTORY_PAGINATED = "/owner/{id}/orderHistory/page/{pageNumber}";
     private final SecurityUtils securityUtils;
     private final OwnerService ownerService;
-    private final OrderService orderService;
     private final BillService billService;
 
 

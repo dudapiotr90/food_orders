@@ -14,10 +14,10 @@ import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +34,7 @@ public class OwnerService {
     private final OwnerMapper ownerMapper;
     private final RestaurantMapper restaurantMapper;
 
+    @Transactional
     public ConfirmationToken registerOwner(RegistrationRequest request) {
         Account ownerAccount = accountService.buildAccount(request);
         Owner owner = buildOwner(ownerAccount, request);
@@ -75,21 +76,6 @@ public class OwnerService {
         return ownerMapper.mapToDTO(owner.get());
     }
 
-    private Menu buildMenu(RestaurantDTO restaurantDTO) {
-        return Menu.builder()
-            .menuName(restaurantDTO.getName())
-            .description(restaurantDTO.getDescription())
-            .build();
-    }
-
-
-    private Owner buildOwner(Account ownerAccount, RegistrationRequest request) {
-        return Owner.builder()
-            .name(request.getUserName())
-            .surname(request.getUserSurname())
-            .account(ownerAccount)
-            .build();
-    }
 
     public Owner findOwnerByRestaurant(Restaurant restaurant) {
         return restaurantService.findOwnerByRestaurant(restaurant)
@@ -103,6 +89,21 @@ public class OwnerService {
         List<Integer> restaurantIds = restaurants.stream()
             .map(Restaurant::getRestaurantId)
             .toList();
-        return orderService.getPaginatedRealizedOrders(restaurantIds, pageNumber, pageSize, sortHow, sortBy);
+        return orderService.getPaginatedRealizedOwnerOrders(restaurantIds, pageNumber, pageSize, sortHow, sortBy);
+    }
+
+    private Menu buildMenu(RestaurantDTO restaurantDTO) {
+        return Menu.builder()
+            .menuName(restaurantDTO.getName())
+            .description(restaurantDTO.getDescription())
+            .build();
+    }
+
+    private Owner buildOwner(Account ownerAccount, RegistrationRequest request) {
+        return Owner.builder()
+            .name(request.getUserName())
+            .surname(request.getUserSurname())
+            .account(ownerAccount)
+            .build();
     }
 }

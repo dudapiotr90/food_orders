@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,9 @@ public interface OrderEntityMapper {
 
     @Named("mapOrdersFromEntity")
     default Set<Order> mapOrdersFromEntity(Set<OrderEntity> orders) {
+        if (Objects.isNull(orders)) {
+            return null;
+        }
         return orders.stream().map(this::mapFromEntity).collect(Collectors.toSet());
     }
 

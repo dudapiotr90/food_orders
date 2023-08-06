@@ -8,10 +8,12 @@ import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -116,8 +118,21 @@ public class CustomerService {
                 .toList())
             .build();
     }
+
     @Transactional
     public void payForBill(String billNumber) {
         billService.payForBill(billNumber);
+    }
+
+    @Transactional
+    public Page<OrderDTO> findCustomerRealizedOrders(
+        Integer customerId,
+        Integer pageNumber,
+        int pageSize,
+        String sortHow,
+        String[] sortBy
+    ) {
+        return orderService.getPaginatedRealizedCustomerOrders(customerId, pageNumber, pageSize, sortHow, sortBy)
+            .map(orderMapper::mapToDTO);
     }
 }
