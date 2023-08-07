@@ -1,10 +1,10 @@
 package com.dudis.foodorders.infrastructure.security.repository.jpa;
 
+import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 
 @Repository
 public interface ApiRoleJpaRepository extends JpaRepository<ApiRoleEntity,Integer> {

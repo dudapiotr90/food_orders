@@ -1,8 +1,5 @@
 package com.dudis.foodorders.domain;
 
-import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;

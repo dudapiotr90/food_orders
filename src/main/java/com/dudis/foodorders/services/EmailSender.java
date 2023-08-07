@@ -14,7 +14,7 @@ public interface EmailSender {
                 
         <p>Thank you for registering! To complete the registration process, please click on the following confirmation link:</p>
         
-        <p><a href="%s">Confirm Email</a> Link will expire in 60 minutes.</p>    
+        <p><a href="%s">Confirm Email</a> Link will expire in 60 minutes.</p>
                 
         <p>After clicking the link, your account will be activated, and you will be able to access our services.</p>
                 

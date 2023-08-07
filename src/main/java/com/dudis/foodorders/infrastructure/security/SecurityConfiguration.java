@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -25,8 +23,9 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,UserDetailsService userDetailsService) {
+    public DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(userDetailsService);
@@ -43,16 +42,17 @@ public class SecurityConfiguration {
             .authenticationProvider(authenticationProvider)
             .build();
     }
+
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         return http
 //            .csrf(AbstractHttpConfigurer::disable) // probably to dont have logout form
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers("/","/login","/error","/registration/**","/css/**").permitAll()
-                    .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
-                    .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
-                    .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())
+                .requestMatchers("/", "/login", "/error", "/registration/**", "/css/**", "/images/error.png").permitAll()
+                .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
+                .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
+                .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())
             )
             .formLogin(formLogin -> formLogin
                 .defaultSuccessUrl("/")
@@ -78,6 +78,4 @@ public class SecurityConfiguration {
             )
             .build();
     }
-
-
 }

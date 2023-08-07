@@ -1,15 +1,12 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.infrastructure.security.ApiRoleService;
-import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
-import lombok.AllArgsConstructor;
-import org.mapstruct.Named;
-import org.springframework.stereotype.Service;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.services.dao.AccountDAO;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;

@@ -9,6 +9,9 @@ import com.dudis.foodorders.domain.exception.SearchingException;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.impl.IOFileUploadException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class RestaurantService {
@@ -103,10 +106,16 @@ public class RestaurantService {
     }
 
     @Transactional
-    public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
+    public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws FileUploadException {
         Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
         Food food = foodMapper.mapFromDTO(foodDTO);
-        String foodImage = storageService.uploadImageToServer(image, restaurantId);
+        String foodImage = "";
+        try {
+            foodImage = storageService.uploadImageToServer(image, restaurantId);
+        } catch (IOException e) {
+            log.error("Failed to upload an image: [{}]",image.getOriginalFilename(),e);
+            throw new FileUploadException("Failed to upload an image: [%s]".formatted(image.getOriginalFilename()));
+        }
         if (image.isEmpty()) {
             foodService.addFoodToMenu(food, menu, null);
         } else {
@@ -116,9 +125,15 @@ public class RestaurantService {
     }
 
     @Transactional
-    public String updateMenuPosition(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws IOException {
+    public String updateMenuPosition(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws FileUploadException {
         Food food = foodMapper.mapFromDTO(foodDTO);
-        String foodImagePath = storageService.uploadImageToServer(image, restaurantId);
+        String foodImagePath = "";
+        try {
+            foodImagePath = storageService.uploadImageToServer(image, restaurantId);
+        } catch (IOException e) {
+            log.error("Failed to upload an image: [{}]",image.getOriginalFilename(),e);
+            throw new FileUploadException("Failed to upload an image: [%s]".formatted(image.getOriginalFilename()));
+        }
         if (image.isEmpty()) {
             foodService.updateMenuPosition(food, null);
         } else {

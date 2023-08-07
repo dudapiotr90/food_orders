@@ -1,6 +1,5 @@
 package com.dudis.foodorders.api.dtos;
 
-import com.dudis.foodorders.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

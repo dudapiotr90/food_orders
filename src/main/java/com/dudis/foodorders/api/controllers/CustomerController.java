@@ -1,21 +1,23 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.*;
+import com.dudis.foodorders.api.dtos.CustomerDTO;
+import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.OrderService;
-import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller

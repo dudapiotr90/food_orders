@@ -1,11 +1,8 @@
 package com.dudis.foodorders.services.dao;
 
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
-import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
-import org.apache.el.stream.Stream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

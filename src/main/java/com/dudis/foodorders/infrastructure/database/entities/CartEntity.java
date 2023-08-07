@@ -3,7 +3,6 @@ package com.dudis.foodorders.infrastructure.database.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter

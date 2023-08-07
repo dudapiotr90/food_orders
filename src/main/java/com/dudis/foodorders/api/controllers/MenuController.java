@@ -7,7 +7,6 @@ import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.CustomerService;
-import com.dudis.foodorders.services.OrderService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;

@@ -1,13 +1,13 @@
 package com.dudis.foodorders.infrastructure.security.entity;
 
+import com.dudis.foodorders.infrastructure.database.entities.AddressEntity;
+import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.dudis.foodorders.infrastructure.database.entities.AddressEntity;
-import com.dudis.foodorders.infrastructure.security.AuthorityException;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public class AccountEntity implements UserDetails {
     private Integer accountId;
 
     @Column(name = "login", unique = true)
-    @Length(min = 4)
+    @Length(min = 4,max = 12)
     private String login;
 
     @Column(name = "password")

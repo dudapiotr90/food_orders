@@ -1,11 +1,9 @@
 package com.dudis.foodorders.infrastructure.database.entities;
 
-import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Getter
 @Setter

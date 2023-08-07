@@ -2,13 +2,10 @@ package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Customer;
-import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.infrastructure.database.entities.CartEntity;
 import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
-import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CartEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.CustomerEntityMapper;
-import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.CartJpaRepository;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.CustomerJpaRepository;
 import com.dudis.foodorders.infrastructure.security.Role;
@@ -23,7 +20,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @AllArgsConstructor

@@ -1,10 +1,10 @@
 package com.dudis.foodorders.infrastructure.database.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Fetch;
-
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

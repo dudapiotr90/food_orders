@@ -1,11 +1,7 @@
 package com.dudis.foodorders.infrastructure.database.entities;
 
-import com.dudis.foodorders.infrastructure.database.entities.utility.RestaurantFromNamedNativeQuery;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.NamedNativeQuery;
 
 @Getter
 @Setter

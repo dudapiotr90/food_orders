@@ -1,11 +1,9 @@
 package com.dudis.foodorders.api.mappers;
 
 import com.dudis.foodorders.api.dtos.OwnerDTO;
-import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Owner;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = AccountMapper.class)

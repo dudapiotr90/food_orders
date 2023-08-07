@@ -2,7 +2,6 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.api.mappers.FoodMapper;
-import com.dudis.foodorders.api.mappers.MenuMapper;
 import com.dudis.foodorders.domain.Food;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.services.dao.FoodDAO;
