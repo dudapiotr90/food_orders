@@ -1,11 +1,8 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
-import com.dudis.foodorders.domain.Menu;
-import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
-import org.apache.el.stream.Stream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,16 +1,14 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.DeveloperDTO;
 import com.dudis.foodorders.api.mappers.DeveloperMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Developer;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.AuthorityException;
+import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.DeveloperDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 
 import java.util.Optional;
 

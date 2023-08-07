@@ -7,12 +7,12 @@ import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.BillService;
-import com.dudis.foodorders.services.OrderService;
 import com.dudis.foodorders.services.OwnerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -33,21 +33,20 @@ public class OwnerController {
     private final OwnerService ownerService;
     private final BillService billService;
 
-
+    @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = OWNER)
     public String getOwnerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount.getAccountId());
         return "redirect:/owner/" + owner.getOwnerId();
     }
-
+    @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = OWNER_ID)
     public ModelAndView getSpecificOwnerPage(@PathVariable(value = "id") Integer ownerId, HttpServletRequest request) {
         securityUtils.checkAccess(ownerId, request);
         Map<String, ?> model = prepareOwnerData(ownerId);
         return new ModelAndView("owner", model);
     }
-
     @GetMapping(value = OWNER_ADD)
     public String restaurantFormPage(@PathVariable(value = "id") Integer ownerId, ModelMap model, HttpServletRequest request) {
         securityUtils.checkAccess(ownerId, request);

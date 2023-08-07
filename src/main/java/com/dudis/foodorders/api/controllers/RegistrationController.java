@@ -1,6 +1,12 @@
 package com.dudis.foodorders.api.controllers;
 
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
+import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
+import com.dudis.foodorders.api.mappers.RoleMapper;
 import com.dudis.foodorders.domain.Account;
+import com.dudis.foodorders.infrastructure.security.ApiRoleService;
+import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
+import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,12 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
-import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
-import com.dudis.foodorders.api.mappers.RoleMapper;
-import com.dudis.foodorders.infrastructure.security.ApiRoleService;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
-import com.dudis.foodorders.infrastructure.security.RegistrationService;
 
 import java.util.Map;
 import java.util.stream.Collectors;

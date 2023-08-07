@@ -48,7 +48,7 @@ public class SecurityUtils {
         CustomerDTO customerToDisplay = customerService.findCustomerById(id);
         if (!customerToDisplay.getAccountId().equals(loggedInAccount.getAccountId())) {
             CustomerDTO customerLogged = customerService.findCustomerByAccountId(loggedInAccount.getAccountId());
-            throw new AuthorityException(String.format("invalid PathVariable. You can access only your account! [/customer/[%s]/**]",
+            throw new AuthorityException(String.format("invalid PathVariable. You can access only your account! [  /customer/[%s]/**  ]",
                 customerLogged.getCustomerId()));
         }
     }
@@ -57,7 +57,8 @@ public class SecurityUtils {
         OwnerDTO ownerToDisplay = ownerService.findOwnerById(ownerId);
         if (!ownerToDisplay.getAccountId().equals(loggedInAccount.getAccountId())) {
             OwnerDTO ownerLogged = ownerService.findOwnerByAccountId(loggedInAccount.getAccountId());
-            throw new AuthorityException(String.format("invalid PathVariable. You can access only your account! [/owner/[%s]/**]", ownerLogged.getOwnerId()));
+            throw new AuthorityException(String.format("invalid PathVariable. You can access only your account! [  /owner/[%s]/**  ]",
+                ownerLogged.getOwnerId()));
         }
     }
 

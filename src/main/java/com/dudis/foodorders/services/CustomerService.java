@@ -8,7 +8,7 @@ import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,7 +107,7 @@ public class CustomerService {
 
     public Cart findCartByCustomerId(Integer customerId) {
         return customerDAO.findCartByCustomerId(customerId)
-            .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu!"));
+            .orElseThrow(() -> new NotFoundException("You don't have a cart. Add some food from the menu first!"));
     }
 
     public OrdersDTO findCancelableOrders(Integer customerId) {

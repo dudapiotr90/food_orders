@@ -1,6 +1,5 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
-import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;

@@ -1,6 +1,5 @@
 package com.dudis.foodorders.infrastructure.database.repositories.jpa;
 
-import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import org.springframework.data.domain.Page;

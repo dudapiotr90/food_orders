@@ -1,12 +1,8 @@
 package com.dudis.foodorders.infrastructure.security.repository;
 
 import com.dudis.foodorders.domain.Account;
-import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.entity.AccountEntityMapper;
-import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
-import com.dudis.foodorders.infrastructure.security.entity.AccountManagerEntity;
-import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
-import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
+import com.dudis.foodorders.domain.exception.RegistrationException;
+import com.dudis.foodorders.infrastructure.security.entity.*;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountManagerJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
@@ -64,10 +60,9 @@ public class AccountRepository implements AccountDAO {
     public ConfirmationToken registerAccount(AccountEntity account, ApiRoleEntity role) {
         Optional<AccountEntity> registeredAccount = accountJpaRepository.findByEmail(account.getEmail());
         if (registeredAccount.isEmpty()) {
-            throw new NotFoundException("Failed to successfully registerAccount");
+            throw new RegistrationException("Failed to successfully registerAccount");
         }
         AccountManagerEntity accountManager = buildAccountManager(role, registeredAccount.get());
-
         accountManagerJpaRepository.saveAndFlush(accountManager);
 
         return prepareActivationToken(account);

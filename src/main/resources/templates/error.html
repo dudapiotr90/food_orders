@@ -14,6 +14,41 @@
   <link rel="stylesheet" href="../static/css/confirmation.css">
 </head>
 <body>
-ERROR
+<header>
+  <nav>
+    <h1>ERROR</h1>
+  </nav>
+</header>
+<br>
+<div class="container">
+  <h1>Something went wrong</h1>
+  <h2>Check message down below for further information</h2>
+  <b><span th:if="${errorMessage}" th:text="${errorMessage}">Error</span></b>
+  <b><span th:if="${errorMessage == null}" >Access Denied!</span></b>
+  <br>
+  <img th:src="@{/images/error.png}" alt="SOMETHING WENT WRONG" width="auto" height="300px"/>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="button-container">
+      <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
+    </div>
+  </div>
+</div>
+
+
+<footer id="flex-container">
+  <div class="flex-item">
+    <p>
+      <i class="fas fa-envelope"></i>
+      <span class="email-address">piotrjavatestowy@gmail.com</span>
+    </p>
+    <p>
+      <i class="fab fa-github"></i>
+      <a href="https://github.com/dudapiotr90/food_orders" target="_blank">GitHub</a>
+    </p>
+  </div>
+</footer>
 </body>
 </html>

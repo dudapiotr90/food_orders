@@ -1,6 +1,5 @@
 package com.dudis.foodorders.infrastructure.security;
 
-import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
 import com.dudis.foodorders.services.dao.ApiRoleDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

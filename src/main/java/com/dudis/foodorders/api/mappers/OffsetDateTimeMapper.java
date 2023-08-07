@@ -2,7 +2,6 @@ package com.dudis.foodorders.api.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
-import org.mapstruct.Qualifier;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

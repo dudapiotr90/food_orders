@@ -1,7 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.DeliveryAddress;
-import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;

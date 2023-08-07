@@ -1,13 +1,13 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
-import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
 import com.dudis.foodorders.services.BillService;
 import com.dudis.foodorders.services.OwnerService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,7 +73,7 @@ public class RestaurantController {
         @ModelAttribute("food") FoodDTO foodDTO,
         @RequestParam("image") MultipartFile image,
         HttpServletRequest request
-    ) throws IOException {
+    ) throws FileUploadException {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.addFoodToMenu(foodDTO, restaurantId, image);
         return modifyMenuPortal(ownerId, restaurantId);
@@ -87,7 +87,7 @@ public class RestaurantController {
         @ModelAttribute("food") FoodDTO foodDTO,
         @RequestParam("image") MultipartFile image,
         HttpServletRequest request
-    ) throws IOException {
+    ) throws FileUploadException {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.updateMenuPosition(foodDTO, restaurantId, image);
         return modifyMenuPortal(ownerId, restaurantId);
