@@ -34,7 +34,8 @@
       NAME: <input type="text" th:field="*{name}" required/>
       FOOD TYPE:
       <select id="type" th:field="*{foodType}" required>
-            <option th:each="type : ${foodTypes}"
+        <option value="">-- Select Type --</option>
+        <option th:each="type : ${foodTypes}"
               th:value="${type}"
               th:text="${type}">
             </option>

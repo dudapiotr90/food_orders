@@ -43,6 +43,7 @@
               </div>
               <div class="col-md-5">
                 <select id="type" th:field="*{type}" required>
+                  <option value="">-- Select Type --</option>
                   <option th:each="type : ${types}"
                           th:value="${type}"
                           th:text="${type}"></option>
