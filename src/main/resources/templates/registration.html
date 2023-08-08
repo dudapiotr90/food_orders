@@ -142,6 +142,7 @@
     <div class="container text-center">
       <label for="role">Account type:</label>
       <select id="role" th:field="*{role}">
+        <option value="">-- Select Role --</option>
         <option th:each="availableRole : ${availableRoles}"
         th:value="${availableRole}"
         th:text="${availableRole}"></option>

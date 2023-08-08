@@ -47,9 +47,9 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         return http
-//            .csrf(AbstractHttpConfigurer::disable) // probably to dont have logout form
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/", "/login", "/error", "/registration/**", "/css/**", "/images/error.png").permitAll()
+                .requestMatchers("/", "/login", "/error", "/registration/**", "/css/**", "/images/error.png","/extras/**","/swagger-ui/**",
+                    "/api/**").permitAll()
                 .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
                 .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
                 .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())

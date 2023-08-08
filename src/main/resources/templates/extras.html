@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+           rel="stylesheet"
+           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+           crossorigin="anonymous">
+     <title>Food Orders - Full Stomach</title>
+     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:ital,wght@1,200;1,300&display=swap" rel="stylesheet">
+     <script src="https://kit.fontawesome.com/87ad05a667.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" th:href="@{/css/customer.css}">
+     <link rel="stylesheet" href="../static/css/customer.css">
+</head>
+<body>
+<nav>
+     <h1>Extras</h1>
+</nav>
+<br>
+<div class="container">
+     <h2><b>Check out our awesome additional features!</b></h2>
+</div>
+<br>
+<div class="container">
+     <h3><b>Are you a food lover?</b></h3>
+     <p>
+     <h3> Maybe you would like to know some fun food facts?</h3>
+     </p>
+     <div>
+          <a th:href="@{/extras/trivia}" class="btn btn-info" role="button">Show me</a>
+     </div>
+     <br>
+     <div>
+          <h2><u><span th:if="${trivia}" th:text="${trivia}">TRIVIA</span></u></h2>
+     </div>
+</div>
+<br>
+<div class="container">
+     <h3>Or maybe you would like to read something funny?</h3>
+     <div>
+          <a th:href="@{/extras/joke}" class="btn btn-info" role="button">Show me</a>
+     </div>
+     <br>
+     <div>
+          <h2><u><span th:if="${joke}" th:text="${joke}">JOKE</span></u></h2>
+     </div>
+</div>
+<br>
+<div class="container">
+     <h3>Looking for a meal? Select your from given options and search</h3>
+     <form action="#"
+           th:action="@{/extras/videoRecipe}"
+           th:method="GET"
+           th:object="${searchParameters}">
+          <div class="form-group">
+               QUERY: <input type="text" th:field="*{query}" placeholder="pasta"/>
+               <label for="diet">DIET : </label>
+               <select id="diet" th:field="*{diet}" >
+                    <option value="">-- Select Diet --</option>
+                    <option th:each="diet : ${diets}"
+                            th:value="${diet}"
+                            th:text="${diet}"></option>
+               </select>
+               <label for="mealType">MEAL TYPE : </label>
+               <select id="mealType" th:field="*{mealType}">
+                    <option value="">-- Select Meal Type --</option>
+                    <option th:each="mealType : ${mealTypes}"
+                            th:value="${mealType}"
+                            th:text="${mealType}"></option>
+               </select>
+               MAX VIDEO LENGTH [s]: <input type="number"  min="0" max="999" th:field="*{maxVideoLengthInSeconds}" style="width: 100px;" />
+               <br>
+               <br>
+               <div style="display: grid; width: 300px">
+               <label for="cuisine">CUISINE : </label>
+               <select id="cuisine" th:field="*{cuisine}" multiple style="height: 100px;">
+                    <option th:each="cuisine : ${cuisines}"
+                            th:value="${cuisine}"
+                            th:text="${cuisine}"></option>
+               </select>
+                    <br>
+               </div>
+          </div>
+          <br>
+          <div class="form-group">
+               <input type="submit" value="SEARCH" class="btn btn-success custom-button"/>
+          </div>
+     </form>
+</div>
+<br>
+<div class="container">
+     <div th:if="${videoData != null}">
+          <h2>Your searching results!</h2>
+          <div>
+               <span th:text="${videoData.title}" th:value="${videoData.title}">DISH TITLE: </span>
+          </div>
+          <br>
+          <div class="row mt-2" th:if="${videoData.dishPreview != null}">
+               <div class="col-sm-2">
+                    <h3> DISH PREVIEW: </h3>
+               </div>
+               <div class="col-sm-4">
+                    <a
+                           th:href="${videoData.dishPreview}" class="btn btn-secondary" role="button"  target="_blank">PREVIEW</a>
+               </div>
+          </div>
+          <div th:if="${videoData.views != null}" >
+               <div class="row mt-2">
+                    <div class="col-sm-2">
+                         VIEWS:
+                         <span th:text="${videoData.views}" th:value="${videoData.views}"></span>
+                    </div>
+                    <div class="col-sm-2">
+                         VIDEO LENGTH:
+                         <span th:text="${videoData.videoLength}" th:value="${videoData.videoLength}"></span>
+                    </div>
+               </div>
+          </div>
+          <br>
+          <div th:if="${videoData.youtubeVideoLink != null}">
+                    <a
+                           th:href="${videoData.youtubeVideoLink}" class="btn btn-danger" role="button"  target="_blank">WATCH HOW TO MAKE IT!</a>
+          </div>
+     </div>
+</div>
+<br>
+<br>
+<div class="button-container">
+     <a th:href="@{/}" class="btn btn-primary" role="button">Go back to the main page</a>
+</div>
+<br>
+
+<footer id="flex-container">
+     <div class="flex-item">
+          <p>
+               <i class="fas fa-envelope"></i>
+               <span class="email-address">piotrjavatestowy@gmail.com</span>
+          </p>
+          <p>
+               <i class="fab fa-github"></i>
+               <a href="https://github.com/dudapiotr90/food_orders" target="_blank">GitHub</a>
+          </p>
+     </div>
+</footer>
+</body>
+</html>

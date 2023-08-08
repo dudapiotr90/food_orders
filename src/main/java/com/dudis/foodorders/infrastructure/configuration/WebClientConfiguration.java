@@ -50,6 +50,7 @@ public class WebClientConfiguration {
 
     @Bean
     public MiscApi getMiscApi(final ApiClient apiClient) {
+        apiClient.setApiKey(spoonacularApiKey);
         return new MiscApi(apiClient);
     }
 
