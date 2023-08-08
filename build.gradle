@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDepManVersion}"
+    id "org.openapi.generator" version "${openapiGeneratorVersion}"
     id 'jacoco'
 }
 
@@ -41,6 +42,13 @@ dependencies {
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiStarter}"
+
+    implementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindNullableVersion}"
+    implementation "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+    implementation "io.swagger:swagger-annotations:${swaggerAnnotationsVersion}"
+    implementation "com.google.code.findbugs:jsr305:${jrs305Version}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -86,8 +94,30 @@ jacocoTestCoverageVerification {
     }
 }
 
+openApiGenerate {
+    generatorName = "java"
+    library = "webclient"
+    configOptions = [
+            serializableModel   : "true",
+            dateLibrary         : "java8",
+            serializationLibrary: "jackson"
+    ]
+
+    outputDir = "$buildDir/generated-sources/openapi".toString()
+    inputSpec = "$rootDir/src/main/resources/contracts/spoonacular.json".toString()
+    apiPackage = "com.dudis.foodorders.infrastructure.spoonacular.api"
+    modelPackage = "com.dudis.foodorders.infrastructure.spoonacular.model"
+}
+
+sourceSets {
+    main {
+        java.srcDirs += "$buildDir/generated-sources/openapi/src/main/java"
+    }
+}
+
 jar {
     enabled = false
 }
 
+compileJava.dependsOn tasks.openApiGenerate
 compileJava.options.encoding = 'UTF-8'
