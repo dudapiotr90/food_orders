@@ -48,11 +48,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         return http
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/", "/login", "/error", "/registration/**", "/css/**", "/images/error.png","/extras/**","/swagger-ui/**",
-                    "/api/**").permitAll()
+                .requestMatchers("/", "/login", "/error", "/registration/**", "/css/**", "/images/error.png","/extras/**").permitAll()
                 .requestMatchers("/owner/**").hasAnyAuthority(Role.OWNER.name())
                 .requestMatchers("/customer/**").hasAnyAuthority(Role.CUSTOMER.name())
-                .requestMatchers("/developer/**").hasAnyAuthority(Role.DEVELOPER.name())
+                .requestMatchers("/developer/**","/v3/**", "/swagger-ui/**").hasAnyAuthority(Role.DEVELOPER.name())
             )
             .formLogin(formLogin -> formLogin
                 .defaultSuccessUrl("/")
