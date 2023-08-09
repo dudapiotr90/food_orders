@@ -21,4 +21,7 @@ public interface AccountDAO {
     Integer findByRole(String role);
 
     Optional<Account> findById(Integer accountId);
+
+    long countAllAccounts();
+
 }

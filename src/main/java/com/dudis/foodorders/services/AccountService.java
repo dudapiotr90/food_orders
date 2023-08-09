@@ -61,4 +61,7 @@ public class AccountService {
             .orElseThrow(() -> new NotFoundException("Account with id: [%s] doesn't exist".formatted(accountId)));
     }
 
+    public long countAllAccounts() {
+        return accountDAO.countAllAccounts();
+    }
 }

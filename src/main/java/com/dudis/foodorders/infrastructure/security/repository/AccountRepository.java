@@ -48,6 +48,11 @@ public class AccountRepository implements AccountDAO {
     }
 
     @Override
+    public long countAllAccounts() {
+        return accountJpaRepository.count();
+    }
+
+    @Override
     public AccountEntity prepareAccountAccess(Account accountToPrepare, ApiRoleEntity role) {
         AccountEntity account = accountEntityMapper.mapToEntity(accountToPrepare);
         account.setRoleId(role.getApiRoleId());

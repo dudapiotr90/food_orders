@@ -14,7 +14,7 @@ public class SpringDocConfiguration {
     @Bean
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder()
-            .group("default")
+            .group("developer")
             .pathsToMatch("/**")
             .packagesToScan(FoodOrdersApplication.class.getPackageName())
             .build();
@@ -27,7 +27,7 @@ public class SpringDocConfiguration {
             .info(new Info()
                 .title("Food Orders Api")
                 .contact(contact())
-                .version("1.0"));
+                .version("0.0.1"));
     }
 
     private Contact contact() {

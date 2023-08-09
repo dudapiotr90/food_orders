@@ -56,8 +56,9 @@ api:
     url: https://api.spoonacular.com/
     apiKey: 0cc7ff8c36614fef9237a26097f2c7ad
 
+
 springdoc:
   api-docs:
-    path: developer/api/api-docs
+    path: /developer/api-docs
   swagger-ui:
-    path: /developer/swagger-ui.html
+    path: /developer/swagger-ui-custom.html
