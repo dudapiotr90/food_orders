@@ -9,10 +9,14 @@ import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -133,5 +137,28 @@ public class CustomerService {
     ) {
         return orderService.getPaginatedRealizedCustomerOrders(customerId, pageNumber, pageSize, sortHow, sortBy)
             .map(orderMapper::mapToDTO);
+    }
+
+    public Page<CustomerDTO> findAllCustomers(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
+        if (Objects.isNull(pageNumber)) {
+            pageNumber = 1;
+        }
+        if (Objects.isNull(pageSize)) {
+            pageSize = 5;
+        }
+
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return customerDAO.findAllCustomers(pageable)
+            .map(customerMapper::mapToDTO);
+    }
+
+
+
+    public Page<CustomerDTO> findAllCustomers(SearchParametersDTO searchParametersDTO) {
+
+        return null;
     }
 }

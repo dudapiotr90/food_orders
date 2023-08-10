@@ -24,4 +24,5 @@ public interface AccountDAO {
 
     long countAllAccounts();
 
+    Account updateAccount(Account accountUpdated);
 }

@@ -1,6 +1,7 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
+import com.dudis.foodorders.api.mappers.AccountMapper;
 import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
 import com.dudis.foodorders.api.mappers.RoleMapper;
 import com.dudis.foodorders.domain.Account;
@@ -34,6 +35,7 @@ public class RegistrationController {
 
     private final RegistrationRequestMapper registrationRequestMapper;
 
+    private final AccountMapper accountMapper;
     @GetMapping(value = REGISTRATION)
     public ModelAndView registerAccountForm() {
         Map<String, ?> model = prepareRegistrationData();
@@ -71,13 +73,7 @@ public class RegistrationController {
     }
 
     private Map<String, ?> prepareConfirmationDetails(Account account) {
-        return Map.of("confirmation",buildConfirmation(account));
+        return Map.of("confirmation",accountMapper.buildConfirmation(account));
     }
 
-    private RegistrationRequestDTO buildConfirmation(Account account) {
-        return RegistrationRequestDTO.builder()
-            .userLogin(account.getLogin())
-            .userEmail(account.getEmail())
-            .build();
-    }
 }

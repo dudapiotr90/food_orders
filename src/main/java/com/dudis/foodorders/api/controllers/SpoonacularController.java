@@ -1,6 +1,6 @@
 package com.dudis.foodorders.api.controllers;
 
-import com.dudis.foodorders.api.dtos.SearchParametersDTO;
+import com.dudis.foodorders.api.dtos.SearchSpoonacularParametersDTO;
 import com.dudis.foodorders.api.dtos.SpoonacularVideoDataDTO;
 import com.dudis.foodorders.infrastructure.spoonacular.Cuisine;
 import com.dudis.foodorders.infrastructure.spoonacular.Diet;
@@ -52,7 +52,7 @@ public class SpoonacularController {
 
     @GetMapping(VIDEO_RECIPE)
     public String searchRandomVideoRecipe(
-        @ModelAttribute("searchParameters")SearchParametersDTO parameters,
+        @ModelAttribute("searchParameters") SearchSpoonacularParametersDTO parameters,
         ModelMap modelMap
     ){
         SpoonacularVideoDataDTO videoData = spoonacularService.searchForRandomVideoRecipe(parameters);
@@ -71,6 +71,6 @@ public class SpoonacularController {
         modelMap.addAttribute("diets",diets);
         modelMap.addAttribute("intolerances",intolerances);
         modelMap.addAttribute("mealTypes",mealTypes);
-        modelMap.addAttribute("searchParameters",SearchParametersDTO.builder().build());
+        modelMap.addAttribute("searchParameters", SearchSpoonacularParametersDTO.builder().build());
     }
 }

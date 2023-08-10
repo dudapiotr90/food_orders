@@ -25,11 +25,12 @@ public interface EmailSender {
         </html>
         """;
 
-    default String buildConfirmationEmail(String token, RegistrationRequest request) {
+    default String buildConfirmationEmail(String token, RegistrationRequest request,String confirmationLink) {
+
         return String.format(
             CONFIRMATION_EMAIL,
             request.getUserName(),
-            "http://localhost:8150/food-orders" + RegistrationController.REGISTRATION_CONFIRM + "?token="+ token
+            confirmationLink
         );
     }
 }

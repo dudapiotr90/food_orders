@@ -2,6 +2,7 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.NotFoundException;
+import com.dudis.foodorders.domain.exception.RegistrationException;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntityMapper;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.ConfirmationTokenDAO;
@@ -28,12 +29,12 @@ public class ConfirmationTokenService {
         ConfirmationToken confirmationToken = confirmationTokenDAO.getToken(token)
             .orElseThrow(() -> new NotFoundException("Token [%s] not found".formatted(token)));
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("Email already confirmed");
+            throw new RegistrationException("Email already confirmed");
         }
         OffsetDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(OffsetDateTime.now())) {
-            throw new IllegalStateException("Token expired");
+            throw new RegistrationException("Token expired");
         }
 
         confirmationTokenDAO.setConfirmedAt(token, OffsetDateTime.now());
