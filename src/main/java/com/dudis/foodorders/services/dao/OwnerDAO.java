@@ -2,6 +2,9 @@ package com.dudis.foodorders.services.dao;
 
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
+import org.apache.el.stream.Stream;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -12,4 +15,5 @@ public interface OwnerDAO {
 
     Optional<Owner> findOwnerById(Integer ownerId);
 
+    Page<Owner> findAllOwners(Pageable pageable);
 }

@@ -6,14 +6,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Diet {
-    GLUTEN_FREE("Gluten Free"),
-    KETOGENIC("Ketogenic"),
-    VEGETARIAN("Vegetarian"),
-    LACTO_VEGETARIAN("Lacto-Vegetarian"),
-    OVO_VEGETARIAN("Ovo-Vegetarian"),
-    VEGAN("Vegan"),
-    PESCETARIAN("Pescetarian"),
-    PALEO("Paleo"),
-    PRIMAL("Primal");
+    GLUTEN_FREE("gluten free"),
+    KETOGENIC("ketogenic"),
+    VEGETARIAN("vegetarian"),
+    LACTO_VEGETARIAN("lacto-vegetarian"),
+    OVO_VEGETARIAN("ovo-vegetarian"),
+    VEGAN("vegan"),
+    PESCETARIAN("pescetarian"),
+    PALEO("paleo"),
+    PRIMAL("primal");
     private final String diet;
 }

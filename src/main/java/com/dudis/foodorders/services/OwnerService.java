@@ -16,10 +16,14 @@ import com.dudis.foodorders.services.dao.OwnerDAO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -105,5 +109,21 @@ public class OwnerService {
             .surname(request.getUserSurname())
             .account(ownerAccount)
             .build();
+    }
+
+    public Page<OwnerDTO> findAllOwners(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
+        if (Objects.isNull(pageNumber)) {
+            pageNumber = 1;
+        }
+        if (Objects.isNull(pageSize)) {
+            pageSize = 5;
+        }
+
+        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return ownerDAO.findAllOwners(pageable)
+            .map(ownerMapper::mapToDTO);
     }
 }

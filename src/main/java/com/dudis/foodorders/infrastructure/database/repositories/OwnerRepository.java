@@ -12,6 +12,8 @@ import com.dudis.foodorders.infrastructure.security.repository.AccountRepository
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -47,6 +49,12 @@ public class OwnerRepository implements OwnerDAO {
     @Override
     public Optional<Owner> findOwnerById(Integer ownerId) {
         return ownerJpaRepository.findById(ownerId)
+            .map(ownerEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public Page<Owner> findAllOwners(Pageable pageable) {
+        return ownerJpaRepository.findAll(pageable)
             .map(ownerEntityMapper::mapFromEntity);
     }
 

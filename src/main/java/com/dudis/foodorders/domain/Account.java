@@ -19,7 +19,7 @@ public class Account {
     OffsetDateTime creationDate;
     Address address;
     Boolean status;
-    Boolean locked;
+    Boolean unlocked;
     Boolean enabled;
     Integer roleId;
 }
