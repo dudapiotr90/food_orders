@@ -1,6 +1,5 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.controllers.RegistrationController;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 
 public interface EmailSender {

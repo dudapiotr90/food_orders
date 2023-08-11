@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(DeveloperEndpointController.DEV)
+@RequestMapping(DeveloperEndpoint.DEV)
 public class SpoonacularRestController {
 
     public static final String MEAL_PLAN = "/spoonacular/mealPlan";

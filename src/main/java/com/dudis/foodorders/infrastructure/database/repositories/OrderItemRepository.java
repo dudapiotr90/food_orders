@@ -22,7 +22,6 @@ public class OrderItemRepository implements OrderItemDAO {
     private final OrderItemJpaRepository orderItemJpaRepository;
     private final OrderItemEntityMapper orderItemEntityMapper;
     private final CartEntityMapper cartEntityMapper;
-    private final FoodEntityMapper foodEntityMapper;
 
     @Override
     public void addItemToCart(Cart cart, OrderItem item) {
@@ -40,13 +39,8 @@ public class OrderItemRepository implements OrderItemDAO {
 
 
     private Optional<OrderItem> isFoodAlreadyInCart(Cart cart, OrderItem item) {
-//        FoodEntity food = foodEntityMapper.mapToEntity(item.getFood());
         Optional<OrderItemEntity> orderItemAlreadyInCart = orderItemJpaRepository
             .findAllByFoodIdAndCartId(item.getFood().getFoodId(), cart.getCartId());
-
-//        return orderItemAlreadyInCart.map(OrderItemEntity::getFood)
-//            .filter(foodEntity -> foodEntity.getFoodId().equals(food.getFoodId()));
-
         return orderItemAlreadyInCart.map(orderItemEntityMapper::mapFromEntity);
 
 
@@ -81,7 +75,6 @@ public class OrderItemRepository implements OrderItemDAO {
 
     @Override
     public void setOrder(OrderItem orderItem, Order order) {
-//        OrderItemEntity assignToOrder = orderItemEntityMapper.mapToEntity(orderItem);
         orderItemJpaRepository.setOrder(orderItem.getOrderItemId(), order.getOrderId());
     }
 

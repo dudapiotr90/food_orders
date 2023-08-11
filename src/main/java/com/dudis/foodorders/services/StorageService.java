@@ -1,5 +1,6 @@
 package com.dudis.foodorders.services;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 @Slf4j
 @Service
-@NoArgsConstructor
+@AllArgsConstructor
 public class StorageService {
     @Value("${server.servlet.multipart.location}")
     private String uploadDir;

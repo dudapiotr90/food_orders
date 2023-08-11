@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(DeveloperEndpointController.DEV)
+@RequestMapping(DeveloperEndpoint.DEV)
 public class RegistrationRestController {
 
     public static final String REGISTER = "/register";

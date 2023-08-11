@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(DeveloperEndpointController.DEV)
+@RequestMapping(DeveloperEndpoint.DEV)
 public class StatisticsController {
     public static final String USER_ACCOUNTS = "/allUsers";
     public static final String CUSTOMERS = "/customers";

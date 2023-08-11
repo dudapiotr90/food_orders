@@ -12,6 +12,5 @@ import java.util.Set;
 public class Cart {
     Integer cartId;
     Customer customer;
-//    Set<OrderDetail> orderDetails;
     Set<OrderItem> orderItems;
 }

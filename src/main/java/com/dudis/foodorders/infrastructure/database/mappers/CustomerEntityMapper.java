@@ -9,7 +9,6 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerEntityMapper {
-//    @Mapping(target = "cart",ignore = true)
     @Named("mapCustomerToEntity")
     @Mapping(target = "bills",ignore = true)
     @Mapping(target = "account",ignore = true)

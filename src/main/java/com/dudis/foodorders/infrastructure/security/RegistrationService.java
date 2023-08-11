@@ -1,7 +1,6 @@
 package com.dudis.foodorders.infrastructure.security;
 
 import com.dudis.foodorders.api.controllers.RegistrationController;
-import com.dudis.foodorders.api.mappers.AccountMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.RegistrationException;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;

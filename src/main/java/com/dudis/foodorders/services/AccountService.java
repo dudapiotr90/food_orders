@@ -107,7 +107,5 @@ public class AccountService {
                 .withResidenceNumber(Objects.isNull(updateRequest.getUserResidenceNumber())
                     ? accountToUpdate.getAddress().getResidenceNumber() : updateRequest.getUserResidenceNumber())
             );
-
-
     }
 }
