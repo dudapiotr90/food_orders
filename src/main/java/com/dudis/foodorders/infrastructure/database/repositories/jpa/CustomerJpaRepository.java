@@ -25,7 +25,6 @@ public interface CustomerJpaRepository extends JpaRepository<CustomerEntity,Inte
         """)
     Optional<CartEntity> findCartByCustomerId(Integer customerId);
 
-//    @Transactional
     @Modifying
     @Query(value = """
         UPDATE CustomerEntity cus

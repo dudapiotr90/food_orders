@@ -11,7 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.impl.IOFileUploadException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +49,6 @@ public class RestaurantService {
         restaurantDAO.addLocal(restaurant);
     }
 
-    //    @Transactional
     public RestaurantDTO findProcessingRestaurant(Integer restaurantId) {
         return restaurantDAO.findProcessingRestaurant(restaurantId)
             .map(restaurantMapper::mapToDTO).orElseThrow(

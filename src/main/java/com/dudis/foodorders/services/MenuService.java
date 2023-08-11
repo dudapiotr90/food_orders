@@ -13,11 +13,7 @@ import java.util.Objects;
 @Service
 @AllArgsConstructor
 public class MenuService{
-
-    private final MenuDAO menuDAO;
     private final FoodService foodService;
-    private final MenuMapper menuMapper;
-
 
     public boolean menuContainsFood(Food food, Menu menu) {
         List<Food> foods = foodService.findAllFoodWhereMenu(menu);

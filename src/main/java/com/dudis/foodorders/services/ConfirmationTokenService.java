@@ -17,13 +17,11 @@ public class ConfirmationTokenService {
 
     private final ConfirmationTokenDAO confirmationTokenDAO;
     private final AccountEntityMapper accountEntityMapper;
-
     private final AccountService accountService;
 
     public String saveConfirmationToken(ConfirmationToken token) {
         return confirmationTokenDAO.save(token);
     }
-
 
     public Account confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenDAO.getToken(token)
@@ -36,7 +34,6 @@ public class ConfirmationTokenService {
         if (expiredAt.isBefore(OffsetDateTime.now())) {
             throw new RegistrationException("Token expired");
         }
-
         confirmationTokenDAO.setConfirmedAt(token, OffsetDateTime.now());
         accountService.enableAccount(confirmationToken.getAccountEntity().getAccountId());
         return accountEntityMapper.mapFromEntity(confirmationToken.getAccountEntity());

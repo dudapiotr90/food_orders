@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.DayOfWeek;
 import java.util.Map;
 
 @Data
@@ -15,5 +14,4 @@ import java.util.Map;
 public class MealPlan {
 
     private Map<String, MealMap> mealPlan;
-
 }

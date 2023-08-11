@@ -1,9 +1,13 @@
 server:
   port: 8150
+  tomcat:
+    max-swallow-size: -1
   servlet:
     multipart:
+      max-file-size:
       location: /src/main/resources/static/uploaded
     context-path: /food-orders
+
 
 upload:
   dir: /uploadImages

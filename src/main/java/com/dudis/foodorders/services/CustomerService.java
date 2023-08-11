@@ -154,11 +154,4 @@ public class CustomerService {
         return customerDAO.findAllCustomers(pageable)
             .map(customerMapper::mapToDTO);
     }
-
-
-
-    public Page<CustomerDTO> findAllCustomers(SearchParametersDTO searchParametersDTO) {
-
-        return null;
-    }
 }

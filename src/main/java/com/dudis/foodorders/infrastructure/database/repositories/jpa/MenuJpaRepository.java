@@ -7,9 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MenuJpaRepository extends JpaRepository<MenuEntity,Integer> {
 
-//    @Query("""
-//        SELECT m FROM MenuEntity m
-//        JOIN FETCH m.
-//        """)
-//    Optional<MenuEntity> findMenuByRestaurantId(Integer restaurantId);
 }
