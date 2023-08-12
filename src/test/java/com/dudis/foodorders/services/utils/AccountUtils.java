@@ -1,0 +1,73 @@
+package com.dudis.foodorders.services.utils;
+
+import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
+import com.dudis.foodorders.domain.Account;
+import com.dudis.foodorders.domain.Address;
+import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
+@Data
+@Builder
+public class AccountUtils {
+
+    public static Account someAccount() {
+        return Account.builder()
+            .accountId(1)
+            .login("someLogin")
+            .password("password")
+            .email("some@mail")
+            .phone("+48 123 456 789")
+            .creationDate(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .address(someAddress())
+            .roleId(1)
+            .build();
+    }
+
+    private static Address someAddress() {
+        return Address.builder()
+            .addressId(1)
+            .city("Warsaw")
+            .postalCode("00-001")
+            .street("someStreet")
+            .residenceNumber("1")
+            .build();
+    }
+
+    public static RegistrationRequest someRegistrationRequest() {
+        return RegistrationRequest.builder()
+            .userName("someName")
+            .userSurname("someSurname")
+            .userLogin("someLogin")
+            .userPassword("password")
+            .userConfirmPassword("password")
+            .userEmail("some@mail")
+            .userPhone("+48 123 456 789")
+            .role("OWNER")
+            .userAddressCity("Warsaw")
+            .userAddressPostalCode("00-001")
+            .userAddressStreet("someStreet")
+            .userResidenceNumber("1")
+            .build();
+    }
+
+    public static UpdateAccountDTO someUpdateRequest() {
+        return UpdateAccountDTO.builder()
+            .userEmail("some@mail")
+            .build();
+    }
+
+    public static UpdateAccountDTO someUpdateRequest2() {
+        return UpdateAccountDTO.builder()
+            .userEmail("some@mail")
+            .newUserPhone("+48 123 456 789")
+            .newUserAddressCity("Warsaw")
+            .newUserAddressPostalCode("00-001")
+            .newUserAddressStreet("someStreet")
+            .newUserResidenceNumber("1")
+            .build();
+    }
+}

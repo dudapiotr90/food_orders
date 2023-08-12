@@ -4,7 +4,6 @@ import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
-import com.dudis.foodorders.api.mappers.OrderMapper;
 import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.domain.Order;
@@ -12,7 +11,6 @@ import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.BillDAO;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -20,14 +18,12 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Service
 @AllArgsConstructor
 public class BillService {
     private final BillDAO billDAO;
     private final OrderService orderService;
     private final BillMapper billMapper;
     private final OwnerMapper ownerMapper;
-    private final OrderMapper orderMapper;
 
 
     public List<BillDTO> findOwnerPendingBills(Integer ownerId, boolean payed) {
@@ -36,8 +32,10 @@ public class BillService {
             .toList();
     }
 
-    public List<Bill> findCustomerPendingBills(Integer customerId, boolean payed) {
-        return billDAO.findCustomerPendingBills(customerId, payed);
+    public List<BillDTO> findCustomerPendingBills(Integer customerId, boolean payed) {
+        return billDAO.findCustomerPendingBills(customerId, payed).stream()
+            .map(billMapper::mapToDTO)
+            .toList();
     }
 
     @Transactional
@@ -53,6 +51,18 @@ public class BillService {
         return billMapper.mapToDTO(bill);
     }
 
+
+    public void payForBill(String billNumber) {
+        billDAO.payForBill(billNumber);
+    }
+
+    public List<Order> findOrdersNotInProgressAndPayedAndNotRealized(
+        Integer restaurantId,
+        boolean inProgress,
+        boolean payed,
+        boolean realized) {
+        return billDAO.findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, inProgress, payed,realized);
+    }
 
     private Bill createBill(Order order, Owner owner) {
         return Bill.builder()
@@ -77,21 +87,9 @@ public class BillService {
             throw new OrderException("Can't issue a receipt for realized order: Order number: [%s]"
                 .formatted(order.getOrderNumber()));
         } else if (!order.getInProgress()) {
-            String issuedBill = billDAO.findIssuedBillForOrder(order.getOrderNumber());
+            String issuedBillNumber = billDAO.findIssuedBillForOrder(order.getOrderNumber());
             throw new OrderException("Receipt had already been issued: Receipt number: [%s]. Wait patiently for customer payment"
-                .formatted(issuedBill));
+                .formatted(issuedBillNumber));
         }
-    }
-
-    public void payForBill(String billNumber) {
-        billDAO.payForBill(billNumber);
-    }
-
-    public List<Order> findOrdersNotInProgressAndPayedAndNotRealized(
-        Integer restaurantId,
-        boolean inProgress,
-        boolean payed,
-        boolean realized) {
-        return billDAO.findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, inProgress, payed,realized);
     }
 }

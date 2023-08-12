@@ -5,6 +5,7 @@ import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
+import com.dudis.foodorders.services.BillService;
 import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ public class CustomerController {
     private final SecurityUtils securityUtils;
     private final CustomerService customerService;
     private final OrderService orderService;
+    private final BillService billService;
 
     @GetMapping(value = CUSTOMER)
     public String getCustomerPage(HttpServletRequest request) {
@@ -104,7 +106,7 @@ public class CustomerController {
 
     private Map<String, ?> prepareCustomerData(Integer customerId, HttpServletRequest request) {
         var customer = customerService.findCustomerById(customerId);
-        var pendingBills = customerService.findPendingBills(customerId);
+        var pendingBills = billService.findCustomerPendingBills(customerId,false);
         var restaurants = customerService.findRestaurantWithCustomerAddress(customer.getAccountId());
         var address = securityUtils.getLoggedInAccountId(request).getAddress();
         var orders = customerService.findCancelableOrders(customerId);

@@ -1,13 +1,12 @@
 package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
-import com.dudis.foodorders.api.mappers.AccountMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.ApiRoleService;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.services.dao.AccountDAO;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,6 @@ import java.util.Optional;
 public class AccountService {
 
     private final AccountDAO accountDAO;
-    private final ApiRoleService apiRoleService;
-    private final AccountMapper accountMapper;
 
     public Account findByEmail(String userEmail) {
         Optional<Account> account = accountDAO.findByEmail(userEmail);
@@ -44,6 +41,9 @@ public class AccountService {
 
 
     public Account buildAccount(RegistrationRequest request) {
+        if (!request.getUserPassword().equals(request.getUserConfirmPassword())) {
+            throw new ValidationException("Passwords input do not match");
+        }
         return Account.builder()
             .login(request.getUserLogin())
             .password(request.getUserPassword())
@@ -76,36 +76,36 @@ public class AccountService {
             throw new NotFoundException("Can't update non existing account");
         }
         Account accountUpdated = setNewDetails(updateRequest,accountToUpdate);
-        Account account = accountDAO.updateAccount(accountUpdated);
+        Account accountAfterUpdate = accountDAO.updateAccount(accountUpdated);
         return UpdateAccountDTO.builder()
-            .userLogin(account.getLogin())
-            .userEmail(account.getEmail())
-            .userPhone(account.getPhone())
-            .userAddressCity(account.getAddress().getCity())
-            .userAddressPostalCode(account.getAddress().getPostalCode())
-            .userAddressStreet(account.getAddress().getStreet())
-            .userResidenceNumber(account.getAddress().getResidenceNumber())
+            .newUserLogin(accountAfterUpdate.getLogin())
+            .userEmail(accountAfterUpdate.getEmail())
+            .newUserPhone(accountAfterUpdate.getPhone())
+            .newUserAddressCity(accountAfterUpdate.getAddress().getCity())
+            .newUserAddressPostalCode(accountAfterUpdate.getAddress().getPostalCode())
+            .newUserAddressStreet(accountAfterUpdate.getAddress().getStreet())
+            .newUserResidenceNumber(accountAfterUpdate.getAddress().getResidenceNumber())
             .build();
     }
 
     private Account setNewDetails(UpdateAccountDTO updateRequest, Account accountToUpdate) {
         return accountToUpdate
-            .withLogin(Objects.isNull(updateRequest.getUserLogin())
-                ? accountToUpdate.getLogin() : updateRequest.getUserLogin())
+            .withLogin(Objects.isNull(updateRequest.getNewUserLogin())
+                ? accountToUpdate.getLogin() : updateRequest.getNewUserLogin())
             .withEmail(Objects.isNull(updateRequest.getNewEmail())
                 ? accountToUpdate.getEmail() : updateRequest.getNewEmail())
-            .withPhone(Objects.isNull(updateRequest.getUserPhone())
-                ? accountToUpdate.getPhone() : updateRequest.getUserPhone())
+            .withPhone(Objects.isNull(updateRequest.getNewUserPhone())
+                ? accountToUpdate.getPhone() : updateRequest.getNewUserPhone())
             .withAddress(
                 accountToUpdate.getAddress()
-                .withCity(Objects.isNull(updateRequest.getUserAddressCity())
-                    ? accountToUpdate.getAddress().getCity() : updateRequest.getUserAddressCity())
-                .withPostalCode(Objects.isNull(updateRequest.getUserAddressPostalCode())
-                    ? accountToUpdate.getAddress().getPostalCode() : updateRequest.getUserAddressPostalCode())
-                .withStreet(Objects.isNull(updateRequest.getUserAddressStreet())
-                    ? accountToUpdate.getAddress().getStreet() : updateRequest.getUserAddressStreet())
-                .withResidenceNumber(Objects.isNull(updateRequest.getUserResidenceNumber())
-                    ? accountToUpdate.getAddress().getResidenceNumber() : updateRequest.getUserResidenceNumber())
+                .withCity(Objects.isNull(updateRequest.getNewUserAddressCity())
+                    ? accountToUpdate.getAddress().getCity() : updateRequest.getNewUserAddressCity())
+                .withPostalCode(Objects.isNull(updateRequest.getNewUserAddressPostalCode())
+                    ? accountToUpdate.getAddress().getPostalCode() : updateRequest.getNewUserAddressPostalCode())
+                .withStreet(Objects.isNull(updateRequest.getNewUserAddressStreet())
+                    ? accountToUpdate.getAddress().getStreet() : updateRequest.getNewUserAddressStreet())
+                .withResidenceNumber(Objects.isNull(updateRequest.getNewUserResidenceNumber())
+                    ? accountToUpdate.getAddress().getResidenceNumber() : updateRequest.getNewUserResidenceNumber())
             );
     }
 }

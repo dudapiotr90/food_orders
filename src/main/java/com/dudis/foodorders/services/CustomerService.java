@@ -63,13 +63,6 @@ public class CustomerService {
         return customerMapper.mapToDTO(customer.get());
     }
 
-    public List<BillDTO> findPendingBills(Integer customerId) {
-        return billService.findCustomerPendingBills(customerId, false).stream()
-            .map(billMapper::mapToDTO)
-            .toList();
-
-    }
-
     public List<RestaurantForCustomerDTO> findRestaurantWithCustomerAddress(Integer accountId) {
         Account customerAccount = accountService.findCustomerAccount(accountId);
         Address address = customerAccount.getAddress();
