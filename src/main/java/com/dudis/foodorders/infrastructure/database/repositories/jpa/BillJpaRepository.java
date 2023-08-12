@@ -28,7 +28,7 @@ public interface BillJpaRepository extends JpaRepository<BillEntity, Integer> {
     List<BillEntity> findByCustomerIdAndPayed(@Param("customerId") Integer ownerId, @Param("payed") boolean payed);
 
     @Query("""
-        SELECT be.order.orderNumber FROM BillEntity be
+        SELECT be.billNumber FROM BillEntity be
         JOIN be.order o
         WHERE o.orderNumber = :orderNumber
         """)

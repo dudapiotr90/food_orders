@@ -5,6 +5,7 @@ import com.dudis.foodorders.infrastructure.security.AuthorityException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.HttpStatus;
@@ -95,6 +96,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {SearchingException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ModelAndView handleSearchingException(SearchingException ex) {
+        String errorMessage = prepareExceptionInfo(ex);
+        return prepareExceptionView(errorMessage);
+    }
+
+    @ExceptionHandler(value = {ValidationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView handleValidationException(ValidationException ex) {
         String errorMessage = prepareExceptionInfo(ex);
         return prepareExceptionView(errorMessage);
     }

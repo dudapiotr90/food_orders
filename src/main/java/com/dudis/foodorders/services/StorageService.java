@@ -1,7 +1,6 @@
 package com.dudis.foodorders.services;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,9 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 @Slf4j
 @Service
@@ -31,8 +32,12 @@ public class StorageService {
             String uniqueFilename = UUID.randomUUID().toString();
             String fileExtension = StringUtils.getFilenameExtension(filename);
             String imagePath = restaurantUploadsCatalog + "\\" + uniqueFilename + "." + fileExtension;
-            File destinationFile = new File(imagePath);
-            image.transferTo(destinationFile);
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, Paths.get(imagePath), StandardCopyOption.REPLACE_EXISTING);
+            }
+//            File destinationFile = new File(imagePath);
+//            image.transferTo(destinationFile);
+            // TODO to test if this works
             return imagePath;
         } else {
             return "";
