@@ -11,6 +11,7 @@ import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.BillDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 @AllArgsConstructor
 public class BillService {
     private final BillDAO billDAO;

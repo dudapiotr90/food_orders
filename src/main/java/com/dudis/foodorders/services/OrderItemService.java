@@ -2,9 +2,11 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.services.dao.OrderItemDAO;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -30,6 +32,9 @@ public class OrderItemService {
     }
 
     public OrderItem findOrderItemById(Integer id) {
+        if (Objects.isNull(id)) {
+            throw new ValidationException("Wrong input");
+        }
         return orderItemDAO.findOrderItemById(id);
     }
 

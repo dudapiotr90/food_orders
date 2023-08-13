@@ -1,6 +1,7 @@
 package com.dudis.foodorders.services;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
+
 @Slf4j
 @Service
-@AllArgsConstructor
+@NoArgsConstructor
 public class StorageService {
     @Value("${server.servlet.multipart.location}")
     private String uploadDir;
@@ -52,7 +54,7 @@ public class StorageService {
                 log.warn("Trying to delete non existing file");
             }
         } catch (IOException e) {
-            log.error("Cannot delete file: [{}]",foodImagePath);
+            log.error("Cannot delete file: [{}]", foodImagePath);
             throw new RuntimeException("Trying to delete directory: %s".formatted(foodImagePath));
         }
     }

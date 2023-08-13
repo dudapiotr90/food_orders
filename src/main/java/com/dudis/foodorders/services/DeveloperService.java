@@ -18,12 +18,18 @@ public class DeveloperService {
 
     private final DeveloperDAO developerDAO;
     private final AccountService accountService;
-    private final DeveloperMapper developerMapper;
 
     public ConfirmationToken registerDeveloper(RegistrationRequest request) {
         Account developerAccount = accountService.buildAccount(request);
         Developer developer = buildDeveloper(developerAccount, request);
         return developerDAO.registerDeveloper(developer);
+    }
+
+    public void findDeveloperByAccountId(Integer accountId) {
+        Optional<Developer> developer = developerDAO.findDeveloperByAccountId(accountId);
+        if (developer.isEmpty()) {
+            throw new NotFoundException("Developer doesn't exists. Please register your account");
+        }
     }
 
     private Developer buildDeveloper(Account developerAccount, RegistrationRequest request) {
@@ -32,12 +38,5 @@ public class DeveloperService {
             .surname(request.getUserSurname())
             .account(developerAccount)
             .build();
-    }
-
-    public void findDeveloperByAccountId(Integer accountId) {
-        Optional<Developer> developer = developerDAO.findDeveloperByAccountId(accountId);
-        if (developer.isEmpty()) {
-            throw new NotFoundException("Developer doesn't exists. Please register your account");
-        }
     }
 }

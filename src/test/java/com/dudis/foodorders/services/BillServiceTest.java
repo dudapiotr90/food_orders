@@ -9,7 +9,7 @@ import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.BillDAO;
-import com.dudis.foodorders.services.utils.OwnerUtils;
+import com.dudis.foodorders.utils.OwnerUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,9 +23,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.dudis.foodorders.services.utils.BillUtils.someBill;
-import static com.dudis.foodorders.services.utils.BillUtils.someBillDTO;
-import static com.dudis.foodorders.services.utils.OrderUtils.*;
+import static com.dudis.foodorders.utils.BillUtils.someBill;
+import static com.dudis.foodorders.utils.BillUtils.someBillDTO;
+import static com.dudis.foodorders.utils.OrderUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -89,7 +89,7 @@ class BillServiceTest {
     @Test
     void issueReceiptWorksCorrectly() {
         // Given
-        OrderDTO someOrderDTO = someOrderDTO();
+        OrderDTO someOrderDTO = someOrderDTO1();
         OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO();
         Order someOrder = someOrder1();
         BillDTO someBillDTO = someBillDTO();
@@ -106,7 +106,6 @@ class BillServiceTest {
         verify(ownerMapper, times(1)).mapFromDTO(someOwnerDTO);
         verify(billMapper, times(1)).mapToDTO(someBill());
         verify(billDAO, times(1)).saveBill(any(Bill.class));
-//        }
 
     }
 
@@ -114,7 +113,7 @@ class BillServiceTest {
     @MethodSource(value = "issueReceiptThrowsExceptionsCorrectly")
     void issueReceiptThrowsExceptionsCorrectly(Order order) {
         // Given
-        OrderDTO someOrderDTO = someOrderDTO();
+        OrderDTO someOrderDTO = someOrderDTO1();
         OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO();
 
         String exceptionMessage1 =
@@ -147,11 +146,10 @@ class BillServiceTest {
     }
 
 
-
     @Test
     void findOrdersNotInProgressAndPayedAndNotRealizedWorksCorrectly() {
         // Given
-        List<Order> someOrders = List.of(someOrder1(),someOrder2());
+        List<Order> someOrders = List.of(someOrder1(), someOrder2());
         when(billDAO.findOrdersNotInProgressAndPayedAndNotRealized(1, false, true, false)).thenReturn(someOrders);
 
         // When
@@ -160,5 +158,4 @@ class BillServiceTest {
         // Then
         assertEquals(someOrders.size(), result.size());
     }
-
 }

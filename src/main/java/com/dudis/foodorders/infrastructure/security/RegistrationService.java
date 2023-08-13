@@ -14,7 +14,7 @@ import java.util.Objects;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-    private static final String REGISTRATION_LINK_FORM = "http://localhost:8150/food-orders" + RegistrationController.REGISTRATION_CONFIRM + "?token=";
+    public static final String REGISTRATION_LINK_FORM = "http://localhost:8150/food-orders" + RegistrationController.REGISTRATION_CONFIRM + "?token=";
     private final CustomerService customerService;
     private final OwnerService ownerService;
     private final DeveloperService developerService;

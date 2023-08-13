@@ -1,9 +1,10 @@
-package com.dudis.foodorders.services.utils;
+package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
+import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class AccountUtils {
             .build();
     }
 
-    private static Address someAddress() {
+    public static Address someAddress() {
         return Address.builder()
             .addressId(1)
             .city("Warsaw")
@@ -68,6 +69,12 @@ public class AccountUtils {
             .newUserAddressPostalCode("00-001")
             .newUserAddressStreet("someStreet")
             .newUserResidenceNumber("1")
+            .build();
+    }
+
+    public static AccountEntity someAccountEntity() {
+        return AccountEntity.builder()
+            .accountId(1)
             .build();
     }
 }

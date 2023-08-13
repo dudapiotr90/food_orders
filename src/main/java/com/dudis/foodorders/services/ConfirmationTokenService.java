@@ -29,9 +29,7 @@ public class ConfirmationTokenService {
         if (confirmationToken.getConfirmedAt() != null) {
             throw new RegistrationException("Email already confirmed");
         }
-        OffsetDateTime expiredAt = confirmationToken.getExpiresAt();
-
-        if (expiredAt.isBefore(OffsetDateTime.now())) {
+        if (confirmationToken.getExpiresAt().isBefore(OffsetDateTime.now())) {
             throw new RegistrationException("Token expired");
         }
         confirmationTokenDAO.setConfirmedAt(token, OffsetDateTime.now());
