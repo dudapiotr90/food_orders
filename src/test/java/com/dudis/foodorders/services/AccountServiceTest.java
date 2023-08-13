@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.dudis.foodorders.services.utils.AccountUtils.*;
+import static com.dudis.foodorders.utils.AccountUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -148,7 +148,4 @@ class AccountServiceTest {
         assertEquals(exceptionMessage,exception.getMessage());
         assertEquals(someAccount(), result);
     }
-
-
-
 }

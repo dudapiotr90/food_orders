@@ -1,13 +1,10 @@
 package com.dudis.foodorders.infrastructure.security.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
-
+@With
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

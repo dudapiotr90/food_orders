@@ -7,6 +7,7 @@ import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,7 +38,6 @@ public class CustomerService {
     private final OrderMapper orderMapper;
     private final CustomerMapper customerMapper;
     private final RestaurantMapper restaurantMapper;
-    private final BillMapper billMapper;
     private final RequestMapper requestMapper;
 
     @Transactional
@@ -93,7 +93,6 @@ public class CustomerService {
 
     public List<OrderDetailsDTO> getRestaurantsWithAddedFoodItems(Integer customerId) {
         Cart cart = findCartByCustomerId(customerId);
-//
         Set<Restaurant> restaurants = cart.getOrderItems().stream()
             .map(o -> orderItemService.findMenuByFood(o.getFood()))
             .map(restaurantService::findRestaurantByMenu)
@@ -126,7 +125,7 @@ public class CustomerService {
         Integer pageNumber,
         int pageSize,
         String sortHow,
-        String[] sortBy
+        String... sortBy
     ) {
         return orderService.getPaginatedRealizedCustomerOrders(customerId, pageNumber, pageSize, sortHow, sortBy)
             .map(orderMapper::mapToDTO);
@@ -139,7 +138,9 @@ public class CustomerService {
         if (Objects.isNull(pageSize)) {
             pageSize = 5;
         }
-
+        if (!("asc".equalsIgnoreCase(sortHow) || "desc".equalsIgnoreCase(sortHow))) {
+            throw new ValidationException("SortHow accepts only: {asc,desc}");
+        }
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 

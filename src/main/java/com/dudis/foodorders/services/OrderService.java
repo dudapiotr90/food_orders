@@ -7,6 +7,7 @@ import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.OrderDAO;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -147,6 +148,9 @@ public class OrderService {
     ) {
         if (Objects.isNull(pageNumber)) {
             pageNumber = 1;
+        }
+        if (!("asc".equalsIgnoreCase(sortHow) || "desc".equalsIgnoreCase(sortHow))) {
+            throw new ValidationException("SortHow accepts only: {asc,desc}");
         }
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();

@@ -10,7 +10,6 @@ import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
-import com.dudis.foodorders.services.dao.CartDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +21,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class CartService {
-    private final CartDAO cartDAO;
     private final OrderItemService orderItemService;
     private final OrderService orderService;
-    private final BillService billService;
     private final OrderItemMapper orderItemMapper;
     private final CustomerMapper customerMapper;
 

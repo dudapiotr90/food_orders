@@ -1,4 +1,4 @@
-package com.dudis.foodorders.services.utils;
+package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.domain.Bill;
