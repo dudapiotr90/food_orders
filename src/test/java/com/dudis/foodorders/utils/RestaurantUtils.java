@@ -18,10 +18,11 @@ public class RestaurantUtils {
         return List.of(someRestaurant1(),someRestaurant2(),someRestaurant3());
     }
 
-    public static Restaurant someRestaurant3() {
+    public static Restaurant someRestaurant1() {
         return Restaurant.builder()
-            .restaurantId(1)
-            .name("Restaurant Name 1")
+            .restaurantId(3)
+            .name("Restaurant Name 3")
+            .menu(MenuUtils.someMenu3())
             .build();
     }
 
@@ -29,13 +30,15 @@ public class RestaurantUtils {
         return Restaurant.builder()
             .restaurantId(2)
             .name("Restaurant Name 2")
+            .menu(MenuUtils.someMenu())
             .build();
     }
 
-    public static Restaurant someRestaurant1() {
+    public static Restaurant someRestaurant3() {
         return Restaurant.builder()
-            .restaurantId(3)
-            .name("Restaurant Name 3")
+            .restaurantId(1)
+            .name("Restaurant Name 1")
+            .menu(MenuUtils.someMenu2())
             .build();
     }
 

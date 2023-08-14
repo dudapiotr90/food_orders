@@ -45,7 +45,7 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
     Optional<OwnerEntity> findOwnerByRestaurantId(Integer restaurantId);
 
     @Query(value = """
-        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.local_type, res.menu_id
+        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.type, res.menu_id
         FROM restaurant res
         JOIN (
             SELECT DISTINCT restaurant_id
@@ -56,7 +56,7 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
     Page<Object[]>  findAllRestaurantsByCity(@Param("city")String city, Pageable pageable);
 
     @Query(value = """
-        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.local_type, res.menu_id
+        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.type, res.menu_id
         FROM restaurant res
         JOIN (
             SELECT DISTINCT restaurant_id

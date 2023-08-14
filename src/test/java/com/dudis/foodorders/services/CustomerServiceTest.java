@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -60,6 +61,8 @@ class CustomerServiceTest {
     private RestaurantService restaurantService;
     @Mock
     private OrderRequestService orderRequestService;
+    @Mock
+    private PageableService pageableService;
     @Mock
     private OrderService orderService;
     @Mock
@@ -285,18 +288,19 @@ class CustomerServiceTest {
     @Test
     void findAllCustomersWorksCorrectly() {
         // Given
-        String expectedExceptionMessage = "SortHow accepts only: {asc,desc}";
+
+        Pageable pageable = PageRequest.of(3, 7);
         Page<Customer> somePaginatedCustomers = new PageImpl<>(List.of(someCustomer(), someCustomer2()));
+        when(pageableService.preparePageable(anyInt(), anyInt(), anyString(), anyString())).thenReturn(pageable);
         when(customerDAO.findAllCustomers(any(Pageable.class))).thenReturn(somePaginatedCustomers);
         when(customerMapper.mapToDTO(any(Customer.class))).thenReturn(someCustomerDTO(), someCustomerDTO2());
         // When
 
         Page<CustomerDTO> result = customerService.findAllCustomers("name", "asc", 23, 2);
-        Throwable exception = assertThrows(ValidationException.class,
-            () -> customerService.findAllCustomers("asdasd", "rfgarew", null, null));
+
         // Then
         verify(customerMapper, times(somePaginatedCustomers.getSize())).mapToDTO(any(Customer.class));
         assertEquals(somePaginatedCustomers.getSize(),result.getSize());
-        assertEquals(expectedExceptionMessage,exception.getMessage());
+
     }
 }

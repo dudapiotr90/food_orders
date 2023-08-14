@@ -35,6 +35,7 @@ public class RestaurantService {
     private final OrderService orderService;
     private final FoodService foodService;
     private final StorageService storageService;
+    private final PageableService pageableService;
     private final RestaurantMapper restaurantMapper;
     private final MenuMapper menuMapper;
     private final FoodMapper foodMapper;
@@ -173,13 +174,14 @@ public class RestaurantService {
         String sortHow,
         Integer restaurantId
     ) {
-        if (Objects.isNull(deliveryPageNumber)) {
-            deliveryPageNumber = 1;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+//        if (Objects.isNull(deliveryPageNumber)) {
+//            deliveryPageNumber = 1;
+//        }
+//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
-        Pageable pageable = PageRequest.of(deliveryPageNumber - 1, pageSize, sort);
+//        Pageable pageable = PageRequest.of(deliveryPageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(deliveryPageNumber, pageSize, sortHow, sortBy);
         return deliveryAddressService.getPaginatedRestaurantDeliveryAddresses(restaurantId, pageable);
     }
 
@@ -216,13 +218,14 @@ public class RestaurantService {
         String sortBy,
         String sortHow
     ) {
-        if (Objects.isNull(pageSize)) {
-            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+//        if (Objects.isNull(pageSize)) {
+//            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+//        }
+//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+//
+//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         return restaurantDAO.findAllRestaurants(pageable)
             .map(restaurantMapper::mapToDTOForCustomer);
     }
@@ -257,13 +260,14 @@ public class RestaurantService {
         String sortBy,
         String sortHow
     ) {
-        if (Objects.isNull(pageSize)) {
-            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+//        if (Objects.isNull(pageSize)) {
+//            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+//        }
+//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+//
+//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         return restaurantDAO.findAllRestaurantsByCity(deliveryAddress.getCity(),pageable)
             .map(restaurantMapper::mapToDTOForCustomer);
 
@@ -276,13 +280,14 @@ public class RestaurantService {
         String sortBy,
         String sortHow
     ) {
-        if (Objects.isNull(pageSize)) {
-            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+//        if (Objects.isNull(pageSize)) {
+//            pageSize = SearchEngineController.DEFAULT_PAGE_SIZE;
+//        }
+//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+//
+//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         return restaurantDAO.findAllRestaurantsByFullAddress(
             deliveryAddress.getCity(),deliveryAddress.getPostalCode(),deliveryAddress.getStreet(),pageable)
             .map(restaurantMapper::mapToDTOForCustomer);

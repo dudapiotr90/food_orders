@@ -32,7 +32,7 @@ public interface DeliveryAddressJpaRepository extends JpaRepository<DeliveryAddr
     Integer countByRestaurant(RestaurantEntity restaurant);
 
     @Query(value = """
-        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.local_type, res.menu_id
+        SELECT DISTINCT res.restaurant_id, res.name, res.description, res.type, res.menu_id
         FROM delivery_address da
         JOIN restaurant res ON da.restaurant_id = res.restaurant_id
         WHERE da.city = :city

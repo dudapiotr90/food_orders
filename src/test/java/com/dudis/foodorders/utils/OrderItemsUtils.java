@@ -30,6 +30,7 @@ public class OrderItemsUtils {
         return OrderItemDTO.builder()
             .orderItemId(56)
             .quantity(BigDecimal.valueOf(44))
+            .food(FoodUtils.someFoodDTO1())
             .build();
     }
 
@@ -45,6 +46,7 @@ public class OrderItemsUtils {
         return OrderItemDTO.builder()
             .orderItemId(78)
             .quantity(BigDecimal.valueOf(312.12))
+            .food(FoodUtils.someFoodDTO2())
             .build();
     }
     public static OrderItemDTO someOrderItemDTO3() {

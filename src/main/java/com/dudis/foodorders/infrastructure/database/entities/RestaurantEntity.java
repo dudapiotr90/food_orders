@@ -29,7 +29,7 @@ public class RestaurantEntity {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "local_type")
+    @Column(name = "type")
     private LocalType type;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
