@@ -34,6 +34,7 @@ public class OwnerService {
     private final AccountService accountService;
     private final RestaurantService restaurantService;
     private final DeliveryAddressService deliveryAddressService;
+    private final PageableService pageableService;
     private final OrderService orderService;
     private final OwnerMapper ownerMapper;
     private final RestaurantMapper restaurantMapper;
@@ -112,17 +113,18 @@ public class OwnerService {
     }
 
     public Page<OwnerDTO> findAllOwners(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
-        if (Objects.isNull(pageNumber)) {
-            pageNumber = 1;
-        }
-        if (Objects.isNull(pageSize)) {
-            pageSize = 5;
-        }
+//        if (Objects.isNull(pageNumber)) {
+//            pageNumber = 1;
+//        }
+//        if (Objects.isNull(pageSize)) {
+//            pageSize = 5;
+//        }
+//
+//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         return ownerDAO.findAllOwners(pageable)
             .map(ownerMapper::mapToDTO);
     }

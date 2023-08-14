@@ -22,7 +22,7 @@ public class OrderService {
     private final OrderDAO orderDAO;
     private final OrderItemService orderItemService;
     private final RestaurantMapper restaurantMapper;
-    private final OrderMapper orderMapper;
+    private final PageableService pageableService;
     private final OrderItemMapper orderItemMapper;
     private final OffsetDateTimeMapper offsetDateTimeMapper;
     private final CustomerMapper customerMapper;
@@ -43,20 +43,6 @@ public class OrderService {
         Restaurant restaurant = restaurantMapper.mapFromDTO(restaurantDTO);
         Order order = buildOrderDetails(orderItems, restaurant, customerComment, customer);
         return orderDAO.issueAnOrder(order);
-    }
-
-    private Order buildOrderDetails(Set<OrderItem> orderItems, Restaurant restaurant, String customerComment, Customer customer) {
-        return Order.builder()
-            .orderNumber(UUID.randomUUID().toString())
-            .receivedDateTime(OffsetDateTime.now())
-            .cancelTill(OffsetDateTime.now().plusMinutes(20))
-            .customerComment(customerComment)
-            .realized(false)
-            .inProgress(true)
-            .orderItems(orderItems)
-            .restaurant(restaurant)
-            .customer(customer)
-            .build();
     }
 
     @Transactional
@@ -101,13 +87,7 @@ public class OrderService {
         String sortHow,
         String... sortBy
     ) {
-        if (Objects.isNull(pageNumber)) {
-            pageNumber = 1;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         Page<Order> paginatedRealizedOrders = orderDAO.getPaginatedRealizedOwnerOrders(restaurantIds, true, pageable);
         return new PageImpl<>(
             mapOrdersToOrdersDTO(paginatedRealizedOrders),
@@ -115,6 +95,33 @@ public class OrderService {
             paginatedRealizedOrders.getTotalElements()
         );
 
+    }
+
+    public Page<Order> getPaginatedRealizedCustomerOrders(
+        Integer customerId,
+        Integer pageNumber,
+        int pageSize,
+        String sortHow,
+        String... sortBy
+    ) {
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
+        return orderDAO.getPaginatedRealizedCustomerOrders(customerId, true, pageable);
+    }
+
+
+
+    private Order buildOrderDetails(Set<OrderItem> orderItems, Restaurant restaurant, String customerComment, Customer customer) {
+        return Order.builder()
+            .orderNumber(UUID.randomUUID().toString())
+            .receivedDateTime(OffsetDateTime.now())
+            .cancelTill(OffsetDateTime.now().plusMinutes(20))
+            .customerComment(customerComment)
+            .realized(false)
+            .inProgress(true)
+            .orderItems(orderItems)
+            .restaurant(restaurant)
+            .customer(customer)
+            .build();
     }
 
     private List<OrderDTO> mapOrdersToOrdersDTO(Page<Order> paginatedRealizedOrders) {
@@ -137,25 +144,5 @@ public class OrderService {
             .name(restaurant.getName())
             .type(restaurant.getType())
             .build();
-    }
-
-    public Page<Order> getPaginatedRealizedCustomerOrders(
-        Integer customerId,
-        Integer pageNumber,
-        int pageSize,
-        String sortHow,
-        String... sortBy
-    ) {
-        if (Objects.isNull(pageNumber)) {
-            pageNumber = 1;
-        }
-        if (!("asc".equalsIgnoreCase(sortHow) || "desc".equalsIgnoreCase(sortHow))) {
-            throw new ValidationException("SortHow accepts only: {asc,desc}");
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-        return orderDAO.getPaginatedRealizedCustomerOrders(customerId, true, pageable);
     }
 }

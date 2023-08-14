@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Objects;
 
+import static com.dudis.foodorders.services.PageableService.DEFAULT_PAGE_SIZE;
+
 @Controller
 @AllArgsConstructor
 public class SearchEngineController {
-    public static final int DEFAULT_PAGE_SIZE = 2;
+
     public static final String SEARCH_ENGINE = "/customer/{id}/searchEngine";
     public static final String SEARCH_ENGINE_WITH_RESULTS = "/customer/{id}/searchEngine/page/{pageNumber}";
     private final SecurityUtils securityUtils;

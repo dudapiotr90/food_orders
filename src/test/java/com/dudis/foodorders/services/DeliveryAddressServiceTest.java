@@ -7,9 +7,6 @@ import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.services.dao.DeliveryAddressDAO;
 import com.dudis.foodorders.utils.AccountUtils;
-import com.dudis.foodorders.utils.DeliveryAddressUtils;
-import com.dudis.foodorders.utils.RestaurantUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +21,7 @@ import java.util.List;
 
 import static com.dudis.foodorders.utils.DeliveryAddressUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
