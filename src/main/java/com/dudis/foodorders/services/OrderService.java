@@ -2,19 +2,26 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
-import com.dudis.foodorders.api.mappers.*;
+import com.dudis.foodorders.api.mappers.CustomerMapper;
+import com.dudis.foodorders.api.mappers.OffsetDateTimeMapper;
+import com.dudis.foodorders.api.mappers.OrderItemMapper;
+import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.OrderDAO;
-import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -27,16 +34,16 @@ public class OrderService {
     private final OffsetDateTimeMapper offsetDateTimeMapper;
     private final CustomerMapper customerMapper;
 
-    public List<Order> findOrdersByInProgress(Integer restaurantId, boolean inProgress) {
-        return orderDAO.getRestaurantOrders(restaurantId, inProgress);
+    public List<Order> findOrdersByInProgress(Integer restaurantId, boolean isInProgress) {
+        return orderDAO.getRestaurantOrders(restaurantId, isInProgress);
     }
 
     public List<Order> findCancelableOrders(Integer customerId) {
         return orderDAO.findCancelableOrders(customerId);
     }
 
-    public Integer countPendingOrdersForRestaurant(Restaurant restaurantId) {
-        return orderDAO.findPendingOrdersForRestaurant(restaurantId);
+    public Integer countPendingOrdersForRestaurant(Restaurant restaurant) {
+        return orderDAO.findPendingOrdersForRestaurant(restaurant);
     }
 
     public Order makeAnOrder(Set<OrderItem> orderItems, String customerComment, RestaurantDTO restaurantDTO, Customer customer) {

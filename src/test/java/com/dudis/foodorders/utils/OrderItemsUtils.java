@@ -11,6 +11,9 @@ public class OrderItemsUtils {
     public static Set<OrderItem> someOrderItems() {
         return Set.of(someOrderItem1(),someOrderItem2());
     }
+    public static Set<OrderItemDTO> someSetOfOrderItemsDTO() {
+        return Set.of(someOrderItemDTO1(),someOrderItemDTO2());
+    }
 
     public static OrderItem someOrderItem1() {
         return OrderItem.builder()

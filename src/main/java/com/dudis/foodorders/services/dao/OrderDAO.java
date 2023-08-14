@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderDAO {
-    List<Order> getRestaurantOrders(Integer restaurantId, boolean inProgress);
+    List<Order> getRestaurantOrders(Integer restaurantId, boolean isInProgress);
 
     Integer findPendingOrdersForRestaurant(Restaurant restaurantId);
 
     Order issueAnOrder(Order order);
 
-    void cancelOrder(Order orderNumber);
+    void cancelOrder(Order order);
 
     List<Order> findCancelableOrders(Integer customerId);
 

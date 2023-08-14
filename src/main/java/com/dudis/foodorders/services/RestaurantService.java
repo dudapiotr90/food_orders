@@ -1,6 +1,5 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.controllers.SearchEngineController;
 import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.api.mappers.*;
 import com.dudis.foodorders.domain.*;
@@ -42,7 +41,7 @@ public class RestaurantService {
     private final DeliveryAddressMapper deliveryAddressMapper;
     private final OrderMapper orderMapper;
 
-    public List<Restaurant> findOwnersLocals(Integer ownerId) {
+    public List<Restaurant> findOwnerLocals(Integer ownerId) {
         return restaurantDAO.findRestaurantsWhereOwnerId(ownerId);
     }
 

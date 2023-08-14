@@ -38,8 +38,8 @@ public class OrderRepository implements OrderDAO {
     }
 
     @Override
-    public List<Order> getRestaurantOrders(Integer restaurantId, boolean inProgress) {
-        return orderJpaRepository.findRestaurantOrdersInProgress(restaurantId,inProgress).stream()
+    public List<Order> getRestaurantOrders(Integer restaurantId, boolean isInProgress) {
+        return orderJpaRepository.findRestaurantOrdersInProgress(restaurantId,isInProgress).stream()
             .map(orderEntityMapper::mapFromEntity)
             .toList();
     }
