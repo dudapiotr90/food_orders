@@ -2,7 +2,6 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.api.dtos.OrderDetailsDTO;
-import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
 import com.dudis.foodorders.api.mappers.FoodMapper;
 import com.dudis.foodorders.api.mappers.OrderItemMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
@@ -12,14 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
 import static com.dudis.foodorders.utils.CartUtils.*;
 import static com.dudis.foodorders.utils.FoodUtils.*;
-import static com.dudis.foodorders.utils.MenuUtils.*;
 import static com.dudis.foodorders.utils.OrderItemsUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +43,7 @@ class OrderRequestServiceTest {
         Set<Restaurant> someRestaurants = Set.of(someRestaurant1(),someRestaurant2(),someRestaurant3());
         List<OrderDetailsDTO> expected = OrderUtils.someOrderDetailsList();
         when(restaurantMapper.mapToDTOForCustomer(any(Restaurant.class)))
-            .thenReturn(someRestaurantDTO1(),someRestaurantDTO2());
+            .thenReturn(someRestaurantForCustomerDTO1(), someRestaurantForCustomerDTO2());
         when(orderItemMapper.mapToDTO(any(OrderItem.class))).thenReturn(someOrderItemDTO1(), someOrderItemDTO2(),someOrderItemDTO3());
         when(foodMapper.mapFromDTO(any(FoodDTO.class))).thenReturn(someFood1(), someFood2(), someFood3());
         when(menuService.menuContainsFood(any(Food.class), any(Menu.class))).thenReturn(true);

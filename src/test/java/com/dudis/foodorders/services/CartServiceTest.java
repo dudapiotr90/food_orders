@@ -10,7 +10,6 @@ import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
-import com.dudis.foodorders.services.dao.CartDAO;
 import com.dudis.foodorders.utils.CartUtils;
 import com.dudis.foodorders.utils.CustomerUtils;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,7 @@ import static com.dudis.foodorders.utils.CustomerUtils.someCustomer;
 import static com.dudis.foodorders.utils.OrderItemsUtils.*;
 import static com.dudis.foodorders.utils.OrderUtils.someOrder1;
 import static com.dudis.foodorders.utils.OrderUtils.someOrderRequestDTO;
-import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurantDTO;
+import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurant1DTO;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -87,7 +86,7 @@ class CartServiceTest {
     void issueOrderWorkCorrectly() {
         // Given
         OrderRequestDTO orderRequestDTO = someOrderRequestDTO();
-        RestaurantDTO someRestaurantDTO = someRestaurantDTO();
+        RestaurantDTO someRestaurantDTO = someRestaurant1DTO();
         CustomerDTO someCustomerDTO = CustomerUtils.someCustomerDTO();
         Customer someCustomer = someCustomer();
         Order someOrder = someOrder1();

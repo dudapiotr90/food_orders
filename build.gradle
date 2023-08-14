@@ -34,7 +34,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     implementation 'org.flywaydb:flyway-core'
-    testImplementation 'org.projectlombok:lombok:1.18.22'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
 
@@ -83,6 +82,19 @@ jacocoTestReport {
         xml.required = false
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtmlCustom')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['com/dudis/foodorders/infrastructure/spoonacular/api/**',
+                    'com/dudis/foodorders/infrastructure/spoonacular/auth/**',
+                    'com/dudis/foodorders/infrastructure/spoonacular/model/**',
+                    'com/dudis/foodorders/infrastructure/spoonacular/ApiClient',
+                    'com/dudis/foodorders/infrastructure/spoonacular/JavaTimeFormatter',
+                    'com/dudis/foodorders/infrastructure/spoonacular/RFC3339DateFormat',
+                    'com/dudis/foodorders/infrastructure/spoonacular/ServerConfiguration',
+                    'com/dudis/foodorders/infrastructure/spoonacular/ServerVariable',
+                    'com/dudis/foodorders/infrastructure/spoonacular/StringUtil'])
+        }))
     }
 }
 

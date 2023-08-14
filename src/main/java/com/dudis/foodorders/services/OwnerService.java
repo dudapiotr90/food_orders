@@ -16,14 +16,11 @@ import com.dudis.foodorders.services.dao.OwnerDAO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -47,10 +44,11 @@ public class OwnerService {
     }
 
     public List<RestaurantDTO> findAllOwnerRestaurants(Integer ownerId) {
-        return restaurantService.findOwnersLocals(ownerId).stream()
+        return restaurantService.findOwnerLocals(ownerId).stream()
             .map(restaurantMapper::mapToDTO)
             .map(restaurantDTO -> restaurantDTO
-                .withDeliveryAddressesSize(deliveryAddressService.countDeliveryAddressesForRestaurant(restaurantMapper.mapFromDTO(restaurantDTO))))
+                .withDeliveryAddressesSize(deliveryAddressService
+                    .countDeliveryAddressesForRestaurant(restaurantMapper.mapFromDTO(restaurantDTO))))
             .toList();
     }
 
@@ -90,11 +88,17 @@ public class OwnerService {
 
     @Transactional
     public Page<OrderDTO> findOwnerRealizedOrders(Integer ownerId, int pageNumber, int pageSize, String sortHow, String... sortBy) {
-        List<Restaurant> restaurants = restaurantService.findOwnersLocals(ownerId);
+        List<Restaurant> restaurants = restaurantService.findOwnerLocals(ownerId);
         List<Integer> restaurantIds = restaurants.stream()
             .map(Restaurant::getRestaurantId)
             .toList();
         return orderService.getPaginatedRealizedOwnerOrders(restaurantIds, pageNumber, pageSize, sortHow, sortBy);
+    }
+
+    public Page<OwnerDTO> findAllOwners(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
+        return ownerDAO.findAllOwners(pageable)
+            .map(ownerMapper::mapToDTO);
     }
 
     private Menu buildMenu(RestaurantDTO restaurantDTO) {
@@ -110,22 +114,5 @@ public class OwnerService {
             .surname(request.getUserSurname())
             .account(ownerAccount)
             .build();
-    }
-
-    public Page<OwnerDTO> findAllOwners(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
-//        if (Objects.isNull(pageNumber)) {
-//            pageNumber = 1;
-//        }
-//        if (Objects.isNull(pageSize)) {
-//            pageSize = 5;
-//        }
-//
-//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
-        return ownerDAO.findAllOwners(pageable)
-            .map(ownerMapper::mapToDTO);
     }
 }

@@ -83,4 +83,7 @@ public class OrderUtils {
     public static List<Order> someOrders() {
         return List.of(someOrder1(),someOrder2());
     }
+    public static List<OrderDTO> someOrdersDTO() {
+        return List.of(someOrderDTO1(), someOrderDTO2());
+    }
 }

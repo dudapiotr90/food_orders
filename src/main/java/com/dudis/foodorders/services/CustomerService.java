@@ -133,19 +133,6 @@ public class CustomerService {
     }
 
     public Page<CustomerDTO> findAllCustomers(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
-//        if (Objects.isNull(pageNumber)) {
-//            pageNumber = 1;
-//        }
-//        if (Objects.isNull(pageSize)) {
-//            pageSize = 5;
-//        }
-//        if (!("asc".equalsIgnoreCase(sortHow) || "desc".equalsIgnoreCase(sortHow))) {
-//            throw new ValidationException("SortHow accepts only: {asc,desc}");
-//        }
-//        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-//            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-//
-//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
         Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
         return customerDAO.findAllCustomers(pageable)
             .map(customerMapper::mapToDTO);

@@ -11,7 +11,6 @@ import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import com.dudis.foodorders.utils.*;
-import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -143,7 +142,7 @@ class CustomerServiceTest {
         when(deliveryAddressService.findRestaurantsWithAddress(someAccount.getAddress()))
             .thenReturn(expected);
         when(restaurantMapper.mapToDTOForCustomer(any(Restaurant.class)))
-            .thenReturn(RestaurantUtils.someRestaurantDTO1(), RestaurantUtils.someRestaurantDTO2(), RestaurantUtils.someRestaurantDTO3());
+            .thenReturn(RestaurantUtils.someRestaurantForCustomerDTO1(), RestaurantUtils.someRestaurantForCustomerDTO2(), RestaurantUtils.someRestaurantForCustomerDTO3());
 
         // When
         List<RestaurantForCustomerDTO> result = customerService.findRestaurantWithCustomerAddress(someAccount.getAccountId());
