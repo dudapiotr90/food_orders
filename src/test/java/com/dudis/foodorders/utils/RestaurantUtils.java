@@ -7,19 +7,13 @@ import com.dudis.foodorders.domain.Restaurant;
 import java.util.List;
 
 public class RestaurantUtils {
-    public static RestaurantDTO someRestaurant1DTO() {
-        return RestaurantDTO.builder()
-            .name("Restaurant Name")
-            .description("Some restaurant description")
-            .build();
-    }
 
     public static List<Restaurant> someRestaurants() {
         return List.of(someRestaurant1(),someRestaurant2(),someRestaurant3());
     }
 
     public static List<RestaurantDTO> someRestaurantsDTO() {
-        return List.of(someRestaurant1DTO(),someRestaurantDTO2(),someRestaurantDTO3());
+        return List.of(someRestaurantDTO1(),someRestaurantDTO2(),someRestaurantDTO3());
     }
 
     public static Restaurant someRestaurant1() {

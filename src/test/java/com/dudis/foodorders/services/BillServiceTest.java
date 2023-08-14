@@ -90,7 +90,7 @@ class BillServiceTest {
     void issueReceiptWorksCorrectly() {
         // Given
         OrderDTO someOrderDTO = someOrderDTO1();
-        OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO();
+        OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO1();
         Order someOrder = someOrder1();
         BillDTO someBillDTO = someBillDTO();
         when(orderService.findOrderByOrderNumber(anyString())).thenReturn(someOrder);
@@ -114,7 +114,7 @@ class BillServiceTest {
     void issueReceiptThrowsExceptionsCorrectly(Order order) {
         // Given
         OrderDTO someOrderDTO = someOrderDTO1();
-        OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO();
+        OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO1();
 
         String exceptionMessage1 =
             String.format("Can't issue a receipt for realized order: Order number: [%s]", order.getOrderNumber());

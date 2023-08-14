@@ -26,7 +26,6 @@ public class OrderRepository implements OrderDAO {
     private final OrderJpaRepository orderJpaRepository;
     private final OrderEntityMapper orderEntityMapper;
     private final RestaurantEntityMapper restaurantEntityMapper;
-    private final CustomerEntityMapper customerEntityMapper;
     private final OrderItemEntityMapper orderItemEntityMapper;
 
     @Override

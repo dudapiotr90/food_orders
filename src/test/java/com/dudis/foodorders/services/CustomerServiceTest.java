@@ -94,16 +94,15 @@ class CustomerServiceTest {
     void findCustomerByIdWorksCorrectly() {
         // Given
         Customer customer1 = someCustomer();
-        Customer customer2 = someCustomer().withCustomerId(342);
         CustomerDTO expected = someCustomerDTO();
         String expectedMessage = "Customer doesn't exists";
-        when(customerDAO.findCustomerById(customer1.getCustomerId())).thenReturn(Optional.of(customer1));
-        when(customerDAO.findCustomerById(customer2.getCustomerId())).thenReturn(Optional.empty());
+        when(customerDAO.findCustomerById(anyInt())).thenReturn(Optional.of(customer1));
+        when(customerDAO.findCustomerById(5)).thenReturn(Optional.empty());
         when(customerMapper.mapToDTO(customer1)).thenReturn(expected);
 
         // When
-        CustomerDTO result = customerService.findCustomerById(customer1.getCustomerId());
-        Throwable exception = assertThrows(NotFoundException.class, () -> customerService.findCustomerById(customer2.getCustomerId()));
+        CustomerDTO result = customerService.findCustomerById(345);
+        Throwable exception = assertThrows(NotFoundException.class, () -> customerService.findCustomerById(5));
 
         // Then
         assertEquals(expected, result);
@@ -116,17 +115,16 @@ class CustomerServiceTest {
     void findCustomerByAccountIdWorksCorrectly() {
         // Given
         Customer customer1 = someCustomer().withAccount(someAccount());
-        Customer customer2 = someCustomer().withAccount(someAccount().withAccountId(789));
         CustomerDTO expected = someCustomerDTO();
         String expectedMessage = "Customer doesn't exists";
-        when(customerDAO.findCustomerByAccountId(customer1.getAccount().getAccountId())).thenReturn(Optional.of(customer1));
-        when(customerDAO.findCustomerByAccountId(customer2.getAccount().getAccountId())).thenReturn(Optional.empty());
-        when(customerMapper.mapToDTO(customer1)).thenReturn(expected);
+        when(customerDAO.findCustomerByAccountId(anyInt())).thenReturn(Optional.of(customer1));
+        when(customerDAO.findCustomerByAccountId(3)).thenReturn(Optional.empty());
+        when(customerMapper.mapToDTO(any(Customer.class))).thenReturn(expected);
 
         // When
-        CustomerDTO result = customerService.findCustomerByAccountId(customer1.getAccount().getAccountId());
+        CustomerDTO result = customerService.findCustomerByAccountId(34);
         Throwable exception = assertThrows(NotFoundException.class,
-            () -> customerService.findCustomerByAccountId(customer2.getAccount().getAccountId()));
+            () -> customerService.findCustomerByAccountId(3));
 
         // Then
         assertEquals(expected, result);
