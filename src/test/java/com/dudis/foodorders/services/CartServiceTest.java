@@ -25,7 +25,7 @@ import static com.dudis.foodorders.utils.CustomerUtils.someCustomer;
 import static com.dudis.foodorders.utils.OrderItemsUtils.*;
 import static com.dudis.foodorders.utils.OrderUtils.someOrder1;
 import static com.dudis.foodorders.utils.OrderUtils.someOrderRequestDTO;
-import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurant1DTO;
+import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurantDTO1;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,7 +86,7 @@ class CartServiceTest {
     void issueOrderWorkCorrectly() {
         // Given
         OrderRequestDTO orderRequestDTO = someOrderRequestDTO();
-        RestaurantDTO someRestaurantDTO = someRestaurant1DTO();
+        RestaurantDTO someRestaurantDTO = someRestaurantDTO1();
         CustomerDTO someCustomerDTO = CustomerUtils.someCustomerDTO();
         Customer someCustomer = someCustomer();
         Order someOrder = someOrder1();

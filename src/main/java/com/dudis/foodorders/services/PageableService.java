@@ -23,6 +23,9 @@ public class PageableService {
         if (!("asc".equalsIgnoreCase(sortHow) || "desc".equalsIgnoreCase(sortHow))) {
             throw new ValidationException("SortHow accepts only: {asc,desc}");
         }
+        if (Objects.isNull(sortBy)) {
+            return PageRequest.of(pageNumber - 1, pageSize);
+        }
         Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
             Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 

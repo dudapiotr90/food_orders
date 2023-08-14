@@ -13,7 +13,6 @@ import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,13 +76,6 @@ public class OwnerService {
             throw new NotFoundException("Owner doesn't exists");
         }
         return ownerMapper.mapToDTO(owner.get());
-    }
-
-
-    public Owner findOwnerByRestaurant(Restaurant restaurant) {
-        return restaurantService.findOwnerByRestaurant(restaurant)
-            .orElseThrow(() -> new EntityNotFoundException("Owner with restaurantId: [%s] doesn't exist"
-                .formatted(restaurant.getRestaurantId())));
     }
 
     @Transactional

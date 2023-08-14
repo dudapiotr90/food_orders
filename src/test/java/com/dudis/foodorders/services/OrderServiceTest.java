@@ -33,7 +33,6 @@ import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItems;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someSetOfOrderItemsDTO;
 import static com.dudis.foodorders.utils.OrderUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
-import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurant1DTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -106,7 +105,7 @@ class OrderServiceTest {
         // Given
         Set<OrderItem> someItems = someOrderItems();
         String comment = "some comment";
-        RestaurantDTO someRestaurantDTO = someRestaurant1DTO();
+        RestaurantDTO someRestaurantDTO = someRestaurantDTO1();
         Customer someCustomer = someCustomer();
         Order expected = someOrder1();
         when(restaurantMapper.mapFromDTO(any(RestaurantDTO.class))).thenReturn(someRestaurant1());

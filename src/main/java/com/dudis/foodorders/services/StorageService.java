@@ -37,9 +37,6 @@ public class StorageService {
             try (InputStream inputStream = image.getInputStream()) {
                 Files.copy(inputStream, Paths.get(imagePath), StandardCopyOption.REPLACE_EXISTING);
             }
-//            File destinationFile = new File(imagePath);
-//            image.transferTo(destinationFile);
-            // TODO to test if this works
             return imagePath;
         } else {
             return "";
