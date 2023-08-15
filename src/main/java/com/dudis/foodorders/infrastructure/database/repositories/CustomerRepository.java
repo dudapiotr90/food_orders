@@ -21,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -75,14 +74,7 @@ public class CustomerRepository implements CustomerDAO {
     }
 
     @Override
-    public List<Customer> findAllCustomers() {
-        return customerJpaRepository.findAll().stream()
-            .map(customerEntityMapper::mapFromEntity)
-            .toList();
-    }
-
-    @Override
-    public Page<Customer> findAllCustomers(Pageable pageable) {
+    public Page<Customer> findPagedCustomers(Pageable pageable) {
         return customerJpaRepository.findAll(pageable)
             .map(customerEntityMapper::mapFromEntity);
     }

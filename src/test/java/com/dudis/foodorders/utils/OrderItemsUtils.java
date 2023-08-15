@@ -2,6 +2,7 @@ package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.OrderItemDTO;
 import com.dudis.foodorders.domain.OrderItem;
+import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -56,6 +57,27 @@ public class OrderItemsUtils {
         return OrderItemDTO.builder()
             .orderItemId(213)
             .quantity(BigDecimal.valueOf(845.14))
+            .build();
+    }
+
+    public static Set<OrderItemEntity> someOrderItemEntities() {
+        return Set.of(someOrderItemEntity1(),someOrderItemEntity2());
+    }
+
+
+    public static OrderItemEntity someOrderItemEntity1() {
+        return OrderItemEntity.builder()
+            .orderItemId(123)
+            .quantity(BigDecimal.valueOf(3))
+            .food(FoodUtils.someFoodEntity1())
+            .build();
+    }
+
+    public static OrderItemEntity someOrderItemEntity2() {
+        return OrderItemEntity.builder()
+            .orderItemId(987)
+            .quantity(BigDecimal.valueOf(5))
+            .food(FoodUtils.someFoodEntity2())
             .build();
     }
 }

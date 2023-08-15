@@ -3,6 +3,7 @@ package com.dudis.foodorders.utils;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
 import com.dudis.foodorders.domain.Restaurant;
+import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 
 import java.util.List;
 
@@ -85,4 +86,43 @@ public class RestaurantUtils {
             .build();
     }
 
+
+
+    public static RestaurantEntity someRestaurantEntity1() {
+        return RestaurantEntity.builder()
+            .restaurantId(3)
+            .name("RestaurantEntity Name 3")
+            .menu(MenuUtils.someMenuEntity3())
+            .build();
+    }
+
+    public static RestaurantEntity someRestaurantEntity2() {
+        return RestaurantEntity.builder()
+            .restaurantId(2)
+            .name("RestaurantEntity Name 2")
+            .menu(MenuUtils.someMenuEntity1())
+            .build();
+    }
+
+    public static RestaurantEntity someRestaurantEntity3() {
+        return RestaurantEntity.builder()
+            .restaurantId(1)
+            .name("RestaurantEntity Name 1")
+            .menu(MenuUtils.someMenuEntity2())
+            .build();
+    }
+
+    public static List<Object[]> someRestaurantsAsObjects() {
+        return List.of(someRestaurantAsObject1(),someRestaurantAsObject2(),someRestaurantAsObject3());
+    }
+
+    private static Object[] someRestaurantAsObject1() {
+        return new Object[]{1,"some name 1","some description 1","BAKERY"};
+    }
+    private static Object[] someRestaurantAsObject2() {
+        return new Object[]{2,"some name 2","some description 2","DRINK_SHOP"};
+    }
+    private static Object[] someRestaurantAsObject3() {
+        return new Object[]{3,"some name 3","some description 3","COFFEE_HOUSE"};
+    }
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(of = "orderId")
+@EqualsAndHashCode(of = {"orderId","orderNumber"})
 @ToString(of = {"orderId", "orderNumber", "receivedDateTime", "completedDateTime","customerComment"})
 @NoArgsConstructor
 @AllArgsConstructor

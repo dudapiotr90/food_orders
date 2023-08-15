@@ -1,7 +1,7 @@
 package com.dudis.foodorders.utils;
 
-import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.Developer;
+import com.dudis.foodorders.infrastructure.database.entities.DeveloperEntity;
 
 public class DeveloperUtils {
     public static Developer someDeveloper() {
@@ -17,6 +17,20 @@ public class DeveloperUtils {
             .name("anotherDeveloperName")
             .surname("anotherDeveloperSurname")
             .account(AccountUtils.someAccount().withEmail("another@email").withRoleId(4))
+            .build();
+    }
+    public static DeveloperEntity someDeveloperEntity1() {
+        return DeveloperEntity.builder()
+            .name("anotherDeveloperName")
+            .surname("anotherDeveloperSurname")
+            .account(AccountUtils.someAccountEntity3())
+            .build();
+    }
+    public static DeveloperEntity someDeveloperEntity2() {
+        return DeveloperEntity.builder()
+            .name("anotherDeveloperName")
+            .surname("anotherDeveloperSurname")
+            .account(AccountUtils.someAccountEntity2())
             .build();
     }
 }

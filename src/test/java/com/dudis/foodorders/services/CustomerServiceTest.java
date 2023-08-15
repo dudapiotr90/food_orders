@@ -29,8 +29,6 @@ import static com.dudis.foodorders.utils.AccountUtils.someAccount;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
 import static com.dudis.foodorders.utils.CartUtils.someCart;
 import static com.dudis.foodorders.utils.CustomerUtils.*;
-import static com.dudis.foodorders.utils.CustomerUtils.someCustomer;
-import static com.dudis.foodorders.utils.CustomerUtils.someCustomerDTO;
 import static com.dudis.foodorders.utils.FoodUtils.someFoodRequest;
 import static com.dudis.foodorders.utils.OrderUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
@@ -289,7 +287,7 @@ class CustomerServiceTest {
         Pageable pageable = PageRequest.of(3, 7);
         Page<Customer> somePaginatedCustomers = new PageImpl<>(List.of(someCustomer(), someCustomer2()));
         when(pageableService.preparePageable(anyInt(), anyInt(), anyString(), anyString())).thenReturn(pageable);
-        when(customerDAO.findAllCustomers(any(Pageable.class))).thenReturn(somePaginatedCustomers);
+        when(customerDAO.findPagedCustomers(any(Pageable.class))).thenReturn(somePaginatedCustomers);
         when(customerMapper.mapToDTO(any(Customer.class))).thenReturn(someCustomerDTO(), someCustomerDTO2());
         // When
 

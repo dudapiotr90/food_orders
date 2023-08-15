@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.dudis.foodorders.utils.BillUtils.someBill;
+import static com.dudis.foodorders.utils.BillUtils.someBill1;
 import static com.dudis.foodorders.utils.BillUtils.someBillDTO;
 import static com.dudis.foodorders.utils.OrderUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,8 +56,8 @@ class BillServiceTest {
     @Test
     void findOwnerPendingBillsWorksCorrectly() {
         // Given
-        Bill someBill1 = someBill();
-        Bill someBill2 = someBill().withAmount(BigDecimal.ONE);
+        Bill someBill1 = someBill1();
+        Bill someBill2 = someBill1().withAmount(BigDecimal.ONE);
         BillDTO someBillDTO1 = someBillDTO();
         BillDTO someBillDTO2 = someBillDTO().withAmount(BigDecimal.ONE);
         List<BillDTO> expected = List.of(someBillDTO1, someBillDTO2);
@@ -73,8 +73,8 @@ class BillServiceTest {
     @Test
     void findCustomerPendingBillsWorksCorrectly() {
         // Given
-        Bill someBill1 = someBill();
-        Bill someBill2 = someBill().withAmount(BigDecimal.ONE);
+        Bill someBill1 = someBill1();
+        Bill someBill2 = someBill1().withAmount(BigDecimal.ONE);
         BillDTO someBillDTO1 = someBillDTO();
         BillDTO someBillDTO2 = someBillDTO().withAmount(BigDecimal.ONE);
         List<BillDTO> expected = List.of(someBillDTO1, someBillDTO2);
@@ -95,8 +95,8 @@ class BillServiceTest {
         BillDTO someBillDTO = someBillDTO();
         when(orderService.findOrderByOrderNumber(anyString())).thenReturn(someOrder);
         doNothing().when(orderService).setOrderAsInProgress(any(Order.class));
-        when(billDAO.saveBill(any(Bill.class))).thenReturn(someBill());
-        when(billMapper.mapToDTO(someBill())).thenReturn(someBillDTO);
+        when(billDAO.saveBill(any(Bill.class))).thenReturn(someBill1());
+        when(billMapper.mapToDTO(someBill1())).thenReturn(someBillDTO);
 
         // When
         BillDTO result = billService.issueReceipt(someOrderDTO, someOwnerDTO);
@@ -104,7 +104,7 @@ class BillServiceTest {
         assertEquals(someBillDTO, result);
         verify(orderService, times(1)).findOrderByOrderNumber(someOrder.getOrderNumber());
         verify(ownerMapper, times(1)).mapFromDTO(someOwnerDTO);
-        verify(billMapper, times(1)).mapToDTO(someBill());
+        verify(billMapper, times(1)).mapToDTO(someBill1());
         verify(billDAO, times(1)).saveBill(any(Bill.class));
 
     }
@@ -119,7 +119,7 @@ class BillServiceTest {
         String exceptionMessage1 =
             String.format("Can't issue a receipt for realized order: Order number: [%s]", order.getOrderNumber());
         String exceptionMessage2 =
-            String.format("Receipt had already been issued: Receipt number: [%s]. Wait patiently for customer payment", someBill().getBillNumber());
+            String.format("Receipt had already been issued: Receipt number: [%s]. Wait patiently for customer payment", someBill1().getBillNumber());
         when(orderService.findOrderByOrderNumber(anyString())).thenReturn(order);
 
         // When, Then
@@ -127,7 +127,7 @@ class BillServiceTest {
             Throwable exception = assertThrows(OrderException.class, () -> billService.issueReceipt(someOrderDTO, someOwnerDTO));
             assertEquals(exceptionMessage1, exception.getMessage());
         } else if (!order.getInProgress()) {
-            when(billDAO.findIssuedBillForOrder(order.getOrderNumber())).thenReturn(someBill().getBillNumber());
+            when(billDAO.findIssuedBillByOrderNumber(order.getOrderNumber())).thenReturn(someBill1().getBillNumber());
             Throwable exception = assertThrows(OrderException.class, () -> billService.issueReceipt(someOrderDTO, someOwnerDTO));
             assertEquals(exceptionMessage2, exception.getMessage());
         }

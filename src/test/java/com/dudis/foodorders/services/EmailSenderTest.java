@@ -3,10 +3,7 @@ package com.dudis.foodorders.services;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import com.dudis.foodorders.utils.AccountUtils;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 

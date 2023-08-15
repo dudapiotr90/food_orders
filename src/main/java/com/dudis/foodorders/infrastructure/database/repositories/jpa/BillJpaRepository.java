@@ -40,7 +40,7 @@ public interface BillJpaRepository extends JpaRepository<BillEntity, Integer> {
         SET be.payed = :payed
         WHERE be.billNumber = :billNumber
         """)
-    void setPayerAsTrue(@Param("billNumber") String billNumber, @Param("payed") boolean payed);
+    void setPayedAsTrue(@Param("billNumber") String billNumber, @Param("payed") boolean payed);
 
     BillEntity findByBillNumber(String billNumber);
 

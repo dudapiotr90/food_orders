@@ -20,7 +20,5 @@ public interface CustomerDAO {
 
     Optional<Cart> findCartByCustomerId(Integer customerId);
 
-    List<Customer> findAllCustomers();
-
-    Page<Customer> findAllCustomers(Pageable pageable);
+    Page<Customer> findPagedCustomers(Pageable pageable);
 }

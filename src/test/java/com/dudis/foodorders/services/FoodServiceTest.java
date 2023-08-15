@@ -18,8 +18,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import static com.dudis.foodorders.utils.FoodUtils.*;
-import static com.dudis.foodorders.utils.MenuUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.dudis.foodorders.utils.MenuUtils.someMenu1;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

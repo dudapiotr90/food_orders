@@ -12,7 +12,7 @@ public interface BillDAO {
 
     Bill saveBill(Bill bill);
 
-    String findIssuedBillForOrder(String orderNumber);
+    String findIssuedBillByOrderNumber(String orderNumber);
 
     void payForBill(String billNumber);
 

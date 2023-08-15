@@ -31,7 +31,8 @@ import static com.dudis.foodorders.utils.AccountUtils.someAccount;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
 import static com.dudis.foodorders.utils.OwnerUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

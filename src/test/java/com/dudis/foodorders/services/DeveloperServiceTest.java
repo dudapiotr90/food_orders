@@ -1,6 +1,5 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.api.dtos.CustomerDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Developer;
 import com.dudis.foodorders.domain.exception.NotFoundException;
@@ -18,9 +17,7 @@ import java.util.Optional;
 
 import static com.dudis.foodorders.utils.AccountUtils.someAccount;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
-import static com.dudis.foodorders.utils.CustomerUtils.someCustomerDTO;
 import static com.dudis.foodorders.utils.DeveloperUtils.someDeveloper;
-import static com.dudis.foodorders.utils.DeveloperUtils.someDeveloper2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;

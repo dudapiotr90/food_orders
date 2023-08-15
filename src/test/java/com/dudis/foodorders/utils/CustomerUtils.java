@@ -2,6 +2,9 @@ package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.CustomerDTO;
 import com.dudis.foodorders.domain.Customer;
+import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
+
+import java.util.List;
 
 public class CustomerUtils {
 
@@ -35,5 +38,26 @@ public class CustomerUtils {
             .surname("anotherCustomerSurname")
             .accountId(7)
             .build();
+    }
+
+
+    public static CustomerEntity someCustomerEntity1() {
+        return CustomerEntity.builder()
+            .name("someCustomerEntityName")
+            .surname("someCustomerEntitySurname")
+            .account(AccountUtils.someAccountEntity1())
+            .build();
+    }
+
+    public static CustomerEntity someCustomerEntity2() {
+        return CustomerEntity.builder()
+            .name("anotherCustomerName")
+            .surname("anotherCustomerSurname")
+            .account(AccountUtils.someAccountEntity2())
+            .build();
+    }
+
+    public static List<CustomerEntity> someCustomerEntities() {
+        return List.of(someCustomerEntity1(), someCustomerEntity2());
     }
 }

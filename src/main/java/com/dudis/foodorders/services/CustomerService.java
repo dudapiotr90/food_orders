@@ -7,17 +7,13 @@ import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
-import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -134,7 +130,7 @@ public class CustomerService {
 
     public Page<CustomerDTO> findAllCustomers(String sortBy, String sortHow, Integer pageSize, Integer pageNumber) {
         Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
-        return customerDAO.findAllCustomers(pageable)
+        return customerDAO.findPagedCustomers(pageable)
             .map(customerMapper::mapToDTO);
     }
 }

@@ -24,8 +24,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static com.dudis.foodorders.utils.TokenUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.dudis.foodorders.utils.TokenUtils.someToken;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

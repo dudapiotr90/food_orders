@@ -3,6 +3,7 @@ package com.dudis.foodorders.utils;
 import com.dudis.foodorders.api.dtos.DeliveryAddressDTO;
 import com.dudis.foodorders.api.dtos.DeliveryAddressesDTO;
 import com.dudis.foodorders.domain.DeliveryAddress;
+import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class DeliveryAddressUtils {
         return List.of(someDeliveryAddressDTO1(),someDeliveryAddressDTO2(),someDeliveryAddressDTO3());
     }
 
-    public static DeliveryAddressesDTO someDeliveryAddresses() {
+    public static DeliveryAddressesDTO someDeliveryAddressesDTO() {
         return DeliveryAddressesDTO.builder()
             .deliveries(someAddressesDTO())
             .build();
@@ -104,5 +105,29 @@ public class DeliveryAddressUtils {
     }
 
 
+    public static List<DeliveryAddressEntity> someDeliveryAddressEntities() {
+        return List.of(someDeliveryAddressEntity1(),someDeliveryAddressEntity2(),someDeliveryAddressEntity3());
+    }
 
+    public static DeliveryAddressEntity someDeliveryAddressEntity1() {
+        return DeliveryAddressEntity.builder()
+            .city("Warsaw")
+            .postalCode("00-001")
+            .street("someStreet")
+            .build();
+    }
+    public static DeliveryAddressEntity someDeliveryAddressEntity2() {
+        return DeliveryAddressEntity.builder()
+            .city("London")
+            .postalCode("14-746")
+            .street("Baker Street")
+            .build();
+    }
+    public static DeliveryAddressEntity someDeliveryAddressEntity3() {
+        return DeliveryAddressEntity.builder()
+            .city("Krakow")
+            .postalCode("30-001")
+            .street("Krakowska")
+            .build();
+    }
 }
