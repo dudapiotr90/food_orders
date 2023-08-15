@@ -27,7 +27,7 @@ class MenuServiceTest {
     @Test
     void menuContainsFoodWorksCorrectly() {
         // Given
-        Menu someMenu1 = MenuUtils.someMenu();
+        Menu someMenu1 = MenuUtils.someMenu1();
         Menu someMenu2 = MenuUtils.someMenu2();
         Food someFood = FoodUtils.someFood1();
         Mockito.when(foodService.findAllFoodWhereMenu(someMenu1)).thenReturn(FoodUtils.someFoodsList());

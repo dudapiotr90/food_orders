@@ -36,7 +36,7 @@ class FoodServiceTest {
     void addFoodToMenuWorksCorrectly() {
        // Given
         Food someFood = someFood1();
-        Menu someMenu = someMenu();
+        Menu someMenu = someMenu1();
         String someImagePath = "image/path/to/add";
         doNothing().when(foodDAO).saveFood(any(Food.class),any(Menu.class),anyString());
        // When
@@ -98,7 +98,7 @@ class FoodServiceTest {
     void findMenuByFoodWorksCorrectly() {
         // Given
         Food someFood = someFood1();
-        Menu expected = someMenu();
+        Menu expected = someMenu1();
         when(foodDAO.findMenuByFood(any(Food.class))).thenReturn(expected);
         // When
         Menu result = foodService.findMenuByFood(someFood);
@@ -111,7 +111,7 @@ class FoodServiceTest {
     @Test
     void findAllFoodWhereMenuWorksCorrectly() {
         // Given
-        Menu someMenu = someMenu();
+        Menu someMenu = someMenu1();
         List<Food> expected = someFoodsList();
         when(foodDAO.findAllFoodWhereMenu(any(Menu.class))).thenReturn(expected);
         // When

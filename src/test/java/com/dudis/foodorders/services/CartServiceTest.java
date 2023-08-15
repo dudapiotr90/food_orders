@@ -48,7 +48,7 @@ class CartServiceTest {
         // Given, When
         Cart someCart = CartUtils.someCart();
         OrderItem someOrderItem = someOrderItem1().withQuantity(BigDecimal.valueOf(11));
-        doNothing().when(orderItemService).addItemToCart(someCart,someOrderItem);
+        doNothing().when(orderItemService).addItemToCart(any(Cart.class),any(OrderItem.class));
 
         cartService.addItemToCart(someCart,someOrderItem);
 
@@ -62,7 +62,7 @@ class CartServiceTest {
         OrderItemDTO someOrderItemDTO = someOrderItemDTO1();
         OrderItem someOrderItem = someOrderItem1().withQuantity(BigDecimal.valueOf(11));
         when(orderItemMapper.mapFromDTO(someOrderItemDTO)).thenReturn(someOrderItem);
-        doNothing().when(orderItemService).updateOrderItem(someOrderItem);
+        doNothing().when(orderItemService).updateOrderItem(any(OrderItem.class));
 
         cartService.updateOrderItem(someOrderItemDTO);
 
@@ -94,7 +94,7 @@ class CartServiceTest {
         when(orderItemService.findOrderItemById(anyInt())).thenReturn(someOrderItem1(),null,someOrderItem2());
         when(orderService.makeAnOrder(someOrderItems(), orderRequestDTO.getCustomerComment(), someRestaurantDTO, someCustomer))
             .thenReturn(someOrder);
-        doNothing().when(orderItemService).deleteOrderItemsFromCartAndAssignOrder(someOrderItems(),someOrder);
+        doNothing().when(orderItemService).deleteOrderItemsFromCartAndAssignOrder(anySet(),any(Order.class));
         // When
         String result = cartService.issueOrder(orderRequestDTO, someRestaurantDTO, someCustomerDTO);
 

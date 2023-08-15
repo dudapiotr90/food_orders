@@ -15,6 +15,9 @@ public class RestaurantUtils {
     public static List<RestaurantDTO> someRestaurantsDTO() {
         return List.of(someRestaurantDTO1(),someRestaurantDTO2(),someRestaurantDTO3());
     }
+    public static List<RestaurantForCustomerDTO> someRestaurantsForCustomerDTO() {
+        return List.of(someRestaurantForCustomerDTO1(),someRestaurantForCustomerDTO2(),someRestaurantForCustomerDTO3());
+    }
 
     public static Restaurant someRestaurant1() {
         return Restaurant.builder()
@@ -28,7 +31,7 @@ public class RestaurantUtils {
         return Restaurant.builder()
             .restaurantId(2)
             .name("Restaurant Name 2")
-            .menu(MenuUtils.someMenu())
+            .menu(MenuUtils.someMenu1())
             .build();
     }
 

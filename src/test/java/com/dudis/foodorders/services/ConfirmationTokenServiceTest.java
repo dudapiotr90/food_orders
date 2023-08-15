@@ -62,7 +62,7 @@ class ConfirmationTokenServiceTest {
         when(confirmationTokenDAO.getToken(someRandomToken)).thenReturn(Optional.ofNullable(someConfirmationToken));
         doNothing().when(confirmationTokenDAO).setConfirmedAt(anyString(),any(OffsetDateTime.class));
         assert someConfirmationToken != null;
-        doNothing().when(accountService).enableAccount(someConfirmationToken.getAccountEntity().getAccountId());
+        doNothing().when(accountService).enableAccount(anyInt());
         when(accountEntityMapper.mapFromEntity(any(AccountEntity.class))).thenReturn(expected);
         // when
         Account result = confirmationTokenService.confirmToken(someRandomToken);

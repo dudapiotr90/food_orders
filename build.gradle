@@ -56,8 +56,11 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
 
+    testImplementation "commons-io:commons-io:${apacheCommonsIOVersion}"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation "uk.org.lidalia:slf4j-test:${slf4jTestVersion}"
+    testImplementation "org.hamcrest:hamcrest:${hamcrestVersion}"
 
     testImplementation "org.slf4j:slf4j-api:${wiremockSlf4jVersion}"
     testImplementation "com.github.tomakehurst:wiremock-standalone:${wiremockStandaloneVersion}"
@@ -85,7 +88,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['com/dudis/foodorders/infrastructure/spoonacular/api/**',
+            fileTree(dir: it, exclude: ['com/dudis/foodorders/infrastructure/spoonacular/**',
                     'com/dudis/foodorders/infrastructure/spoonacular/auth/**',
                     'com/dudis/foodorders/infrastructure/spoonacular/model/**',
                     'com/dudis/foodorders/infrastructure/spoonacular/ApiClient',

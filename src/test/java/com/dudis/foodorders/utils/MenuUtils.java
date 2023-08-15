@@ -1,12 +1,18 @@
 package com.dudis.foodorders.utils;
 
+import com.dudis.foodorders.api.dtos.MenuDTO;
 import com.dudis.foodorders.domain.Menu;
-import org.hibernate.mapping.List;
 
 import java.util.Set;
 
 public class MenuUtils {
-    public static Menu someMenu() {
+    public static MenuDTO someMenuDTO() {
+        return MenuDTO.builder()
+            .menuName("some menu name")
+            .foods(FoodUtils.someFoodsSetDTO())
+            .build();
+    }
+    public static Menu someMenu1() {
         return Menu.builder()
             .menuName("some menu name")
             .menuId(1)

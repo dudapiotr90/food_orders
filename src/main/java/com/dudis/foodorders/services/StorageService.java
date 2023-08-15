@@ -3,6 +3,7 @@ package com.dudis.foodorders.services;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -19,10 +20,12 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-@NoArgsConstructor
+@AllArgsConstructor
 public class StorageService {
     @Value("${server.servlet.multipart.location}")
     private String uploadDir;
+
+    private final RandomUUIDGenerator randomUUIDGenerator;
 
     public String uploadImageToServer(MultipartFile image, Integer restaurantId) throws IOException {
         Path restaurantUploadsCatalog = Paths.get(System.getProperty("user.dir") + uploadDir + "\\restaurant" + restaurantId);
@@ -31,7 +34,7 @@ public class StorageService {
         }
         if (!"".equals(image.getOriginalFilename())) {
             String filename = image.getOriginalFilename();
-            String uniqueFilename = UUID.randomUUID().toString();
+            String uniqueFilename = randomUUIDGenerator.generateUniqueCode();
             String fileExtension = StringUtils.getFilenameExtension(filename);
             String imagePath = restaurantUploadsCatalog + "\\" + uniqueFilename + "." + fileExtension;
             try (InputStream inputStream = image.getInputStream()) {
@@ -43,7 +46,7 @@ public class StorageService {
         }
     }
 
-    public void removeImageFromServer(String foodImagePath) {
+    public void removeImageFromServer(String foodImagePath) throws FileUploadException {
         try {
             if (Files.deleteIfExists(Paths.get(foodImagePath))) {
                 log.info("Image successfully deleted");
@@ -51,8 +54,8 @@ public class StorageService {
                 log.warn("Trying to delete non existing file");
             }
         } catch (IOException e) {
-            log.error("Cannot delete file: [{}]", foodImagePath);
-            throw new RuntimeException("Trying to delete directory: %s".formatted(foodImagePath));
+            log.error("Cannot delete file: [{}]", foodImagePath,e);
+            throw new FileUploadException("Cannot delete file: [%s]".formatted(foodImagePath));
         }
     }
 }

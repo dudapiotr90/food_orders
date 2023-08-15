@@ -48,7 +48,7 @@ class AccountServiceTest {
     void enableAccountWorksCorrectly() {
         // Given
         Integer accountId = 1;
-        doNothing().when(accountDAO).enableAccount(accountId);
+        doNothing().when(accountDAO).enableAccount(anyInt());
 
         // When
         accountService.enableAccount(accountId);
