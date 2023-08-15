@@ -34,6 +34,9 @@ public class SpoonacularService {
         BigDecimal videoLength = parameters.getMaxVideoLengthInSeconds();
         int resultsToSkip = new Random().nextInt(1, 5);
 
+        if (Objects.isNull(cuisineTable)) {
+            cuisineTable = new String[]{""};
+        }
         String cuisine = Arrays.stream(cuisineTable)
             .reduce((prev, next) -> prev + "," + next)
             .orElse("");
@@ -43,8 +46,7 @@ public class SpoonacularService {
 
         return spoonacularVideoDataDTOs.size() > 0 ?
             spoonacularVideoDataDTOs.get(new Random().nextInt(spoonacularVideoDataDTOs.size())) :
-            SpoonacularVideoDataDTO.builder()
-                .title("No results found!").build();
+            SpoonacularVideoDataDTO.builder().title("No results found!").build();
 
     }
 

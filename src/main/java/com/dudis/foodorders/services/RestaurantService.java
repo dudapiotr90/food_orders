@@ -27,8 +27,8 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class RestaurantService {
-
     private final RestaurantDAO restaurantDAO;
+
     private final DeliveryAddressService deliveryAddressService;
     private final BillService billService;
     private final OrderService orderService;
@@ -103,19 +103,18 @@ public class RestaurantService {
     public String addFoodToMenu(FoodDTO foodDTO, Integer restaurantId, MultipartFile image) throws FileUploadException {
         Menu menu = restaurantDAO.getMenu(restaurantId).orElseThrow(() -> new NotFoundException("Menu doesn't exist"));
         Food food = foodMapper.mapFromDTO(foodDTO);
-        String foodImage = "";
+        String foodImagePath = "";
         try {
-            foodImage = storageService.uploadImageToServer(image, restaurantId);
+            foodImagePath = storageService.uploadImageToServer(image, restaurantId);
         } catch (IOException e) {
-            log.error("Failed to upload an image: [{}]",image.getOriginalFilename(),e);
-            throw new FileUploadException("Failed to upload an image: [%s]".formatted(image.getOriginalFilename()));
+            logAndThrowNew(image, e);
         }
         if (image.isEmpty()) {
             foodService.addFoodToMenu(food, menu, null);
         } else {
-            foodService.addFoodToMenu(food, menu, foodImage);
+            foodService.addFoodToMenu(food, menu, foodImagePath);
         }
-        return foodImage.isBlank() ? "No image" : foodImage;
+        return foodImagePath.isBlank() ? "No image" : foodImagePath;
     }
 
     @Transactional
@@ -125,8 +124,7 @@ public class RestaurantService {
         try {
             foodImagePath = storageService.uploadImageToServer(image, restaurantId);
         } catch (IOException e) {
-            log.error("Failed to upload an image: [{}]",image.getOriginalFilename(),e);
-            throw new FileUploadException("Failed to upload an image: [%s]".formatted(image.getOriginalFilename()));
+            logAndThrowNew(image, e);
         }
         if (image.isEmpty()) {
             foodService.updateMenuPosition(food, null);
@@ -140,7 +138,7 @@ public class RestaurantService {
     }
 
     @Transactional
-    public String deleteFoodFromMenu(Integer foodId) {
+    public String deleteFoodFromMenu(Integer foodId) throws FileUploadException {
         String imagePathToDelete = foodService.deleteFood(foodId);
         if (Objects.nonNull(imagePathToDelete)) {
             storageService.removeImageFromServer(imagePathToDelete);
@@ -149,13 +147,7 @@ public class RestaurantService {
     }
 
     public Page<FoodDTO> getPaginatedMenu(Integer pageNumber, Integer pageSize, String sortBy, String sortHow, Integer restaurantId) {
-        if (Objects.isNull(pageNumber)) {
-            pageNumber = 1;
-        }
-        Sort sort = sortHow.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-            Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Pageable pageable = pageableService.preparePageable(pageNumber,pageSize,sortHow,sortBy);
         Menu menu = restaurantDAO.getMenu(restaurantId)
             .orElseThrow(() -> new EntityNotFoundException("Restaurant doesn't have a menu"));
 
@@ -262,6 +254,11 @@ public class RestaurantService {
 
     private Integer countPendingOrdersForRestaurant(Restaurant restaurant) {
         return orderService.countPendingOrdersForRestaurant(restaurant);
+    }
+
+    private void logAndThrowNew(MultipartFile image, IOException e) throws FileUploadException {
+        log.error("Failed to upload an image: [{}]", image.getOriginalFilename(), e);
+        throw new FileUploadException("Failed to upload an image: [%s]".formatted(image.getOriginalFilename()));
     }
 }
 

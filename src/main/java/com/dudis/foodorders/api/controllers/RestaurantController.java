@@ -97,7 +97,7 @@ public class RestaurantController {
         @PathVariable(value = "restaurantId") Integer restaurantId,
         @PathVariable(value = "foodId") Integer foodId,
         HttpServletRequest request
-    ) {
+    ) throws FileUploadException {
         securityUtils.checkAccess(ownerId, request);
         restaurantService.deleteFoodFromMenu(foodId);
         return restaurantManagerPortal(ownerId, restaurantId);

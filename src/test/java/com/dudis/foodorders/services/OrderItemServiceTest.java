@@ -2,10 +2,8 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.services.dao.OrderItemDAO;
-import com.dudis.foodorders.utils.CartUtils;
 import com.dudis.foodorders.utils.FoodUtils;
 import com.dudis.foodorders.utils.MenuUtils;
-import com.dudis.foodorders.utils.OrderUtils;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
-import static com.dudis.foodorders.utils.CartUtils.*;
 import static com.dudis.foodorders.utils.CartUtils.someCart;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItem1;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItems;
@@ -52,7 +49,7 @@ class OrderItemServiceTest {
     void findMenuByFoodWorksCorrectly() {
         // Given
         Food someFood = FoodUtils.someFood1();
-        Menu expected = MenuUtils.someMenu();
+        Menu expected = MenuUtils.someMenu1();
         when(foodService.findMenuByFood(any(Food.class))).thenReturn(expected);
         // When
         Menu result = orderItemService.findMenuByFood(someFood);

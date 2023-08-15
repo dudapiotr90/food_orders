@@ -3,6 +3,7 @@ package com.dudis.foodorders.utils;
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OrderDetailsDTO;
 import com.dudis.foodorders.api.dtos.OrderRequestDTO;
+import com.dudis.foodorders.api.dtos.OrdersDTO;
 import com.dudis.foodorders.domain.Order;
 
 import java.time.OffsetDateTime;
@@ -83,7 +84,11 @@ public class OrderUtils {
     public static List<Order> someOrders() {
         return List.of(someOrder1(),someOrder2());
     }
-    public static List<OrderDTO> someOrdersDTO() {
+    public static List<OrderDTO> someListOfOrderDTO() {
         return List.of(someOrderDTO1(), someOrderDTO2());
+    }
+
+    public static OrdersDTO someOrdersDTO() {
+        return OrdersDTO.builder().orders(someListOfOrderDTO()).build();
     }
 }

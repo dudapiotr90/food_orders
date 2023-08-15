@@ -151,7 +151,7 @@ class OwnerServiceTest {
     @Test
     void findOwnerRealizedOrdersWorksCorrectly() {
         // Given
-        Page<OrderDTO> expected = new PageImpl<>(OrderUtils.someOrdersDTO());
+        Page<OrderDTO> expected = new PageImpl<>(OrderUtils.someListOfOrderDTO());
         when(restaurantService.findOwnerLocals(anyInt())).thenReturn(someRestaurants());
         when(orderService.getPaginatedRealizedOwnerOrders(anyList(), anyInt(), anyInt(), anyString(), anyString()))
             .thenReturn(expected);

@@ -160,7 +160,7 @@ class CustomerServiceTest {
         when(requestMapper.mapFoodRequestToOrderItem(someFoodRequest)).thenReturn(someOrderItem);
         when(customerDAO.findCartByCustomerId(someId)).thenReturn(Optional.empty());
         when(customerDAO.addCart(someId)).thenReturn(someCart);
-        doNothing().when(cartService).addItemToCart(someCart, someOrderItem);
+        doNothing().when(cartService).addItemToCart(any(Cart.class),any(OrderItem.class));
 
         // When
         customerService.addFoodToCart(someId, someFoodRequest);
@@ -181,7 +181,7 @@ class CustomerServiceTest {
         OrderItem someOrderItem = OrderItemsUtils.someOrderItem1();
         when(requestMapper.mapFoodRequestToOrderItem(someFoodRequest)).thenReturn(someOrderItem);
         when(customerDAO.findCartByCustomerId(someId)).thenReturn(Optional.of(someCart));
-        doNothing().when(cartService).addItemToCart(someCart, someOrderItem);
+        doNothing().when(cartService).addItemToCart(any(Cart.class),any(OrderItem.class));
 
         // When
         customerService.addFoodToCart(someId, someFoodRequest);
@@ -199,9 +199,9 @@ class CustomerServiceTest {
         // Given
         Integer someId = 65;
         Cart someCart = someCart();
-        Menu someMenu1 = MenuUtils.someMenu();
-        Menu someMenu2 = MenuUtils.someMenu().withMenuId(76);
-        Menu someMenu3 = MenuUtils.someMenu().withMenuId(123);
+        Menu someMenu1 = MenuUtils.someMenu1();
+        Menu someMenu2 = MenuUtils.someMenu1().withMenuId(76);
+        Menu someMenu3 = MenuUtils.someMenu1().withMenuId(123);
         List<OrderDetailsDTO> someOrderDetailsDTOS = OrderUtils.someOrderDetailsList();
         when(customerDAO.findCartByCustomerId(someId)).thenReturn(Optional.of(someCart));
         when(orderItemService.findMenuByFood(any(Food.class)))
@@ -255,7 +255,7 @@ class CustomerServiceTest {
     void payForBillWorksCorrectly() {
         // Given
         String someBillNumber = UUID.randomUUID().toString();
-        doNothing().when(billService).payForBill(someBillNumber);
+        doNothing().when(billService).payForBill(anyString());
         // When
         customerService.payForBill(someBillNumber);
 

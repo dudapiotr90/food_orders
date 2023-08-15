@@ -31,6 +31,10 @@ public class FoodUtils {
         return Set.of(someFood1(), someFood2(), someFood3());
     }
 
+    public static Set<FoodDTO> someFoodsSetDTO() {
+        return Set.of(someFoodDTO1(), someFoodDTO2(), someFoodDTO3());
+    }
+
     public static Food someFood1() {
         return Food.builder()
             .foodId(1)

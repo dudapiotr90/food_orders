@@ -10,7 +10,6 @@ import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
 import com.dudis.foodorders.domain.exception.OrderException;
 import com.dudis.foodorders.services.dao.OrderDAO;
-import com.dudis.foodorders.utils.RestaurantUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -235,7 +234,7 @@ class OrderServiceTest {
         when(offsetDateTimeMapper.mapOffsetDateTimeToString(any(OffsetDateTime.class))).thenReturn(someODT1, someODT2);
         when(customerMapper.mapToDTO(null)).thenReturn(someCustomerDTO());
         when(orderDAO.findRestaurantByOrderNumber(anyString())).thenReturn(someRestaurant1());
-        Page<OrderDTO> expected = new PageImpl<>(someOrdersDTO());
+        Page<OrderDTO> expected = new PageImpl<>(someListOfOrderDTO());
 
         // When
         Page<OrderDTO> result = orderService.getPaginatedRealizedOwnerOrders(List.of(1, 3, 8), 3, 6, "asc", "orderNumber");
