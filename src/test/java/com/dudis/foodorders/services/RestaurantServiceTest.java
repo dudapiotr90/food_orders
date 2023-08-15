@@ -178,7 +178,7 @@ class RestaurantServiceTest {
     @Test
     void getDeliveryAddressesWorksCorrectly() {
         // Given
-        DeliveryAddressesDTO expected = someDeliveryAddresses();
+        DeliveryAddressesDTO expected = someDeliveryAddressesDTO();
         when(deliveryAddressService.getRestaurantDeliveryAddresses(anyInt())).thenReturn(someAddresses());
         when(deliveryAddressMapper.mapToDTO(any(DeliveryAddress.class)))
             .thenReturn(someDeliveryAddressDTO1(), someDeliveryAddressDTO2(), someDeliveryAddressDTO3());

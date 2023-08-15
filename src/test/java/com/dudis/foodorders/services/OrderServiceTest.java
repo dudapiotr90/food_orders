@@ -27,11 +27,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.dudis.foodorders.utils.CartUtils.someCart;
-import static com.dudis.foodorders.utils.CustomerUtils.*;
+import static com.dudis.foodorders.utils.CustomerUtils.someCustomer;
+import static com.dudis.foodorders.utils.CustomerUtils.someCustomerDTO;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItems;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someSetOfOrderItemsDTO;
 import static com.dudis.foodorders.utils.OrderUtils.*;
-import static com.dudis.foodorders.utils.RestaurantUtils.*;
+import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurant1;
+import static com.dudis.foodorders.utils.RestaurantUtils.someRestaurantDTO1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;

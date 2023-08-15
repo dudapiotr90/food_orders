@@ -89,7 +89,7 @@ public class BillService {
             throw new OrderException("Can't issue a receipt for realized order: Order number: [%s]"
                 .formatted(order.getOrderNumber()));
         } else if (!order.getInProgress()) {
-            String issuedBillNumber = billDAO.findIssuedBillForOrder(order.getOrderNumber());
+            String issuedBillNumber = billDAO.findIssuedBillByOrderNumber(order.getOrderNumber());
             throw new OrderException("Receipt had already been issued: Receipt number: [%s]. Wait patiently for customer payment"
                 .formatted(issuedBillNumber));
         }

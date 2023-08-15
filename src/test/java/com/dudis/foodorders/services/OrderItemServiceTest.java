@@ -16,7 +16,7 @@ import java.util.Set;
 import static com.dudis.foodorders.utils.CartUtils.someCart;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItem1;
 import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItems;
-import static com.dudis.foodorders.utils.OrderUtils.*;
+import static com.dudis.foodorders.utils.OrderUtils.someOrder1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;

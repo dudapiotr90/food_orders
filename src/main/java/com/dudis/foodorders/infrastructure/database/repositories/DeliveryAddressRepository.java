@@ -58,8 +58,7 @@ public class DeliveryAddressRepository implements DeliveryAddressDAO {
     public List<Restaurant> findRestaurantsWithAddress(String city, String postalCode, String street) {
         List<Object[]> restaurantDetails = deliveryAddressJpaRepository.findRestaurantsWithAddress(city, postalCode, street);
         return restaurantDetails.stream()
-            .map(restaurantEntityMapper::buildRestaurantFromObject
-            )
+            .map(restaurantEntityMapper::buildRestaurantFromObject)
             .toList();
     }
 

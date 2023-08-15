@@ -6,21 +6,23 @@ import com.dudis.foodorders.api.mappers.FoodMapper;
 import com.dudis.foodorders.api.mappers.OrderItemMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.*;
-import com.dudis.foodorders.utils.*;
+import com.dudis.foodorders.utils.OrderUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
-import static com.dudis.foodorders.utils.CartUtils.*;
+import static com.dudis.foodorders.utils.CartUtils.someCart;
 import static com.dudis.foodorders.utils.FoodUtils.*;
 import static com.dudis.foodorders.utils.OrderItemsUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OrderRequestServiceTest {

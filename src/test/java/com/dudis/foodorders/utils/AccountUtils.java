@@ -72,9 +72,24 @@ public class AccountUtils {
             .build();
     }
 
-    public static AccountEntity someAccountEntity() {
+    public static AccountEntity someAccountEntity1() {
         return AccountEntity.builder()
             .accountId(1)
+            .build();
+    }
+
+    public static AccountEntity someAccountEntity2() {
+        return AccountEntity.builder()
+            .email("some@mail")
+            .accountId(5)
+            .roleId(4)
+            .build();
+    }
+    public static AccountEntity someAccountEntity3() {
+        return AccountEntity.builder()
+            .email("another@email")
+            .roleId(4)
+            .accountId(12)
             .build();
     }
 }

@@ -5,6 +5,7 @@ import com.dudis.foodorders.api.dtos.OrderDetailsDTO;
 import com.dudis.foodorders.api.dtos.OrderRequestDTO;
 import com.dudis.foodorders.api.dtos.OrdersDTO;
 import com.dudis.foodorders.domain.Order;
+import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -91,4 +92,34 @@ public class OrderUtils {
     public static OrdersDTO someOrdersDTO() {
         return OrdersDTO.builder().orders(someListOfOrderDTO()).build();
     }
+
+    public static List<OrderEntity> someOrderEntities() {
+        return List.of(someOrderEntity1(),someOrderEntity2());
+    }
+
+
+
+    public static OrderEntity someOrderEntity1() {
+        return OrderEntity.builder()
+            .orderNumber("asasda12312sdasmlk")
+            .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .customerComment("some comment")
+            .realized(false)
+            .inProgress(true)
+            .orderItems(OrderItemsUtils.someOrderItemEntities())
+            .build();
+    }
+
+
+    public static OrderEntity someOrderEntity2() {
+        return OrderEntity.builder()
+            .orderNumber("asdfdfgqw123hjmm4vgaasd")
+            .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .customerComment("some comment 2")
+            .realized(false)
+            .inProgress(true)
+            .orderItems(OrderItemsUtils.someOrderItemEntities())
+            .build();
+    }
+
 }

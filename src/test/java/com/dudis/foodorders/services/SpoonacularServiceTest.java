@@ -2,15 +2,12 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.SearchSpoonacularParametersDTO;
 import com.dudis.foodorders.api.dtos.SpoonacularVideoDataDTO;
-import com.dudis.foodorders.infrastructure.spoonacular.Diet;
 import com.dudis.foodorders.infrastructure.spoonacular.MealMap;
 import com.dudis.foodorders.services.dao.SpoonacularDAO;
 import com.dudis.foodorders.utils.SpoonacularUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;

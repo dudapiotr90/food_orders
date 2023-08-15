@@ -35,22 +35,20 @@ public class FoodRepository implements FoodDAO {
 
     @Override
     public String updateFood(Food food, String foodImagePath) {
-        FoodEntity existingFood = foodJpaRepository.findById(food.getFoodId())
-            .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(food.getFoodId())));
+        FoodEntity existingFood = getExistingFood(food.getFoodId());
         String imageToDelete = existingFood.getFoodImagePath();
         existingFood.setName(food.getName());
         existingFood.setDescription(food.getDescription());
         existingFood.setFoodType(food.getFoodType());
         existingFood.setPrice(food.getPrice());
         existingFood.setFoodImagePath(foodImagePath);
-        FoodEntity updatedFood = foodJpaRepository.saveAndFlush(existingFood);
+        foodJpaRepository.saveAndFlush(existingFood);
         return imageToDelete;
     }
 
     @Override
     public String deleteFood(Integer foodId) {
-        FoodEntity existingFood = foodJpaRepository.findById(foodId)
-            .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(foodId)));
+        FoodEntity existingFood = getExistingFood(foodId);
         foodJpaRepository.deleteById(foodId);
         return existingFood.getFoodImagePath();
     }
@@ -72,6 +70,11 @@ public class FoodRepository implements FoodDAO {
         MenuEntity menuEntity = menuEntityMapper.mapToEntity(menu);
         return foodJpaRepository.findByMenuId(menuEntity.getMenuId()).stream()
             .map(foodEntityMapper::mapFromEntity).toList();
+    }
+
+    private FoodEntity getExistingFood(Integer foodId) {
+        return foodJpaRepository.findById(foodId)
+            .orElseThrow(() -> new EntityNotFoundException("FoodEntity with id: [%s] not found".formatted(foodId)));
     }
 
 }

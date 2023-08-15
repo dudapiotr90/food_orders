@@ -30,9 +30,7 @@ public class BillRepository implements BillDAO {
 
     @Override
     public List<Bill> findCustomerPendingBills(Integer customerId, boolean payed) {
-
-        List<BillEntity> byCustomerIdAndPayed = billJpaRepository.findByCustomerIdAndPayed(customerId, payed);
-        return byCustomerIdAndPayed.stream()
+        return billJpaRepository.findByCustomerIdAndPayed(customerId, payed).stream()
             .map(billEntityMapper::mapFromEntity)
             .toList();
     }
@@ -45,13 +43,13 @@ public class BillRepository implements BillDAO {
     }
 
     @Override
-    public String findIssuedBillForOrder(String orderNumber) {
+    public String findIssuedBillByOrderNumber(String orderNumber) {
         return billJpaRepository.findByOrderNumber(orderNumber);
     }
 
     @Override
     public void payForBill(String billNumber) {
-        billJpaRepository.setPayerAsTrue(billNumber,true);
+        billJpaRepository.setPayedAsTrue(billNumber,true);
     }
 
     @Override
@@ -61,7 +59,12 @@ public class BillRepository implements BillDAO {
     }
 
     @Override
-    public List<Order> findOrdersNotInProgressAndPayedAndNotRealized(Integer restaurantId, boolean inProgress, boolean payed, boolean realized) {
+    public List<Order> findOrdersNotInProgressAndPayedAndNotRealized(
+        Integer restaurantId,
+        boolean inProgress,
+        boolean payed,
+        boolean realized
+    ) {
         return billJpaRepository.findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, inProgress, payed,realized).stream()
             .map(orderEntityMapper::mapFromEntity).toList();
     }

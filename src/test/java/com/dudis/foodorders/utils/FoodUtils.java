@@ -3,6 +3,7 @@ package com.dudis.foodorders.utils;
 import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.api.dtos.FoodRequestDTO;
 import com.dudis.foodorders.domain.Food;
+import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,6 +13,9 @@ public class FoodUtils {
 
     public static List<Food> someFoodsList() {
         return List.of(someFood1(), someFood2(), someFood3());
+    }
+    public static List<FoodEntity> someFoodEntities() {
+        return List.of(someFoodEntity1(), someFoodEntity2(), someFoodEntity3());
     }
 
     public static List<FoodDTO> someFoodsListDTO() {
@@ -40,6 +44,7 @@ public class FoodUtils {
             .foodId(1)
             .foodType("TEA")
             .price(BigDecimal.TEN)
+            .foodImagePath("some/image/path")
             .build();
     }
 
@@ -82,5 +87,34 @@ public class FoodUtils {
             .foodType("ROLL")
             .price(BigDecimal.valueOf(123.44))
             .build();
+    }
+
+    public static FoodEntity someFoodEntity1() {
+        return FoodEntity.builder()
+            .foodId(1)
+            .foodType("TEA")
+            .price(BigDecimal.TEN)
+            .foodImagePath("some/image/path")
+            .build();
+    }
+
+    public static FoodEntity someFoodEntity2() {
+        return FoodEntity.builder()
+            .foodId(2)
+            .foodType("COFFEE")
+            .price(BigDecimal.valueOf(20))
+            .build();
+    }
+
+    public static FoodEntity someFoodEntity3() {
+        return FoodEntity.builder()
+            .foodId(43)
+            .foodType("ROLL")
+            .price(BigDecimal.valueOf(123.44))
+            .build();
+    }
+
+    public static Set<FoodEntity> someSetOfFoodEntities() {
+        return Set.of(someFoodEntity1(), someFoodEntity2(), someFoodEntity3());
     }
 }
