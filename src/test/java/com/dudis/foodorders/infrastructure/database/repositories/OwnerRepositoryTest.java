@@ -1,9 +1,7 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Account;
-import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.domain.Owner;
-import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.OwnerEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OwnerJpaRepository;
@@ -24,15 +22,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
-import static com.dudis.foodorders.utils.ApiRoleUtils.someApiRoleEntity1;
 import static com.dudis.foodorders.utils.ApiRoleUtils.someApiRoleEntity2;
-import static com.dudis.foodorders.utils.CustomerUtils.*;
-import static com.dudis.foodorders.utils.CustomerUtils.someCustomer2;
 import static com.dudis.foodorders.utils.OwnerUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;

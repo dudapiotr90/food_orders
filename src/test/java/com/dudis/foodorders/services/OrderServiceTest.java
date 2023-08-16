@@ -234,7 +234,7 @@ class OrderServiceTest {
             .thenReturn(somePagedOrders);
         when(orderItemMapper.mapOrderItemsToDTO(anySet())).thenReturn(someSetOfOrderItemsDTO());
         when(offsetDateTimeMapper.mapOffsetDateTimeToString(any(OffsetDateTime.class))).thenReturn(someODT1, someODT2);
-        when(customerMapper.mapToDTO(null)).thenReturn(someCustomerDTO());
+        when(customerMapper.mapToDTO(any(Customer.class))).thenReturn(someCustomerDTO());
         when(orderDAO.findRestaurantByOrderNumber(anyString())).thenReturn(someRestaurant1());
         Page<OrderDTO> expected = new PageImpl<>(someListOfOrderDTO());
 

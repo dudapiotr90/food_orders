@@ -1,7 +1,6 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Bill;
-import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.infrastructure.database.entities.BillEntity;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;

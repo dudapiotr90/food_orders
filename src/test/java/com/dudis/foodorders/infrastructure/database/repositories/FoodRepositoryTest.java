@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.dudis.foodorders.utils.FoodUtils.*;
-import static com.dudis.foodorders.utils.MenuUtils.*;
+import static com.dudis.foodorders.utils.MenuUtils.someMenu1;
+import static com.dudis.foodorders.utils.MenuUtils.someMenuEntity1;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

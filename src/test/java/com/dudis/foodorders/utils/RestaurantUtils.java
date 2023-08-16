@@ -7,6 +7,7 @@ import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 
 import java.util.List;
+import java.util.Set;
 
 public class RestaurantUtils {
 
@@ -30,6 +31,7 @@ public class RestaurantUtils {
             .name("Restaurant Name 1")
             .type(LocalType.BAKERY)
             .menu(MenuUtils.someMenu3())
+            .deliveryAddresses(Set.of(DeliveryAddressUtils.someDeliveryAddress1(),DeliveryAddressUtils.someDeliveryAddress2()))
             .build();
     }
 

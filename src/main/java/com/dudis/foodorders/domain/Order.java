@@ -19,7 +19,7 @@ public class Order {
     Boolean realized;
     Boolean inProgress;
     OffsetDateTime cancelTill;
-    Set<OrderItem> orderItems;
     Restaurant restaurant;
+    Set<OrderItem> orderItems;
     Customer customer;
 }

@@ -109,7 +109,13 @@ public class AccountUtils {
         return AccountEntity.builder()
             .email("another@email")
             .roleId(4)
-            .accountId(12)
+            .accountId(787)
+            .password("password")
+            .email("some@mail")
+            .phone("+48 123 456 789")
+            .creationDate(OffsetDateTime.of(2023, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
+            .enabled(true)
+            .unlocked(true)
             .build();
     }
 }
