@@ -17,9 +17,9 @@ public class Account {
     String email;
     String phone;
     OffsetDateTime creationDate;
-    Address address;
     Boolean status;
     Boolean unlocked;
     Boolean enabled;
     Integer roleId;
+    Address address;
 }

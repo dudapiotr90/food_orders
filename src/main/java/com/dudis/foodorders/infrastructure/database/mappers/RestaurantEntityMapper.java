@@ -17,6 +17,7 @@ public interface RestaurantEntityMapper {
     @Mapping(source = "menu.foods", target = "menu.foods", ignore = true)
     Restaurant mapFromEntity(RestaurantEntity local);
 
+    @Mapping(source = "orders" ,target = "orders",qualifiedByName = "mapOrdersToEntity")
     RestaurantEntity mapToEntity(Restaurant restaurant);
 
     default Restaurant buildRestaurantFromObject(Object[] o) {

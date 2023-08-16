@@ -15,6 +15,7 @@ public class OrderUtils {
 
     public static Order someOrder1() {
         return Order.builder()
+            .orderId(32)
             .orderNumber("asasda12312sdasmlk")
             .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
             .customerComment("some comment")
@@ -22,6 +23,7 @@ public class OrderUtils {
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItems())
             .restaurant(RestaurantUtils.someRestaurant1())
+            .customer(CustomerUtils.someCustomer())
             .build();
     }
 
@@ -35,11 +37,13 @@ public class OrderUtils {
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItems())
             .restaurant(RestaurantUtils.someRestaurant2())
+            .customer(CustomerUtils.someCustomer2())
             .build();
     }
 
     public static OrderDTO someOrderDTO1() {
         return OrderDTO.builder()
+            .orderId(32)
             .orderNumber("asasda12312sdasmlk")
             .build();
         
@@ -103,6 +107,7 @@ public class OrderUtils {
 
     public static OrderEntity someOrderEntity1() {
         return OrderEntity.builder()
+            .orderId(32)
             .orderNumber("asasda12312sdasmlk")
             .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
             .cancelTill(OffsetDateTime.of(2023, 8, 8, 6,45, 0, 0, ZoneOffset.UTC))
@@ -111,6 +116,7 @@ public class OrderUtils {
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
             .restaurant(RestaurantUtils.someRestaurantEntity1())
+            .customer(CustomerUtils.someCustomerEntity1())
             .build();
     }
 
@@ -125,6 +131,7 @@ public class OrderUtils {
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
             .restaurant(RestaurantUtils.someRestaurantEntity2())
+            .customer(CustomerUtils.someCustomerEntity2())
             .build();
     }
 

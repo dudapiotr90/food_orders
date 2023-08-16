@@ -1,11 +1,8 @@
-package com.dudis.foodorders.mappers;
+package com.dudis.foodorders.integration.mappers;
 
-import com.dudis.foodorders.domain.Address;
-import com.dudis.foodorders.infrastructure.database.entities.AddressEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.ApiRoleEntityMapper;
 import com.dudis.foodorders.infrastructure.security.ApiRole;
 import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
-import com.dudis.foodorders.utils.AddressUtils;
 import com.dudis.foodorders.utils.ApiRoleUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

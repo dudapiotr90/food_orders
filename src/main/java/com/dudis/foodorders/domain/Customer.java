@@ -15,6 +15,6 @@ public class Customer {
     String surname;
     Account account;
     Cart cart;
-    Set<Cart.Bill> bills;
+    Set<Bill> bills;
     Set<Order> orders;
 }

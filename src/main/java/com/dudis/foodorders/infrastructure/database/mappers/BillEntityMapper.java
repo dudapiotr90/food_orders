@@ -2,6 +2,7 @@ package com.dudis.foodorders.infrastructure.database.mappers;
 
 import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.infrastructure.database.entities.BillEntity;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

@@ -21,6 +21,7 @@ public class DeveloperUtils {
     }
     public static DeveloperEntity someDeveloperEntity1() {
         return DeveloperEntity.builder()
+            .developerId(76)
             .name("anotherDeveloperName")
             .surname("anotherDeveloperSurname")
             .account(AccountUtils.someAccountEntity3())

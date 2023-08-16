@@ -5,6 +5,7 @@ import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 
 import java.util.List;
+import java.util.Set;
 
 public class OwnerUtils {
 
@@ -35,6 +36,7 @@ public class OwnerUtils {
 
     public static Owner someOwner1() {
         return Owner.builder()
+            .restaurants(Set.of(RestaurantUtils.someRestaurant1(), RestaurantUtils.someRestaurant2(), RestaurantUtils.someRestaurant3()))
             .ownerId(1)
             .name("owner1")
             .surname("surname1")

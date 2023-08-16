@@ -24,7 +24,10 @@ public interface OrderEntityMapper {
 
     @Named("mapOrderToEntity")
     @Mapping(source = "orderItems",target = "orderItems",qualifiedByName = "mapOrderItems")
-    @Mapping(source = "restaurant",target = "restaurant")
+    @Mapping(target = "restaurant.menu",ignore = true)
+    @Mapping(target = "restaurant.owner",ignore = true)
+    @Mapping(target = "restaurant.deliveryAddresses",ignore = true)
+    @Mapping(target = "restaurant.orders",ignore = true)
     @Mapping(source = "customer",target = "customer",qualifiedByName = "mapCustomerToEntity")
     OrderEntity mapToEntity(Order order);
 
@@ -34,6 +37,13 @@ public interface OrderEntityMapper {
             return null;
         }
         return orders.stream().map(this::mapFromEntity).collect(Collectors.toSet());
+    }
+    @Named("mapOrdersToEntity")
+    default Set<OrderEntity> mapOrdersToEntity(Set<Order> orders) {
+        if (Objects.isNull(orders)) {
+            return null;
+        }
+        return orders.stream().map(this::mapToEntity).collect(Collectors.toSet());
     }
 
 

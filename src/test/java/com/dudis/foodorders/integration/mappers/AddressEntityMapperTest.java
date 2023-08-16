@@ -1,4 +1,4 @@
-package com.dudis.foodorders.mappers;
+package com.dudis.foodorders.integration.mappers;
 
 
 import com.dudis.foodorders.domain.Address;

@@ -6,22 +6,20 @@ import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CartEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderItemJpaRepository;
-import com.dudis.foodorders.utils.CartUtils;
-import com.dudis.foodorders.utils.OrderItemsUtils;
-import com.dudis.foodorders.utils.OrderUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.dudis.foodorders.utils.CartUtils.*;
-import static com.dudis.foodorders.utils.OrderItemsUtils.*;
-import static com.dudis.foodorders.utils.OrderUtils.*;
+import static com.dudis.foodorders.utils.CartUtils.someCart;
+import static com.dudis.foodorders.utils.CartUtils.someCartEntity;
+import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItem1;
+import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItemEntity1;
+import static com.dudis.foodorders.utils.OrderUtils.someOrder1;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

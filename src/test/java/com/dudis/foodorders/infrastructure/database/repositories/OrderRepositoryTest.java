@@ -1,14 +1,12 @@
 package com.dudis.foodorders.infrastructure.database.repositories;
 
 import com.dudis.foodorders.domain.Order;
-import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderJpaRepository;
-import com.dudis.foodorders.utils.OrderItemsUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,7 +25,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.dudis.foodorders.utils.OrderItemsUtils.*;
+import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItemEntities;
+import static com.dudis.foodorders.utils.OrderItemsUtils.someOrderItems;
 import static com.dudis.foodorders.utils.OrderUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;

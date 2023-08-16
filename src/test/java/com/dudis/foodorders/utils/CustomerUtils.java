@@ -10,6 +10,7 @@ public class CustomerUtils {
 
     public static Customer someCustomer() {
         return Customer.builder()
+            .customerId(5)
             .name("someCustomerName")
             .surname("someCustomerSurname")
             .account(AccountUtils.someAccount1().withRoleId(3))
@@ -26,6 +27,7 @@ public class CustomerUtils {
 
     public static CustomerDTO someCustomerDTO() {
         return CustomerDTO.builder()
+            .customerId(5)
             .name("someCustomerName")
             .surname("someCustomerSurname")
             .accountId(4)
@@ -43,6 +45,7 @@ public class CustomerUtils {
 
     public static CustomerEntity someCustomerEntity1() {
         return CustomerEntity.builder()
+            .customerId(5)
             .name("someCustomerEntityName")
             .surname("someCustomerEntitySurname")
             .account(AccountUtils.someAccountEntity1())

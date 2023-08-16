@@ -7,7 +7,6 @@ import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRep
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountManagerJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
 import com.dudis.foodorders.services.RandomUUIDGenerator;
-import com.dudis.foodorders.utils.ApiRoleUtils;
 import com.dudis.foodorders.utils.TokenUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,8 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 import static com.dudis.foodorders.utils.AccountUtils.*;
-import static com.dudis.foodorders.utils.ApiRoleUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.dudis.foodorders.utils.ApiRoleUtils.someApiRoleEntity1;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
