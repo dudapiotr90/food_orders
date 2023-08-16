@@ -8,7 +8,7 @@ public class DeveloperUtils {
         return Developer.builder()
             .name("someDeveloperName")
             .surname("someDeveloperSurname")
-            .account(AccountUtils.someAccount().withRoleId(4))
+            .account(AccountUtils.someAccount1().withRoleId(4))
             .build();
     }
 
@@ -16,7 +16,7 @@ public class DeveloperUtils {
         return Developer.builder()
             .name("anotherDeveloperName")
             .surname("anotherDeveloperSurname")
-            .account(AccountUtils.someAccount().withEmail("another@email").withRoleId(4))
+            .account(AccountUtils.someAccount1().withEmail("another@email").withRoleId(4))
             .build();
     }
     public static DeveloperEntity someDeveloperEntity1() {

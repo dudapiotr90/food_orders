@@ -5,7 +5,7 @@ import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
 import com.dudis.foodorders.api.mappers.OwnerMapper;
-import com.dudis.foodorders.domain.Bill;
+import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.exception.OrderException;
@@ -49,7 +49,7 @@ public class BillService {
         Order updated = order.withInProgress(false);
         orderService.setOrderAsInProgress(updated);
         Owner owner = ownerMapper.mapFromDTO(ownerDTO);
-        Bill bill = billDAO.saveBill(createBill(order, owner));
+        Cart.Bill bill = billDAO.saveBill(createBill(order, owner));
         return billMapper.mapToDTO(bill);
     }
 
@@ -66,8 +66,8 @@ public class BillService {
         return billDAO.findOrdersNotInProgressAndPayedAndNotRealized(restaurantId, inProgress, payed,realized);
     }
 
-    private Bill createBill(Order order, Owner owner) {
-        return Bill.builder()
+    private Cart.Bill createBill(Order order, Owner owner) {
+        return Cart.Bill.builder()
             .billNumber(UUID.randomUUID().toString())
             .dateTime(OffsetDateTime.now())
             .amount(calculateBillAmount(order))

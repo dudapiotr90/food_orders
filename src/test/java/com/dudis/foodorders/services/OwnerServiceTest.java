@@ -27,7 +27,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dudis.foodorders.utils.AccountUtils.someAccount;
+import static com.dudis.foodorders.utils.AccountUtils.someAccount1;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
 import static com.dudis.foodorders.utils.OwnerUtils.*;
 import static com.dudis.foodorders.utils.RestaurantUtils.*;
@@ -64,7 +64,7 @@ class OwnerServiceTest {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
         RegistrationRequest someRequest = someRegistrationRequest();
-        Account someAccount = someAccount().withRoleId(2);
+        Account someAccount = someAccount1().withRoleId(2);
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(ownerDAO.registerOwner(any(Owner.class))).thenReturn(expected);
         // When
@@ -115,7 +115,7 @@ class OwnerServiceTest {
     @Test
     void findOwnerByAccountIdWorksCorrectly() {
         // Given
-        Owner owner1 = someOwner1().withAccount(someAccount());
+        Owner owner1 = someOwner1().withAccount(someAccount1());
         OwnerDTO expected = someOwnerDTO1();
         String expectedMessage = "Owner doesn't exists";
         when(ownerDAO.findOwnerByAccountId(anyInt())).thenReturn(Optional.of(owner1));

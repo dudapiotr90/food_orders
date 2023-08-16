@@ -6,6 +6,7 @@ import com.dudis.foodorders.infrastructure.security.entity.*;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountManagerJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
+import com.dudis.foodorders.services.RandomUUIDGenerator;
 import com.dudis.foodorders.services.dao.AccountDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,7 @@ public class AccountRepository implements AccountDAO {
     private final AccountEntityMapper accountEntityMapper;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ApiRoleJpaRepository apiRoleJpaRepository;
+    private final RandomUUIDGenerator randomUUIDGenerator;
 
     @Override
     public Optional<Account> findByEmail(String userEmail) {
@@ -96,7 +98,7 @@ public class AccountRepository implements AccountDAO {
     private ConfirmationToken prepareActivationToken(AccountEntity account) {
         OffsetDateTime createdAt = OffsetDateTime.now();
         return ConfirmationToken.builder()
-            .token(UUID.randomUUID().toString())
+            .token(randomUUIDGenerator.generateUniqueCode())
             .createdAt(createdAt)
             .expiresAt(createdAt.plusHours(1))
             .accountEntity(account)

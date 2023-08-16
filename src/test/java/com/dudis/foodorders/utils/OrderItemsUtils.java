@@ -18,6 +18,7 @@ public class OrderItemsUtils {
 
     public static OrderItem someOrderItem1() {
         return OrderItem.builder()
+            .orderItemId(56)
             .quantity(BigDecimal.valueOf(3))
             .food(FoodUtils.someFood1())
             .build();
@@ -25,6 +26,7 @@ public class OrderItemsUtils {
 
     public static OrderItem someOrderItem2() {
         return OrderItem.builder()
+            .orderItemId(78)
             .quantity(BigDecimal.valueOf(5))
             .food(FoodUtils.someFood2())
             .build();
@@ -67,7 +69,7 @@ public class OrderItemsUtils {
 
     public static OrderItemEntity someOrderItemEntity1() {
         return OrderItemEntity.builder()
-            .orderItemId(123)
+            .orderItemId(56)
             .quantity(BigDecimal.valueOf(3))
             .food(FoodUtils.someFoodEntity1())
             .build();
@@ -75,7 +77,7 @@ public class OrderItemsUtils {
 
     public static OrderItemEntity someOrderItemEntity2() {
         return OrderItemEntity.builder()
-            .orderItemId(987)
+            .orderItemId(78)
             .quantity(BigDecimal.valueOf(5))
             .food(FoodUtils.someFoodEntity2())
             .build();

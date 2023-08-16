@@ -12,7 +12,7 @@ public class CustomerUtils {
         return Customer.builder()
             .name("someCustomerName")
             .surname("someCustomerSurname")
-            .account(AccountUtils.someAccount().withRoleId(3))
+            .account(AccountUtils.someAccount1().withRoleId(3))
             .build();
     }
 
@@ -20,7 +20,7 @@ public class CustomerUtils {
         return Customer.builder()
             .name("anotherCustomerName")
             .surname("anotherCustomerSurname")
-            .account(AccountUtils.someAccount().withEmail("another@email").withRoleId(3))
+            .account(AccountUtils.someAccount1().withEmail("another@email").withRoleId(3))
             .build();
     }
 

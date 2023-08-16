@@ -18,8 +18,8 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 public class OrderItemRepository implements OrderItemDAO {
-
     private final OrderItemJpaRepository orderItemJpaRepository;
+
     private final OrderItemEntityMapper orderItemEntityMapper;
     private final CartEntityMapper cartEntityMapper;
 
@@ -37,15 +37,6 @@ public class OrderItemRepository implements OrderItemDAO {
         }
     }
 
-
-    private Optional<OrderItem> isFoodAlreadyInCart(Cart cart, OrderItem item) {
-        Optional<OrderItemEntity> orderItemAlreadyInCart = orderItemJpaRepository
-            .findAllByFoodIdAndCartId(item.getFood().getFoodId(), cart.getCartId());
-        return orderItemAlreadyInCart.map(orderItemEntityMapper::mapFromEntity);
-
-
-    }
-
     @Override
     public void updateOrderItem(OrderItem orderItem) {
         OrderItemEntity item = orderItemJpaRepository.findById(orderItem.getOrderItemId())
@@ -56,8 +47,6 @@ public class OrderItemRepository implements OrderItemDAO {
 
     @Override
     public void deleteOrderItem(Integer orderItemId) {
-        orderItemJpaRepository.findById(orderItemId)
-            .orElseThrow(() -> new EntityNotFoundException("OrderItem with id: [%s] not found".formatted(orderItemId)));
         orderItemJpaRepository.deleteById(orderItemId);
     }
 
@@ -86,5 +75,11 @@ public class OrderItemRepository implements OrderItemDAO {
     @Override
     public void setOrderNull(OrderItem orderItem) {
         orderItemJpaRepository.setOrderNull(orderItem.getOrderItemId());
+    }
+
+    private Optional<OrderItem> isFoodAlreadyInCart(Cart cart, OrderItem item) {
+        Optional<OrderItemEntity> orderItemAlreadyInCart = orderItemJpaRepository
+            .findAllByFoodIdAndCartId(item.getFood().getFoodId(), cart.getCartId());
+        return orderItemAlreadyInCart.map(orderItemEntityMapper::mapFromEntity);
     }
 }

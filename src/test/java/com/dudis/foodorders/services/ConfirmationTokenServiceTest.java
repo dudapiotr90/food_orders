@@ -57,7 +57,7 @@ class ConfirmationTokenServiceTest {
     @Test
     void confirmTokenWorksCorrectly() {
         // Given
-        Account expected = AccountUtils.someAccount();
+        Account expected = AccountUtils.someAccount1();
         String someRandomToken = UUID.randomUUID().toString();
         ConfirmationToken someConfirmationToken = someToken().withExpiresAt(OffsetDateTime.now().plusMinutes(30));
         when(confirmationTokenDAO.getToken(someRandomToken)).thenReturn(Optional.ofNullable(someConfirmationToken));

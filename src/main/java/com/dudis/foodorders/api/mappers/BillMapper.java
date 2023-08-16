@@ -2,6 +2,7 @@ package com.dudis.foodorders.api.mappers;
 
 import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.domain.Bill;
+import com.dudis.foodorders.domain.Cart;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

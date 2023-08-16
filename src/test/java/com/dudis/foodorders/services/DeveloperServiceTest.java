@@ -15,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.dudis.foodorders.utils.AccountUtils.someAccount;
+import static com.dudis.foodorders.utils.AccountUtils.someAccount1;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
 import static com.dudis.foodorders.utils.DeveloperUtils.someDeveloper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,7 +39,7 @@ class DeveloperServiceTest {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
         RegistrationRequest someRequest = someRegistrationRequest().withRole("DEVELOPER");
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(developerDAO.registerDeveloper(any(Developer.class))).thenReturn(expected);
         // When

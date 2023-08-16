@@ -2,9 +2,12 @@ package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.domain.Bill;
+import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.database.entities.BillEntity;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class BillUtils {
@@ -46,6 +49,11 @@ public class BillUtils {
             .billId(3)
             .billNumber("21123-312312-asdas-23132-das")
             .payed(true)
+            .amount(new BigDecimal("14554,145"))
+            .dateTime(OffsetDateTime.of(2011,6,1,12,7,0,0, ZoneOffset.UTC))
+            .order(OrderUtils.someOrderEntity1())
+            .customer(CustomerUtils.someCustomerEntity1())
+            .owner(OwnerUtils.someOwnerEntity1())
             .build();
     }
     public static BillEntity someBillEntity2() {

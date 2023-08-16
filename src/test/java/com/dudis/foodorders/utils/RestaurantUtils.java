@@ -2,6 +2,7 @@ package com.dudis.foodorders.utils;
 
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
+import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 
@@ -13,6 +14,9 @@ public class RestaurantUtils {
         return List.of(someRestaurant1(),someRestaurant2(),someRestaurant3());
     }
 
+    public static List<RestaurantEntity> someRestaurantEntities() {
+        return List.of(someRestaurantEntity1(),someRestaurantEntity2(),someRestaurantEntity3());
+    }
     public static List<RestaurantDTO> someRestaurantsDTO() {
         return List.of(someRestaurantDTO1(),someRestaurantDTO2(),someRestaurantDTO3());
     }
@@ -22,8 +26,9 @@ public class RestaurantUtils {
 
     public static Restaurant someRestaurant1() {
         return Restaurant.builder()
-            .restaurantId(3)
-            .name("Restaurant Name 3")
+            .restaurantId(1)
+            .name("Restaurant Name 1")
+            .type(LocalType.BAKERY)
             .menu(MenuUtils.someMenu3())
             .build();
     }
@@ -38,8 +43,8 @@ public class RestaurantUtils {
 
     public static Restaurant someRestaurant3() {
         return Restaurant.builder()
-            .restaurantId(1)
-            .name("Restaurant Name 1")
+            .restaurantId(3)
+            .name("Restaurant Name 3")
             .menu(MenuUtils.someMenu2())
             .build();
     }
@@ -116,13 +121,13 @@ public class RestaurantUtils {
         return List.of(someRestaurantAsObject1(),someRestaurantAsObject2(),someRestaurantAsObject3());
     }
 
-    private static Object[] someRestaurantAsObject1() {
-        return new Object[]{1,"some name 1","some description 1","BAKERY"};
+    public static Object[] someRestaurantAsObject1() {
+        return new Object[]{"1","Restaurant Name 1","some description 1","BAKERY"};
     }
     private static Object[] someRestaurantAsObject2() {
-        return new Object[]{2,"some name 2","some description 2","DRINK_SHOP"};
+        return new Object[]{"2","Restaurant Name 2","some description 2","DRINK_SHOP"};
     }
-    private static Object[] someRestaurantAsObject3() {
-        return new Object[]{3,"some name 3","some description 3","COFFEE_HOUSE"};
+    public static Object[] someRestaurantAsObject3() {
+        return new Object[]{"3","RestaurantDTO Name 3","some description 3","COFFEE_HOUSE"};
     }
 }

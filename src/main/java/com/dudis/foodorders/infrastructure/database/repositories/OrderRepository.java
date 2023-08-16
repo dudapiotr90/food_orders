@@ -12,10 +12,12 @@ import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapp
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderJpaRepository;
 import com.dudis.foodorders.services.dao.OrderDAO;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +30,20 @@ public class OrderRepository implements OrderDAO {
     private final RestaurantEntityMapper restaurantEntityMapper;
     private final OrderItemEntityMapper orderItemEntityMapper;
 
+    @Autowired
+    private final Clock clock;
+
+//    @Override
+//    public List<Order> findCancelableOrders(Integer customerId) {
+//        return orderJpaRepository.findCancelableOrders(customerId).stream()
+//            .filter(orderEntity -> orderEntity.getCancelTill().isAfter(OffsetDateTime.now()))
+//            .map(orderEntityMapper::mapFromEntity)
+//            .toList();
+//    }
     @Override
     public List<Order> findCancelableOrders(Integer customerId) {
         return orderJpaRepository.findCancelableOrders(customerId).stream()
-            .filter(orderEntity -> orderEntity.getCancelTill().isAfter(OffsetDateTime.now()))
+            .filter(orderEntity -> orderEntity.getCancelTill().isAfter(OffsetDateTime.now(clock)))
             .map(orderEntityMapper::mapFromEntity)
             .toList();
     }
@@ -44,8 +56,8 @@ public class OrderRepository implements OrderDAO {
     }
 
     @Override
-    public Integer findPendingOrdersForRestaurant(Restaurant restaurantId) {
-        RestaurantEntity restaurantEntity = restaurantEntityMapper.mapToEntity(restaurantId);
+    public Integer findPendingOrdersForRestaurant(Restaurant restaurant) {
+        RestaurantEntity restaurantEntity = restaurantEntityMapper.mapToEntity(restaurant);
         return orderJpaRepository.countByRestaurantIdAndRealized(restaurantEntity, false);
     }
 
