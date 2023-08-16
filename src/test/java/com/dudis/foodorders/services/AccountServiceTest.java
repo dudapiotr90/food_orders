@@ -31,7 +31,7 @@ class AccountServiceTest {
         // Given
         String someEmail1 = "some@mail";
         String someEmail2 = "";
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         when(accountDAO.findByEmail(someEmail1)).thenReturn(Optional.of(someAccount));
         when(accountDAO.findByEmail(someEmail2)).thenReturn(Optional.empty());
 
@@ -62,7 +62,7 @@ class AccountServiceTest {
         // Given
         String someLogin1 = "someLogin";
         String someLogin2 = "asd";
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         String exceptionMessage = String.format("User with login: [%s] doesn't exists", someLogin2);
         when(accountDAO.findByLogin(someLogin1)).thenReturn(Optional.of(someAccount));
         when(accountDAO.findByLogin(someLogin2)).thenReturn(Optional.empty());
@@ -79,7 +79,7 @@ class AccountServiceTest {
     @Test
     void buildAccountWorksCorrectly() {
         // Given
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         RegistrationRequest someRequest = someRegistrationRequest();
         RegistrationRequest someRequest2 = someRegistrationRequest().withUserConfirmPassword("notMatching");
         when(accountDAO.findByRole(someRequest.getRole())).thenReturn(1);
@@ -97,8 +97,8 @@ class AccountServiceTest {
     @Test
     void updateAccountWorksCorrectly() {
         // Given
-        Account someAccount = someAccount();
-        Account updatedAccount = someAccount().withLogin("updatedLogin");
+        Account someAccount = someAccount1();
+        Account updatedAccount = someAccount1().withLogin("updatedLogin");
         UpdateAccountDTO someRequest = someUpdateRequest();
         UpdateAccountDTO someRequest2 = someUpdateRequest().withUserEmail("");
         UpdateAccountDTO updatedDetails = someUpdateRequest2().withNewUserLogin("updatedLogin");
@@ -136,7 +136,7 @@ class AccountServiceTest {
     @Test
     void findCustomerAccountWorksCorrectly() {
         // Given
-        Account someAccount = someAccount().withRoleId(3);
+        Account someAccount = someAccount1().withRoleId(3);
         when(accountDAO.findById(1)).thenReturn(Optional.of(someAccount));
         when(accountDAO.findById(3)).thenReturn(Optional.empty());
         String exceptionMessage = "Account with id: [%s] doesn't exist".formatted(3);
@@ -146,6 +146,6 @@ class AccountServiceTest {
 
         // Then
         assertEquals(exceptionMessage,exception.getMessage());
-        assertEquals(someAccount(), result);
+        assertEquals(someAccount1(), result);
     }
 }

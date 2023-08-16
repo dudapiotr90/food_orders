@@ -16,5 +16,5 @@ public class Owner {
     String surname;
     Account account;
     Set<Restaurant> restaurants;
-    Set<Bill> bills;
+    Set<Cart.Bill> bills;
 }

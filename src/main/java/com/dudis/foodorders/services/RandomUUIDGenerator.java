@@ -1,7 +1,9 @@
 package com.dudis.foodorders.services;
 
-import java.util.UUID;
+import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+@Service
 public class RandomUUIDGenerator {
     public String generateUniqueCode() {
         return UUID.randomUUID().toString();

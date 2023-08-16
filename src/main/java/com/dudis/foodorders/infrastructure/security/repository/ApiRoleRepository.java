@@ -23,6 +23,6 @@ public class ApiRoleRepository implements ApiRoleDAO {
     @Override
     public List<ApiRole> findApiRoles() {
         return apiRoleJpaRepository.findAll().stream()
-            .map(apiRoleEntityMapper::mapFromDTO).toList();
+            .map(apiRoleEntityMapper::mapFromEntity).toList();
     }
 }

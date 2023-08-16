@@ -21,6 +21,7 @@ public class OrderUtils {
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItems())
+            .restaurant(RestaurantUtils.someRestaurant1())
             .build();
     }
 
@@ -33,6 +34,7 @@ public class OrderUtils {
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItems())
+            .restaurant(RestaurantUtils.someRestaurant2())
             .build();
     }
 
@@ -103,10 +105,12 @@ public class OrderUtils {
         return OrderEntity.builder()
             .orderNumber("asasda12312sdasmlk")
             .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .cancelTill(OffsetDateTime.of(2023, 8, 8, 6,45, 0, 0, ZoneOffset.UTC))
             .customerComment("some comment")
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
+            .restaurant(RestaurantUtils.someRestaurantEntity1())
             .build();
     }
 
@@ -114,11 +118,13 @@ public class OrderUtils {
     public static OrderEntity someOrderEntity2() {
         return OrderEntity.builder()
             .orderNumber("asdfdfgqw123hjmm4vgaasd")
-            .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .receivedDateTime(OffsetDateTime.of(2023, 8, 4, 11, 9, 0, 0, ZoneOffset.UTC))
+            .cancelTill(OffsetDateTime.of(2023, 8, 8, 6,25, 0, 0, ZoneOffset.UTC))
             .customerComment("some comment 2")
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
+            .restaurant(RestaurantUtils.someRestaurantEntity2())
             .build();
     }
 

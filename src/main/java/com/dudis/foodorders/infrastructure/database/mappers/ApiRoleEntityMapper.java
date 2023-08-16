@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 public interface ApiRoleEntityMapper {
 
 
-    ApiRoleEntity mapToDTO(ApiRole apiRole);
+    ApiRoleEntity mapToEntity(ApiRole apiRole);
 
-    ApiRole mapFromDTO(ApiRoleEntity apiRoleEntity);
+    ApiRole mapFromEntity(ApiRoleEntity apiRoleEntity);
 }

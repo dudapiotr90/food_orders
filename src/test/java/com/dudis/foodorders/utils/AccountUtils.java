@@ -15,7 +15,7 @@ import java.time.ZoneOffset;
 @Builder
 public class AccountUtils {
 
-    public static Account someAccount() {
+    public static Account someAccount1() {
         return Account.builder()
             .accountId(1)
             .login("someLogin")
@@ -24,6 +24,22 @@ public class AccountUtils {
             .phone("+48 123 456 789")
             .creationDate(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
             .address(someAddress())
+            .roleId(1)
+            .build();
+    }
+
+
+    public static Account someAccount2() {
+        return Account.builder()
+            .accountId(5)
+            .login("someLogin")
+            .password("password")
+            .email("some@mail")
+            .phone("+48 123 456 789")
+            .creationDate(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .address(someAddress())
+            .enabled(true)
+            .unlocked(true)
             .roleId(1)
             .build();
     }
@@ -74,7 +90,9 @@ public class AccountUtils {
 
     public static AccountEntity someAccountEntity1() {
         return AccountEntity.builder()
+            .email("")
             .accountId(1)
+            .password("")
             .build();
     }
 
@@ -83,6 +101,8 @@ public class AccountUtils {
             .email("some@mail")
             .accountId(5)
             .roleId(4)
+            .status(true)
+            .roleId(2)
             .build();
     }
     public static AccountEntity someAccountEntity3() {

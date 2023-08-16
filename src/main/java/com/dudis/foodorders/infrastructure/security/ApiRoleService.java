@@ -15,10 +15,10 @@ public class ApiRoleService {
     public List<Role> findAvailableApiRoles() {
         return List.of(Role.values());
     }
-
-    public String findRoleById(Integer roleId) {
-        return apiRoleDAO.findRoleById(roleId);
-    }
+//
+//    public String findRoleById(Integer roleId) {
+//        return apiRoleDAO.findRoleById(roleId);
+//    }
 
 
     public List<ApiRole> findApiRoles() {

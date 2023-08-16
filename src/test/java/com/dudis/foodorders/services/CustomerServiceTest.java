@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.dudis.foodorders.utils.AccountUtils.someAccount;
+import static com.dudis.foodorders.utils.AccountUtils.someAccount1;
 import static com.dudis.foodorders.utils.AccountUtils.someRegistrationRequest;
 import static com.dudis.foodorders.utils.CartUtils.someCart;
 import static com.dudis.foodorders.utils.CustomerUtils.*;
@@ -76,7 +76,7 @@ class CustomerServiceTest {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
         RegistrationRequest someRequest = someRegistrationRequest();
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(customerDAO.registerCustomer(any(Customer.class))).thenReturn(expected);
         // When
@@ -112,7 +112,7 @@ class CustomerServiceTest {
     @Test
     void findCustomerByAccountIdWorksCorrectly() {
         // Given
-        Customer customer1 = someCustomer().withAccount(someAccount());
+        Customer customer1 = someCustomer().withAccount(someAccount1());
         CustomerDTO expected = someCustomerDTO();
         String expectedMessage = "Customer doesn't exists";
         when(customerDAO.findCustomerByAccountId(anyInt())).thenReturn(Optional.of(customer1));
@@ -132,7 +132,7 @@ class CustomerServiceTest {
     @Test
     void findRestaurantWithCustomerAddressWorksCorrectly() {
         // Given
-        Account someAccount = someAccount();
+        Account someAccount = someAccount1();
         when(accountService.findCustomerAccount(anyInt())).thenReturn(someAccount);
         List<Restaurant> expected = someRestaurants();
         when(deliveryAddressService.findRestaurantsWithAddress(someAccount.getAddress()))
