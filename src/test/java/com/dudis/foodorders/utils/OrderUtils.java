@@ -65,7 +65,19 @@ public class OrderUtils {
         return OrderDTO.builder()
             .orderNumber("dfsdsdf34gaasagdfdssadf")
             .build();
+    }
 
+    public static OrderDTO someOrderDTO3() {
+        return OrderDTO.builder()
+            .orderNumber("asdfdfgqw123hjmm4vgaasd")
+            .receivedDateTime("2023-08-08 06:30:00")
+            .customerComment("some comment")
+            .realized(false)
+            .inProgress(true)
+            .orderItems(OrderItemsUtils.someSetOfOrderItemsDTO())
+            .restaurant(RestaurantUtils.someRestaurantDTO4())
+            .customer(CustomerUtils.someCustomerDTO2())
+            .build();
     }
 
     public static OrderRequestDTO someOrderRequestDTO() {

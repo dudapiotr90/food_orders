@@ -41,17 +41,46 @@ public class BillUtils {
     public static Bill someBill4() {
         return Bill.builder()
             .billNumber("2671231212126-564-vbmcbmcv-23132-das")
-            .amount(BigDecimal.ONE)
             .payed(true)
             .amount(new BigDecimal("14554.145"))
             .dateTime(OffsetDateTime.of(2011,6,1,12,7,0,0, ZoneOffset.UTC))
             .build();
     }
 
-    public static BillDTO someBillDTO() {
+    public static BillDTO someBillDTO1() {
         return BillDTO.builder()
             .billNumber("21123-312312-asdas-23132-das")
             .build();
+    }
+
+
+    public static BillDTO someBillDTO2() {
+        return BillDTO.builder()
+            .billNumber("21123-bsds-asdas-23132-das")
+            .dateTime("2000-10-10")
+            .payed(true)
+            .owner(OwnerUtils.someOwnerDTO1())
+            .customer(CustomerUtils.someCustomerDTO())
+            .order(OrderUtils.someOrderDTO1())
+            .amount(new BigDecimal("38.1"))
+            .build();
+    }
+
+
+    public static BillDTO someBillDTO3() {
+        return BillDTO.builder()
+            .billNumber("sda-312312-asdas-23132-das")
+            .dateTime("1990-10-10")
+            .payed(false)
+            .owner(OwnerUtils.someOwnerDTO2())
+            .customer(CustomerUtils.someCustomerDTO2())
+            .order(OrderUtils.someOrderDTO2())
+            .amount(new BigDecimal("14.1"))
+            .build();
+    }
+
+    public static List<BillDTO> someBillsDTO() {
+        return List.of(someBillDTO2(), someBillDTO3());
     }
 
     public static List<BillEntity> someBillEntities() {

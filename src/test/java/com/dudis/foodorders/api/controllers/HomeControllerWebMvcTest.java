@@ -16,12 +16,12 @@ import java.util.regex.Pattern;
 @WebMvcTest(controllers = HomeController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-class HomeControllerTest {
+class HomeControllerWebMvcTest {
 
     private MockMvc mockMvc;
 
     @Test
-    void homeWorksCorrectly() throws Exception {
+    void homeControllerWorksCorrectly() throws Exception {
         // given, when, then
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/"))
             .andExpect(MockMvcResultMatchers.status().isOk())

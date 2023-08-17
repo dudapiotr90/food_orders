@@ -31,7 +31,7 @@ public class RegistrationController {
     private final AccountMapper accountMapper;
 
     @GetMapping(value = REGISTRATION)
-    public ModelAndView registerAccountForm() {
+    public ModelAndView registerAccountFormPage() {
         Map<String, ?> model = prepareRegistrationData();
         return new ModelAndView("registration", model);
     }

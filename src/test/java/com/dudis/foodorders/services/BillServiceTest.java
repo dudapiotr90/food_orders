@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.dudis.foodorders.utils.BillUtils.someBill1;
-import static com.dudis.foodorders.utils.BillUtils.someBillDTO;
+import static com.dudis.foodorders.utils.BillUtils.someBillDTO1;
 import static com.dudis.foodorders.utils.OrderUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,8 +58,8 @@ class BillServiceTest {
         // Given
         Bill someBill1 = someBill1();
         Bill someBill2 = someBill1().withAmount(BigDecimal.ONE);
-        BillDTO someBillDTO1 = someBillDTO();
-        BillDTO someBillDTO2 = someBillDTO().withAmount(BigDecimal.ONE);
+        BillDTO someBillDTO1 = someBillDTO1();
+        BillDTO someBillDTO2 = someBillDTO1().withAmount(BigDecimal.ONE);
         List<BillDTO> expected = List.of(someBillDTO1, someBillDTO2);
         when(billDAO.findOwnerPendingBills(1, false)).thenReturn(List.of(someBill1, someBill2));
         when(billMapper.mapToDTO(someBill1)).thenReturn(someBillDTO1, someBillDTO2);
@@ -75,8 +75,8 @@ class BillServiceTest {
         // Given
         Bill someBill1 = someBill1();
         Bill someBill2 = someBill1().withAmount(BigDecimal.ONE);
-        BillDTO someBillDTO1 = someBillDTO();
-        BillDTO someBillDTO2 = someBillDTO().withAmount(BigDecimal.ONE);
+        BillDTO someBillDTO1 = someBillDTO1();
+        BillDTO someBillDTO2 = someBillDTO1().withAmount(BigDecimal.ONE);
         List<BillDTO> expected = List.of(someBillDTO1, someBillDTO2);
         when(billDAO.findCustomerPendingBills(1, false)).thenReturn(List.of(someBill1, someBill2));
         when(billMapper.mapToDTO(someBill1)).thenReturn(someBillDTO1, someBillDTO2);
@@ -92,7 +92,7 @@ class BillServiceTest {
         OrderDTO someOrderDTO = someOrderDTO1();
         OwnerDTO someOwnerDTO = OwnerUtils.someOwnerDTO1();
         Order someOrder = someOrder1();
-        BillDTO someBillDTO = someBillDTO();
+        BillDTO someBillDTO = someBillDTO1();
         when(orderService.findOrderByOrderNumber(anyString())).thenReturn(someOrder);
         doNothing().when(orderService).setOrderAsInProgress(any(Order.class));
         when(billDAO.saveBill(any(Bill.class))).thenReturn(someBill1());
