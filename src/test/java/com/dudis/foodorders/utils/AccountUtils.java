@@ -54,23 +54,6 @@ public class AccountUtils {
             .build();
     }
 
-    public static RegistrationRequestDTO someRegistrationRequest() {
-        return RegistrationRequestDTO.builder()
-            .userName("someName")
-            .userSurname("someSurname")
-            .userLogin("someLogin")
-            .userPassword("password")
-            .userConfirmPassword("password")
-            .userEmail("some@mail")
-            .userPhone("+48 123 456 789")
-            .role("OWNER")
-            .userAddressCity("Warsaw")
-            .userAddressPostalCode("00-001")
-            .userAddressStreet("someStreet")
-            .userResidenceNumber("1")
-            .build();
-    }
-
     public static UpdateAccountDTO someUpdateRequest() {
         return UpdateAccountDTO.builder()
             .userEmail("some@mail")
@@ -111,6 +94,7 @@ public class AccountUtils {
             .roleId(2)
             .build();
     }
+
     public static AccountEntity someAccountEntity3() {
         return AccountEntity.builder()
             .email("another@email")
@@ -121,6 +105,73 @@ public class AccountUtils {
             .enabled(true)
             .unlocked(true)
             .roleId(4)
+            .build();
+    }
+    public static RegistrationRequestDTO someRegistrationRequest() {
+        return RegistrationRequestDTO.builder()
+            .userName("someName")
+            .userSurname("someSurname")
+            .userLogin("someLogin")
+            .userPassword("password")
+            .userConfirmPassword("password")
+            .userEmail("some@mail")
+            .userPhone("+48 123 456 789")
+            .role("OWNER")
+            .userAddressCity("Warsaw")
+            .userAddressPostalCode("00-001")
+            .userAddressStreet("someStreet")
+            .userResidenceNumber("1")
+            .build();
+    }
+
+    public static RegistrationRequestDTO someRegistrationRequestWithBadEmail() {
+        return RegistrationRequestDTO.builder()
+            .userName("someName")
+            .userSurname("someSurname")
+            .userLogin("someLogin")
+            .userPassword("password")
+            .userConfirmPassword("password")
+            .userEmail("badmail")
+            .userPhone("+48 123 456 789")
+            .role("OWNER")
+            .userAddressCity("Warsaw")
+            .userAddressPostalCode("00-001")
+            .userAddressStreet("someStreet")
+            .userResidenceNumber("1")
+            .build();
+    }
+
+    public static RegistrationRequestDTO someRegistrationRequestWithBadPhone() {
+        return RegistrationRequestDTO.builder()
+            .userName("someName")
+            .userSurname("someSurname")
+            .userLogin("someLogin")
+            .userPassword("password")
+            .userConfirmPassword("password")
+            .userEmail("some@mail")
+            .userPhone("+48123456789")
+            .role("OWNER")
+            .userAddressCity("Warsaw")
+            .userAddressPostalCode("00-001")
+            .userAddressStreet("someStreet")
+            .userResidenceNumber("1")
+            .build();
+    }
+
+    public static RegistrationRequestDTO someRegistrationRequestWithBadLogin() {
+        return RegistrationRequestDTO.builder()
+            .userName("someName")
+            .userSurname("someSurname")
+            .userLogin("gin")
+            .userPassword("password")
+            .userConfirmPassword("password")
+            .userEmail("some@mail")
+            .userPhone("+48 123 456 789")
+            .role("OWNER")
+            .userAddressCity("Warsaw")
+            .userAddressPostalCode("00-001")
+            .userAddressStreet("someStreet")
+            .userResidenceNumber("1")
             .build();
     }
 }

@@ -24,5 +24,4 @@ public class OrderDTO {
     private CustomerDTO customer;
     private Set<OrderItemDTO> orderItems;
     private RestaurantDTO restaurant;
-
 }

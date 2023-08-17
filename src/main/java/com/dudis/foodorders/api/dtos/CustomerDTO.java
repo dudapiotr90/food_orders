@@ -18,4 +18,5 @@ public class CustomerDTO {
     private Integer accountId;
     private Set<OrderDTO> orders;
     private Set<BillDTO> bills;
+
 }

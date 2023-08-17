@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,6 +36,7 @@ public class OwnerController {
 
     @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = OWNER)
+    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
     public String getOwnerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount.getAccountId());
@@ -57,6 +59,7 @@ public class OwnerController {
     }
 
     @PostMapping(value = OWNER_ADD)
+    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
     public String addRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
