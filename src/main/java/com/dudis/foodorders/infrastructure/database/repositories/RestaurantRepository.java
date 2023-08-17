@@ -11,7 +11,6 @@ import com.dudis.foodorders.infrastructure.database.mappers.OwnerEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.RestaurantJpaRepository;
 import com.dudis.foodorders.services.dao.RestaurantDAO;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

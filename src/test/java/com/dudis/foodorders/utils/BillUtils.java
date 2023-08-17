@@ -38,6 +38,15 @@ public class BillUtils {
             .amount(BigDecimal.TEN)
             .build();
     }
+    public static Bill someBill4() {
+        return Bill.builder()
+            .billNumber("2671231212126-564-vbmcbmcv-23132-das")
+            .amount(BigDecimal.ONE)
+            .payed(true)
+            .amount(new BigDecimal("14554.145"))
+            .dateTime(OffsetDateTime.of(2011,6,1,12,7,0,0, ZoneOffset.UTC))
+            .build();
+    }
 
     public static BillDTO someBillDTO() {
         return BillDTO.builder()

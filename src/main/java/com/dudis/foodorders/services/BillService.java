@@ -6,7 +6,6 @@ import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
 import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.domain.Bill;
-import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.exception.OrderException;

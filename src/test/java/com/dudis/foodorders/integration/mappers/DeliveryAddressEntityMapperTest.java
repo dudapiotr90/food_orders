@@ -4,7 +4,7 @@ import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
 import com.dudis.foodorders.integration.EntityMappersTestConfig;
-import com.dudis.foodorders.utils.AssertionsUtils;
+import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class DeliveryAddressEntityMapperTest {
         DeliveryAddress model = deliveryAddressEntityMapper.mapFromEntity(expected);
 
         // Then
-        Assertions.assertTrue(AssertionsUtils.assertDeliveryAddressFromEntityEquals(expected, model));
+        Assertions.assertTrue(EntityAssertionsUtils.assertDeliveryAddressFromEntityEquals(expected, model));
 
     }
     @Test
@@ -42,7 +42,7 @@ class DeliveryAddressEntityMapperTest {
         DeliveryAddressEntity model = deliveryAddressEntityMapper.mapToEntity(expected);
 
         // Then
-        Assertions.assertTrue(AssertionsUtils.assertDeliveryAddressToEntityEquals(expected, model));
+        Assertions.assertTrue(EntityAssertionsUtils.assertDeliveryAddressToEntityEquals(expected, model));
     }
 
 }

@@ -9,6 +9,10 @@ import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import java.util.List;
 import java.util.Set;
 
+import static com.dudis.foodorders.utils.DeliveryAddressUtils.*;
+import static com.dudis.foodorders.utils.OrderUtils.someOrderEntity1;
+import static com.dudis.foodorders.utils.OrderUtils.someOrderEntity2;
+
 public class RestaurantUtils {
 
     public static List<Restaurant> someRestaurants() {
@@ -31,7 +35,7 @@ public class RestaurantUtils {
             .name("Restaurant Name 1")
             .type(LocalType.BAKERY)
             .menu(MenuUtils.someMenu3())
-            .deliveryAddresses(Set.of(DeliveryAddressUtils.someDeliveryAddress1(),DeliveryAddressUtils.someDeliveryAddress2()))
+            .deliveryAddresses(Set.of(someDeliveryAddress1(), someDeliveryAddress2()))
             .build();
     }
 
@@ -48,6 +52,14 @@ public class RestaurantUtils {
             .restaurantId(3)
             .name("Restaurant Name 3")
             .menu(MenuUtils.someMenu2())
+            .build();
+    }
+    public static Restaurant someRestaurant4() {
+        return Restaurant.builder()
+            .restaurantId(3)
+            .name("Restaurant Name 3")
+            .menu(MenuUtils.someMenu2())
+            .orders(Set.of(OrderUtils.someOrder3()))
             .build();
     }
 
@@ -92,6 +104,15 @@ public class RestaurantUtils {
             .name("RestaurantDTO Name 1")
             .build();
     }
+    public static RestaurantDTO someRestaurantDTO4() {
+        return RestaurantDTO.builder()
+            .restaurantId(1)
+            .name("RestaurantDTO Name 1")
+            .menuDTO(MenuUtils.someMenuDTO())
+            .type(LocalType.BAKERY)
+            .description("Some DTO description")
+            .build();
+    }
 
 
 
@@ -100,6 +121,7 @@ public class RestaurantUtils {
             .restaurantId(3)
             .name("RestaurantEntity Name 3")
             .menu(MenuUtils.someMenuEntity3())
+            .orders(Set.of(someOrderEntity1()))
             .build();
     }
 
@@ -107,7 +129,11 @@ public class RestaurantUtils {
         return RestaurantEntity.builder()
             .restaurantId(2)
             .name("RestaurantEntity Name 2")
+            .type(LocalType.DRINK_SHOP)
             .menu(MenuUtils.someMenuEntity1())
+            .owner(OwnerUtils.someOwnerEntity2())
+            .orders(Set.of(someOrderEntity1(),someOrderEntity2()))
+            .deliveryAddresses(Set.of(someDeliveryAddressEntity1(),someDeliveryAddressEntity2(),someDeliveryAddressEntity3()))
             .build();
     }
 
@@ -116,6 +142,7 @@ public class RestaurantUtils {
             .restaurantId(1)
             .name("RestaurantEntity Name 1")
             .menu(MenuUtils.someMenuEntity2())
+//            .orders(Set.of(someOrderEntity1(),someOrderEntity2()))
             .build();
     }
 
@@ -123,6 +150,14 @@ public class RestaurantUtils {
         return List.of(someRestaurantAsObject1(),someRestaurantAsObject2(),someRestaurantAsObject3());
     }
 
+    public static Restaurant someRestaurantFromObject() {
+        return Restaurant.builder()
+            .restaurantId(1)
+            .name("Restaurant Name 1")
+            .description("some description 1")
+            .type(LocalType.BAKERY)
+            .build();
+    }
     public static Object[] someRestaurantAsObject1() {
         return new Object[]{"1","Restaurant Name 1","some description 1","BAKERY"};
     }

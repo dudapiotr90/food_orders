@@ -32,6 +32,7 @@ public class OrderItemsUtils {
             .build();
     }
 
+
     public static OrderItemDTO someOrderItemDTO1() {
         return OrderItemDTO.builder()
             .orderItemId(56)
@@ -39,6 +40,7 @@ public class OrderItemsUtils {
             .food(FoodUtils.someFoodDTO1())
             .build();
     }
+
 
     public static Set<Integer> someOrderItemsIds() {
         return Set.of(132, 54, 78);
@@ -80,6 +82,14 @@ public class OrderItemsUtils {
             .orderItemId(78)
             .quantity(BigDecimal.valueOf(5))
             .food(FoodUtils.someFoodEntity2())
+            .build();
+    }
+
+    public static OrderItemEntity someOrderItemEntity3() {
+        return OrderItemEntity.builder()
+            .orderItemId(78)
+            .quantity(BigDecimal.valueOf(5))
+            .food(FoodUtils.someFoodEntity4())
             .build();
     }
 }

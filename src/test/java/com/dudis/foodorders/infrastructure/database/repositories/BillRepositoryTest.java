@@ -63,7 +63,7 @@ class BillRepositoryTest {
         when(billJpaRepository.findByCustomerIdAndPayed(anyInt(), anyBoolean()))
             .thenReturn(someBillEntities());
         when(billEntityMapper.mapFromEntity(any(BillEntity.class)))
-            .thenReturn(someBill1(), someBill2(), someBill3());
+            .thenReturn(someBill4(), someBill2(), someBill3());
 
         // When
         List<Bill> result1 = billRepository.findCustomerPendingBills(234, true);

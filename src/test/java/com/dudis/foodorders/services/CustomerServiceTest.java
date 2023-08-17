@@ -7,7 +7,6 @@ import com.dudis.foodorders.api.mappers.RequestMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import com.dudis.foodorders.utils.*;
@@ -75,7 +74,7 @@ class CustomerServiceTest {
     void registerCustomerWorksCorrectly() {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
-        RegistrationRequest someRequest = someRegistrationRequest();
+        RegistrationRequestDTO someRequest = someRegistrationRequest();
         Account someAccount = someAccount1();
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(customerDAO.registerCustomer(any(Customer.class))).thenReturn(expected);

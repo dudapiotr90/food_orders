@@ -9,6 +9,7 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailSendException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
         return prepareExceptionView(errorMessage);
     }
 
-    @ExceptionHandler(value = {ConnectException.class})
+    @ExceptionHandler(value = {MailSendException.class})
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ModelAndView handleMailDevException(ConnectException ex) {
         String errorMessage = "Unexpected exception: Run maildev container and try again";

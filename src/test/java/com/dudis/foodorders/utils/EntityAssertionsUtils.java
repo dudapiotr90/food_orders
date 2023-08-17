@@ -10,9 +10,9 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AssertionsUtils {
+public class EntityAssertionsUtils {
 
-    public static void assertBillEquals(BillEntity expected, Bill model) {
+    public static void assertBillFromEntityEquals(BillEntity expected, Bill model) {
         assertAll(
             () -> assertEquals(expected.getBillId(), model.getBillId()),
             () -> assertEquals(expected.getBillNumber(), model.getBillNumber()),
@@ -21,11 +21,11 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getPayed(), model.getPayed()),
             () -> assertNull(model.getOwner()),
             () -> assertCustomerFromEntityEquals(expected.getCustomer(), model.getCustomer()),
-            () -> assertOrderEquals(expected.getOrder(), model.getOrder())
+            () -> assertOrderFromEntityEquals(expected.getOrder(), model.getOrder())
         );
     }
 
-    public static void assertOrderEquals(OrderEntity expected, Order model) {
+    public static void assertOrderFromEntityEquals(OrderEntity expected, Order model) {
         assertAll(
             () -> assertNull(model.getRestaurant()),
             () -> assertEquals(expected.getOrderId(), model.getOrderId()),
@@ -36,7 +36,7 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getRealized(), model.getRealized()),
             () -> assertEquals(expected.getInProgress(), model.getInProgress()),
             () -> assertEquals(expected.getCancelTill(), model.getCancelTill()),
-            () -> AssertionsUtils.assertOrderItemsFromEntityEquals(expected.getOrderItems(), model.getOrderItems()),
+            () -> EntityAssertionsUtils.assertOrderItemsFromEntityEquals(expected.getOrderItems(), model.getOrderItems()),
             () -> assertCustomerFromEntityEquals(expected.getCustomer(), model.getCustomer())
         );
     }
@@ -45,7 +45,7 @@ public class AssertionsUtils {
         assertEquals(expected.size(), model.size());
         for (OrderItemEntity expectedItem : expected) {
             OrderItem match = model.stream()
-                .filter(modelItem -> assertOrderItemEquals(expectedItem, modelItem))
+                .filter(modelItem -> assertOrderItemFromEntityEquals(expectedItem, modelItem))
                 .findFirst()
                 .orElse(null);
             assertNotNull(match, "expectedItem not found in model: expected: " + expectedItem);
@@ -57,19 +57,20 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getCustomerId(), model.getCustomerId()),
             () -> assertEquals(expected.getName(), model.getName()),
             () -> assertEquals(expected.getSurname(), model.getSurname()),
-            () -> assertAccountFromEntity(expected.getAccount(), model.getAccount())
+            () -> assertAccountFromEntityEquals(expected.getAccount(), model.getAccount())
         );
     }
 
-    public static boolean assertFoodEquals(FoodEntity expected, Food model) {
+    public static boolean assertFoodFromEntityEquals(FoodEntity expected, Food model) {
         return Objects.equals(expected.getFoodId(), model.getFoodId())
             && Objects.equals(expected.getName(), model.getName())
             && Objects.equals(expected.getDescription(), model.getDescription())
             && Objects.equals(expected.getPrice(), model.getPrice())
+            && Objects.equals(expected.getFoodImagePath(), model.getFoodImagePath())
             && Objects.equals(expected.getFoodType(), model.getFoodType());
     }
 
-    public static void assertAccountFromEntity(AccountEntity expected, Account model) {
+    public static void assertAccountFromEntityEquals(AccountEntity expected, Account model) {
         assertAll(
             () -> assertEquals(expected.getAccountId(), model.getAccountId()),
             () -> assertEquals(expected.getLogin(), model.getLogin()),
@@ -85,7 +86,7 @@ public class AssertionsUtils {
         );
     }
 
-    public static void assertBillEquals(Bill expected, BillEntity model) {
+    public static void assertBillToEntityEquals(Bill expected, BillEntity model) {
         assertAll(
             () -> assertEquals(expected.getBillId(), model.getBillId()),
             () -> assertEquals(expected.getBillNumber(), model.getBillNumber()),
@@ -93,11 +94,11 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getAmount(), model.getAmount()),
             () -> assertEquals(expected.getPayed(), model.getPayed()),
             () -> assertCustomerToEntityEquals(expected.getCustomer(), model.getCustomer()),
-            () -> assertOrderEquals(expected.getOrder(), model.getOrder()),
-            () -> assertOwnerEquals(expected.getOwner(), model.getOwner())
+            () -> assertOrderToEntityEquals(expected.getOrder(), model.getOrder()),
+            () -> assertOwnerToEntityEquals(expected.getOwner(), model.getOwner())
         );
     }
-    public static void assertOwnerEquals(Owner expected, OwnerEntity model) {
+    public static void assertOwnerToEntityEquals(Owner expected, OwnerEntity model) {
         assertAll(
             () -> assertEquals(expected.getOwnerId(), model.getOwnerId()),
             () -> assertEquals(expected.getName(), model.getName()),
@@ -108,7 +109,7 @@ public class AssertionsUtils {
         );
     }
 
-    public static void assertOrderEquals(Order expected, OrderEntity model) {
+    public static void assertOrderToEntityEquals(Order expected, OrderEntity model) {
         assertAll(
             () -> assertEquals(expected.getOrderId(), model.getOrderId()),
             () -> assertEquals(expected.getOrderNumber(), model.getOrderNumber()),
@@ -124,31 +125,20 @@ public class AssertionsUtils {
         );
     }
 
-    public static void assertOrderItemsEquals(Set<OrderItem> expected, Set<OrderItemEntity> model) {
-        assertEquals(expected.size(), model.size());
-        for (OrderItem expectedItem : expected) {
-            OrderItemEntity match = model.stream()
-                .filter(modelItem -> assertOrderItemEquals(expectedItem, modelItem))
-                .findFirst()
-                .orElse(null);
-            assertNotNull(match, "expectedItem not found in model: expected: " + expectedItem);
-        }
-    }
-
-    public static void assertRestaurantEquals(Restaurant expected, RestaurantEntity model) {
+    public static void assertRestaurantToEntityEquals(Restaurant expected, RestaurantEntity model) {
         assertAll(
             () -> assertEquals(expected.getRestaurantId(), model.getRestaurantId()),
             () -> assertEquals(expected.getName(), model.getName()),
             () -> assertEquals(expected.getDescription(), model.getDescription()),
             () -> assertEquals(expected.getType(), model.getType()),
-            () -> assertMenuEquals(expected.getMenu(), model.getMenu()),
+            () -> assertMenuToEntityEquals(expected.getMenu(), model.getMenu()),
             () -> assertNull(model.getOwner()),
-            () -> assertDeliveryAddressesEquals(expected.getDeliveryAddresses(), model.getDeliveryAddresses()),
-            () -> assertOrdersEquals(expected.getOrders(), model.getOrders())
+            () -> assertNull(model.getDeliveryAddresses()),
+            () -> assertOrdersToEntityEquals(expected.getOrders(), model.getOrders())
         );
     }
 
-    public static void assertOrdersEquals(Set<Order> expected, Set<OrderEntity> model) {
+    public static void assertOrdersToEntityEquals(Set<Order> expected, Set<OrderEntity> model) {
         assertEquals(expected.size(), model.size());
         for (Order expectedItem : expected) {
             OrderEntity match = model.stream()
@@ -181,14 +171,26 @@ public class AssertionsUtils {
         }
     }
 
-    public static void assertMenuEquals(Menu expected, MenuEntity model) {
+    public static void assertMenuToEntityEquals(Menu expected, MenuEntity model) {
         assertAll(
             () -> assertEquals(expected.getMenuId(), model.getMenuId()),
             () -> assertEquals(expected.getMenuName(), model.getMenuName()),
             () -> assertEquals(expected.getDescription(), model.getDescription()),
-            () -> assertEquals(expected.getFoods().size(), model.getFoods().size())
+            () -> assertFoodsToEntityEquals(expected.getFoods(),model.getFoods())
         );
     }
+
+    private static void assertFoodsToEntityEquals(Set<Food> expected, Set<FoodEntity> model) {
+        assertEquals(expected.size(), model.size());
+        for (Food expectedItem : expected) {
+            FoodEntity match = model.stream()
+                .filter(modelItem -> assertFoodToEntityEqualsReturnsTrue(expectedItem, modelItem))
+                .findFirst()
+                .orElse(null);
+            assertNotNull(match, "expectedItem not found in model: expected: " + expectedItem);
+        }
+    }
+
 
     public static void assertCustomerToEntityEquals(Customer expected, CustomerEntity model) {
         assertAll(
@@ -199,23 +201,25 @@ public class AssertionsUtils {
         );
     }
 
-    public static boolean assertOrderItemEquals(OrderItem expected, OrderItemEntity model) {
+    public static boolean assertOrderItemToEntityEquals(OrderItem expected, OrderItemEntity model) {
         return Objects.equals(expected.getOrderItemId(), model.getOrderItemId())
             && Objects.equals(expected.getQuantity(), model.getQuantity())
-            && assertFoodEquals(expected.getFood(), model.getFood());
+            && assertFoodToEntityEqualsReturnsTrue(expected.getFood(), model.getFood());
     }
 
-    public static boolean assertOrderItemEquals(OrderItemEntity expected, OrderItem model) {
+
+    public static boolean assertOrderItemFromEntityEquals(OrderItemEntity expected, OrderItem model) {
         return Objects.equals(expected.getOrderItemId(), model.getOrderItemId())
             && Objects.equals(expected.getQuantity(), model.getQuantity())
-            && assertFoodEquals(expected.getFood(), model.getFood());
+            && assertFoodFromEntityEquals(expected.getFood(), model.getFood());
     }
 
-    public static boolean assertFoodEquals(Food expected, FoodEntity model) {
+    public static boolean assertFoodToEntityEqualsReturnsTrue(Food expected, FoodEntity model) {
         return Objects.equals(expected.getFoodId(), model.getFoodId())
             && Objects.equals(expected.getName(), model.getName())
             && Objects.equals(expected.getDescription(), model.getDescription())
             && Objects.equals(expected.getPrice(), model.getPrice())
+            && Objects.equals(expected.getFoodImagePath(), model.getFoodImagePath())
             && Objects.equals(expected.getFoodType(), model.getFoodType());
     }
 
@@ -254,7 +258,7 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getDeveloperId(), model.getDeveloperId()),
             () -> assertEquals(expected.getName(), model.getName()),
             () -> assertEquals(expected.getSurname(), model.getSurname()),
-            () -> assertAccountFromEntity(expected.getAccount(), model.getAccount())
+            () -> assertAccountFromEntityEquals(expected.getAccount(), model.getAccount())
         );
     }
 
@@ -265,5 +269,79 @@ public class AssertionsUtils {
             () -> assertEquals(expected.getSurname(), model.getSurname()),
             () -> assertNull(model.getAccount())
         );
+    }
+
+    public static void assertMenuFromEntityEquals(MenuEntity expected, Menu model) {
+        assertAll(
+            () -> assertEquals(expected.getMenuId(), model.getMenuId()),
+            () -> assertEquals(expected.getMenuName(), model.getMenuName()),
+            () -> assertEquals(expected.getDescription(), model.getDescription()),
+            () -> assertFoodsFromEntityEquals(expected.getFoods(), model.getFoods())
+        );
+    }
+
+    private static void assertFoodsFromEntityEquals(Set<FoodEntity> expected, Set<Food> model) {
+        assertEquals(expected.size(), model.size());
+        for (FoodEntity expectedItem : expected) {
+            Food match = model.stream()
+                .filter(modelItem -> assertFoodFromEntityEqualsReturnsTrue(expectedItem, modelItem))
+                .findFirst()
+                .orElse(null);
+            assertNotNull(match, "expectedItem not found in model: expected: " + expectedItem);
+        }
+    }
+
+    private static boolean assertFoodFromEntityEqualsReturnsTrue(FoodEntity expected, Food model) {
+        return Objects.equals(expected.getFoodId(), model.getFoodId())
+            && Objects.equals(expected.getName(), model.getName())
+            && Objects.equals(expected.getDescription(), model.getDescription())
+            && Objects.equals(expected.getPrice(), model.getPrice())
+            && Objects.equals(expected.getFoodType(), model.getFoodType())
+            && Objects.equals(expected.getFoodImagePath(), model.getFoodImagePath());
+    }
+
+    public static void assertOwnerFromEntityEquals(OwnerEntity expected, Owner model) {
+        assertAll(
+            () -> assertEquals(expected.getOwnerId(), model.getOwnerId()),
+            () -> assertEquals(expected.getName(), model.getName()),
+            () -> assertEquals(expected.getSurname(), model.getSurname()),
+            () -> assertAccountFromEntityEquals(expected.getAccount(),model.getAccount()),
+            () -> assertNull(model.getRestaurants()),
+            () -> assertNull(model.getBills())
+        );
+    }
+
+    public static void assertRestaurantFromEntityEquals(RestaurantEntity expected, Restaurant model) {
+        assertAll(
+            () -> assertEquals(expected.getRestaurantId(), model.getRestaurantId()),
+            () -> assertEquals(expected.getName(), model.getName()),
+            () -> assertEquals(expected.getDescription(), model.getDescription()),
+            () -> assertEquals(expected.getType(), model.getType()),
+            () -> assertNull(model.getOwner()),
+            () -> assertNull(model.getDeliveryAddresses()),
+            () -> assertOrdersFromEntityEquals(expected.getOrders(), model.getOrders())
+        );
+    }
+
+    public static void assertOrdersFromEntityEquals(Set<OrderEntity> expected, Set<Order> model) {
+        assertEquals(expected.size(), model.size());
+        for (OrderEntity expectedItem : expected) {
+            Order match = model.stream()
+                .filter(modelItem -> assertOrderFromEntityEqualsReturnsTrue(expectedItem, modelItem))
+                .findFirst()
+                .orElse(null);
+            assertNotNull(match, "expectedItem not found in model: expected: " + expectedItem);
+        }
+    }
+
+    public static boolean assertOrderFromEntityEqualsReturnsTrue(OrderEntity expected, Order model) {
+        return Objects.equals(expected.getOrderId(), model.getOrderId())
+            && Objects.equals(expected.getOrderNumber(), model.getOrderNumber())
+            && Objects.equals(expected.getReceivedDateTime(), model.getReceivedDateTime())
+            && Objects.equals(expected.getCompletedDateTime(), model.getCompletedDateTime())
+            && Objects.equals(expected.getCustomerComment(), model.getCustomerComment())
+            && Objects.equals(expected.getRealized(), model.getRealized())
+            && Objects.equals(expected.getInProgress(), model.getInProgress())
+            && Objects.equals(expected.getCancelTill(), model.getCancelTill());
     }
 }

@@ -7,6 +7,7 @@ import com.dudis.foodorders.infrastructure.database.mappers.OrderEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderJpaRepository;
+import com.dudis.foodorders.utils.RestaurantUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -207,10 +208,14 @@ class OrderRepositoryTest {
     @Test
     void getPaginatedRealizedCustomerOrdersWorksCorrectly() {
         // Given
+        OrderEntity orderEntity1 = someOrderEntity1();
+        orderEntity1.setRestaurant(RestaurantUtils.someRestaurantEntity1());
+        OrderEntity orderEntity2 = someOrderEntity2();
+        orderEntity2.setRestaurant(RestaurantUtils.someRestaurantEntity2());
         Pageable somePageable = PageRequest.of(4, 12);
         Integer someId = 3;
         boolean realized = true;
-        Page<OrderEntity> someOrders = new PageImpl<>(someOrderEntities());
+        Page<OrderEntity> someOrders = new PageImpl<>(List.of(orderEntity1,orderEntity2));
         Page<Order> expected = new PageImpl<>(someOrders());
         when(orderJpaRepository.findByCustomerIdAndRealized(someId, realized, somePageable))
             .thenReturn(someOrders);

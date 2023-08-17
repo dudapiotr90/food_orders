@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
@@ -29,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, OutputCaptureExtension.class})
 @TestPropertySource(locations = "classpath:application-test.yml")
@@ -86,24 +84,26 @@ class StorageServiceTest {
         String expectedLog1 = "Image successfully deleted";
         String expectedLog2 = "Trying to delete non existing file";
         String expectedLog3 = "Cannot delete file";
-        mockStatic(Files.class);
-        mock(Path.class);
+        try (
+            MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class);
+        ) {
+            filesMock.when(()->Files.deleteIfExists(path)).thenReturn(true);
 
-        when(Files.deleteIfExists(path)).thenReturn(true);
-        BDDMockito.given(Files.deleteIfExists(throwingPath)).willAnswer(invocation -> {
-            throw new IOException(expectedLog3);
-        });
+            BDDMockito.given(Files.deleteIfExists(throwingPath)).willAnswer(invocation -> {
+                throw new IOException(expectedLog3);
+            });
 
-        // When
-        storageService.removeImageFromServer(TEMP);
-        storageService.removeImageFromServer(somePath);
-        Throwable exception = assertThrows(FileUploadException.class,
-            () -> storageService.removeImageFromServer(pathToThrow));
+            // When
+            storageService.removeImageFromServer(TEMP);
+            storageService.removeImageFromServer(somePath);
+            Throwable exception = assertThrows(FileUploadException.class,
+                () -> storageService.removeImageFromServer(pathToThrow));
 
-        // Then
-        Assertions.assertTrue(output.getOut().contains(expectedLog1));
-        Assertions.assertTrue(output.getOut().contains(expectedLog2));
-        Assertions.assertTrue(output.getOut().contains(expectedLog3));
-        Assertions.assertTrue(exception.getMessage().contains(expectedLog3));
+            // Then
+            Assertions.assertTrue(output.getOut().contains(expectedLog1));
+            Assertions.assertTrue(output.getOut().contains(expectedLog2));
+            Assertions.assertTrue(output.getOut().contains(expectedLog3));
+            Assertions.assertTrue(exception.getMessage().contains(expectedLog3));
+        }
     }
 }

@@ -3,7 +3,6 @@ package com.dudis.foodorders.api.dtos;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 @With
 @Data
 @Builder
@@ -12,10 +11,11 @@ import java.time.OffsetDateTime;
 public class BillDTO {
 
    private String billNumber;
-   private OffsetDateTime dateTime;
-   private BigDecimal amount;
+   private String dateTime;
    private Boolean payed;
    private OwnerDTO owner;
    private CustomerDTO customer;
    private OrderDTO order;
+   private BigDecimal amount;
+   //   private OffsetDateTime dateTime;
 }
