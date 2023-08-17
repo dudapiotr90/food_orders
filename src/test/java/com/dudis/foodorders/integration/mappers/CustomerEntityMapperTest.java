@@ -4,8 +4,8 @@ import com.dudis.foodorders.domain.Customer;
 import com.dudis.foodorders.infrastructure.database.entities.CustomerEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CustomerEntityMapper;
 import com.dudis.foodorders.integration.EntityMappersTestConfig;
-import com.dudis.foodorders.utils.AssertionsUtils;
 import com.dudis.foodorders.utils.CustomerUtils;
+import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class CustomerEntityMapperTest {
         Customer model = customerEntityMapper.mapFromEntity(expected);
 
         // Then
-        AssertionsUtils.assertCustomerFromEntityEquals(expected, model);
+        EntityAssertionsUtils.assertCustomerFromEntityEquals(expected, model);
 
     }
     @Test
@@ -39,7 +39,7 @@ class CustomerEntityMapperTest {
         CustomerEntity model = customerEntityMapper.mapToEntity(expected);
 
         // Then
-        AssertionsUtils.assertCustomerToEntityEquals(expected, model);
+        EntityAssertionsUtils.assertCustomerToEntityEquals(expected, model);
     }
 
 }

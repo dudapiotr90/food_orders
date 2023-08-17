@@ -8,7 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderEntityMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE
+    ,uses = {OrderEntityMapper.class, DeliveryAddressEntityMapper.class})
 public interface RestaurantEntityMapper {
     @Named("mapRestaurantFromEntity")
     @Mapping(target = "owner", ignore = true)
@@ -18,6 +19,10 @@ public interface RestaurantEntityMapper {
     Restaurant mapFromEntity(RestaurantEntity local);
 
     @Mapping(source = "orders" ,target = "orders",qualifiedByName = "mapOrdersToEntity")
+    @Mapping(target = "deliveryAddresses", ignore = true)
+    @Mapping(target = "owner.account",ignore = true)
+    @Mapping(target = "owner.restaurants",ignore = true)
+    @Mapping(target = "owner.bills",ignore = true)
     RestaurantEntity mapToEntity(Restaurant restaurant);
 
     default Restaurant buildRestaurantFromObject(Object[] o) {

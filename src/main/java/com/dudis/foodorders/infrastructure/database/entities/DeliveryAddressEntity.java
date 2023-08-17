@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "deliveryAddressId")
+@EqualsAndHashCode(of = {"deliveryAddressId","city","postalCode","street"})
 @ToString(of = {"deliveryAddressId", "city", "postalCode", "street"})
 @NoArgsConstructor
 @AllArgsConstructor

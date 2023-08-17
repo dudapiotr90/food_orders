@@ -5,7 +5,6 @@ import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.OrderItem;
 import com.dudis.foodorders.infrastructure.database.entities.OrderItemEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.CartEntityMapper;
-import com.dudis.foodorders.infrastructure.database.mappers.FoodEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.repositories.jpa.OrderItemJpaRepository;
 import com.dudis.foodorders.services.dao.OrderItemDAO;

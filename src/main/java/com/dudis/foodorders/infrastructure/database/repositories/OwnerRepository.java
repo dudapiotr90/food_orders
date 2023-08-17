@@ -12,7 +12,6 @@ import com.dudis.foodorders.infrastructure.security.repository.AccountRepository
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ApiRoleJpaRepository;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

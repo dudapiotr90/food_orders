@@ -1,10 +1,10 @@
 package com.dudis.foodorders.services;
 
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.services.dao.AccountDAO;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class AccountService {
     }
 
 
-    public Account buildAccount(RegistrationRequest request) {
+    public Account buildAccount(RegistrationRequestDTO request) {
         if (!request.getUserPassword().equals(request.getUserConfirmPassword())) {
             throw new ValidationException("Passwords input do not match");
         }

@@ -1,6 +1,6 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import com.dudis.foodorders.utils.AccountUtils;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class EmailSenderTest {
     void buildConfirmationEmailWorksCorrectly() {
         // Given
         String someToken = UUID.randomUUID().toString();
-        RegistrationRequest someRegistrationRequest = AccountUtils.someRegistrationRequest();
+        RegistrationRequestDTO someRegistrationRequest = AccountUtils.someRegistrationRequest();
         String someConfirmationLink = RegistrationService.REGISTRATION_LINK_FORM;
         String expected = EmailSender.CONFIRMATION_EMAIL.formatted(someRegistrationRequest.getUserName(),someConfirmationLink);
         // When

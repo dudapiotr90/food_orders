@@ -2,6 +2,7 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
@@ -10,7 +11,6 @@ import com.dudis.foodorders.domain.Menu;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,7 @@ public class OwnerService {
     private final RestaurantMapper restaurantMapper;
 
     @Transactional
-    public ConfirmationToken registerOwner(RegistrationRequest request) {
+    public ConfirmationToken registerOwner(RegistrationRequestDTO request) {
         Account ownerAccount = accountService.buildAccount(request);
         Owner owner = buildOwner(ownerAccount, request);
         return ownerDAO.registerOwner(owner);
@@ -100,7 +100,7 @@ public class OwnerService {
             .build();
     }
 
-    private Owner buildOwner(Account ownerAccount, RegistrationRequest request) {
+    private Owner buildOwner(Account ownerAccount, RegistrationRequestDTO request) {
         return Owner.builder()
             .name(request.getUserName())
             .surname(request.getUserSurname())

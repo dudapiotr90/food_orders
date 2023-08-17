@@ -1,9 +1,9 @@
 package com.dudis.foodorders.utils;
 
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -54,8 +54,8 @@ public class AccountUtils {
             .build();
     }
 
-    public static RegistrationRequest someRegistrationRequest() {
-        return RegistrationRequest.builder()
+    public static RegistrationRequestDTO someRegistrationRequest() {
+        return RegistrationRequestDTO.builder()
             .userName("someName")
             .userSurname("someSurname")
             .userLogin("someLogin")
@@ -90,9 +90,15 @@ public class AccountUtils {
 
     public static AccountEntity someAccountEntity1() {
         return AccountEntity.builder()
-            .email("")
+            .email("empty@email")
             .accountId(1)
-            .password("")
+            .password("another password")
+            .phone("+48 123 741 147")
+            .creationDate(OffsetDateTime.of(2022, 7, 9, 1, 11, 0, 0, ZoneOffset.UTC))
+            .status(true)
+            .enabled(true)
+            .unlocked(true)
+            .roleId(4)
             .build();
     }
 
@@ -108,14 +114,13 @@ public class AccountUtils {
     public static AccountEntity someAccountEntity3() {
         return AccountEntity.builder()
             .email("another@email")
-            .roleId(4)
             .accountId(787)
             .password("password")
-            .email("some@mail")
             .phone("+48 123 456 789")
             .creationDate(OffsetDateTime.of(2023, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
             .enabled(true)
             .unlocked(true)
+            .roleId(4)
             .build();
     }
 }

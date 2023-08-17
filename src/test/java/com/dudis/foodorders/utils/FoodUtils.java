@@ -42,6 +42,8 @@ public class FoodUtils {
     public static Food someFood1() {
         return Food.builder()
             .foodId(1)
+            .name("Tomatoes")
+            .description("ripen in the sun")
             .foodType("TEA")
             .price(BigDecimal.TEN)
             .foodImagePath("some/image/path")
@@ -67,6 +69,8 @@ public class FoodUtils {
 
     public static FoodDTO someFoodDTO1() {
         return FoodDTO.builder()
+            .name("Tomatoes")
+            .description("ripen in the sun")
             .foodId(1)
             .foodType("TEA")
             .price(BigDecimal.TEN)
@@ -92,6 +96,8 @@ public class FoodUtils {
     public static FoodEntity someFoodEntity1() {
         return FoodEntity.builder()
             .foodId(1)
+            .name("Tomatoes")
+            .description("ripen in the sun")
             .foodType("TEA")
             .price(BigDecimal.TEN)
             .foodImagePath("some/image/path")
@@ -109,6 +115,16 @@ public class FoodUtils {
     public static FoodEntity someFoodEntity3() {
         return FoodEntity.builder()
             .foodId(43)
+            .foodType("ROLL")
+            .price(BigDecimal.valueOf(123.44))
+            .build();
+    }
+
+
+    public static FoodEntity someFoodEntity4() {
+        return FoodEntity.builder()
+            .foodId(43)
+            .menu(MenuUtils.someMenuEntity4())
             .foodType("ROLL")
             .price(BigDecimal.valueOf(123.44))
             .build();

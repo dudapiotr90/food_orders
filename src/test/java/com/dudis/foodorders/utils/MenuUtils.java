@@ -15,8 +15,9 @@ public class MenuUtils {
     }
     public static Menu someMenu1() {
         return Menu.builder()
-            .menuName("some menu name")
             .menuId(1)
+            .menuName("some menu name")
+            .description("some description")
             .foods(FoodUtils.someFoodsSet())
             .build();
     }
@@ -40,8 +41,9 @@ public class MenuUtils {
 
     public static MenuEntity someMenuEntity1() {
         return MenuEntity.builder()
-            .menuName("some menu name")
             .menuId(1)
+            .menuName("some menu name")
+            .description("some description")
             .foods(FoodUtils.someSetOfFoodEntities())
             .build();
     }
@@ -58,7 +60,14 @@ public class MenuUtils {
         return MenuEntity.builder()
             .menuName("and another menu name")
             .menuId(4)
-            .foods(Set.of())
+            .foods(Set.of(FoodUtils.someFoodEntity2()))
+            .build();
+    }
+
+    public static MenuEntity someMenuEntity4() {
+        return MenuEntity.builder()
+            .menuName("and another menu name")
+            .menuId(4)
             .build();
     }
 }

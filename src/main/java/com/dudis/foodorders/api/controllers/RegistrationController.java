@@ -2,11 +2,9 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.mappers.AccountMapper;
-import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
 import com.dudis.foodorders.api.mappers.RoleMapper;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.ApiRoleService;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,31 +25,25 @@ public class RegistrationController {
 
     public static final String REGISTRATION = "/registration";
     public static final String REGISTRATION_CONFIRM = "/registration/confirm";
-
     private final ApiRoleService apiRoleService;
     private final RoleMapper roleMapper;
-
     private final RegistrationService registrationService;
-
-    private final RegistrationRequestMapper registrationRequestMapper;
-
     private final AccountMapper accountMapper;
+
     @GetMapping(value = REGISTRATION)
     public ModelAndView registerAccountForm() {
         Map<String, ?> model = prepareRegistrationData();
-
         return new ModelAndView("registration", model);
     }
 
     @PostMapping(value = REGISTRATION)
     public ModelAndView registerAccount(
-        @Valid @ModelAttribute("registrationRequestDTO") RegistrationRequestDTO registrationRequestDTO,
+        @Valid @ModelAttribute("registrationRequestDTO") RegistrationRequestDTO request,
         ModelMap model
     ) {
-        RegistrationRequest request = registrationRequestMapper.mapFromDTO(registrationRequestDTO);
         registrationService.registerAccount(request);
-        model.addAttribute("userName", registrationRequestDTO.getUserName());
-        model.addAttribute("userEmail", registrationRequestDTO.getUserEmail());
+        model.addAttribute("userName", request.getUserName());
+        model.addAttribute("userEmail", request.getUserEmail());
         return new ModelAndView("registration_confirm",model);
     }
 

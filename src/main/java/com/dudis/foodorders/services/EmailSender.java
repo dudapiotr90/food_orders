@@ -1,6 +1,6 @@
 package com.dudis.foodorders.services;
 
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 
 public interface EmailSender {
 
@@ -24,7 +24,7 @@ public interface EmailSender {
         </html>
         """;
 
-    default String buildConfirmationEmail(String token, RegistrationRequest request,String confirmationLink) {
+    default String buildConfirmationEmail(String token, RegistrationRequestDTO request, String confirmationLink) {
 
         return String.format(
             CONFIRMATION_EMAIL,

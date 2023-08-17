@@ -1,6 +1,7 @@
 package com.dudis.foodorders.infrastructure.security;
 
 import com.dudis.foodorders.api.controllers.RegistrationController;
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.RegistrationException;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
@@ -22,7 +23,7 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
     @Transactional
-    public String registerAccount(RegistrationRequest request) {
+    public String registerAccount(RegistrationRequestDTO request) {
         Account account = accountService.findByEmail(request.getUserEmail());
         if (Objects.nonNull(account)) {
             throw new RegistrationException(

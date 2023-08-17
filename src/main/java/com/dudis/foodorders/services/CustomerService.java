@@ -1,10 +1,12 @@
 package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.*;
-import com.dudis.foodorders.api.mappers.*;
+import com.dudis.foodorders.api.mappers.CustomerMapper;
+import com.dudis.foodorders.api.mappers.OrderMapper;
+import com.dudis.foodorders.api.mappers.RequestMapper;
+import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.*;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.CustomerDAO;
 import lombok.AllArgsConstructor;
@@ -38,7 +40,7 @@ public class CustomerService {
     private final PageableService pageableService;
 
     @Transactional
-    public ConfirmationToken registerCustomer(RegistrationRequest request) {
+    public ConfirmationToken registerCustomer(RegistrationRequestDTO request) {
         Account customerAccount = accountService.buildAccount(request);
         Customer customer = buildCustomer(customerAccount, request);
         return customerDAO.registerCustomer(customer);
@@ -80,7 +82,7 @@ public class CustomerService {
         }
     }
 
-    private Customer buildCustomer(Account customerAccount, RegistrationRequest request) {
+    private Customer buildCustomer(Account customerAccount, RegistrationRequestDTO request) {
         return Customer.builder()
             .name(request.getUserName())
             .surname(request.getUserSurname())

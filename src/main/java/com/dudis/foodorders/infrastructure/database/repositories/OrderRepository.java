@@ -5,7 +5,6 @@ import com.dudis.foodorders.domain.Order;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
-import com.dudis.foodorders.infrastructure.database.mappers.CustomerEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.OrderItemEntityMapper;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;

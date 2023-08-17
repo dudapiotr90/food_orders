@@ -2,6 +2,7 @@ package com.dudis.foodorders.services;
 
 import com.dudis.foodorders.api.dtos.OrderDTO;
 import com.dudis.foodorders.api.dtos.OwnerDTO;
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.mappers.OwnerMapper;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
@@ -9,7 +10,6 @@ import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.OwnerDAO;
 import com.dudis.foodorders.utils.OrderUtils;
@@ -63,7 +63,7 @@ class OwnerServiceTest {
     void registerOwnerWorksCorrectly() {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
-        RegistrationRequest someRequest = someRegistrationRequest();
+        RegistrationRequestDTO someRequest = someRegistrationRequest();
         Account someAccount = someAccount1().withRoleId(2);
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(ownerDAO.registerOwner(any(Owner.class))).thenReturn(expected);

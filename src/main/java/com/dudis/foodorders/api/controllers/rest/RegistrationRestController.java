@@ -2,7 +2,6 @@ package com.dudis.foodorders.api.controllers.rest;
 
 import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
-import com.dudis.foodorders.api.mappers.RegistrationRequestMapper;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import com.dudis.foodorders.services.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +23,6 @@ public class RegistrationRestController {
 
     private final RegistrationService registrationService;
     private final AccountService accountService;
-    private final RegistrationRequestMapper registrationRequestMapper;
 
 
     @Operation(summary = "Register account")
@@ -48,7 +46,7 @@ public class RegistrationRestController {
     public String registerAccount(
         @RequestBody RegistrationRequestDTO request
     ) {
-        return registrationService.registerAccount(registrationRequestMapper.mapFromDTO(request));
+        return registrationService.registerAccount(request);
     }
 
     @Operation(summary = "Update account")

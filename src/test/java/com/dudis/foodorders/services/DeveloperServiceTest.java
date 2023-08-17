@@ -1,9 +1,9 @@
 package com.dudis.foodorders.services;
 
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Developer;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.dao.DeveloperDAO;
 import com.dudis.foodorders.utils.TokenUtils;
@@ -38,7 +38,7 @@ class DeveloperServiceTest {
     void registerDeveloperWorksCorrectly() {
         // Given
         ConfirmationToken expected = TokenUtils.someToken();
-        RegistrationRequest someRequest = someRegistrationRequest().withRole("DEVELOPER");
+        RegistrationRequestDTO someRequest = someRegistrationRequest().withRole("DEVELOPER");
         Account someAccount = someAccount1();
         when(accountService.buildAccount(someRequest)).thenReturn(someAccount);
         when(developerDAO.registerDeveloper(any(Developer.class))).thenReturn(expected);

@@ -41,6 +41,18 @@ public class OrderUtils {
             .build();
     }
 
+    public static Order someOrder3() {
+        return Order.builder()
+            .orderNumber("asdfdfgqw123hjmm4vgaasd")
+            .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .customerComment("some comment")
+            .realized(false)
+            .inProgress(true)
+            .orderItems(OrderItemsUtils.someOrderItems())
+            .customer(CustomerUtils.someCustomer2())
+            .build();
+    }
+
     public static OrderDTO someOrderDTO1() {
         return OrderDTO.builder()
             .orderId(32)
@@ -115,7 +127,6 @@ public class OrderUtils {
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
-            .restaurant(RestaurantUtils.someRestaurantEntity1())
             .customer(CustomerUtils.someCustomerEntity1())
             .build();
     }
@@ -130,7 +141,6 @@ public class OrderUtils {
             .realized(false)
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
-            .restaurant(RestaurantUtils.someRestaurantEntity2())
             .customer(CustomerUtils.someCustomerEntity2())
             .build();
     }

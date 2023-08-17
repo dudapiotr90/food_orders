@@ -1,9 +1,9 @@
 package com.dudis.foodorders.services;
 
+import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.exception.NotFoundException;
-import com.dudis.foodorders.infrastructure.security.RegistrationRequest;
 import com.dudis.foodorders.services.dao.AccountDAO;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
@@ -80,8 +80,8 @@ class AccountServiceTest {
     void buildAccountWorksCorrectly() {
         // Given
         Account someAccount = someAccount1();
-        RegistrationRequest someRequest = someRegistrationRequest();
-        RegistrationRequest someRequest2 = someRegistrationRequest().withUserConfirmPassword("notMatching");
+        RegistrationRequestDTO someRequest = someRegistrationRequest();
+        RegistrationRequestDTO someRequest2 = someRegistrationRequest().withUserConfirmPassword("notMatching");
         when(accountDAO.findByRole(someRequest.getRole())).thenReturn(1);
         String exceptionMessage = "Passwords input do not match";
 

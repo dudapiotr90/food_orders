@@ -4,8 +4,8 @@ import com.dudis.foodorders.domain.Bill;
 import com.dudis.foodorders.infrastructure.database.entities.BillEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.BillEntityMapper;
 import com.dudis.foodorders.integration.EntityMappersTestConfig;
-import com.dudis.foodorders.utils.AssertionsUtils;
 import com.dudis.foodorders.utils.BillUtils;
+import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ class BillEntityMapperTest {
         Bill model = billEntityMapper.mapFromEntity(expected);
 
         // Then
-        AssertionsUtils.assertBillEquals(expected, model);
+        EntityAssertionsUtils.assertBillFromEntityEquals(expected, model);
 
     }
     @Test
@@ -39,7 +39,7 @@ class BillEntityMapperTest {
         BillEntity model = billEntityMapper.mapToEntity(expected);
 
         // Then
-        AssertionsUtils.assertBillEquals(expected, model);
+        EntityAssertionsUtils.assertBillToEntityEquals(expected, model);
 
     }
 

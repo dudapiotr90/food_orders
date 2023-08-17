@@ -13,4 +13,5 @@ public interface DeliveryAddressEntityMapper {
     DeliveryAddress mapFromEntity(DeliveryAddressEntity deliveryAddressEntity);
     @Mapping(target = "restaurant",ignore = true)
     DeliveryAddressEntity mapToEntity(DeliveryAddress deliveryAddress);
+
 }

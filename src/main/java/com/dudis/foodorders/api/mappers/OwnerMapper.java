@@ -11,8 +11,6 @@ public interface OwnerMapper {
     @Mapping(target = "accountId", source = "account", qualifiedByName = "getAccountId")
     OwnerDTO mapToDTO(Owner owner);
 
-
-
     @Mapping(target = "account",ignore = true)
     @Mapping(target = "restaurants",ignore = true)
     @Mapping(target = "bills",ignore = true)

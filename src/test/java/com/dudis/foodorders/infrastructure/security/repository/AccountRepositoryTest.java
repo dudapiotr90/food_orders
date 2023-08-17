@@ -141,7 +141,7 @@ class AccountRepositoryTest {
         ApiRoleEntity someRole = someApiRoleEntity1();
         when(accountEntityMapper.mapToEntity(someAccount))
             .thenReturn(someAccountEntity1());
-        when(bCryptPasswordEncoder.encode(""))
+        when(bCryptPasswordEncoder.encode("another password"))
             .thenReturn("someEncodedPassword");
         AccountEntity expected = someAccountEntity2();
         expected.setAccountId(1);
