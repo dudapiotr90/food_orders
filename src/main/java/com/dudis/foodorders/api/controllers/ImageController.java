@@ -33,6 +33,6 @@ public class ImageController {
         model.addAttribute("foodImagePath", foodImageAsBase64);
         model.addAttribute("restaurantId", restaurantId);
         model.addAttribute("ownerId", ownerId);
-        return "image.html";
+        return "image";
     }
 }

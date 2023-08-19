@@ -70,4 +70,16 @@ public class MenuUtils {
             .menuId(4)
             .build();
     }
+
+    public static MenuEntity someMenuToPersist1() {
+        return MenuEntity.builder()
+            .menuName("Menu to Persist 1")
+            .build();
+    }
+
+    public static MenuEntity someMenuToPersist2() {
+        return MenuEntity.builder()
+            .menuName("Menu to Persist 2")
+            .build();
+    }
 }

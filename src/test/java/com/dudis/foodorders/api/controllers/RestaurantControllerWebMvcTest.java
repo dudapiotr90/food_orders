@@ -41,8 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class RestaurantControllerWebMvcTest extends ControllersSupport {
-    public static final int RESTAURANT_ID = 4;
-    public static final int OWNER_ID = 1;
+
     public static final String SOME_PATH_FOR_TEST = "some/path/for/test";
 
     private MockMvc mockMvc;
@@ -117,6 +116,7 @@ class RestaurantControllerWebMvcTest extends ControllersSupport {
         // When, Then
         mockMvc.perform(multipart(OWNER + ADD_MENU_POSITION, OWNER_ID, RESTAURANT_ID)
                 .file("image", someFile.getBytes())
+                .flashAttr("food",food)
                 .params(params))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(OWNER + MODIFY_MENU, OWNER_ID, RESTAURANT_ID));
@@ -131,9 +131,14 @@ class RestaurantControllerWebMvcTest extends ControllersSupport {
         when(restaurantService.updateMenuPosition(food, RESTAURANT_ID, someFile)).thenReturn(SOME_PATH_FOR_TEST);
 
         // When, Then
-        mockMvc.perform(multipart(OWNER + ADD_MENU_POSITION, OWNER_ID, RESTAURANT_ID)
+        mockMvc.perform(multipart(OWNER + UPDATE_MENU_POSITION, OWNER_ID, RESTAURANT_ID)
                 .file("image", someFile.getBytes())
-                .params(params))
+                .flashAttr("food",food)
+                .params(params)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                }))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(OWNER + MODIFY_MENU, OWNER_ID, RESTAURANT_ID));
     }

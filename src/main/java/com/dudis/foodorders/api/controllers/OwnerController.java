@@ -26,7 +26,7 @@ import java.util.Map;
 public class OwnerController {
 
     public static final String OWNER = "/owner";
-    public static final String OWNER_ID = "/owner/{id}";
+    public static final String OWNER_PAGE = "/owner/{id}";
     public static final String OWNER_ADD = "/owner/{id}/add";
     public static final String ORDER_HISTORY = "/owner/{id}/orderHistory";
     public static final String ORDER_HISTORY_PAGINATED = "/owner/{id}/orderHistory/page/{pageNumber}";
@@ -43,7 +43,7 @@ public class OwnerController {
         return "redirect:/owner/" + owner.getOwnerId();
     }
     @PreAuthorize("hasRole('OWNER')")
-    @GetMapping(value = OWNER_ID)
+    @GetMapping(value = OWNER_PAGE)
     public ModelAndView getSpecificOwnerPage(@PathVariable(value = "id") Integer ownerId, HttpServletRequest request) {
         securityUtils.checkAccess(ownerId, request);
         Map<String, ?> model = prepareOwnerData(ownerId);

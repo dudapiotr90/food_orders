@@ -34,6 +34,8 @@ public interface BillJpaRepository extends JpaRepository<BillEntity, Integer> {
         """)
     String findByOrderNumber(@Param("orderNumber") String orderNumber);
 
+    BillEntity findByBillNumber(String billNumber);
+
     @Modifying
     @Query("""
         UPDATE BillEntity be
@@ -41,8 +43,6 @@ public interface BillJpaRepository extends JpaRepository<BillEntity, Integer> {
         WHERE be.billNumber = :billNumber
         """)
     void setPayedAsTrue(@Param("billNumber") String billNumber, @Param("payed") boolean payed);
-
-    BillEntity findByBillNumber(String billNumber);
 
     @Query("""
         SELECT be.order FROM BillEntity be

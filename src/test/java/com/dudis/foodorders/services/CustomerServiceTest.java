@@ -209,7 +209,7 @@ class CustomerServiceTest {
             .thenReturn(someOrderDetailsDTOS);
 
         // When
-        List<OrderDetailsDTO> result = customerService.getRestaurantsWithAddedFoodItems(someId);
+        List<OrderDetailsDTO> result = customerService.getAddedFoodItems(someId);
 
         // Then
         assertEquals(someOrderDetailsDTOS.size(), result.size());
@@ -226,7 +226,7 @@ class CustomerServiceTest {
         when(customerDAO.findCartByCustomerId(someId)).thenReturn(Optional.empty());
 
         // When
-        Throwable exception = assertThrows(NotFoundException.class, () -> customerService.getRestaurantsWithAddedFoodItems(someId));
+        Throwable exception = assertThrows(NotFoundException.class, () -> customerService.getAddedFoodItems(someId));
         // Then
         assertEquals(expectedMessage, exception.getMessage());
     }

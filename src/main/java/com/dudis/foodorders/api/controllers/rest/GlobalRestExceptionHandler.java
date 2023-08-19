@@ -6,8 +6,11 @@ import com.sun.mail.iap.ConnectionException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice(annotations = RestController.class)
 public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -27,6 +31,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
         IllegalArgumentException.class, HttpStatus.BAD_REQUEST,
         DataIntegrityViolationException.class, HttpStatus.BAD_REQUEST,
+        MethodArgumentNotValidException.class, HttpStatus.BAD_REQUEST,
         EntityNotFoundException.class, HttpStatus.NOT_FOUND,
         NotFoundException.class, HttpStatus.NOT_FOUND,
         ConnectException.class, HttpStatus.SERVICE_UNAVAILABLE,

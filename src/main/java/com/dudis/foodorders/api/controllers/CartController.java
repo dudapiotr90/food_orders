@@ -7,6 +7,7 @@ import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class CartController {
 
 
     @PutMapping(UPDATE_CART)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String updateCartPosition(
         @PathVariable(value = "id") Integer customerId,
         @ModelAttribute("foodToUpdate") OrderItemDTO orderItem,
@@ -42,6 +44,7 @@ public class CartController {
 
 
     @DeleteMapping(DELETE_FROM_CART)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String deleteFromCart(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "orderItemId") Integer orderItemId,
@@ -76,8 +79,8 @@ public class CartController {
         HttpServletRequest request
     ) {
         securityUtils.checkAccess(customerId, request);
-        List<OrderDetailsDTO> restaurantsWithAddedFoodItems = customerService.getRestaurantsWithAddedFoodItems(customerId);
-        modelMap.addAttribute("orderRequests", restaurantsWithAddedFoodItems);
+        List<OrderDetailsDTO> addedFoodItems = customerService.getAddedFoodItems(customerId);
+        modelMap.addAttribute("orderRequests", addedFoodItems);
         modelMap.addAttribute("customerId", customerId);
         modelMap.addAttribute("foodToUpdate",new OrderItemDTO());
         modelMap.addAttribute("foodsToOrder",OrderRequestDTO.builder().build());
@@ -85,6 +88,7 @@ public class CartController {
     }
 
     @PostMapping(value = CUSTOMER_ADD_TO_CART)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String addFoodToCart(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,

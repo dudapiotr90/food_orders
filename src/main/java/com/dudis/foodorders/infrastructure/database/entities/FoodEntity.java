@@ -33,7 +33,7 @@ public class FoodEntity {
     @Column(name="food_type")
     private String foodType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id")
     private MenuEntity menu;
 

@@ -11,12 +11,10 @@ import com.dudis.foodorders.services.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -26,7 +24,7 @@ import java.util.Map;
 public class CustomerController {
 
     public static final String CUSTOMER = "/customer";
-    public static final String CUSTOMER_ID = "/customer/{id}";
+    public static final String CUSTOMER_PAGE = "/customer/{id}";
     public static final String CANCEL_ORDER = "/customer/{id}/cancel/{orderNumber}";
     public static final String PAY = "/customer/{id}/pay";
     public static final String ORDER_HISTORY = "/customer/{id}/orderHistory";
@@ -38,13 +36,14 @@ public class CustomerController {
     private final BillService billService;
 
     @GetMapping(value = CUSTOMER)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String getCustomerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         CustomerDTO customer = customerService.findCustomerByAccountId(loggedAccount.getAccountId());
         return customerPortal(customer.getCustomerId());
     }
 
-    @GetMapping(value = CUSTOMER_ID)
+    @GetMapping(value = CUSTOMER_PAGE)
     public ModelAndView getSpecificCustomerPage(@PathVariable(value = "id") Integer customerId, HttpServletRequest request) {
         securityUtils.checkAccess(customerId, request);
         Map<String, ?> model = prepareCustomerData(customerId, request);
@@ -52,6 +51,7 @@ public class CustomerController {
     }
 
     @PutMapping(CANCEL_ORDER)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String cancelOrder(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "orderNumber") String orderNumber,
@@ -65,6 +65,7 @@ public class CustomerController {
     }
 
     @PutMapping(PAY)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String payForOrder(
         @PathVariable(value = "id") Integer customerId,
         @RequestParam(value = "billNumber") String billNumber,
@@ -91,11 +92,10 @@ public class CustomerController {
         @PathVariable(value = "id") Integer customerId,
         ModelMap modelMap,
         HttpServletRequest request,
-        @PathVariable(value = "pageNumber", required = false) int pageNumber,
+        @PathVariable(value = "pageNumber") int pageNumber,
         @RequestParam("sortHow") String sortHow,
         @RequestParam("sortBy") String... sortBy
-    )
-    {
+    ) {
         securityUtils.checkAccess(customerId, request);
         int defaultPageSize = 2;
         Page<OrderDTO> orders = customerService.findCustomerRealizedOrders(customerId, pageNumber, defaultPageSize, sortHow, sortBy);
@@ -106,7 +106,7 @@ public class CustomerController {
 
     private Map<String, ?> prepareCustomerData(Integer customerId, HttpServletRequest request) {
         var customer = customerService.findCustomerById(customerId);
-        var pendingBills = billService.findCustomerPendingBills(customerId,false);
+        var pendingBills = billService.findCustomerPayedBills(customerId, false);
         var restaurants = customerService.findRestaurantWithCustomerAddress(customer.getAccountId());
         var address = securityUtils.getLoggedInAccountId(request).getAddress();
         var orders = customerService.findCancelableOrders(customerId);
@@ -116,7 +116,7 @@ public class CustomerController {
             "pendingBills", pendingBills,
             "restaurants", restaurants,
             "address", address,
-            "orders",orders
+            "orders", orders
         );
     }
 
@@ -139,6 +139,7 @@ public class CustomerController {
     private String cartPortal(Integer customerId) {
         return String.format("redirect:/customer/%s/showCart", customerId);
     }
+
     private String customerPortal(Integer customerId) {
         return String.format("redirect:/customer/%s", customerId);
     }

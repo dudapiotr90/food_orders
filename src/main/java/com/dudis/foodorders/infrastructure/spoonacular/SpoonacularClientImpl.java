@@ -45,9 +45,14 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
     }
 
     @Override
-    public List<SpoonacularVideoDataDTO> searchForVideoRecipe(String query, String mealType, String cuisine, String diet, BigDecimal videoLength,
-                                                              int resultsToSkip) {
-
+    public List<SpoonacularVideoDataDTO> searchForVideoRecipe(
+        String query,
+        String mealType,
+        String cuisine,
+        String diet,
+        BigDecimal videoLength,
+        int resultsToSkip
+    ) {
         SearchFoodVideos200Response searchFoodVideos200ResponseMono = Optional.ofNullable(
                 miscApi.searchFoodVideos(query, mealType, cuisine, diet, null, null, null, videoLength, resultsToSkip, 10).block())
             .orElseThrow(() -> new NotFoundException(
@@ -70,11 +75,11 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
         GenerateMealPlan200Response plan = Optional.ofNullable(mealPlanningApi.generateMealPlan(timeFrame, caloriesPerDay, diet, exclude).block())
             .orElseThrow(() -> new NotFoundException("Cannot generate plan for given parameters"));
 
-        Map<String, MealMap> mealPlan = new HashMap<>();
+        Map<String, MealMap> mealPlan = new LinkedHashMap<>();
         Nutrients nutrients = buildNutrients(plan);
-        Set<Meal> meals = plan.getMeals().stream()
+        TreeSet<Meal> meals = plan.getMeals().stream()
             .map(this::buildMeal)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toCollection(TreeSet::new));
 
         MealMap mealMap = buildMealMap(nutrients, meals);
 
@@ -83,17 +88,22 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
     }
 
     @Override
-    public Map<String,MealMap> getMealPlanForWeek(String timeFrame, BigDecimal caloriesPerDay, String diet, String exclude) throws JsonProcessingException {
+    public Map<String, MealMap> getMealPlanForWeek(
+        String timeFrame,
+        BigDecimal caloriesPerDay,
+        String diet,
+        String exclude
+    ) throws JsonProcessingException {
         String rawJson = mealPlanningApi.generateMealPlanWithResponseSpec(timeFrame, caloriesPerDay, diet, exclude)
             .bodyToMono(String.class).block();
 
-        Map<String,MealMap> weeklyPlan= new LinkedHashMap<>();
+        Map<String, MealMap> weeklyPlan = new LinkedHashMap<>();
         JsonNode jsonNode = objectMapper.readTree(rawJson);
 
         return mapJsonToMap(weeklyPlan, objectMapper, jsonNode);
     }
 
-    private Map<String,MealMap> mapJsonToMap(Map<String, MealMap> weeklyPlan, ObjectMapper objectMapper, JsonNode jsonNode) {
+    private Map<String, MealMap> mapJsonToMap(Map<String, MealMap> weeklyPlan, ObjectMapper objectMapper, JsonNode jsonNode) {
         Iterator<Map.Entry<String, JsonNode>> daysIterator = jsonNode.get("week").fields();
         while (daysIterator.hasNext()) {
             Map.Entry<String, JsonNode> dayEntry = daysIterator.next();
@@ -105,7 +115,7 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
         return weeklyPlan;
     }
 
-    private  Meal buildMeal(GetSimilarRecipes200ResponseInner m) {
+    private Meal buildMeal(GetSimilarRecipes200ResponseInner m) {
         return Meal.builder()
             .mealId(m.getId())
             .preparationTime(m.getReadyInMinutes())
@@ -115,7 +125,7 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
             .build();
     }
 
-    private  Nutrients buildNutrients(GenerateMealPlan200Response plan) {
+    private Nutrients buildNutrients(GenerateMealPlan200Response plan) {
         return Nutrients.builder()
             .fat(plan.getNutrients().getFat())
             .carbohydrates(plan.getNutrients().getCarbohydrates())
@@ -124,7 +134,7 @@ public class SpoonacularClientImpl implements SpoonacularDAO {
             .build();
     }
 
-    private MealMap buildMealMap(Nutrients nutrients, Set<Meal> meals) {
+    private MealMap buildMealMap(Nutrients nutrients, TreeSet<Meal> meals) {
         return MealMap.builder()
             .meals(meals)
             .nutrients(nutrients)

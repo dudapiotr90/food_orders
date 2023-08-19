@@ -54,12 +54,14 @@ public class SearchEngineController {
     ) {
         securityUtils.checkAccess(customerId, request);
         if (searchedWithoutParameters(deliveryAddress)) {
-            Page<RestaurantForCustomerDTO> restaurants = restaurantService.findAllRestaurants(pageNumber,pageSize,sortBy,sortHow);
+            Page<RestaurantForCustomerDTO> restaurants = restaurantService
+                .findAllRestaurants(pageNumber,pageSize,sortBy,sortHow);
             modelMap.addAttribute("customerId", customerId);
             modelMap.addAttribute("deliveryAddress", deliveryAddress);
             preparePaginatedAttributes(modelMap,restaurants,pageNumber,sortBy,sortHow,pageSize);
         } else {
-            Page<RestaurantForCustomerDTO> restaurants = restaurantService.findAllRestaurantsByParameters(deliveryAddress,pageNumber,pageSize,sortBy,sortHow);
+            Page<RestaurantForCustomerDTO> restaurants = restaurantService
+                .findAllRestaurantsByParameters(deliveryAddress,pageNumber,pageSize,sortBy,sortHow);
             modelMap.addAttribute("customerId", customerId);
             modelMap.addAttribute("deliveryAddress", deliveryAddress);
             preparePaginatedAttributes(modelMap,restaurants,pageNumber,sortBy,sortHow,pageSize);

@@ -10,6 +10,7 @@ import com.dudis.foodorders.infrastructure.database.entities.OrderEntity;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.UUID;
 
 public class OrderUtils {
 
@@ -80,10 +81,25 @@ public class OrderUtils {
             .build();
     }
 
+
+    public static OrderDTO someOrderDTO4() {
+        return OrderDTO.builder()
+            .orderNumber("asdasdf-adsasdf-43223-dfsdfs-sd")
+            .receivedDateTime("2021-11-11 22:30:00")
+            .customerComment("another comment")
+            .realized(true)
+            .inProgress(false)
+            .orderItems(OrderItemsUtils.someSetOfOrderItemsDTO())
+            .restaurant(RestaurantUtils.someRestaurantDTO4())
+            .customer(CustomerUtils.someCustomerDTO2())
+            .build();
+    }
+
     public static OrderRequestDTO someOrderRequestDTO() {
         return OrderRequestDTO.builder()
             .orderItemsId(OrderItemsUtils.someOrderItemsIds())
             .customerComment("some customer comment")
+            .restaurantId(78)
             .build();
     }
 
@@ -95,6 +111,7 @@ public class OrderUtils {
         return OrderDetailsDTO.builder()
             .customerComment("some customer comment")
             .orderItems(OrderItemsUtils.someOrderItemsDTO())
+            .restaurant(RestaurantUtils.someRestaurantForCustomerDTO1())
         .build();
     }
 
@@ -102,14 +119,16 @@ public class OrderUtils {
         return OrderDetailsDTO.builder()
             .customerComment("some another customer comment")
             .orderItems(OrderItemsUtils.someOrderItemsDTO())
-        .build();
+            .restaurant(RestaurantUtils.someRestaurantForCustomerDTO2())
+            .build();
     }
 
     public static OrderDetailsDTO someOrderDetail3() {
         return OrderDetailsDTO.builder()
             .customerComment("some other customer comment")
             .orderItems(OrderItemsUtils.someOrderItemsDTO())
-        .build();
+            .restaurant(RestaurantUtils.someRestaurantForCustomerDTO3())
+            .build();
     }
 
     public static List<Order> someOrders() {
@@ -154,6 +173,17 @@ public class OrderUtils {
             .inProgress(true)
             .orderItems(OrderItemsUtils.someOrderItemEntities())
             .customer(CustomerUtils.someCustomerEntity2())
+            .build();
+    }
+
+    public static OrderEntity someOrderEntityToPersist1() {
+        return OrderEntity.builder()
+            .orderNumber(UUID.randomUUID().toString())
+            .receivedDateTime(OffsetDateTime.of(2023, 8, 8, 6, 30, 0, 0, ZoneOffset.UTC))
+            .cancelTill(OffsetDateTime.of(2023, 8, 8, 6,45, 0, 0, ZoneOffset.UTC))
+            .customerComment("some comment")
+            .realized(false)
+            .inProgress(false)
             .build();
     }
 
