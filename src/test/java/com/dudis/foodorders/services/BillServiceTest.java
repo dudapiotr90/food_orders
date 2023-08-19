@@ -81,7 +81,7 @@ class BillServiceTest {
         when(billDAO.findCustomerPendingBills(1, false)).thenReturn(List.of(someBill1, someBill2));
         when(billMapper.mapToDTO(someBill1)).thenReturn(someBillDTO1, someBillDTO2);
         // When
-        List<BillDTO> result = billService.findCustomerPendingBills(1, false);
+        List<BillDTO> result = billService.findCustomerPayedBills(1, false);
         // Then
         assertEquals(expected.size(), result.size());
     }

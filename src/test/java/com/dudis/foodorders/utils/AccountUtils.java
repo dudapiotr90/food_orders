@@ -7,13 +7,17 @@ import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import lombok.Builder;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Random;
 
 @Data
 @Builder
 public class AccountUtils {
+
+    public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public static Account someAccount1() {
         return Account.builder()
@@ -40,7 +44,7 @@ public class AccountUtils {
             .address(someAddress())
             .enabled(true)
             .unlocked(true)
-            .roleId(1)
+            .roleId(3)
             .build();
     }
 
@@ -74,6 +78,7 @@ public class AccountUtils {
     public static AccountEntity someAccountEntity1() {
         return AccountEntity.builder()
             .email("empty@email")
+            .login("someLogin")
             .accountId(1)
             .password("another password")
             .phone("+48 123 741 147")
@@ -173,5 +178,46 @@ public class AccountUtils {
             .userAddressStreet("someStreet")
             .userResidenceNumber("1")
             .build();
+    }
+
+    public static AccountEntity someAccountToPersist() {
+        return AccountEntity.builder()
+            .email(randomEmail())
+            .login(randomLogin())
+            .password("password")
+            .phone("+48 123 456 789")
+            .creationDate(OffsetDateTime.of(2023, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
+            .enabled(true)
+            .unlocked(true)
+            .status(true)
+            .roleId(4)
+            .build();
+    }
+
+    private static String randomLogin() {
+        Random random = new Random();
+        int length = random.nextInt(9)+4;
+
+        StringBuilder randomString = generateRandomString(random, length);
+        return randomString.toString();
+    }
+    private static String randomEmail() {
+        Random random = new Random();
+        int length = random.nextInt(5)+4;
+
+        StringBuilder randomString = generateRandomString(random, length);
+        return randomString+ "@" + randomString;
+    }
+
+    @NotNull
+    private static StringBuilder generateRandomString(Random random, int length) {
+        StringBuilder randomString = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            randomString.append(randomChar);
+        }
+        return randomString;
     }
 }

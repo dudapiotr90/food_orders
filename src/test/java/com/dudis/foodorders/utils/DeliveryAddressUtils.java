@@ -9,10 +9,11 @@ import java.util.List;
 
 public class DeliveryAddressUtils {
     public static List<DeliveryAddress> someAddresses() {
-        return List.of(someDeliveryAddress1(),someDeliveryAddress2(),someDeliveryAddress3());
+        return List.of(someDeliveryAddress1(), someDeliveryAddress2(), someDeliveryAddress3());
     }
+
     public static List<DeliveryAddressDTO> someAddressesDTO() {
-        return List.of(someDeliveryAddressDTO1(),someDeliveryAddressDTO2(),someDeliveryAddressDTO3());
+        return List.of(someDeliveryAddressDTO1(), someDeliveryAddressDTO2(), someDeliveryAddressDTO3());
     }
 
     public static DeliveryAddressesDTO someDeliveryAddressesDTO() {
@@ -28,6 +29,7 @@ public class DeliveryAddressUtils {
             .street("someStreet")
             .build();
     }
+
     public static DeliveryAddress someDeliveryAddress2() {
         return DeliveryAddress.builder()
             .city("London")
@@ -35,6 +37,7 @@ public class DeliveryAddressUtils {
             .street("Baker Street")
             .build();
     }
+
     public static DeliveryAddress someDeliveryAddress3() {
         return DeliveryAddress.builder()
             .city("Krakow")
@@ -50,6 +53,7 @@ public class DeliveryAddressUtils {
             .street("someStreet")
             .build();
     }
+
     public static DeliveryAddressDTO someDeliveryAddressDTO2() {
         return DeliveryAddressDTO.builder()
             .city("Warsaw")
@@ -57,6 +61,7 @@ public class DeliveryAddressUtils {
             .street("someStreet")
             .build();
     }
+
     public static DeliveryAddressDTO someDeliveryAddressDTO3() {
         return DeliveryAddressDTO.builder()
             .city("Warsaw")
@@ -64,7 +69,6 @@ public class DeliveryAddressUtils {
             .street("someStreet")
             .build();
     }
-
 
 
     public static DeliveryAddressDTO someBlankDeliveryAddressDTO() {
@@ -82,6 +86,7 @@ public class DeliveryAddressUtils {
             .street("")
             .build();
     }
+
     public static DeliveryAddressDTO someDeliveryAddressWithoutCityOnlyDTO() {
         return DeliveryAddressDTO.builder()
             .city("")
@@ -89,6 +94,7 @@ public class DeliveryAddressUtils {
             .street("some street")
             .build();
     }
+
     public static DeliveryAddressDTO someDeliveryAddressWithStreetOnlyDTO() {
         return DeliveryAddressDTO.builder()
             .city("")
@@ -96,6 +102,7 @@ public class DeliveryAddressUtils {
             .street("some street")
             .build();
     }
+
     public static DeliveryAddressDTO someDeliveryAddressWithPostalCodeOnlyDTO() {
         return DeliveryAddressDTO.builder()
             .city("")
@@ -106,7 +113,7 @@ public class DeliveryAddressUtils {
 
 
     public static List<DeliveryAddressEntity> someDeliveryAddressEntities() {
-        return List.of(someDeliveryAddressEntity1(),someDeliveryAddressEntity2(),someDeliveryAddressEntity3());
+        return List.of(someDeliveryAddressEntity1(), someDeliveryAddressEntity2(), someDeliveryAddressEntity3());
     }
 
     public static DeliveryAddressEntity someDeliveryAddressEntity1() {
@@ -116,6 +123,7 @@ public class DeliveryAddressUtils {
             .street("someStreet")
             .build();
     }
+
     public static DeliveryAddressEntity someDeliveryAddressEntity2() {
         return DeliveryAddressEntity.builder()
             .city("London")
@@ -123,11 +131,22 @@ public class DeliveryAddressUtils {
             .street("Baker Street")
             .build();
     }
+
     public static DeliveryAddressEntity someDeliveryAddressEntity3() {
         return DeliveryAddressEntity.builder()
             .city("Krakow")
             .postalCode("30-001")
             .street("Krakowska")
             .build();
+    }
+
+    public static List<DeliveryAddressDTO> addressesToSearchingTest() {
+        return List.of(
+            someDeliveryAddressWithCityOnlyDTO(),
+            someBlankDeliveryAddressDTO(),
+            someDeliveryAddressWithoutCityOnlyDTO(),
+            someDeliveryAddressWithPostalCodeOnlyDTO(),
+            someDeliveryAddressWithStreetOnlyDTO()
+        );
     }
 }

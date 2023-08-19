@@ -5,8 +5,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-  security:
-    enabled: false
 
 server:
   servlet:

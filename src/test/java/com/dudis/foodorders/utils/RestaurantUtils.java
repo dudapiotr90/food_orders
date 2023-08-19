@@ -167,4 +167,20 @@ public class RestaurantUtils {
     public static Object[] someRestaurantAsObject3() {
         return new Object[]{"3","RestaurantDTO Name 3","some description 3","COFFEE_HOUSE"};
     }
+
+    public static RestaurantEntity someRestaurantToPersist1() {
+        return RestaurantEntity.builder()
+            .name("RestaurantEntity Name 1")
+            .type(LocalType.RESTAURANT)
+            .menu(MenuUtils.someMenuToPersist1())
+            .build();
+    }
+    public static RestaurantEntity someRestaurantToPersist2() {
+        return RestaurantEntity.builder()
+            .name("RestaurantEntity Name 2")
+            .type(LocalType.BAKERY)
+            .menu(MenuUtils.someMenuToPersist2())
+            .build();
+    }
+
 }

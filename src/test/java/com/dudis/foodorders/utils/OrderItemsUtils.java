@@ -61,6 +61,7 @@ public class OrderItemsUtils {
         return OrderItemDTO.builder()
             .orderItemId(213)
             .quantity(BigDecimal.valueOf(845.14))
+            .food(FoodUtils.someFoodDTO1())
             .build();
     }
 

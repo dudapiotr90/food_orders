@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-
+@With
 @Getter
 @Setter
 @EqualsAndHashCode(of = "billId")
@@ -38,7 +38,7 @@ public class BillEntity {
     @JoinColumn(name = "owner_id")
     private OwnerEntity owner;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 

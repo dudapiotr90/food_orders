@@ -7,10 +7,7 @@ import com.dudis.foodorders.infrastructure.spoonacular.MealMap;
 import com.dudis.foodorders.infrastructure.spoonacular.Nutrients;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SpoonacularUtils {
 
@@ -38,7 +35,7 @@ public class SpoonacularUtils {
         return List.of(someVideoData1(), someVideoData2(), someVideoData3());
     }
 
-    private static SpoonacularVideoDataDTO someVideoData1() {
+    public static SpoonacularVideoDataDTO someVideoData1() {
         return SpoonacularVideoDataDTO.builder()
             .title("some title 1")
             .videoLength(671)
@@ -47,7 +44,7 @@ public class SpoonacularUtils {
             .youtubeVideoLink("some youtube video link 1")
             .build();
     }
-    private static SpoonacularVideoDataDTO someVideoData2() {
+    public static SpoonacularVideoDataDTO someVideoData2() {
         return SpoonacularVideoDataDTO.builder()
             .title("some title 2")
             .videoLength(99)
@@ -56,7 +53,7 @@ public class SpoonacularUtils {
             .youtubeVideoLink("some youtube video link 2")
             .build();
     }
-    private static SpoonacularVideoDataDTO someVideoData3() {
+    public static SpoonacularVideoDataDTO someVideoData3() {
         return SpoonacularVideoDataDTO.builder()
             .title("some title 3")
             .videoLength(173)
@@ -72,14 +69,14 @@ public class SpoonacularUtils {
         return mealPlan;
     }
 
-    private static MealMap someMealMap1() {
+    public static MealMap someMealMap1() {
         return MealMap.builder()
             .meals(someMeals())
             .nutrients(someNutrients())
             .build();
     }
 
-    private static Nutrients someNutrients() {
+    public static Nutrients someNutrients() {
         return Nutrients.builder()
             .calories(BigDecimal.valueOf(1850))
             .protein(BigDecimal.valueOf(145))
@@ -88,11 +85,11 @@ public class SpoonacularUtils {
             .build();
     }
 
-    private static Set<Meal> someMeals() {
-        return Set.of(someMeal1(),someMeal2(),someMeal3());
+    public static TreeSet<Meal> someMeals() {
+        return new TreeSet<>(Set.of(someMeal1(),someMeal2(),someMeal3()));
     }
 
-    private static Meal someMeal1() {
+    public static Meal someMeal1() {
         return Meal.builder()
             .mealId(21)
             .title("Meal 1")
@@ -102,7 +99,7 @@ public class SpoonacularUtils {
             .build();
     }
 
-    private static Meal someMeal2() {
+    public static Meal someMeal2() {
         return Meal.builder()
             .mealId(66)
             .title("Meal 2")
@@ -112,7 +109,7 @@ public class SpoonacularUtils {
             .build();
     }
 
-    private static Meal someMeal3() {
+    public static Meal someMeal3() {
         return Meal.builder()
             .mealId(3)
             .title("Meal 3")

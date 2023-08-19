@@ -40,7 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class OwnerControllerWebMvcTest extends ControllersSupport {
 
-    private static final Integer someID = 123;
     private MockMvc mockMvc;
     private SecurityUtils securityUtils;
     @MockBean
@@ -68,18 +67,11 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
         List<RestaurantDTO> someRestaurants = someRestaurantsDTO();
         someRestaurants.forEach(r->r.setOrders(Set.of(someOrderDTO2(),someOrderDTO1())));
         when(ownerService.findAllOwnerRestaurants(anyInt())).thenReturn(someRestaurants);
-        when(billService.findOwnerPendingBills(someID,false)).thenReturn(someBillsDTO());
+        when(billService.findOwnerPendingBills(OWNER_ID,false)).thenReturn(someBillsDTO());
         when(ownerService.findOwnerById(anyInt())).thenReturn(someOwnerDTO1());
 
         // When
-        ResultActions actions = mockMvc.perform(get(OWNER_ID,someID)
-            .requestAttr("restaurants", someRestaurants)
-            .requestAttr("bills", someBillsDTO())
-            .requestAttr("owner", someOwnerDTO1())
-        );
-
-        // Then
-        actions
+         mockMvc.perform(get(OwnerController.OWNER_PAGE, OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("restaurants"))
             .andExpect(model().attributeExists("bills"))
@@ -91,9 +83,9 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
     void restaurantFormPageWorksCorrectly() throws Exception {
         // Given, When
 
-        ResultActions actions = mockMvc.perform(get(OWNER_ADD,someID)
+        ResultActions actions = mockMvc.perform(get(OWNER_ADD, OWNER_ID)
             .requestAttr("restaurant", new RestaurantDTO())
-            .requestAttr("ownerId", someID)
+            .requestAttr("ownerId", OWNER_ID)
             .requestAttr("types", LocalType.values())
         );
 
@@ -110,13 +102,13 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
     void addRestaurantWorksCorrectly() throws Exception {
         // Given
         RestaurantDTO someRestaurant = someRestaurantDTO4();
-        doNothing().when(ownerService).addRestaurant(someID,someRestaurant);
+        doNothing().when(ownerService).addRestaurant(OWNER_ID,someRestaurant);
 
 
         // When, Then
-        mockMvc.perform(post(OWNER_ADD, someID,someRestaurant))
+        mockMvc.perform(post(OWNER_ADD, OWNER_ID,someRestaurant))
             .andExpect(status().isPermanentRedirect())
-            .andExpect(redirectedUrl(OWNER + "/" + someID));
+            .andExpect(redirectedUrl(OWNER + "/" + OWNER_ID));
 
     }
     @Test
@@ -131,7 +123,7 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
             .thenReturn(orders);
 
         // When
-        mockMvc.perform(get(ORDER_HISTORY, someID))
+        mockMvc.perform(get(ORDER_HISTORY, OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("owner_order_history"))
             .andExpect(model().attributeExists("ownerId"))

@@ -114,4 +114,36 @@ public class BillUtils {
             .build();
     }
 
+    public static BillEntity someBillToPersist1() {
+        return BillEntity.builder()
+            .billNumber("21123-312312-asdas-23132-das")
+            .dateTime(OffsetDateTime.of(2011,6,1,12,7,0,0, ZoneOffset.UTC))
+            .payed(false)
+            .amount(new BigDecimal("14554.145"))
+            .owner(OwnerUtils.someOwnerEntity1().withOwnerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .customer(CustomerUtils.someCustomerEntity1().withCustomerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .build();
+    }
+
+    public static BillEntity someBillToPersist2() {
+        return BillEntity.builder()
+            .billNumber("12313-312312-ghfds-23132-das")
+            .dateTime(OffsetDateTime.of(2015,1,8,4,10,0,0, ZoneOffset.UTC))
+            .payed(false)
+            .amount(new BigDecimal("532.12"))
+            .owner(OwnerUtils.someOwnerEntity2().withOwnerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .customer(CustomerUtils.someCustomerEntity2().withCustomerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .build();
+    }
+
+    public static BillEntity someBillToPersist3() {
+        return BillEntity.builder()
+            .billNumber("sdff-312312-asdas-23132-das")
+            .dateTime(OffsetDateTime.of(2020,4,12,5,15,0,0, ZoneOffset.UTC))
+            .payed(false)
+            .amount(new BigDecimal("1213.1"))
+            .owner(OwnerUtils.someOwnerEntity3().withOwnerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .customer(CustomerUtils.someCustomerEntity3().withCustomerId(null).withAccount(AccountUtils.someAccountToPersist()))
+            .build();
+    }
 }

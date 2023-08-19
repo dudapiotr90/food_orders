@@ -60,6 +60,14 @@ public class CustomerUtils {
             .build();
     }
 
+    public static CustomerEntity someCustomerEntity3() {
+        return CustomerEntity.builder()
+            .name("otherCustomerName")
+            .surname("otherCustomerSurname")
+            .account(AccountUtils.someAccountEntity3())
+            .build();
+    }
+
     public static List<CustomerEntity> someCustomerEntities() {
         return List.of(someCustomerEntity1(), someCustomerEntity2());
     }

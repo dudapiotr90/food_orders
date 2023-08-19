@@ -57,25 +57,25 @@ public class SpoonacularRestController {
             example = "day",
             allowEmptyValue = true
         )
-        @RequestParam(required = false) String timeFrame,
+        @RequestParam(value = "timeFrame",required = false) String timeFrame,
         @Parameter(
             description = "Number of calories you want to consume per day",
             example = "2500",
             allowEmptyValue = true
         )
-        @RequestParam(required = false) BigDecimal caloriesPerDay,
+        @RequestParam(value = "caloriesPerDay",required = false) BigDecimal caloriesPerDay,
         @Parameter(
             description = "Diet type",
             schema = @Schema(implementation = Diet.class),
             example = "Vegan"
         )
-        @RequestParam Diet diet,
+        @RequestParam(value = "diet") Diet diet,
         @Parameter(
             description = "Which ingredients to exclude. Comma separated",
             example = "eggs, apples",
             allowEmptyValue = true
         )
-        @RequestParam(required = false) String exclude
+        @RequestParam(value = "exclude",required = false) String exclude
     ) throws JsonProcessingException {
         Map<String, MealMap> mealPlan = spoonacularService.getMealPlan(timeFrame, caloriesPerDay, diet, exclude);
         return ResponseEntity.ok(mealPlan);

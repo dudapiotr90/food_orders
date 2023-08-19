@@ -90,7 +90,7 @@ public class CustomerService {
             .build();
     }
 
-    public List<OrderDetailsDTO> getRestaurantsWithAddedFoodItems(Integer customerId) {
+    public List<OrderDetailsDTO> getAddedFoodItems(Integer customerId) {
         Cart cart = findCartByCustomerId(customerId);
         Set<Restaurant> restaurants = cart.getOrderItems().stream()
             .map(o -> orderItemService.findMenuByFood(o.getFood()))

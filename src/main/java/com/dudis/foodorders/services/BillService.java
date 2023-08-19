@@ -34,7 +34,7 @@ public class BillService {
             .toList();
     }
 
-    public List<BillDTO> findCustomerPendingBills(Integer customerId, boolean payed) {
+    public List<BillDTO> findCustomerPayedBills(Integer customerId, boolean payed) {
         return billDAO.findCustomerPendingBills(customerId, payed).stream()
             .map(billMapper::mapToDTO)
             .toList();

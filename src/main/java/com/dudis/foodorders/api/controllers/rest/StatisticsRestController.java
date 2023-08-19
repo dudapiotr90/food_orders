@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping(DeveloperEndpoint.DEV)
-public class StatisticsController {
+public class StatisticsRestController {
     public static final String USER_ACCOUNTS = "/allUsers";
     public static final String CUSTOMERS = "/customers";
     public static final String OWNERS = "/owners";
@@ -145,11 +145,11 @@ public class StatisticsController {
         ),
     })
     @GetMapping(OWNER)
-    public ResponseEntity<CustomerDTO> findOwner(
+    public ResponseEntity<OwnerDTO> findOwner(
         @Parameter(description = "Owner id", example = "1")
         @PathVariable(value = "id") Integer id
     ) {
-        return ResponseEntity.ok(customerService.findCustomerById(id));
+        return ResponseEntity.ok(ownerService.findOwnerById(id));
     }
 
 }

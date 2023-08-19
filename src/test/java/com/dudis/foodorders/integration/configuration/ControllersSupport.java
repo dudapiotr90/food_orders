@@ -10,6 +10,9 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 
 public abstract class ControllersSupport {
+    public static final Integer OWNER_ID = 123;
+    public static final int RESTAURANT_ID = 4;
+    public static final int CUSTOMER_ID = 7;
 
     @MockBean
     private SecurityUtils securityUtils;

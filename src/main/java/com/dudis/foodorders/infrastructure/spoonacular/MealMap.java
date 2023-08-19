@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MealMap {
-    private Set<Meal> meals;
+    private TreeSet<Meal> meals;
     private Nutrients nutrients;
 }
