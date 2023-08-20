@@ -5,7 +5,6 @@ import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import com.dudis.foodorders.services.AccountService;
 import com.dudis.foodorders.utils.AccountUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -17,17 +16,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import static com.dudis.foodorders.api.controllers.rest.DeveloperEndpoint.DEV;
-import static com.dudis.foodorders.api.controllers.rest.RegistrationRestController.*;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static com.dudis.foodorders.api.controllers.rest.RegistrationRestController.REGISTER;
+import static com.dudis.foodorders.api.controllers.rest.RegistrationRestController.UPDATE;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = RegistrationRestController.class)

@@ -7,7 +7,6 @@ import com.dudis.foodorders.domain.exception.RegistrationException;
 import com.dudis.foodorders.infrastructure.security.entity.ConfirmationToken;
 import com.dudis.foodorders.services.*;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.dudis.foodorders.infrastructure.security.repository.jpa;
 
-import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
