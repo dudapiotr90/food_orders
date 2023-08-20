@@ -17,7 +17,7 @@ public class DeveloperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name = "developer_id")
     Integer developerId;
 
     @Column(name = "name")

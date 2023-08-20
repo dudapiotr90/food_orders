@@ -3,7 +3,7 @@ package com.dudis.foodorders.integration.mappers;
 import com.dudis.foodorders.domain.DeliveryAddress;
 import com.dudis.foodorders.infrastructure.database.entities.DeliveryAddressEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.DeliveryAddressEntityMapper;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;

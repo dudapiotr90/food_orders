@@ -15,4 +15,6 @@ public interface OwnerDAO {
     Optional<Owner> findOwnerById(Integer ownerId);
 
     Page<Owner> findAllOwners(Pageable pageable);
+
+    void deleteByAccountId(Integer accountId);
 }

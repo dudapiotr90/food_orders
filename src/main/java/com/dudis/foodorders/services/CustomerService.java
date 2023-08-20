@@ -135,4 +135,8 @@ public class CustomerService {
         return customerDAO.findPagedCustomers(pageable)
             .map(customerMapper::mapToDTO);
     }
+
+    public void deleteCustomer(Integer accountId) {
+        customerDAO.deleteCustomer(accountId);
+    }
 }

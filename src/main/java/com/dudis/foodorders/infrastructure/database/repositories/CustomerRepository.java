@@ -36,6 +36,7 @@ public class CustomerRepository implements CustomerDAO {
 
 
 
+
     @Override
     public ConfirmationToken registerCustomer(Customer customer) {
         ApiRoleEntity customerRole = apiRoleJpaRepository.findFirstByRole(Role.CUSTOMER.name());
@@ -77,6 +78,11 @@ public class CustomerRepository implements CustomerDAO {
     public Page<Customer> findPagedCustomers(Pageable pageable) {
         return customerJpaRepository.findAll(pageable)
             .map(customerEntityMapper::mapFromEntity);
+    }
+
+    @Override
+    public void deleteCustomer(Integer accountId) {
+        customerJpaRepository.deleteByAccountId(accountId);
     }
 
     @Override

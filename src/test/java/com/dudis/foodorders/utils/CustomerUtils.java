@@ -71,4 +71,12 @@ public class CustomerUtils {
     public static List<CustomerEntity> someCustomerEntities() {
         return List.of(someCustomerEntity1(), someCustomerEntity2());
     }
+
+//    public static CustomerEntity customerForIntegrationTest() {
+//        return CustomerEntity.builder()
+//            .name("Customer")
+//            .surname("Buyer")
+//            .account(AccountUtils.someCustomerAccountForIntegrationTest())
+//            .build();
+//    }
 }

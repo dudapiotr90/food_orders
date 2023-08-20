@@ -58,4 +58,9 @@ public class OwnerRepository implements OwnerDAO {
             .map(ownerEntityMapper::mapFromEntity);
     }
 
+    @Override
+    public void deleteByAccountId(Integer accountId) {
+        ownerJpaRepository.deleteByAccount(accountId);
+    }
+
 }

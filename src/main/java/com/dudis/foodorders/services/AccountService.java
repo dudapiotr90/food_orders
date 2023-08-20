@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -75,7 +76,7 @@ public class AccountService {
         if (Objects.isNull(accountToUpdate)) {
             throw new NotFoundException("Can't update non existing account");
         }
-        Account accountUpdated = setNewDetails(updateRequest,accountToUpdate);
+        Account accountUpdated = setNewDetails(updateRequest, accountToUpdate);
         Account accountAfterUpdate = accountDAO.updateAccount(accountUpdated);
         return UpdateAccountDTO.builder()
             .newUserLogin(accountAfterUpdate.getLogin())
@@ -98,14 +99,23 @@ public class AccountService {
                 ? accountToUpdate.getPhone() : updateRequest.getNewUserPhone())
             .withAddress(
                 accountToUpdate.getAddress()
-                .withCity(Objects.isNull(updateRequest.getNewUserAddressCity())
-                    ? accountToUpdate.getAddress().getCity() : updateRequest.getNewUserAddressCity())
-                .withPostalCode(Objects.isNull(updateRequest.getNewUserAddressPostalCode())
-                    ? accountToUpdate.getAddress().getPostalCode() : updateRequest.getNewUserAddressPostalCode())
-                .withStreet(Objects.isNull(updateRequest.getNewUserAddressStreet())
-                    ? accountToUpdate.getAddress().getStreet() : updateRequest.getNewUserAddressStreet())
-                .withResidenceNumber(Objects.isNull(updateRequest.getNewUserResidenceNumber())
-                    ? accountToUpdate.getAddress().getResidenceNumber() : updateRequest.getNewUserResidenceNumber())
+                    .withCity(Objects.isNull(updateRequest.getNewUserAddressCity())
+                        ? accountToUpdate.getAddress().getCity() : updateRequest.getNewUserAddressCity())
+                    .withPostalCode(Objects.isNull(updateRequest.getNewUserAddressPostalCode())
+                        ? accountToUpdate.getAddress().getPostalCode() : updateRequest.getNewUserAddressPostalCode())
+                    .withStreet(Objects.isNull(updateRequest.getNewUserAddressStreet())
+                        ? accountToUpdate.getAddress().getStreet() : updateRequest.getNewUserAddressStreet())
+                    .withResidenceNumber(Objects.isNull(updateRequest.getNewUserResidenceNumber())
+                        ? accountToUpdate.getAddress().getResidenceNumber() : updateRequest.getNewUserResidenceNumber())
             );
+    }
+
+
+    public void deleteNotConfirmedAccounts() {
+        accountDAO.deleteNotConfirmedAccounts();
+    }
+
+    public List<Account> findAccountsToDelete() {
+        return accountDAO.findAllAccountByEnabled(false);
     }
 }

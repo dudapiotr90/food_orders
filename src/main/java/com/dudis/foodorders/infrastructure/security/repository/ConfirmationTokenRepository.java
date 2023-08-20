@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,15 +16,23 @@ public class ConfirmationTokenRepository implements ConfirmationTokenDAO {
 
     private final ConfirmationTokenJpaRepository confirmationTokenJpaRepository;
 
+    @Override
     public String save(ConfirmationToken confirmationToken) {
         confirmationTokenJpaRepository.saveAndFlush(confirmationToken);
         return confirmationToken.getToken();
     }
 
+    @Override
     public Optional<ConfirmationToken> getToken(String token) {
         return confirmationTokenJpaRepository.findByToken(token);
     }
 
+    @Override
+    public void deleteTokensByAccount(List<Integer> ids) {
+        confirmationTokenJpaRepository.deleteAllByAccountIds(ids);
+    }
+
+    @Override
     public void setConfirmedAt(String token, OffsetDateTime confirmedAt) {
         confirmationTokenJpaRepository.updateConfirmedAt(token, confirmedAt);
     }

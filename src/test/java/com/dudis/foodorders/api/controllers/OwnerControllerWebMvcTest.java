@@ -5,7 +5,7 @@ import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
-import com.dudis.foodorders.integration.configuration.ControllersSupport;
+import com.dudis.foodorders.integration.support.ControllersSupport;
 import com.dudis.foodorders.services.BillService;
 import com.dudis.foodorders.services.OwnerService;
 import com.dudis.foodorders.utils.AccountUtils;

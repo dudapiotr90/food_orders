@@ -32,5 +32,10 @@ public interface CustomerJpaRepository extends JpaRepository<CustomerEntity,Inte
         WHERE cus.customerId = :customerId
         """)
     void addCartToCustomer(@Param("cart") CartEntity cart, @Param("customerId") Integer customerId);
-
+    @Query(value = """
+        DELETE FROM customer c
+        WHERE c.account_id = :accountId
+        """, nativeQuery = true)
+    @Modifying(clearAutomatically = true)
+    void deleteByAccountId(@Param("accountId") Integer accountId);
 }

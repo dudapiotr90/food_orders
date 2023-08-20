@@ -20,4 +20,6 @@ public interface CustomerDAO {
     Optional<Cart> findCartByCustomerId(Integer customerId);
 
     Page<Customer> findPagedCustomers(Pageable pageable);
+
+    void deleteCustomer(Integer accountId);
 }

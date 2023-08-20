@@ -1,6 +1,7 @@
-package com.dudis.foodorders.integration.configuration;
+package com.dudis.foodorders.integration.support;
 
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,7 +17,6 @@ public abstract class ControllersSupport {
 
     @MockBean
     private SecurityUtils securityUtils;
-
     @BeforeEach
     void checkSecurity() {
         doNothing().when(securityUtils).checkAccess(anyInt(),any(HttpServletRequest.class));

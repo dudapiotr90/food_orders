@@ -98,4 +98,14 @@ public class OwnerUtils {
     public static List<OwnerEntity> someOwnerEntities() {
         return List.of(someOwnerEntity1(), someOwnerEntity2(), someOwnerEntity3());
     }
+
+
+
+    public static OwnerEntity ownerForIntegrationTest() {
+        return OwnerEntity.builder()
+            .name("Owner")
+            .surname("Seller")
+            .account(AccountUtils.someOwnerAccountForIntegrationTest())
+            .build();
+    }
 }

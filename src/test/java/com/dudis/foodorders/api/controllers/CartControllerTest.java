@@ -1,7 +1,7 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.*;
-import com.dudis.foodorders.integration.configuration.ControllersSupport;
+import com.dudis.foodorders.integration.support.ControllersSupport;
 import com.dudis.foodorders.services.CartService;
 import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.RestaurantService;

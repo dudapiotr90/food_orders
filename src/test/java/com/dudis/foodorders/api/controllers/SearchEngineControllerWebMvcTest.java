@@ -2,7 +2,7 @@ package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.DeliveryAddressDTO;
 import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
-import com.dudis.foodorders.integration.configuration.ControllersSupport;
+import com.dudis.foodorders.integration.support.ControllersSupport;
 import com.dudis.foodorders.services.RestaurantService;
 import com.dudis.foodorders.utils.RestaurantUtils;
 import lombok.AllArgsConstructor;

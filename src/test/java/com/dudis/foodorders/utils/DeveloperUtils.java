@@ -34,4 +34,11 @@ public class DeveloperUtils {
             .account(AccountUtils.someAccountEntity2())
             .build();
     }
+    public static DeveloperEntity developerForIntegrationTest() {
+        return DeveloperEntity.builder()
+            .name("Developer")
+            .surname("Programmer")
+            .account(AccountUtils.someDeveloperAccountForIntegrationTest())
+            .build();
+    }
 }

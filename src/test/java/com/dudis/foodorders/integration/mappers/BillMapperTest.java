@@ -3,7 +3,7 @@ package com.dudis.foodorders.integration.mappers;
 import com.dudis.foodorders.api.dtos.BillDTO;
 import com.dudis.foodorders.api.mappers.BillMapper;
 import com.dudis.foodorders.domain.Bill;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.BillUtils;
 import com.dudis.foodorders.utils.DTOAssertionsUtils;
 import lombok.AllArgsConstructor;

@@ -4,7 +4,7 @@ import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.api.dtos.RestaurantForCustomerDTO;
 import com.dudis.foodorders.api.mappers.RestaurantMapper;
 import com.dudis.foodorders.domain.Restaurant;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.DTOAssertionsUtils;
 import com.dudis.foodorders.utils.RestaurantUtils;
 import lombok.AllArgsConstructor;

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -35,5 +36,9 @@ public class ConfirmationTokenService {
         confirmationTokenDAO.setConfirmedAt(token, OffsetDateTime.now());
         accountService.enableAccount(confirmationToken.getAccountEntity().getAccountId());
         return accountEntityMapper.mapFromEntity(confirmationToken.getAccountEntity());
+    }
+
+    public void deleteTokensByAccount(List<Integer> ids) {
+        confirmationTokenDAO.deleteTokensByAccount(ids);
     }
 }

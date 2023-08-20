@@ -1,0 +1,242 @@
+{
+  "week": {
+    "monday": {
+      "meals": [
+        {
+          "id": 635446,
+          "imageType": "jpg",
+          "title": "Blueberry Cinnamon Porridge",
+          "readyInMinutes": 45,
+          "servings": 1,
+          "sourceUrl": "https://spoonacular.com/blueberry-cinnamon-porridge-635446"
+        },
+        {
+          "id": 642777,
+          "imageType": "jpg",
+          "title": "Fig and Goat Cheese Pizza With Pesto",
+          "readyInMinutes": 15,
+          "servings": 6,
+          "sourceUrl": "https://spoonacular.com/fig-and-goat-cheese-pizza-with-pesto-642777"
+        },
+        {
+          "id": 157344,
+          "imageType": "jpg",
+          "title": "Spicy Salad with Kidney Beans, Cheddar, and Nuts",
+          "readyInMinutes": 10,
+          "servings": 1,
+          "sourceUrl": "https://spoonacular.com/spicy-salad-with-kidney-beans-cheddar-and-nuts-157344"
+        }
+      ],
+      "nutrients": {
+        "calories": 2000.13,
+        "protein": 44.84,
+        "fat": 151.2,
+        "carbohydrates": 134.42
+      }
+    },
+    "tuesday": {
+      "meals": [
+        {
+          "id": 1100990,
+          "imageType": "jpg",
+          "title": "Blueberry, Chocolate & Cocao Superfood Pancakes - Gluten-Free/Paleo/Vegan",
+          "readyInMinutes": 30,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/blueberry-chocolate-cocao-superfood-pancakes-gluten-free-paleo-vegan-1100990"
+        },
+        {
+          "id": 655822,
+          "imageType": "jpg",
+          "title": "Pesto Fresh Caprese Sandwich",
+          "readyInMinutes": 10,
+          "servings": 1,
+          "sourceUrl": "https://spoonacular.com/pesto-fresh-caprese-sandwich-655822"
+        },
+        {
+          "id": 652919,
+          "imageType": "jpg",
+          "title": "Nachos Grande",
+          "readyInMinutes": 45,
+          "servings": 4,
+          "sourceUrl": "https://spoonacular.com/nachos-grande-652919"
+        }
+      ],
+      "nutrients": {
+        "calories": 1999.88,
+        "protein": 66.54,
+        "fat": 108.63,
+        "carbohydrates": 199.36
+      }
+    },
+    "wednesday": {
+      "meals": [
+        {
+          "id": 640194,
+          "imageType": "jpg",
+          "title": "Country Breakfast: Tofu and Veggie Scramble With Home Fries",
+          "readyInMinutes": 45,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/country-breakfast-tofu-and-veggie-scramble-with-home-fries-640194"
+        },
+        {
+          "id": 1697625,
+          "imageType": "jpg",
+          "title": "Light and Tasty Tomato Basil Mozzarella Pasta for a Hot Summer Evening",
+          "readyInMinutes": 25,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/light-and-tasty-tomato-basil-mozzarella-pasta-for-a-hot-summer-evening-1697625"
+        },
+        {
+          "id": 652679,
+          "imageType": "jpg",
+          "title": "Mushroom Quesadillas",
+          "readyInMinutes": 45,
+          "servings": 4,
+          "sourceUrl": "https://spoonacular.com/mushroom-quesadillas-652679"
+        }
+      ],
+      "nutrients": {
+        "calories": 1999.61,
+        "protein": 89.38,
+        "fat": 100.73,
+        "carbohydrates": 195.13
+      }
+    },
+    "thursday": {
+      "meals": [
+        {
+          "id": 632463,
+          "imageType": "jpg",
+          "title": "Apple and Potato Fritatta",
+          "readyInMinutes": 45,
+          "servings": 8,
+          "sourceUrl": "https://spoonacular.com/apple-and-potato-fritatta-632463"
+        },
+        {
+          "id": 1697625,
+          "imageType": "jpg",
+          "title": "Light and Tasty Tomato Basil Mozzarella Pasta for a Hot Summer Evening",
+          "readyInMinutes": 25,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/light-and-tasty-tomato-basil-mozzarella-pasta-for-a-hot-summer-evening-1697625"
+        },
+        {
+          "id": 654527,
+          "imageType": "jpg",
+          "title": "Paneer And Farro Casserole",
+          "readyInMinutes": 45,
+          "servings": 4,
+          "sourceUrl": "https://spoonacular.com/paneer-and-farro-casserole-654527"
+        }
+      ],
+      "nutrients": {
+        "calories": 2000.15,
+        "protein": 73.63,
+        "fat": 110.39,
+        "carbohydrates": 186.19
+      }
+    },
+    "friday": {
+      "meals": [
+        {
+          "id": 640398,
+          "imageType": "jpg",
+          "title": "Cranberry Orange Scones",
+          "readyInMinutes": 45,
+          "servings": 24,
+          "sourceUrl": "https://spoonacular.com/cranberry-orange-scones-640398"
+        },
+        {
+          "id": 1697625,
+          "imageType": "jpg",
+          "title": "Light and Tasty Tomato Basil Mozzarella Pasta for a Hot Summer Evening",
+          "readyInMinutes": 25,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/light-and-tasty-tomato-basil-mozzarella-pasta-for-a-hot-summer-evening-1697625"
+        },
+        {
+          "id": 654008,
+          "imageType": "jpg",
+          "title": "Orecchiette with Brown Butter, Broccoli, Pine Nuts, and Basil",
+          "readyInMinutes": 45,
+          "servings": 4,
+          "sourceUrl": "https://spoonacular.com/orecchiette-with-brown-butter-broccoli-pine-nuts-and-basil-654008"
+        }
+      ],
+      "nutrients": {
+        "calories": 2000.04,
+        "protein": 55.82,
+        "fat": 93.42,
+        "carbohydrates": 238.61
+      }
+    },
+    "saturday": {
+      "meals": [
+        {
+          "id": 1459207,
+          "imageType": "jpg",
+          "title": "Easy Sheet Pan Pancakes",
+          "readyInMinutes": 30,
+          "servings": 6,
+          "sourceUrl": "https://spoonacular.com/easy-sheet-pan-pancakes-1459207"
+        },
+        {
+          "id": 157344,
+          "imageType": "jpg",
+          "title": "Spicy Salad with Kidney Beans, Cheddar, and Nuts",
+          "readyInMinutes": 10,
+          "servings": 1,
+          "sourceUrl": "https://spoonacular.com/spicy-salad-with-kidney-beans-cheddar-and-nuts-157344"
+        },
+        {
+          "id": 657651,
+          "imageType": "jpg",
+          "title": "Quick Veggie Stir-Fry",
+          "readyInMinutes": 45,
+          "servings": 1,
+          "sourceUrl": "https://spoonacular.com/quick-veggie-stir-fry-657651"
+        }
+      ],
+      "nutrients": {
+        "calories": 1999.88,
+        "protein": 70.92,
+        "fat": 111,
+        "carbohydrates": 199.42
+      }
+    },
+    "sunday": {
+      "meals": [
+        {
+          "id": 640398,
+          "imageType": "jpg",
+          "title": "Cranberry Orange Scones",
+          "readyInMinutes": 45,
+          "servings": 24,
+          "sourceUrl": "https://spoonacular.com/cranberry-orange-scones-640398"
+        },
+        {
+          "id": 1697625,
+          "imageType": "jpg",
+          "title": "Light and Tasty Tomato Basil Mozzarella Pasta for a Hot Summer Evening",
+          "readyInMinutes": 25,
+          "servings": 2,
+          "sourceUrl": "https://spoonacular.com/light-and-tasty-tomato-basil-mozzarella-pasta-for-a-hot-summer-evening-1697625"
+        },
+        {
+          "id": 654008,
+          "imageType": "jpg",
+          "title": "Orecchiette with Brown Butter, Broccoli, Pine Nuts, and Basil",
+          "readyInMinutes": 45,
+          "servings": 4,
+          "sourceUrl": "https://spoonacular.com/orecchiette-with-brown-butter-broccoli-pine-nuts-and-basil-654008"
+        }
+      ],
+      "nutrients": {
+        "calories": 2000.04,
+        "protein": 55.82,
+        "fat": 93.42,
+        "carbohydrates": 238.61
+      }
+    }
+  }
+}

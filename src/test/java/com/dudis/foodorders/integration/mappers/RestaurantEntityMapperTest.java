@@ -3,7 +3,7 @@ package com.dudis.foodorders.integration.mappers;
 import com.dudis.foodorders.domain.Restaurant;
 import com.dudis.foodorders.infrastructure.database.entities.RestaurantEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.RestaurantEntityMapper;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import com.dudis.foodorders.utils.RestaurantUtils;
 import lombok.AllArgsConstructor;
