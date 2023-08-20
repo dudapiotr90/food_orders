@@ -1,0 +1,61 @@
+version: '3.1.1'
+
+services:
+  PostgreSQL:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=food_orders
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - maildev-spring-boot-postgres
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 20s
+      timeout: 15s
+      retries: 5
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    environment:
+      - TZ=Europe/Warsaw
+      - MAILDEV_WEB_PORT=1080
+      - MAILDEV_SMTP_PORT=1025
+    container_name: maildev-container
+    networks:
+      - maildev-spring-boot-postgres
+
+  backend:
+    build: .
+    ports:
+      - 8150:8150
+    environment:
+      #      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/food_orders
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - maildev-spring-boot-postgres
+#      - spring-boot-maildev
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+      maildev:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  maildev:
+
+networks:
+  maildev-spring-boot-postgres:
+#  spring-boot-maildev:
+
+
+

@@ -41,9 +41,10 @@ public class RegistrationController {
         @Valid @ModelAttribute("registrationRequestDTO") RegistrationRequestDTO request,
         ModelMap model
     ) {
-        registrationService.registerAccount(request);
+        String confirmationLink = registrationService.registerAccount(request);
         model.addAttribute("userName", request.getUserName());
         model.addAttribute("userEmail", request.getUserEmail());
+        model.addAttribute("confirmationLink", confirmationLink);
         return new ModelAndView("registration_confirm",model);
     }
 
