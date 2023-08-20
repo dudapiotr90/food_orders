@@ -19,8 +19,6 @@ import static com.dudis.foodorders.infrastructure.security.Role.valueOf;
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
-//    public static final String REGISTRATION_LINK_FORM =
-//        "http://localhost:8150/food-orders" + RegistrationController.REGISTRATION_CONFIRM + "?token=";
     public static final String REGISTRATION_LINK_FORM =
         "http://localhost:%s/food-orders" + RegistrationController.REGISTRATION_CONFIRM + "?token=";
 
