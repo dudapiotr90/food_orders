@@ -57,8 +57,6 @@ public class AccountRepository implements AccountDAO {
     @Override
     public Account updateAccount(Account accountUpdated) {
         AccountEntity updated = accountJpaRepository.save(accountEntityMapper.mapToEntity(accountUpdated));
-        updated.setEnabled(true);
-        updated.setUnlocked(true);
         return accountEntityMapper.mapFromEntity(updated);
     }
 

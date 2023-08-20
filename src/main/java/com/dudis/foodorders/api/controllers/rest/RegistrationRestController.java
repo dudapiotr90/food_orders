@@ -4,18 +4,14 @@ import com.dudis.foodorders.api.dtos.RegistrationRequestDTO;
 import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
 import com.dudis.foodorders.services.AccountService;
-import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @AllArgsConstructor

@@ -7,7 +7,6 @@ import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import com.dudis.foodorders.infrastructure.security.entity.AccountManagerEntity;
 import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
-import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
@@ -317,6 +316,57 @@ public class AccountUtils {
             .userPassword("developer")
             .userConfirmPassword("developer")
             .userEmail("developer@email.com")
+            .userPhone("+48 963 258 741")
+            .role("DEVELOPER")
+            .userAddressCity("DeveloperCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("DeveloperStreet")
+            .userResidenceNumber("5")
+            .build();
+    }
+
+    public static RegistrationRequestDTO customerToDelete() {
+        return RegistrationRequestDTO.builder()
+            .userName("CustomerToDelete")
+            .userSurname("Buyer")
+            .userLogin("custToDelete")
+            .userPassword("custToDelete")
+            .userConfirmPassword("custToDelete")
+            .userEmail("custToDelete@email.com")
+            .userPhone("+48 123 456 789")
+            .role("CUSTOMER")
+            .userAddressCity("CustomerCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("CustomerStreet")
+            .userResidenceNumber("5")
+            .build();
+    }
+
+    public static RegistrationRequestDTO ownerToDelete() {
+        return RegistrationRequestDTO.builder()
+            .userName("OwnerToDelete")
+            .userSurname("Seller")
+            .userLogin("ownToDelete")
+            .userPassword("ownToDelete")
+            .userConfirmPassword("ownToDelete")
+            .userEmail("ownToDelete@email.com")
+            .userPhone("+48 987 654 321")
+            .role("OWNER")
+            .userAddressCity("OwnerCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("OwnerStreet")
+            .userResidenceNumber("5")
+            .build();
+    }
+
+    public static RegistrationRequestDTO developerToDelete() {
+        return RegistrationRequestDTO.builder()
+            .userName("DeveloperToDelete")
+            .userSurname("Programmer")
+            .userLogin("devToDelete")
+            .userPassword("devToDelete")
+            .userConfirmPassword("devToDelete")
+            .userEmail("devToDelete@email.com")
             .userPhone("+48 963 258 741")
             .role("DEVELOPER")
             .userAddressCity("DeveloperCity")

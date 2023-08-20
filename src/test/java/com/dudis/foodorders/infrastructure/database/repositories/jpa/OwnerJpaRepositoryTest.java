@@ -5,7 +5,6 @@ import com.dudis.foodorders.integration.configuration.PersistanceContainerTestCo
 import com.dudis.foodorders.utils.AccountUtils;
 import com.dudis.foodorders.utils.OwnerUtils;
 import lombok.AllArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -15,7 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")

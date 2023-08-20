@@ -18,8 +18,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import java.io.IOException;
-
 public abstract class RestAssuredIntegrationTestBase
     extends AbstractIntegrationTest
     implements TestSupport, AuthenticationTestSupport {
@@ -48,17 +46,6 @@ public abstract class RestAssuredIntegrationTestBase
         wireMockServer.stop();
     }
 
-//    @BeforeEach
-//    void beforeEach() {
-
-//        jSessionIdValue = login("api_user", "test")
-//            .and()
-//            .cookie("JSESSIONID")
-//            .header(HttpHeaders.LOCATION, "http://localhost:%s%s/".formatted(port, basePath))
-//            .extract()
-//            .cookie("JSESSIONID");
-//    }
-
     @Override
     public ObjectMapper getObjectMapper() {
         return objectMapper;
@@ -86,7 +73,6 @@ public abstract class RestAssuredIntegrationTestBase
         return restAssuredBase()
             .accept(ContentType.JSON)
             .contentType(ContentType.JSON)
-//            .header("x-api-key", RANDOM_API_KEY)
             .cookie("JSESSIONID", jSessionIdValue);
     }
 

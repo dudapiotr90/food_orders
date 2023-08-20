@@ -66,11 +66,12 @@ public abstract class AbstractIntegrationTest {
 
         List.of(customerToken, developerToken, ownerToken).forEach(t->registrationService.confirmToken(
             t.substring(t.indexOf("=")+1)));
-        confirmationTokenJpaRepository.deleteAll();
+//        confirmationTokenJpaRepository.deleteAll();
     }
 
     @AfterEach
     public void after() {
+        confirmationTokenJpaRepository.deleteAll();
         customerJpaRepository.deleteAll();
         ownerJpaRepository.deleteAll();
         developerJpaRepository.deleteAll();

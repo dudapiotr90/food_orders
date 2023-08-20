@@ -4,7 +4,6 @@ import com.dudis.foodorders.infrastructure.database.entities.FoodEntity;
 import com.dudis.foodorders.infrastructure.database.entities.MenuEntity;
 import com.dudis.foodorders.integration.configuration.PersistanceContainerTestConfiguration;
 import lombok.AllArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.dudis.foodorders.utils.FoodUtils.someFoodEntities;
-import static com.dudis.foodorders.utils.FoodUtils.someFoodEntity2;
-import static com.dudis.foodorders.utils.MenuUtils.someMenuEntity1;
 import static com.dudis.foodorders.utils.MenuUtils.someMenuToPersist1;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
