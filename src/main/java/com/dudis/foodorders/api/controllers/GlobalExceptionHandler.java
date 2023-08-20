@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = NotFoundException.class)
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handleNotFoundException(NotFoundException ex) {
         String errorMessage = prepareExceptionInfo(ex);
         return prepareExceptionView(errorMessage);
