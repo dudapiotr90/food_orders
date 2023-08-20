@@ -1,0 +1,34 @@
+{
+  "meals": [
+    {
+      "id": 639728,
+      "imageType": "jpg",
+      "title": "Coconut Bliss Smoothie",
+      "readyInMinutes": 45,
+      "servings": 4,
+      "sourceUrl": "https://spoonacular.com/coconut-bliss-smoothie-639728"
+    },
+    {
+      "id": 1697625,
+      "imageType": "jpg",
+      "title": "Light and Tasty Tomato Basil Mozzarella Pasta for a Hot Summer Evening",
+      "readyInMinutes": 25,
+      "servings": 2,
+      "sourceUrl": "https://spoonacular.com/light-and-tasty-tomato-basil-mozzarella-pasta-for-a-hot-summer-evening-1697625"
+    },
+    {
+      "id": 648852,
+      "imageType": "jpg",
+      "title": "Khachapuri",
+      "readyInMinutes": 45,
+      "servings": 8,
+      "sourceUrl": "https://spoonacular.com/khachapuri-648852"
+    }
+  ],
+  "nutrients": {
+    "calories": 2000.2,
+    "protein": 73.83,
+    "fat": 121.8,
+    "carbohydrates": 160.13
+  }
+}

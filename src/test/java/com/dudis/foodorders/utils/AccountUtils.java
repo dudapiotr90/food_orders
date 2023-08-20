@@ -5,6 +5,9 @@ import com.dudis.foodorders.api.dtos.UpdateAccountDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Address;
 import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
+import com.dudis.foodorders.infrastructure.security.entity.AccountManagerEntity;
+import com.dudis.foodorders.infrastructure.security.entity.ApiRoleEntity;
+import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
@@ -112,6 +115,7 @@ public class AccountUtils {
             .roleId(4)
             .build();
     }
+
     public static RegistrationRequestDTO someRegistrationRequest() {
         return RegistrationRequestDTO.builder()
             .userName("someName")
@@ -196,17 +200,18 @@ public class AccountUtils {
 
     private static String randomLogin() {
         Random random = new Random();
-        int length = random.nextInt(9)+4;
+        int length = random.nextInt(9) + 4;
 
         StringBuilder randomString = generateRandomString(random, length);
         return randomString.toString();
     }
+
     private static String randomEmail() {
         Random random = new Random();
-        int length = random.nextInt(5)+4;
+        int length = random.nextInt(5) + 4;
 
         StringBuilder randomString = generateRandomString(random, length);
-        return randomString+ "@" + randomString;
+        return randomString + "@" + randomString;
     }
 
     @NotNull
@@ -219,5 +224,105 @@ public class AccountUtils {
             randomString.append(randomChar);
         }
         return randomString;
+    }
+
+    public static AccountEntity someCustomerAccountForIntegrationTest() {
+        return AccountEntity.builder()
+            .email("customer@email.com")
+            .login("customer")
+            .password("customer")
+            .phone("+48 123 456 789")
+            .creationDate(OffsetDateTime.of(2000, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
+            .enabled(true)
+            .unlocked(true)
+            .status(true)
+            .roleId(2)
+            .build();
+    }
+
+    public static AccountEntity someOwnerAccountForIntegrationTest() {
+        return AccountEntity.builder()
+            .email("owner@email.com")
+            .login("owner")
+            .password("owner")
+            .phone("+48 987 654 321")
+            .creationDate(OffsetDateTime.of(2001, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
+            .enabled(true)
+            .unlocked(true)
+            .status(true)
+            .roleId(3)
+            .build();
+    }
+
+    public static AccountEntity someDeveloperAccountForIntegrationTest() {
+        return AccountEntity.builder()
+            .email("developer@email.com")
+            .login("developer")
+            .password("developer")
+            .phone("+48 963 258 741")
+            .creationDate(OffsetDateTime.of(2002, 2, 2, 1, 10, 0, 0, ZoneOffset.UTC))
+            .enabled(true)
+            .unlocked(true)
+            .status(true)
+            .roleId(4)
+            .build();
+    }
+
+    public static AccountManagerEntity buildAccess(ApiRoleEntity role, AccountEntity registeredAccount) {
+        return AccountManagerEntity.builder()
+            .accountId(registeredAccount.getAccountId())
+            .apiRoleId(role.getApiRoleId())
+            .build();
+    }
+
+    public static RegistrationRequestDTO customerRequest() {
+        return RegistrationRequestDTO.builder()
+            .userName("Customer")
+            .userSurname("Buyer")
+            .userLogin("customer")
+            .userPassword("customer")
+            .userConfirmPassword("customer")
+            .userEmail("customer@email.com")
+            .userPhone("+48 123 456 789")
+            .role("CUSTOMER")
+            .userAddressCity("CustomerCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("CustomerStreet")
+            .userResidenceNumber("5")
+            .build();
+    }
+
+    public static RegistrationRequestDTO ownerRequest() {
+        return RegistrationRequestDTO.builder()
+            .userName("Owner")
+            .userSurname("Seller")
+            .userLogin("owner")
+            .userPassword("owner")
+            .userConfirmPassword("owner")
+            .userEmail("owner@email.com")
+            .userPhone("+48 987 654 321")
+            .role("OWNER")
+            .userAddressCity("OwnerCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("OwnerStreet")
+            .userResidenceNumber("5")
+            .build();
+    }
+
+    public static RegistrationRequestDTO developerRequest() {
+        return RegistrationRequestDTO.builder()
+            .userName("Developer")
+            .userSurname("Programmer")
+            .userLogin("developer")
+            .userPassword("developer")
+            .userConfirmPassword("developer")
+            .userEmail("developer@email.com")
+            .userPhone("+48 963 258 741")
+            .role("DEVELOPER")
+            .userAddressCity("DeveloperCity")
+            .userAddressPostalCode("00-000")
+            .userAddressStreet("DeveloperStreet")
+            .userResidenceNumber("5")
+            .build();
     }
 }

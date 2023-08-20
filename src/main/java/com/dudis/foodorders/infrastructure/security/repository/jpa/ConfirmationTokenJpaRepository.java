@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,4 +23,11 @@ public interface ConfirmationTokenJpaRepository extends JpaRepository<Confirmati
         WHERE ct.token = ?1
         """)
     void updateConfirmedAt(String token, OffsetDateTime confirmedAt);
+
+    @Modifying
+    @Query(value = """
+        DELETE FROM confirmation_token ct
+        WHERE ct.account_id IN (:ids)
+        """,nativeQuery = true)
+    void deleteAllByAccountIds(List<Integer> ids);
 }

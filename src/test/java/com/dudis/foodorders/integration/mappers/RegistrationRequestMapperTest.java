@@ -1,6 +1,6 @@
 package com.dudis.foodorders.integration.mappers;
 
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

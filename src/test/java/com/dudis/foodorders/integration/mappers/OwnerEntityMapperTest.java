@@ -3,7 +3,7 @@ package com.dudis.foodorders.integration.mappers;
 import com.dudis.foodorders.domain.Owner;
 import com.dudis.foodorders.infrastructure.database.entities.OwnerEntity;
 import com.dudis.foodorders.infrastructure.database.mappers.OwnerEntityMapper;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.EntityAssertionsUtils;
 import com.dudis.foodorders.utils.OwnerUtils;
 import lombok.AllArgsConstructor;

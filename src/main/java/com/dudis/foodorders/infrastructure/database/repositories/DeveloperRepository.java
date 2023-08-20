@@ -42,4 +42,9 @@ public class DeveloperRepository implements DeveloperDAO {
        return developerJpaRepository.findByAccountId(accountId)
            .map(developerEntityMapper::mapFromEntity);
     }
+
+    @Override
+    public void deleteByAccountId(Integer accountId) {
+        developerJpaRepository.deleteByAccount(accountId);
+    }
 }

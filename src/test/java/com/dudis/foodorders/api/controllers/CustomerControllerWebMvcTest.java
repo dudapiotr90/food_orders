@@ -4,7 +4,7 @@ import com.dudis.foodorders.api.dtos.*;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.Cart;
 import com.dudis.foodorders.infrastructure.security.SecurityUtils;
-import com.dudis.foodorders.integration.configuration.ControllersSupport;
+import com.dudis.foodorders.integration.support.ControllersSupport;
 import com.dudis.foodorders.services.BillService;
 import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.OrderService;

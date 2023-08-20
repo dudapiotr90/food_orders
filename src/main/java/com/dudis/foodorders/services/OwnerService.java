@@ -107,4 +107,8 @@ public class OwnerService {
             .account(ownerAccount)
             .build();
     }
+
+    public void deleteOwner(Integer accountId) {
+        ownerDAO.deleteByAccountId(accountId);
+    }
 }

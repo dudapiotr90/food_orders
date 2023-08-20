@@ -2,7 +2,7 @@ package com.dudis.foodorders.api.controllers;
 
 
 import com.dudis.foodorders.api.mappers.FoodMapper;
-import com.dudis.foodorders.integration.configuration.ControllersSupport;
+import com.dudis.foodorders.integration.support.ControllersSupport;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

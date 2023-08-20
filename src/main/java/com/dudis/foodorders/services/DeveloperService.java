@@ -38,4 +38,8 @@ public class DeveloperService {
             .account(developerAccount)
             .build();
     }
+
+    public void deleteDeveloper(Integer accountId) {
+        developerDAO.deleteByAccountId(accountId);
+    }
 }

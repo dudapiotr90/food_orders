@@ -1,7 +1,8 @@
 package com.dudis.foodorders.api.controllers.rest;
 
-public class DeveloperEndpoint {
-    public static final String DEV = "/developer";
+import org.springframework.web.bind.annotation.DeleteMapping;
 
+public abstract class DeveloperEndpoint {
+    public static final String DEV = "/developer";
 
 }

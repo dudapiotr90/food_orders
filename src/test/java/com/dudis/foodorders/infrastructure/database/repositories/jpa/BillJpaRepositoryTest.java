@@ -4,7 +4,6 @@ import com.dudis.foodorders.infrastructure.database.entities.*;
 import com.dudis.foodorders.integration.configuration.PersistanceContainerTestConfiguration;
 import com.dudis.foodorders.utils.BillUtils;
 import com.dudis.foodorders.utils.OrderUtils;
-import com.dudis.foodorders.utils.OwnerUtils;
 import com.dudis.foodorders.utils.RestaurantUtils;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -20,7 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
@@ -30,7 +29,6 @@ import static org.assertj.core.api.Assertions.*;
 class BillJpaRepositoryTest {
 
     private BillJpaRepository billJpaRepository;
-
     private OwnerJpaRepository ownerJpaRepository;
     private CustomerJpaRepository customerJpaRepository;
     private RestaurantJpaRepository restaurantJpaRepository;

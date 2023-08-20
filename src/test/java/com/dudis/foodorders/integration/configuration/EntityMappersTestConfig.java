@@ -1,4 +1,4 @@
-package com.dudis.foodorders.integration;
+package com.dudis.foodorders.integration.configuration;
 
 import com.dudis.foodorders.api.mappers.DTOMappersMarker;
 import com.dudis.foodorders.infrastructure.database.mappers.EntityMappersMarker;

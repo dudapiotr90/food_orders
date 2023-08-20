@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -59,6 +60,18 @@ public class AccountRepository implements AccountDAO {
         updated.setEnabled(true);
         updated.setUnlocked(true);
         return accountEntityMapper.mapFromEntity(updated);
+    }
+
+    @Override
+    public void deleteNotConfirmedAccounts() {
+        accountJpaRepository.deleteAllByEnabled(false);
+    }
+
+    @Override
+    public List<Account> findAllAccountByEnabled(boolean enabled) {
+        return accountJpaRepository.findAllByEnabled(enabled).stream()
+            .map(accountEntityMapper::mapFromEntity)
+            .toList();
     }
 
     @Override

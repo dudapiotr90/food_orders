@@ -3,7 +3,7 @@ package com.dudis.foodorders.integration.mappers;
 import com.dudis.foodorders.api.dtos.FoodDTO;
 import com.dudis.foodorders.api.mappers.FoodMapper;
 import com.dudis.foodorders.domain.Food;
-import com.dudis.foodorders.integration.EntityMappersTestConfig;
+import com.dudis.foodorders.integration.configuration.EntityMappersTestConfig;
 import com.dudis.foodorders.utils.FoodUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
