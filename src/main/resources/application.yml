@@ -58,7 +58,7 @@ spring:
 api:
   spoonacular:
     url: https://api.spoonacular.com/
-    apiKey: 0cc7ff8c36614fef9237a26097f2c7ad
+    apiKey: YOUR_NEW_API_KEY_HERE
 
 
 springdoc:
