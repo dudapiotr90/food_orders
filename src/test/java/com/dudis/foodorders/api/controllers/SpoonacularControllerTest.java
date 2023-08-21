@@ -93,7 +93,7 @@ class SpoonacularControllerTest {
 
     @Test
     void searchRandomVideoRecipeWorksCorrectly() throws Exception {
-        //
+        // Given
         SearchSpoonacularParametersDTO parameters = SpoonacularUtils.someParameters();
         when(spoonacularService.searchForRandomVideoRecipe(parameters))
             .thenReturn(SpoonacularUtils.someVideoData1());

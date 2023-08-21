@@ -179,5 +179,5 @@ If you encounter issues with container startup or communication, ensure that you
 Contributions are welcome! If you find any issues or have suggestions, please create an issue or a pull request.
 
 
-Hope you enjoy using my application!
+Enjoy using My Awesome Application!
 

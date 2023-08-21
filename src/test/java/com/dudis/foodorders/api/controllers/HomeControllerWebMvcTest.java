@@ -22,7 +22,7 @@ class HomeControllerWebMvcTest {
 
     @Test
     void homeControllerWorksCorrectly() throws Exception {
-        // given, when, then
+        // Given, When, Then
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("index"))

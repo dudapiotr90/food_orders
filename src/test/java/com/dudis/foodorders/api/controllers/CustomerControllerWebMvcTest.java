@@ -133,7 +133,7 @@ class CustomerControllerWebMvcTest extends ControllersSupport {
 
         when(customerService.findCustomerRealizedOrders(CUSTOMER_ID, pageNumber, 2, sortHow, sortBy)).thenReturn(orders);
 
-        // When
+        // When, Then
         ResultActions perform = mockMvc.perform(get(ORDER_HISTORY, CUSTOMER_ID));
             andExpect(perform);
     }
@@ -176,6 +176,7 @@ class CustomerControllerWebMvcTest extends ControllersSupport {
         when(customerService.findCustomerRealizedOrders(customerId, pageNumber, 2, sortHow, sortBy))
             .thenReturn(orders);
 
+        // When, Then
         ResultActions perform = mockMvc.perform(get(ORDER_HISTORY_PAGINATED, customerId, pageNumber)
             .param("sortHow", sortHow)
             .param("sortBy", sortBy));
