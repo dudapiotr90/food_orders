@@ -56,6 +56,7 @@ public abstract class AbstractIntegrationTest {
     @Value("${server.servlet.context-path}")
     protected String basePath;
 
+
     @BeforeEach
     public void before() throws ReflectiveOperationException {
         doNothing().when(emailSender).send(anyString(),anyString());
@@ -66,7 +67,6 @@ public abstract class AbstractIntegrationTest {
 
         List.of(customerToken, developerToken, ownerToken).forEach(t->registrationService.confirmToken(
             t.substring(t.indexOf("=")+1)));
-//        confirmationTokenJpaRepository.deleteAll();
     }
 
     @AfterEach
