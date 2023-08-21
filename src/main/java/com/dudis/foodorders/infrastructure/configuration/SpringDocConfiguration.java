@@ -27,12 +27,12 @@ public class SpringDocConfiguration {
             .info(new Info()
                 .title("Food Orders Api")
                 .contact(contact())
-                .version("0.0.1"));
+                .version("v1.0"));
     }
 
     private Contact contact() {
         return new Contact()
             .name("Piotr")
-            .email("piotrjavatestowy@gmail.com");
+            .email("dudapiotr90@gmail.com");
     }
 }
