@@ -32,13 +32,6 @@ public class OrderRepository implements OrderDAO {
     @Autowired
     private final Clock clock;
 
-//    @Override
-//    public List<Order> findCancelableOrders(Integer customerId) {
-//        return orderJpaRepository.findCancelableOrders(customerId).stream()
-//            .filter(orderEntity -> orderEntity.getCancelTill().isAfter(OffsetDateTime.now()))
-//            .map(orderEntityMapper::mapFromEntity)
-//            .toList();
-//    }
     @Override
     public List<Order> findCancelableOrders(Integer customerId) {
         return orderJpaRepository.findCancelableOrders(customerId).stream()

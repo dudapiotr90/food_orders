@@ -17,5 +17,4 @@ public class BillDTO {
    private CustomerDTO customer;
    private OrderDTO order;
    private BigDecimal amount;
-   //   private OffsetDateTime dateTime;
 }

@@ -73,7 +73,7 @@ class RestaurantControllerWebMvcTest extends ControllersSupport {
         when(restaurantService.findPayedOrdersAndNotRealized(anyInt()))
             .thenReturn(someOrdersDTO());
 
-        // When
+        // When, Then
         mockMvc.perform(get(OWNER + MANAGE, OWNER_ID, RESTAURANT_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("local_manager"))

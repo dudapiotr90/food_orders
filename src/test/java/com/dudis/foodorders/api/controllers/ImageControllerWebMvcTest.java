@@ -33,7 +33,7 @@ class ImageControllerWebMvcTest extends ControllersSupport {
         String someImagePath = "some/image/path/to/show/";
         Mockito.when(foodMapper.mapFoodImage(someImagePath)).thenReturn("some/coded/path");
 
-        // When
+        // When, Then
         mockMvc.perform(MockMvcRequestBuilders.get(ImageController.SHOW_IMAGE, someOwnerId, someRestaurantId)
                 .param("foodImagePath", someImagePath))
             .andExpect(status().isOk())

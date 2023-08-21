@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-//@Transactional(readOnly = true)
 public interface ConfirmationTokenJpaRepository extends JpaRepository<ConfirmationToken, Integer> {
 
     Optional<ConfirmationToken> findByToken(String token);

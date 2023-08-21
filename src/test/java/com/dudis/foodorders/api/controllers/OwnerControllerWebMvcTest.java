@@ -70,7 +70,7 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
         when(billService.findOwnerPendingBills(OWNER_ID,false)).thenReturn(someBillsDTO());
         when(ownerService.findOwnerById(anyInt())).thenReturn(someOwnerDTO1());
 
-        // When
+        // When, Then
          mockMvc.perform(get(OwnerController.OWNER_PAGE, OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("restaurants"))
@@ -122,7 +122,7 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
         when(ownerService.findOwnerRealizedOrders(anyInt(), anyInt(), anyInt(), anyString(), anyString()))
             .thenReturn(orders);
 
-        // When
+        // When, Then
         mockMvc.perform(get(ORDER_HISTORY, OWNER_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("owner_order_history"))
