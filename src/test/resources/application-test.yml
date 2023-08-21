@@ -1,7 +1,7 @@
 api:
   spoonacular:
     url: http://localhost:9999
-    api-key: 0cc7ff8c36614fef9237a26097f2c7ad
+    apiKey: 0cc7ff8c36614fef9237a26097f2c7ad
 
 spring:
   jpa:

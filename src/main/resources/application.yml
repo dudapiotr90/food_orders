@@ -60,7 +60,6 @@ api:
     url: https://api.spoonacular.com/
     apiKey: YOUR_NEW_API_KEY_HERE
 
-
 springdoc:
   api-docs:
     path: /developer/api-docs
