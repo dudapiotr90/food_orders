@@ -36,7 +36,6 @@ public class OwnerController {
 
     @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = OWNER)
-    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
     public String getOwnerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount.getAccountId());
@@ -59,7 +58,6 @@ public class OwnerController {
     }
 
     @PostMapping(value = OWNER_ADD)
-    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
     public String addRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
