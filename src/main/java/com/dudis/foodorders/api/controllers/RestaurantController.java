@@ -147,7 +147,6 @@ public class RestaurantController {
 
 
     @PutMapping(REALIZE_ORDER)
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String realizeOrder(
         @PathVariable(value = "id") Integer ownerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
