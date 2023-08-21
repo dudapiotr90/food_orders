@@ -31,7 +31,6 @@ public class CartController {
 
 
     @PutMapping(UPDATE_CART)
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String updateCartPosition(
         @PathVariable(value = "id") Integer customerId,
         @ModelAttribute("foodToUpdate") OrderItemDTO orderItem,
@@ -44,7 +43,6 @@ public class CartController {
 
 
     @DeleteMapping(DELETE_FROM_CART)
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String deleteFromCart(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "orderItemId") Integer orderItemId,
@@ -88,7 +86,6 @@ public class CartController {
     }
 
     @PostMapping(value = CUSTOMER_ADD_TO_CART)
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String addFoodToCart(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "restaurantId") Integer restaurantId,
