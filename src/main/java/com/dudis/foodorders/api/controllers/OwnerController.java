@@ -59,7 +59,7 @@ public class OwnerController {
     }
 
     @PostMapping(value = OWNER_ADD)
-    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String addRestaurant(
         @PathVariable(value = "id") Integer ownerId,
         @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,

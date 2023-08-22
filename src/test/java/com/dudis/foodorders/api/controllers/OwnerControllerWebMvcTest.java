@@ -107,7 +107,7 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
 
         // When, Then
         mockMvc.perform(post(OWNER_ADD, OWNER_ID,someRestaurant))
-            .andExpect(status().isPermanentRedirect())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl(OWNER + "/" + OWNER_ID));
 
     }

@@ -140,31 +140,4 @@ public class FoodUtils {
         return Set.of(someFoodEntity1(), someFoodEntity2(), someFoodEntity3());
     }
 
-//    public static FoodEntity foodForJpaTest1() {
-//        return FoodEntity.builder()
-//            .name("Finlandia")
-//            .price(new BigDecimal("20.00"))
-//            .foodType("DRINK")
-//            .build();
-//    }
-//
-//    public static FoodEntity foodForJpaTest2() {
-//        return FoodEntity.builder()
-//            .name("sophia")
-//            .price(new BigDecimal("17.00"))
-//            .foodType("WINE")
-//            .build();
-//    }
-//
-//    public static FoodEntity foodForJpaTest3() {
-//        return FoodEntity.builder()
-//            .name("bulka tarta")
-//            .price(new BigDecimal("45.00"))
-//            .foodType("APPETIZER")
-//            .build();
-//    }
-//
-//    public static List<FoodEntity> foodListForJpaTest() {
-//        return List.of(foodForJpaTest1(), foodForJpaTest2(), foodForJpaTest3());
-//    }
 }
