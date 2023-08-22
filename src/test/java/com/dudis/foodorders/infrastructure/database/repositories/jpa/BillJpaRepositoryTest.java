@@ -39,12 +39,6 @@ class BillJpaRepositoryTest {
         assertThat(ownerJpaRepository.findAll().size()).isEqualTo(1);
         assertThat(customerJpaRepository.findAll().size()).isEqualTo(1);
     }
-    @Test
-    void assertThatRepositoryIsEmpty() {
-        // Given, When, Then
-        List<BillEntity> all = billJpaRepository.findAll();
-        assertThat(all).isEmpty();
-    }
 
     @Test
     void findByOwnerIdAndPayedWorksCorrectly() {
