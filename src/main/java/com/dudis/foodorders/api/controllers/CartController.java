@@ -7,7 +7,6 @@ import com.dudis.foodorders.services.CustomerService;
 import com.dudis.foodorders.services.RestaurantService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;

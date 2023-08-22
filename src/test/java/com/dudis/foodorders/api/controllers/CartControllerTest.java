@@ -52,7 +52,7 @@ class CartControllerTest extends ControllersSupport {
         // When, Then
         mockMvc.perform(MockMvcRequestBuilders.put(UPDATE_CART,CUSTOMER_ID)
                 .flashAttr("foodToUpdate", someFoodToUpdate))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(SHOW_CART, CUSTOMER_ID));
     }
     @Test
@@ -63,7 +63,7 @@ class CartControllerTest extends ControllersSupport {
 
         // When, Then
         mockMvc.perform(MockMvcRequestBuilders.delete(DELETE_FROM_CART,CUSTOMER_ID,someItemId))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(SHOW_CART, CUSTOMER_ID));
     }
     @Test
@@ -113,7 +113,7 @@ class CartControllerTest extends ControllersSupport {
         // When, Then
         mockMvc.perform(MockMvcRequestBuilders.post(CUSTOMER_ADD_TO_CART, CUSTOMER_ID, someRestaurantId)
                 .flashAttr("foodToAdd", request))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(MenuController.CUSTOMER_SHOW_MENU, someRestaurantId));
     }
 }

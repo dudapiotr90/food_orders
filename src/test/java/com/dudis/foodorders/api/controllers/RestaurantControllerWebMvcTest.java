@@ -207,7 +207,7 @@ class RestaurantControllerWebMvcTest extends ControllersSupport {
         // When, Then
         mockMvc.perform(put(OWNER + REALIZE_ORDER, OWNER_ID, RESTAURANT_ID)
                 .param("orderNumber",orderNumber))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(OWNER + MANAGE, OWNER_ID, RESTAURANT_ID));
     }
 

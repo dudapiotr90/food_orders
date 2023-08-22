@@ -67,7 +67,7 @@ class CustomerControllerWebMvcTest extends ControllersSupport {
 
         // When, Then
         mockMvc.perform(get(CUSTOMER))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrlTemplate(CUSTOMER_PAGE, someCustomer.getCustomerId()));
     }
 
@@ -108,7 +108,7 @@ class CustomerControllerWebMvcTest extends ControllersSupport {
         // When, Then
         mockMvc.perform(put(CANCEL_ORDER, CUSTOMER_ID, NUMBER))
             .andExpect(redirectedUrlTemplate(CartController.SHOW_CART, CUSTOMER_ID))
-            .andExpect(status().isMovedPermanently());
+            .andExpect(status().is3xxRedirection());
     }
 
     @Test

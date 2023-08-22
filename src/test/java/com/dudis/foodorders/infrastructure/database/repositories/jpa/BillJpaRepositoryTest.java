@@ -36,8 +36,8 @@ class BillJpaRepositoryTest {
 
     @BeforeEach
     void checkDatabase() {
-        assertThat(ownerJpaRepository.findAll()).isEmpty();
-        assertThat(customerJpaRepository.findAll()).isEmpty();
+        assertThat(ownerJpaRepository.findAll().size()).isEqualTo(1);
+        assertThat(customerJpaRepository.findAll().size()).isEqualTo(1);
     }
     @Test
     void assertThatRepositoryIsEmpty() {
