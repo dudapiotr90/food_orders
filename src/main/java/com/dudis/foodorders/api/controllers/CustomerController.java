@@ -36,6 +36,7 @@ public class CustomerController {
     private final BillService billService;
 
     @GetMapping(value = CUSTOMER)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String getCustomerPage(HttpServletRequest request) {
         Account loggedAccount = securityUtils.getLoggedInAccountId(request);
         CustomerDTO customer = customerService.findCustomerByAccountId(loggedAccount.getAccountId());
@@ -50,6 +51,7 @@ public class CustomerController {
     }
 
     @PutMapping(CANCEL_ORDER)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String cancelOrder(
         @PathVariable(value = "id") Integer customerId,
         @PathVariable(value = "orderNumber") String orderNumber,
@@ -63,6 +65,7 @@ public class CustomerController {
     }
 
     @PutMapping(PAY)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public String payForOrder(
         @PathVariable(value = "id") Integer customerId,
         @RequestParam(value = "billNumber") String billNumber,
