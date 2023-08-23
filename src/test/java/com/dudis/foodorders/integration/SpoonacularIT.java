@@ -19,7 +19,7 @@ public class SpoonacularIT
     @Test
     void randomMealPlanWorksCorrectly() {
         // Given
-        logInto("developer","developer");
+        logInto("devITtest","developer");
 
         String timeFrame = "day";
         String timeFrame2 = "week";

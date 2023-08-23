@@ -27,7 +27,7 @@ public class  MenuEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "menu")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "menu",cascade = CascadeType.REMOVE)
     private Set<FoodEntity> foods;
 
 }

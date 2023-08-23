@@ -21,7 +21,7 @@ public class DeveloperIT
     @Test
     void inactiveAccountsDeleteSuccessfully() {
         // Given
-        logInto("developer", "developer");
+        logInto("devITtest", "developer");
         List<String> listOfTokens = registerAccountsForDeletion();
         long allAccounts = findAllAccounts();
         assertThat(allAccounts).isGreaterThan(3);
@@ -38,7 +38,7 @@ public class DeveloperIT
     @Test
     void updateAccountSuccessfully() {
         // Given
-        logInto("developer","developer");
+        logInto("devITtest","developer");
         RegistrationRequestDTO request = AccountUtils.developerToDelete();
         String accountToUpdate = registerAccount(request);
         assertThat(accountToUpdate).isNotEmpty();
@@ -53,7 +53,7 @@ public class DeveloperIT
     @Test
     void updateAccountWithNonExistingEmail() {
         // Given
-        logInto("developer","developer");
+        logInto("devITtest","developer");
         RegistrationRequestDTO request = AccountUtils.developerToDelete();
         String accountToUpdate = registerAccount(request);
         assertThat(accountToUpdate).isNotEmpty();

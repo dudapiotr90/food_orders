@@ -1,10 +1,9 @@
 package com.dudis.foodorders.integration.configuration;
 
 import com.dudis.foodorders.FoodOrdersApplication;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.CustomerJpaRepository;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.DeveloperJpaRepository;
-import com.dudis.foodorders.infrastructure.database.repositories.jpa.OwnerJpaRepository;
+import com.dudis.foodorders.infrastructure.database.repositories.jpa.*;
 import com.dudis.foodorders.infrastructure.security.RegistrationService;
+import com.dudis.foodorders.infrastructure.security.entity.AccountEntity;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.AccountJpaRepository;
 import com.dudis.foodorders.infrastructure.security.repository.jpa.ConfirmationTokenJpaRepository;
 import com.dudis.foodorders.services.EmailSender;
@@ -33,6 +32,10 @@ import static org.mockito.Mockito.doNothing;
 )
 public abstract class AbstractIntegrationTest {
 
+    @LocalServerPort
+    protected int port;
+    @Value("${server.servlet.context-path}")
+    protected String basePath;
     @Autowired
     private OwnerJpaRepository ownerJpaRepository;
     @Autowired
@@ -42,36 +45,38 @@ public abstract class AbstractIntegrationTest {
     @Autowired
     private AccountJpaRepository accountJpaRepository;
     @Autowired
+    private AddressJpaRepository addressJpaRepository;
+    @Autowired
     private RegistrationService registrationService;
-
     @Autowired
     private ConfirmationTokenJpaRepository confirmationTokenJpaRepository;
 
+    @Autowired
+    private MenuJpaRepository menuJpaRepository;
+
+    @Autowired
+    private RestaurantJpaRepository restaurantJpaRepository;
     @MockBean
     private EmailSender emailSender;
 
-    @LocalServerPort
-    protected int port;
-
-    @Value("${server.servlet.context-path}")
-    protected String basePath;
-
-
     @BeforeEach
     public void before() throws ReflectiveOperationException {
-        doNothing().when(emailSender).send(anyString(),anyString());
+        doNothing().when(emailSender).send(anyString(), anyString());
         ReflectionTestUtils.setField(registrationService, "port", String.valueOf(port));
         String customerToken = registrationService.registerAccount(AccountUtils.customerRequest());
         String developerToken = registrationService.registerAccount(AccountUtils.developerRequest());
         String ownerToken = registrationService.registerAccount(AccountUtils.ownerRequest());
 
-        List.of(customerToken, developerToken, ownerToken).forEach(t->registrationService.confirmToken(
-            t.substring(t.indexOf("=")+1)));
+        List.of(customerToken, developerToken, ownerToken).forEach(t -> registrationService.confirmToken(
+            t.substring(t.indexOf("=") + 1)));
     }
 
     @AfterEach
     public void after() {
+        addressJpaRepository.deleteAll();
         confirmationTokenJpaRepository.deleteAll();
+        restaurantJpaRepository.deleteAll();
+        menuJpaRepository.deleteAll();
         customerJpaRepository.deleteAll();
         ownerJpaRepository.deleteAll();
         developerJpaRepository.deleteAll();

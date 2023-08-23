@@ -54,7 +54,7 @@ class FoodJpaRepositoryTest {
         Pageable pageable = PageRequest.of(1, 1, Sort.by("price").ascending());
 
         // When
-        Page<FoodEntity> result1 = foodJpaRepository.findByMenuId(all.get(0).getMenuId(), pageable);
+        Page<FoodEntity> result1 = foodJpaRepository.findByMenuId(all.get(all.size()-1).getMenuId(), pageable);
         Page<FoodEntity> result2 = foodJpaRepository.findByMenuId(18797, pageable);
         // Then
         assertThat(result1.getSize()).isEqualTo(1);
@@ -80,7 +80,7 @@ class FoodJpaRepositoryTest {
         List<MenuEntity> all = menuJpaRepository.findAll();
 
         // When, Then
-        List<FoodEntity> result1 = foodJpaRepository.findByMenuId(all.get(0).getMenuId());
+        List<FoodEntity> result1 = foodJpaRepository.findByMenuId(all.get(all.size()-1).getMenuId());
         List<FoodEntity> result2 = foodJpaRepository.findByMenuId(18797);
 
         assertThat(result1).isNotNull();

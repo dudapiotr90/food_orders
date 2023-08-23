@@ -40,7 +40,7 @@ public class RestaurantEntity {
     @JoinColumn(name ="owner_id")
     private OwnerEntity owner;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "restaurant",cascade = CascadeType.REMOVE)
     private Set<DeliveryAddressEntity> deliveryAddresses;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "restaurant")
