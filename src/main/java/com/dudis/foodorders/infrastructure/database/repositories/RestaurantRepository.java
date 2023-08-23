@@ -36,6 +36,12 @@ public class RestaurantRepository implements RestaurantDAO {
     }
 
     @Override
+    public Page<Restaurant> findAllPagedOwnersLocals(Integer ownerId, Pageable pageable) {
+        return restaurantJpaRepository.findByOwnerId(ownerId,pageable)
+            .map(restaurantEntityMapper::mapFromEntity);
+    }
+
+    @Override
     public void addLocal(Restaurant restaurant) {
         restaurantJpaRepository.save(restaurantEntityMapper.mapToEntity(restaurant));
     }

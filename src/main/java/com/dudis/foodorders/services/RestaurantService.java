@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -41,6 +42,10 @@ public class RestaurantService {
 
     public List<Restaurant> findOwnerLocals(Integer ownerId) {
         return restaurantDAO.findRestaurantsWhereOwnerId(ownerId);
+    }
+
+    public Page<Restaurant> findAllPagedOwnersLocals(Integer ownerId, Pageable pageable) {
+        return restaurantDAO.findAllPagedOwnersLocals(ownerId,pageable);
     }
 
     public void addLocal(Restaurant restaurant) {

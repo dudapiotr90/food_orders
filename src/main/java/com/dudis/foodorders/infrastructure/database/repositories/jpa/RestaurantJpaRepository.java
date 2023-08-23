@@ -22,6 +22,12 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         WHERE ow.ownerId = :ownerId
         """)
     List<RestaurantEntity> findByOwnerId(@Param("ownerId") Integer ownerId);
+    @Query("""
+        SELECT re FROM RestaurantEntity re
+        JOIN FETCH re.owner ow
+        WHERE ow.ownerId = :ownerId
+        """)
+    Page<RestaurantEntity> findByOwnerId(Integer ownerId, Pageable pageable);
 
 
     @Query("""
@@ -67,5 +73,4 @@ public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,
         ) da ON res.restaurant_id = da.restaurant_id
          """,nativeQuery = true)
     Page<Object[]> findAllRestaurantsByFullAddress(String city, String postalCode, String street, Pageable pageable);
-
 }

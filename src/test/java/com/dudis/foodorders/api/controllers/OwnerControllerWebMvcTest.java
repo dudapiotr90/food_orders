@@ -1,6 +1,7 @@
 package com.dudis.foodorders.api.controllers;
 
 import com.dudis.foodorders.api.dtos.OrderDTO;
+import com.dudis.foodorders.api.dtos.OwnerDTO;
 import com.dudis.foodorders.api.dtos.RestaurantDTO;
 import com.dudis.foodorders.domain.Account;
 import com.dudis.foodorders.domain.LocalType;
@@ -64,9 +65,10 @@ class OwnerControllerWebMvcTest extends ControllersSupport {
     @Test
     void getSpecificOwnerPageWorksCorrectly() throws Exception {
         // Given
-        List<RestaurantDTO> someRestaurants = someRestaurantsDTO();
+        Page<RestaurantDTO> someRestaurants = new PageImpl<>(someRestaurantsDTO());
+//        List<RestaurantDTO> someRestaurants = someRestaurantsDTO();
         someRestaurants.forEach(r->r.setOrders(Set.of(someOrderDTO2(),someOrderDTO1())));
-        when(ownerService.findAllOwnerRestaurants(anyInt())).thenReturn(someRestaurants);
+        when(ownerService.findAllPaginatedOwnerRestaurants(OWNER_ID,1,6,"asc","name")).thenReturn(someRestaurants);
         when(billService.findOwnerPendingBills(OWNER_ID,false)).thenReturn(someBillsDTO());
         when(ownerService.findOwnerById(anyInt())).thenReturn(someOwnerDTO1());
 

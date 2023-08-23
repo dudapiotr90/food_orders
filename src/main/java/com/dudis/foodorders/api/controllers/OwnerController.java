@@ -27,6 +27,7 @@ public class OwnerController {
 
     public static final String OWNER = "/owner";
     public static final String OWNER_PAGE = "/owner/{id}";
+    public static final String OWNER_PAGE_PAGED = "/owner/{id}/page/{pageNumber}";
     public static final String OWNER_ADD = "/owner/{id}/add";
     public static final String ORDER_HISTORY = "/owner/{id}/orderHistory";
     public static final String ORDER_HISTORY_PAGINATED = "/owner/{id}/orderHistory/page/{pageNumber}";
@@ -42,13 +43,30 @@ public class OwnerController {
         OwnerDTO owner = ownerService.findOwnerByAccountId(loggedAccount.getAccountId());
         return "redirect:/owner/" + owner.getOwnerId();
     }
+
     @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = OWNER_PAGE)
-    public ModelAndView getSpecificOwnerPage(@PathVariable(value = "id") Integer ownerId, HttpServletRequest request) {
+    public ModelAndView getSpecificOwnerPage(
+        @PathVariable(value = "id") Integer ownerId,
+        HttpServletRequest request
+    ) {
         securityUtils.checkAccess(ownerId, request);
-        Map<String, ?> model = prepareOwnerData(ownerId);
+        return paginatedOwnerHomePage(ownerId, 1, "asc", "name",request);
+    }
+
+    @GetMapping(OWNER_PAGE_PAGED)
+    public ModelAndView paginatedOwnerHomePage(
+        @PathVariable(value = "id") Integer ownerId,
+        @PathVariable(value = "pageNumber") Integer pageNumber,
+        @RequestParam(value = "sortHow") String sortHow,
+        @RequestParam(value = "sortBy") String sortBy,
+        HttpServletRequest request
+    ) {
+        securityUtils.checkAccess(ownerId, request);
+        Map<String, ?> model = prepareOwnerData(ownerId, pageNumber, sortHow, sortBy);
         return new ModelAndView("owner", model);
     }
+
     @GetMapping(value = OWNER_ADD)
     public String restaurantFormPage(@PathVariable(value = "id") Integer ownerId, ModelMap model, HttpServletRequest request) {
         securityUtils.checkAccess(ownerId, request);
@@ -88,8 +106,7 @@ public class OwnerController {
         @PathVariable(value = "pageNumber", required = false) int pageNumber,
         @RequestParam("sortHow") String sortHow,
         @RequestParam("sortBy") String... sortBy
-        )
-    {
+    ) {
         securityUtils.checkAccess(ownerId, request);
         int defaultPageSize = 2;
         Page<OrderDTO> orders = ownerService.findOwnerRealizedOrders(ownerId, pageNumber, defaultPageSize, sortHow, sortBy);
@@ -99,15 +116,23 @@ public class OwnerController {
         return "owner_order_history";
     }
 
-    private Map<String, ?> prepareOwnerData(Integer ownerId) {
-        var addedRestaurants = ownerService.findAllOwnerRestaurants(ownerId);
+    private Map<String, ?> prepareOwnerData(Integer ownerId, Integer pageNumber, String sortHow, String sortBy) {
+        int defaultPageSize = 6;
+        var addedRestaurants = ownerService.findAllPaginatedOwnerRestaurants(ownerId, pageNumber, defaultPageSize, sortHow, sortBy);
         var pendingBills = billService.findOwnerPendingBills(ownerId, false);
         var owner = ownerService.findOwnerById(ownerId);
 
         return Map.of(
             "restaurants", addedRestaurants,
             "bills", pendingBills,
-            "owner", owner
+            "owner", owner,
+            "orders", addedRestaurants.getContent(),
+            "reverseSortHow", sortHow.equals("asc") ? "desc" : "asc",
+            "sortHow", sortHow,
+            "sortBy", sortBy,
+            "currentPage", pageNumber,
+            "totalPages", addedRestaurants.getTotalPages(),
+            "totalSize", addedRestaurants.getTotalElements()
         );
     }
 

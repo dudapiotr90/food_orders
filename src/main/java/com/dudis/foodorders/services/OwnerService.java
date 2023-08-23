@@ -111,4 +111,19 @@ public class OwnerService {
     public void deleteOwner(Integer accountId) {
         ownerDAO.deleteByAccountId(accountId);
     }
+
+    public Page<RestaurantDTO> findAllPaginatedOwnerRestaurants(
+        Integer ownerId,
+        Integer pageNumber,
+        int pageSize,
+        String sortHow,
+        String sortBy
+    ) {
+        Pageable pageable = pageableService.preparePageable(pageNumber, pageSize, sortHow, sortBy);
+        return restaurantService.findAllPagedOwnersLocals(ownerId,pageable)
+            .map(restaurantMapper::mapToDTO)
+            .map(restaurantDTO -> restaurantDTO
+                .withDeliveryAddressesSize(deliveryAddressService
+                    .countDeliveryAddressesForRestaurant(restaurantMapper.mapFromDTO(restaurantDTO))));
+    }
 }

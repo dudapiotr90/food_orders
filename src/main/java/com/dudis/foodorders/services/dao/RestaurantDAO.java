@@ -27,4 +27,5 @@ public interface RestaurantDAO {
 
     Page<Restaurant> findAllRestaurantsByFullAddress(String city, String postalCode, String street, Pageable pageable);
 
+    Page<Restaurant> findAllPagedOwnersLocals(Integer ownerId, Pageable pageable);
 }

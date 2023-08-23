@@ -28,8 +28,18 @@
      <table class="table">
           <thead class="table-primary">
           <tr>
-               <th>NAME</th>
-               <th>TYPE</th>
+               <th>
+                    <a
+                           th:href="@{/owner/{id}/page/{pageNumber}?sortBy=name&sortHow={reverseSortHow}
+               (id=${owner.ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                         NAME</a>
+               </th>
+               <th>
+                    <a
+                           th:href="@{/owner/{id}/page/{pageNumber}?sortBy=type&sortHow={reverseSortHow}
+               (id=${owner.ownerId}, pageNumber=${currentPage},reverseSortHow=${reverseSortHow})}">
+                         TYPE</a>
+               </th>
                <th>TOTAL PROCESSED ORDERS</th>
                <th>DELIVERY ADDRESSES</th>
                <th></th>
@@ -52,6 +62,38 @@
           </tbody>
      </table>
      </div>
+<div class="container">
+     <div th:if="${totalPages > 1}">
+          <div class="row col-sm-10">
+               <div class="col-sm-2">
+                    Size: [[${totalSize}]]
+               </div>
+               <div class="col-sm-1">
+                    <span th:each="p: ${#numbers.sequence(1, totalPages)}">
+                         <a th:if="${currentPage != p}"
+                            th:href="@{/owner/{id}/page/{p}?sortBy={sortBy}&sortHow={sortHow}
+               (id=${owner.ownerId}, p=${p}, sortHow=${sortHow},sortBy=${sortBy})}">
+                         [[${p}]]</a>
+                         <span th:unless="${currentPage != p}">[[${p}]]</span>
+                    </span>
+               </div>
+               <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{/owner/{id}/page/{nextPage}?sortBy={sortBy}&sortHow={sortHow}
+                    (id=${owner.ownerId}, nextPage=${currentPage + 1}, sortHow=${sortHow},sortBy=${sortBy})}">
+                         Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+               </div>
+               <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{/owner/{id}/page/{last}?sortBy={sortBy}&sortHow={sortHow}
+                    (id=${owner.ownerId}, sortHow=${sortHow},sortBy=${sortBy},last=${totalPages})}">
+                         Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+               </div>
+          </div>
+     </div>
+</div>
      <br>
      <div class="container">
           <a th:href="@{/owner/{id}/add(id=${owner.ownerId})}" class="btn btn-success custom-button" role="button">Add New Local!</a>
