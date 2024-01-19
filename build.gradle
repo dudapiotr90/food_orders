@@ -32,8 +32,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     implementation 'org.flywaydb:flyway-core'
+    implementation 'org.projectlombok:lombok:1.18.28'
     runtimeOnly 'org.postgresql:postgresql'
 
     compileOnly 'org.projectlombok:lombok'
@@ -118,13 +120,13 @@ jacocoTestCoverageVerification {
 openApiGenerate {
     generatorName = "java"
     library = "webclient"
-    configOptions = [
+    configOptions.set([
             serializableModel   : "true",
             dateLibrary         : "java8",
             serializationLibrary: "jackson"
-    ]
+    ])
 
-    outputDir = "$buildDir/generated-sources/openapi".toString()
+    outputDir = "$layout.buildDirectory/generated-sources/openapi".toString()
     inputSpec = "$rootDir/src/main/resources/contracts/spoonacular.json".toString()
     apiPackage = "com.dudis.foodorders.infrastructure.spoonacular.api"
     modelPackage = "com.dudis.foodorders.infrastructure.spoonacular.model"
